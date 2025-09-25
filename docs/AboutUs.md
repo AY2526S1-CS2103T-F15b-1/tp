@@ -8,16 +8,17 @@ We are a team based in the [School of Computing, National University of Singapor
 You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
+[[homepage](https://nus-cs2103-ay2526s1.github.io/tp/)]
 
-### John Doe
+### Kevin Tan
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/kevin.png" width="200px">
 
-[[homepage](http://www.comp.nus.edu.sg/~damithch)]
-[[github](https://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](https://github.com/kevintanjc)]
+[[portfolio](team/kevin.md)]
 
-* Role: Project Advisor
+* Role: Software Engineer
+* Responsibilities: Backend + Testing
 
 ### Pin Wen
 
@@ -29,24 +30,22 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: None
 
-### Johnny Doe
+### Tan Jay
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/jayyyyy25.png" width="200px">
 
-[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
-
-* Role: Developer
-* Responsibilities: Data
-
-### Jean Doe
-
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](http://github.com/jayyyyy25)] [[portfolio](team/jayyyyy25.md)]
 
 * Role: Developer
-* Responsibilities: Dev Ops + Threading
+
+### Jun Yan
+
+<img src="images/junyan-k.png" width="200px">
+
+[[github](http://github.com/junyan-k)]
+[[portfolio](team/junyan-k.md)]
+
+* Role: Developer
 
 ### James Doe
 
