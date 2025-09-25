@@ -47,7 +47,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Developer
 
-### James Doe
+### Zi Yong
 
 <img src="images/yong0112.png" width="200px">
 
