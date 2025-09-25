@@ -20,15 +20,15 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Software Engineer
 * Responsibilities: Backend + Testing
 
-### Jane Doe
+### Pin Wen
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/print2pdf.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](https://github.com/Print2PDF)]
+[[portfolio](team/print2pdf.md)]
 
-* Role: Team Lead
-* Responsibilities: UI
+* Role: Developer
+* Responsibilities: None
 
 ### Tan Jay
 
