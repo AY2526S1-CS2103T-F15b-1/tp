@@ -327,7 +327,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
 * **Client**: An individual client of the user. If a group is under the same policy (e.g. family protection), each member of the group is a different Client.
-* **Policy Type**: A specific policy/plan offered by the user/the user's firm. This is different from Policies.
+* **Policy Type**: A specific policy/plan offered by the user/the user's firm. This is different from a Policy.
 * **Policy**: An instance of a Policy Type owned by a Client. This is different from a Policy Type.
 * **Claim**: Produced by a Client in regard to one of their Policies.
 
