@@ -290,32 +290,60 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `InsuraBook` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+**Use case 1: Add a new policy for a client**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to view types of policy
+2.  InsuraBook shows a list of policy types
+3.  User requests to view a specific client
+4.  InsuraBook shows the specific client profile
+5.  User requests to add a policy to the client
+6.  InsuraBook shows the client profile with the list of policies
 
     Use case ends.
 
 **Extensions**
 
-* 2a. The list is empty.
+* 4a. Specific client does not exist.
 
-  Use case ends.
+  * 4a1. InsuraBook shows an error message.
 
-* 3a. The given index is invalid.
+    Use case: Add a new client
+    Resume at step 3.
 
-    * 3a1. AddressBook shows an error message.
+* 5a. Policy type does not exist.
 
-      Use case resumes at step 2.
+  * 5a1. InsuraBook shows an error message.
 
-*{More to be added}*
+    Resume at step 2.
+
+**Use case 2: Add a claim on a policy**
+
+**MSS**
+
+1.  User searches for a policy number
+2.  InsuraBook shows the specific policy on the client profile
+3.  User adds a claim on the policy
+4.  InsuraBook shows the specific policy on the client profile with the claim
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. Specified policy or client profile does not exist.
+
+  * 2a1. InsuraBook shows an error message
+
+    Use case ends.
+
+* 3a. Claim is a duplicate of an existing claim
+
+  * 3a1. InsuraBook shows an error message
+
+    Use case resumes at step 3.
 
 ### Non-Functional Requirements
 
