@@ -290,7 +290,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `InsuraBook` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Add a new policy for a client**
+**Use case 1: Add a new policy for a client**
 
 **MSS**
 
@@ -318,7 +318,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Resume at step 2.
 
-**Use case: Add a claim on a policy**
+**Use case 2: Add a claim on a policy**
 
 **MSS**
 
