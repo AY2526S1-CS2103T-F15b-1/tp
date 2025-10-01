@@ -275,16 +275,18 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
-| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |
-| `* * *`  | new user                                   | see usage instructions         | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person               |                                                                        |
-| `* * *`  | user                                       | delete a person                | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name          | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details   | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name           | locate a person easily                                                 |
-
-*{More to be added}*
+| Priority | As a …​                         | I want to …​                                                | So that I can…​                                                          |
+|----------|---------------------------------|-------------------------------------------------------------|--------------------------------------------------------------------------|
+| `* * *`  | insurance agent                 | add clients to the app                                      | start tracking their policies and claims                                 |
+| `* * *`  | insurance agent                 | delete clients from the app                                 | remove records for clients I no longer manage                            |
+| `* * *`  | insurance agent                 | see the expiry date and details (type) of a client’s policy | address client concerns quickly when asked                               |
+| `* * *`  | insurance agent                 | add policies to a client’s profile                          | keep track of the latest policies my clients are covered under           |
+| `* * *`  | insurance agent                 | delete policies from a client’s profile                     | ensure only the latest policies my clients are covered under are tracked |
+| `* * *`  | insurance agent                 | add claims to a client’s profile                            | keep track of new claims as they come in                                 |
+| `* * *`  | insurance agent                 | delete claims from a client’s profile                       | remove resolved or incorrect claims so the records stay accurate         |
+| `* * *`  | first-time insurance agent user | easily launch the app                                       | start saving client details without much unnecessary procedures          |
+| `* * *`  | new user                        | search for a client by name or policy number                | locate a client easily and find the information I needed                 |
+| `* * *`  | new user                        | view the app through a client view or a policy view         | directly look at policies or clients                                     |
 
 ### Use cases
 
