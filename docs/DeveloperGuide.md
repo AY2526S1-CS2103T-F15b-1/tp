@@ -305,10 +305,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 2a. There are no policy types.
-
-  Use case ends.
-
 * 4a. Specific client does not exist.
 
   * 4a1. InsuraBook shows an error message.
