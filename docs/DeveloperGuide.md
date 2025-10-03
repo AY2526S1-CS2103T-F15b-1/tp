@@ -275,58 +275,94 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
-| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |
-| `* * *`  | new user                                   | see usage instructions         | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person               |                                                                        |
-| `* * *`  | user                                       | delete a person                | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name          | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details   | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name           | locate a person easily                                                 |
-
-*{More to be added}*
+| Priority | As a …​                         | I want to …​                                                | So that I can…​                                                          |
+|----------|---------------------------------|-------------------------------------------------------------|--------------------------------------------------------------------------|
+| `* * *`  | insurance agent                 | add clients to the app                                      | start tracking their policies and claims                                 |
+| `* * *`  | insurance agent                 | delete clients from the app                                 | remove records for clients I no longer manage                            |
+| `* * *`  | insurance agent                 | see the expiry date and details (type) of a client’s policy | address client concerns quickly when asked                               |
+| `* * *`  | insurance agent                 | add policies to a client’s profile                          | keep track of the latest policies my clients are covered under           |
+| `* * *`  | insurance agent                 | delete policies from a client’s profile                     | ensure only the latest policies my clients are covered under are tracked |
+| `* * *`  | insurance agent                 | add claims to a client’s profile                            | keep track of new claims as they come in                                 |
+| `* * *`  | insurance agent                 | delete claims from a client’s profile                       | remove resolved or incorrect claims so the records stay accurate         |
+| `* * *`  | first-time insurance agent user | easily launch the app                                       | start saving client details without much unnecessary procedures          |
+| `* * *`  | new user                        | search for a client by name or policy number                | locate a client easily and find the information I needed                 |
+| `* * *`  | new user                        | view the app through a client view or a policy view         | directly look at policies or clients                                     |
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `InsuraBook` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+**Use case 1: Add a new policy for a client**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to view types of policy
+2.  InsuraBook shows a list of policy types
+3.  User requests to view a specific client
+4.  InsuraBook shows the specific client profile
+5.  User requests to add a policy to the client
+6.  InsuraBook shows the client profile with the list of policies
 
     Use case ends.
 
 **Extensions**
 
-* 2a. The list is empty.
+* 4a. Specific client does not exist.
 
-  Use case ends.
+  * 4a1. InsuraBook shows an error message.
 
-* 3a. The given index is invalid.
+    Use case: Add a new client
+    Resume at step 3.
 
-    * 3a1. AddressBook shows an error message.
+* 5a. Policy type does not exist.
 
-      Use case resumes at step 2.
+  * 5a1. InsuraBook shows an error message.
 
-*{More to be added}*
+    Resume at step 2.
+
+**Use case 2: Add a claim on a policy**
+
+**MSS**
+
+1.  User searches for a policy number
+2.  InsuraBook shows the specific policy on the client profile
+3.  User adds a claim on the policy
+4.  InsuraBook shows the specific policy on the client profile with the claim
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. Specified policy or client profile does not exist.
+
+  * 2a1. InsuraBook shows an error message
+
+    Use case ends.
+
+* 3a. Claim is a duplicate of an existing claim
+
+  * 3a1. InsuraBook shows an error message
+
+    Use case resumes at step 3.
 
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+2.  Should be able to hold up to 1000 clients without a noticeable sluggishness in performance for typical usage.
+3.  Should be able to hold up to 10000 policies without a noticeable sluggishness in performance for typical usage.
+4.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+5.  Should work without additional libraries
+6.  Should work locally on user's device
+7.  Should work without an installer
 
-*{More to be added}*
 
 ### Glossary
 
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
+* **Client**: An individual client of the user. If a group is under the same policy (e.g. family protection), each member of the group is a different Client.
+* **Policy Type**: A specific policy/plan offered by the user/the user's firm. This is different from a Policy.
+* **Policy**: An instance of a Policy Type owned by a Client. This is different from a Policy Type.
+* **Claim**: Produced by a Client in regard to one of their Policies.
 
 --------------------------------------------------------------------------------------------------------------------
 
