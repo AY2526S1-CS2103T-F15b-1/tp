@@ -12,10 +12,10 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ### Kevin Tan
 
-<img src="images/kevin.png" width="200px">
+<img src="images/kevintanjc.png" width="200px">
 
 [[github](https://github.com/kevintanjc)]
-[[portfolio](team/kevin.md)]
+[[portfolio](team/kevintanjc.md)]
 
 * Role: Software Engineer
 * Responsibilities: Backend + Testing
