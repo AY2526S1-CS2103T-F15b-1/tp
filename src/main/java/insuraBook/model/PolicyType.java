@@ -3,28 +3,28 @@ package insuraBook.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import insuraBook.exceptions.ptDuplicateError;
-import insuraBook.exceptions.ptMissingError;
+import insuraBook.exceptions.PtDuplicateError;
+import insuraBook.exceptions.PtMissingError;
 
 /**
  * Class representing policy type
  */
 public class PolicyType {
 
+    private static final List<PolicyType> recorded_policyTypes = new ArrayList<>();
+
     private final String ptName;
     private final int ptId;
     private String ptDescription = "";
     private int ptPremium = 0;
 
-    private static List<PolicyType> recorded_policyTypes = new ArrayList<>();
-
     /**
      * Constructor for PolicyType
      * @param ptName name of policy type
      * @param ptId id of policy type
-     * @throws ptDuplicateError if duplicate policy type already exists
+     * @throws PtDuplicateError if duplicate policy type already exists
      */
-    public PolicyType(String ptName, int ptId) throws ptDuplicateError {
+    public PolicyType(String ptName, int ptId) throws PtDuplicateError {
         checkIfDuplicate(ptName, ptId);
         this.ptName = ptName;
         this.ptId = ptId;
@@ -37,9 +37,9 @@ public class PolicyType {
      * @param ptId id of policy type
      * @param ptDescription additional description of policy type
      * @param ptPremium specified starting premium of policy type
-     * @throws ptDuplicateError if duplicate policy type already exists
+     * @throws PtDuplicateError if duplicate policy type already exists
      */
-    public PolicyType(String ptName, int ptId, String ptDescription, int ptPremium) throws ptDuplicateError {
+    public PolicyType(String ptName, int ptId, String ptDescription, int ptPremium) throws PtDuplicateError {
         checkIfDuplicate(ptName, ptId);
         this.ptName = ptName;
         this.ptId = ptId;
@@ -80,10 +80,10 @@ public class PolicyType {
         return this.ptPremium;
     }
 
-    private static void checkIfDuplicate(String ptName, int ptId) throws ptDuplicateError {
+    private static void checkIfDuplicate(String ptName, int ptId) throws PtDuplicateError {
         for (PolicyType pt2 : recorded_policyTypes) {
             if (isEqual(ptName, ptId, pt2)) {
-                throw new ptDuplicateError(pt2);
+                throw new PtDuplicateError(pt2);
             }
         }
     }
@@ -92,9 +92,9 @@ public class PolicyType {
      * Function for deleting policy type
      * @param ptName of policy to be deleted
      * @param ptId of policy to be deleted
-     * @throws ptMissingError if policy type does not exist in record
+     * @throws PtMissingError if policy type does not exist in record
      */
-    public static void deletePolicyType(String ptName, int ptId) throws ptMissingError {
+    public static void deletePolicyType(String ptName, int ptId) throws PtMissingError {
         boolean found = false;
         for (PolicyType pt2 : recorded_policyTypes) {
             if (isEqual(ptName, ptId, pt2)) {
@@ -104,12 +104,12 @@ public class PolicyType {
             }
         }
         if (!found) {
-            throw new ptMissingError(ptName, ptId);
+            throw new PtMissingError(ptName, ptId);
         }
     }
 
-    private static boolean isEqual(String pt1_name, int pt1_id, PolicyType policyType2) {
-        return pt1_name.equals(policyType2.getPtName()) && (pt1_id == policyType2.getPtId());
+    private static boolean isEqual(String pt1Name, int pt1Id, PolicyType policyType2) {
+        return pt1Name.equals(policyType2.getPtName()) && (pt1Id == policyType2.getPtId());
     }
 
 }

@@ -7,8 +7,8 @@ import java.time.LocalDateTime;
  */
 public class Policy {
 
-    private PolicyType policyType;
-    private LocalDateTime expiryDate;
+    private final PolicyType policyType;
+    private final LocalDateTime expiryDate;
 
     /**
      * Constructor

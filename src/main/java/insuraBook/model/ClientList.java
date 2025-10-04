@@ -3,7 +3,7 @@ package insuraBook.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import insuraBook.exceptions.clientMissingError;
+import insuraBook.exceptions.ClientMissingError;
 
 /**
  * Class representing InsuraBook's storage of clients
@@ -30,9 +30,9 @@ public class ClientList {
     /**
      * Function to delete client by name
      * @param name of client to delete, may not be unique
-     * @throws clientMissingError if there are no clients with or containing the name
+     * @throws ClientMissingError if there are no clients with or containing the name
      */
-    public void deleteClient(String name) throws clientMissingError {
+    public void deleteClient(String name) throws ClientMissingError {
         List<Client> matchingList = new ArrayList<>();
         for (int i = 0; i < this.clientList.size(); i++) {
             Client client = this.clientList.get(i);
@@ -41,7 +41,7 @@ public class ClientList {
             }
         }
         if (matchingList.isEmpty()) {
-            throw new clientMissingError("name");
+            throw new ClientMissingError("name");
         }
         if (matchingList.size() == 1) {
             this.clientList.remove(matchingList.get(0));
@@ -54,9 +54,9 @@ public class ClientList {
     /**
      * Function to delete client by id
      * @param id of client to delete, will be unique
-     * @throws clientMissingError if there are no clients with the same id
+     * @throws ClientMissingError if there are no clients with the same id
      */
-    public void deleteClient(int id) throws clientMissingError {
+    public void deleteClient(int id) throws ClientMissingError {
         boolean found = false;
         for (int i = 0; i < this.clientList.size(); i++) {
             Client client = this.clientList.get(i);
@@ -66,7 +66,7 @@ public class ClientList {
             }
         }
         if (!found) {
-            throw new clientMissingError("id");
+            throw new ClientMissingError("id");
         } else {
             // ui display success
         }
