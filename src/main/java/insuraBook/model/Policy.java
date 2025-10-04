@@ -2,20 +2,36 @@ package insuraBook.model;
 
 import java.time.LocalDateTime;
 
+/**
+ * Class representing policy
+ */
 public class Policy {
 
     private PolicyType policyType;
     private LocalDateTime expiryDate;
 
+    /**
+     * Constructor
+     * @param policyType from parser
+     * @param expiryDate datetime from parser
+     */
     public Policy(PolicyType policyType, LocalDateTime expiryDate) {
         this.policyType = policyType;
         this.expiryDate = expiryDate;
     }
 
+    /**
+     * Getter
+     * @return policy type of policy
+     */
     public PolicyType getPolicyType() {
         return this.policyType;
     }
 
+    /**
+     * Getter
+     * @return expiry date of policy
+     */
     public LocalDateTime getExpiryDate() {
         return this.expiryDate;
     }

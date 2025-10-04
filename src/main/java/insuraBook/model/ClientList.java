@@ -5,18 +5,33 @@ import java.util.List;
 
 import insuraBook.exceptions.clientMissingError;
 
+/**
+ * Class representing InsuraBook's storage of clients
+ */
 public class ClientList {
 
     private final List<Client> clientList;
 
+    /**
+     * Default constructor
+     */
     public ClientList() {
         this.clientList = new ArrayList<>();
     }
 
+    /**
+     * Function to add client
+     * @param client to add to clientList
+     */
     public void addClient(Client client) {
         this.clientList.add(client);
     }
 
+    /**
+     * Function to delete client by name
+     * @param name of client to delete, may not be unique
+     * @throws clientMissingError if there are no clients with or containing the name
+     */
     public void deleteClient(String name) throws clientMissingError {
         List<Client> matchingList = new ArrayList<>();
         for (int i = 0; i < this.clientList.size(); i++) {
@@ -36,6 +51,11 @@ public class ClientList {
         }
     }
 
+    /**
+     * Function to delete client by id
+     * @param id of client to delete, will be unique
+     * @throws clientMissingError if there are no clients with the same id
+     */
     public void deleteClient(int id) throws clientMissingError {
         boolean found = false;
         for (int i = 0; i < this.clientList.size(); i++) {

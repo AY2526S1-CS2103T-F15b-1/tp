@@ -1,7 +1,10 @@
 package insuraBook.exceptions;
 
+/**
+ * Exception if policy type does not exist
+ */
 public class ptMissingError extends Error {
-    public ptMissingError(String pt_name, int pt_id) {
-        super(String.format("No Policy Type found matching %s and %d", pt_name, pt_id));
+    public ptMissingError(String ptName, int ptId) {
+        super(String.format("No Policy Type found matching %s and %d", ptName, ptId));
     }
 }
