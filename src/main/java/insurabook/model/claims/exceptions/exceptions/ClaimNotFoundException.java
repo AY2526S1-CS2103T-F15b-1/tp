@@ -1,4 +1,4 @@
-package seedu.address.model.claim.exceptions;
+package insurabook.model.claims.exceptions.exceptions;
 
 /**
  * Signals that the operation is unable to find the specified claim.
