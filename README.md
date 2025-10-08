@@ -8,9 +8,9 @@
 ![Ui](docs/images/Ui.png)
 
 ## About - InsuraBook
-* The project simulates an ongoing software project for a multi-platform application (called _InsuraBook_) used by 
+* The project simulates an ongoing software project for a multi-platform application (called _InsuraBook_) used by
 * Insurance Agents for managing client details.
-  * It is **written in OOP fashion**. It provides a **reasonably well-written** code base **bigger** (around 6 KLoC) 
+  * It is **written in OOP fashion**. It provides a **reasonably well-written** code base **bigger** (around 6 KLoC)
   * than what students usually write in beginner-level SE modules, without being overwhelmingly big.
   * It comes with a **reasonable level of user and developer documentation**.
 
