@@ -1,4 +1,4 @@
-package insurabook.model.person;
+package insurabook.model.client;
 
 import static insurabook.testutil.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertFalse;

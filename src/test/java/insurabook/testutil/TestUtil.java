@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 
 import insurabook.commons.core.index.Index;
 import insurabook.model.Model;
-import insurabook.model.person.Person;
+import insurabook.model.client.Client;
 
 /**
  * A utility class for test cases.
@@ -49,7 +49,7 @@ public class TestUtil {
     /**
      * Returns the person in the {@code model}'s person list at {@code index}.
      */
-    public static Person getPerson(Model model, Index index) {
+    public static Client getPerson(Model model, Index index) {
         return model.getFilteredPersonList().get(index.getZeroBased());
     }
 }

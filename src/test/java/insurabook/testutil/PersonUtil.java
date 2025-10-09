@@ -10,7 +10,7 @@ import java.util.Set;
 
 import insurabook.logic.commands.AddCommand;
 import insurabook.logic.commands.EditCommand.EditPersonDescriptor;
-import insurabook.model.person.Person;
+import insurabook.model.client.Client;
 import insurabook.model.tag.Tag;
 
 /**
@@ -21,14 +21,14 @@ public class PersonUtil {
     /**
      * Returns an add command string for adding the {@code person}.
      */
-    public static String getAddCommand(Person person) {
+    public static String getAddCommand(Client person) {
         return AddCommand.COMMAND_WORD + " " + getPersonDetails(person);
     }
 
     /**
      * Returns the part of command string for the given {@code person}'s details.
      */
-    public static String getPersonDetails(Person person) {
+    public static String getPersonDetails(Client person) {
         StringBuilder sb = new StringBuilder();
         sb.append(PREFIX_NAME + person.getName().fullName + " ");
         sb.append(PREFIX_PHONE + person.getPhone().value + " ");

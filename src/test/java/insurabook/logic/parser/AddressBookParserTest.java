@@ -23,8 +23,8 @@ import insurabook.logic.commands.FindCommand;
 import insurabook.logic.commands.HelpCommand;
 import insurabook.logic.commands.ListCommand;
 import insurabook.logic.parser.exceptions.ParseException;
-import insurabook.model.person.NameContainsKeywordsPredicate;
-import insurabook.model.person.Person;
+import insurabook.model.client.NameContainsKeywordsPredicate;
+import insurabook.model.client.Client;
 import insurabook.testutil.EditPersonDescriptorBuilder;
 import insurabook.testutil.PersonBuilder;
 import insurabook.testutil.PersonUtil;
@@ -35,7 +35,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_add() throws Exception {
-        Person person = new PersonBuilder().build();
+        Client person = new PersonBuilder().build();
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
         assertEquals(new AddCommand(person), command);
     }
@@ -55,7 +55,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_edit() throws Exception {
-        Person person = new PersonBuilder().build();
+        Client person = new PersonBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));

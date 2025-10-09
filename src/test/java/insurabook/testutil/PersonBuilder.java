@@ -3,11 +3,11 @@ package insurabook.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
-import insurabook.model.person.Address;
-import insurabook.model.person.Email;
-import insurabook.model.person.Name;
-import insurabook.model.person.Person;
-import insurabook.model.person.Phone;
+import insurabook.model.client.Address;
+import insurabook.model.client.Email;
+import insurabook.model.client.Name;
+import insurabook.model.client.Client;
+import insurabook.model.client.Phone;
 import insurabook.model.tag.Tag;
 import insurabook.model.util.SampleDataUtil;
 
@@ -41,7 +41,7 @@ public class PersonBuilder {
     /**
      * Initializes the PersonBuilder with the data of {@code personToCopy}.
      */
-    public PersonBuilder(Person personToCopy) {
+    public PersonBuilder(Client personToCopy) {
         name = personToCopy.getName();
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
@@ -89,8 +89,8 @@ public class PersonBuilder {
         return this;
     }
 
-    public Person build() {
-        return new Person(name, phone, email, address, tags);
+    public Client build() {
+        return new Client(name, phone, email, address, tags);
     }
 
 }

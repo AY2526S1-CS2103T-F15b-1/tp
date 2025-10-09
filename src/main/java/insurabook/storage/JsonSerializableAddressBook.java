@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import insurabook.commons.exceptions.IllegalValueException;
 import insurabook.model.AddressBook;
 import insurabook.model.ReadOnlyAddressBook;
-import insurabook.model.person.Person;
+import insurabook.model.client.Client;
 
 /**
  * An Immutable AddressBook that is serializable to JSON format.
@@ -48,7 +48,7 @@ class JsonSerializableAddressBook {
     public AddressBook toModelType() throws IllegalValueException {
         AddressBook addressBook = new AddressBook();
         for (JsonAdaptedPerson jsonAdaptedPerson : persons) {
-            Person person = jsonAdaptedPerson.toModelType();
+            Client person = jsonAdaptedPerson.toModelType();
             if (addressBook.hasPerson(person)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
             }

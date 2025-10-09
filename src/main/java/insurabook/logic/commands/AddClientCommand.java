@@ -11,7 +11,7 @@ import insurabook.commons.util.ToStringBuilder;
 import insurabook.logic.Messages;
 import insurabook.logic.commands.exceptions.CommandException;
 import insurabook.model.Model;
-import insurabook.model.person.Person;
+import insurabook.model.client.Client;
 
 /**
  * Adds a person to the address book.
@@ -38,12 +38,12 @@ public class AddClientCommand extends Command {
     public static final String MESSAGE_SUCCESS = "New client added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 
-    private final Person toAdd;
+    private final Client toAdd;
 
     /**
      * Creates an AddCommand to add the specified {@code Person}
      */
-    public AddClientCommand(Person person) {
+    public AddClientCommand(Client person) {
         requireNonNull(person);
         toAdd = person;
     }

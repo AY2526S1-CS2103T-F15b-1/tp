@@ -12,11 +12,11 @@ import java.util.stream.Stream;
 
 import insurabook.logic.commands.AddCommand;
 import insurabook.logic.parser.exceptions.ParseException;
-import insurabook.model.person.Address;
-import insurabook.model.person.Email;
-import insurabook.model.person.Name;
-import insurabook.model.person.Person;
-import insurabook.model.person.Phone;
+import insurabook.model.client.Address;
+import insurabook.model.client.Email;
+import insurabook.model.client.Name;
+import insurabook.model.client.Client;
+import insurabook.model.client.Phone;
 import insurabook.model.tag.Tag;
 
 /**
@@ -45,7 +45,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        Person person = new Person(name, phone, email, address, tagList);
+        Client person = new Client(name, phone, email, address, tagList);
 
         return new AddCommand(person);
     }

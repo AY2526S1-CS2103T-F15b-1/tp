@@ -1,10 +1,10 @@
-package insurabook.model.person;
+package insurabook.model.client;
 
 import static insurabook.commons.util.AppUtil.checkArgument;
 import static java.util.Objects.requireNonNull;
 
 /**
- * Represents a Person's name in the address book.
+ * Represents a Client's name in InsuraBook.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
 public class Name {
@@ -38,6 +38,14 @@ public class Name {
         return test.matches(VALIDATION_REGEX);
     }
 
+    /**
+     * Function to check if name contains search word
+     * @param word to be searched for
+     * @return True if word is substring of fullName, else False
+     */
+    public boolean containsWord(String word) {
+        return fullName.contains(word);
+    }
 
     @Override
     public String toString() {
