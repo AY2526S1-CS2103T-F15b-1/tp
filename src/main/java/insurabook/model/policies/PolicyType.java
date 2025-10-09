@@ -13,13 +13,21 @@ public class PolicyType {
 
     private static final List<PolicyType> recorded_policyTypes = new ArrayList<>();
 
+    /** Name of policy type. */
     private final String ptName;
+
+    /** ID of policy type. */
     private final int ptId;
+
+    /** Description of policy type. */
     private String ptDescription = "";
+
+    /** Starting premium of policy type. */
     private int ptPremium = 0;
 
     /**
      * Constructor for PolicyType
+     *
      * @param ptName name of policy type
      * @param ptId id of policy type
      * @throws PolicyTypeDuplicateException if duplicate policy type already exists
@@ -33,6 +41,7 @@ public class PolicyType {
 
     /**
      * Constructor for PolicyType if description and premium are specified
+     *
      * @param ptName name of policy type
      * @param ptId id of policy type
      * @param ptDescription additional description of policy type
@@ -51,6 +60,7 @@ public class PolicyType {
 
     /**
      * Temporary getter, if possible remove
+     *
      * @return String policy type name
      */
     public String getPtName() {
@@ -59,6 +69,7 @@ public class PolicyType {
 
     /**
      * Temporary getter, if possible remove
+     *
      * @return int policy type id
      */
     public int getPtId() {
@@ -67,6 +78,7 @@ public class PolicyType {
 
     /**
      * Temporary getter, if possible remove
+     *
      * @return String description of policy
      */
     public String getPtDescription() {
@@ -75,6 +87,7 @@ public class PolicyType {
 
     /**
      * Temporary getter, if possible remove
+     *
      * @return int premium of policy
      */
     public int getPtPremium() {
@@ -91,6 +104,7 @@ public class PolicyType {
 
     /**
      * Function for deleting policy type
+     *
      * @param ptName of policy to be deleted
      * @param ptId of policy to be deleted
      * @throws PolicyTypeMissingException if policy type does not exist in record
