@@ -11,14 +11,22 @@ import insurabook.model.policies.Policy;
  */
 public class Portfolio {
 
-    public Client client;
-    public List<Policy> policies;
+    private Client client;
+    private List<Policy> policies;
 
     /**
      * Constructs a container for a Client's policies
      */
     public Portfolio() {
         this.policies = new ArrayList<>();
+    }
+
+    public Client getClient() {
+        return this.client;
+    }
+
+    public List<Policy> getPolicies() {
+        return this.policies;
     }
 
     /**
