@@ -1,6 +1,11 @@
 package insurabook.model.policies;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import insurabook.model.claims.Claim;
+import insurabook.model.policytype.PolicyType;
 
 /**
  * Class representing policy
@@ -9,6 +14,7 @@ public class Policy {
 
     private final PolicyType policyType;
     private final LocalDateTime expiryDate;
+    private final List<Claim> claim;
 
     /**
      * Constructor
@@ -18,6 +24,7 @@ public class Policy {
     public Policy(PolicyType policyType, LocalDateTime expiryDate) {
         this.policyType = policyType;
         this.expiryDate = expiryDate;
+        this.claim = new ArrayList<>();
     }
 
     /**
@@ -36,6 +43,13 @@ public class Policy {
         return this.expiryDate;
     }
 
+    /**
+     * Getter
+     * @return list of claims under this policy
+     */
+    public List<Claim> getClaims() {
+        return this.claim;
+    }
     /*
      * Problem:
      * How do we add/delete if we are using id only.
