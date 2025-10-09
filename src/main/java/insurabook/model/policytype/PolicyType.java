@@ -11,6 +11,7 @@ import insurabook.model.policytype.exceptions.PolicyTypeMissingException;
  */
 public class PolicyType {
 
+    /** List of all PolicyTypes. */
     private static final List<PolicyType> recorded_policyTypes = new ArrayList<>();
 
     /** Name of policy type. */
@@ -96,7 +97,7 @@ public class PolicyType {
 
     private static void checkIfDuplicate(String ptName, int ptId) throws PolicyTypeDuplicateException {
         for (PolicyType pt2 : recorded_policyTypes) {
-            if (isEqual(ptName, ptId, pt2)) {
+            if (pt2.equals(ptName, ptId)) {
                 throw new PolicyTypeDuplicateException(pt2);
             }
         }
@@ -112,7 +113,7 @@ public class PolicyType {
     public static void deletePolicyType(String ptName, int ptId) throws PolicyTypeMissingException {
         boolean found = false;
         for (PolicyType pt2 : recorded_policyTypes) {
-            if (isEqual(ptName, ptId, pt2)) {
+            if (pt2.equals(ptName, ptId)) {
                 found = true;
                 recorded_policyTypes.remove(pt2);
                 break;
@@ -123,8 +124,27 @@ public class PolicyType {
         }
     }
 
-    private static boolean isEqual(String pt1Name, int pt1Id, PolicyType policyType2) {
-        return pt1Name.equals(policyType2.getPtName()) && (pt1Id == policyType2.getPtId());
+    /**
+     * Checks if given object is equal to this PolicyType.
+     * Two PolicyTypes are equal if either name or ID are identical.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof PolicyType castedObject) {
+            return this.equals(castedObject.ptName, castedObject.ptId);
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Checks if this PolicyType shares either given name or ID.
+     */
+    public boolean equals(String name, int id) {
+        boolean isNameEqual = ptName.equals(name);
+        boolean isIdEqual = ptId == id;
+
+        return isNameEqual || isIdEqual;
     }
 
 }
