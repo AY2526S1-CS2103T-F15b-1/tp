@@ -33,6 +33,7 @@ public class MainWindow extends UiPart<Stage> {
     // Independent Ui parts residing in this Ui container
     private PersonListPanel personListPanel;
     private ResultDisplay resultDisplay;
+    private ViewChangeDisplay viewChangeDisplay;
     private HelpWindow helpWindow;
 
     @FXML
@@ -46,6 +47,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane resultDisplayPlaceholder;
+
+    @FXML
+    private StackPane viewChangeDisplayPlaceholder;
 
     @FXML
     private StackPane statusbarPlaceholder;
@@ -113,6 +117,9 @@ public class MainWindow extends UiPart<Stage> {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
+        viewChangeDisplay = new ViewChangeDisplay();
+        viewChangeDisplayPlaceholder.getChildren().add(viewChangeDisplay.getRoot());
+
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
@@ -175,8 +182,9 @@ public class MainWindow extends UiPart<Stage> {
     private CommandResult executeCommand(String commandText) throws CommandException, ParseException {
         try {
             CommandResult commandResult = logic.execute(commandText);
-            logger.info("Result: " + commandResult.getFeedbackToUser());
+            logger.info("Result: " + commandResult.getFeedbackToUser() + " View: " + commandResult.getView());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
+            viewChangeDisplay.setViewForUser(commandResult.getView());
 
             if (commandResult.isShowHelp()) {
                 handleHelp();
