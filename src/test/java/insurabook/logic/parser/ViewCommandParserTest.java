@@ -1,13 +1,16 @@
 package insurabook.logic.parser;
 
-import insurabook.logic.commands.ViewCommand;
-import insurabook.logic.parser.exceptions.ParseException;
-import org.junit.jupiter.api.Test;
+import static insurabook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.Field;
 
-import static insurabook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+import insurabook.logic.commands.ViewCommand;
+import insurabook.logic.parser.exceptions.ParseException;
 
 class ViewCommandParserTest {
 

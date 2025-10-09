@@ -1,6 +1,6 @@
 package insurabook.logic.commands;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
 import org.junit.jupiter.api.Test;
@@ -35,6 +35,6 @@ class ViewCommandTest {
         CommandResult result = command.execute(model);
 
         assertEquals("Invalid flag! Use -c for Client View and -p for Policy View", result.getFeedbackToUser());
-        assertEquals(result.getView(), "client" ); // defaults to client view
+        assertEquals(result.getView(), "client"); // defaults to client view
     }
 }

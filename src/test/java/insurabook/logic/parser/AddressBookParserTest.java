@@ -11,7 +11,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import insurabook.logic.commands.ViewCommand;
 import org.junit.jupiter.api.Test;
 
 import insurabook.logic.commands.AddCommand;
@@ -23,6 +22,7 @@ import insurabook.logic.commands.ExitCommand;
 import insurabook.logic.commands.FindCommand;
 import insurabook.logic.commands.HelpCommand;
 import insurabook.logic.commands.ListCommand;
+import insurabook.logic.commands.ViewCommand;
 import insurabook.logic.parser.exceptions.ParseException;
 import insurabook.model.person.NameContainsKeywordsPredicate;
 import insurabook.model.person.Person;

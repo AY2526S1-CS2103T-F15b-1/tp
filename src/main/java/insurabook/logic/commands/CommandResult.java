@@ -43,9 +43,13 @@ public class CommandResult {
         return feedbackToUser;
     }
 
-    public String getView() { return view; }
+    public String getView() {
+        return view;
+    }
 
-    public void setView(String view) { this.view = view; }
+    public void setView(String view) {
+        this.view = view;
+    }
 
     public boolean isShowHelp() {
         return showHelp;

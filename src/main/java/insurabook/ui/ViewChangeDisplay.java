@@ -7,7 +7,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.Region;
 
 /**
- * A ui for the status bar that is displayed at the header of the application.
+ * An UI component that displays the current view (Client or Policy).
  */
 public class ViewChangeDisplay extends UiPart<Region> {
 
@@ -16,11 +16,18 @@ public class ViewChangeDisplay extends UiPart<Region> {
     @FXML
     private TextArea viewChangeDisplay;
 
+    /**
+     * Creates a {@code ViewChangeDisplay} with the default view set to "Client View".
+     */
     public ViewChangeDisplay() {
         super(FXML);
         viewChangeDisplay.setText("Client View");
     }
 
+    /**
+     * Updates the display to show the current view.
+     * @param view The current view, either "client" or "policy".
+     */
     public void setViewForUser(String view) {
         if (view.equals(CLIENT_VIEW)) {
             viewChangeDisplay.setText("Client View");

@@ -1,11 +1,9 @@
 package insurabook.logic.parser;
 
+import static insurabook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import insurabook.logic.commands.ViewCommand;
 import insurabook.logic.parser.exceptions.ParseException;
-
-import java.util.Arrays;
-
-import static insurabook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 /**
  * Parses input arguments and creates a new FindCommand object
