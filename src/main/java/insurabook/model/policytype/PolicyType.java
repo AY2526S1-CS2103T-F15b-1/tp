@@ -12,8 +12,11 @@ import insurabook.model.policytype.exceptions.PolicyTypeMissingException;
  */
 public class PolicyType {
 
-    /** List of all PolicyTypes. */
-    private static final List<PolicyType> recorded_policyTypes = new ArrayList<>();
+    /**
+     * List of all PolicyTypes.
+     * TODO: Shift ownership of this to main running class, not PolicyType class.
+     */
+    private static final PolicyTypeList recordedPolicyTypes = new PolicyTypeList();
 
     /** Name of policy type. */
     private final String ptName;
@@ -35,10 +38,10 @@ public class PolicyType {
      * @throws PolicyTypeDuplicateException if duplicate policy type already exists
      */
     public PolicyType(String ptName, int ptId) throws PolicyTypeDuplicateException {
-        checkIfDuplicate(ptName, ptId);
+        recordedPolicyTypes.checkDuplicate(ptName, ptId);
         this.ptName = ptName;
         this.ptId = ptId;
-        recorded_policyTypes.add(this);
+        recordedPolicyTypes.addPolicyType(this);
     }
 
     /**
@@ -52,12 +55,12 @@ public class PolicyType {
      */
     public PolicyType(String ptName, int ptId, String ptDescription, int ptPremium)
             throws PolicyTypeDuplicateException {
-        checkIfDuplicate(ptName, ptId);
+        recordedPolicyTypes.checkDuplicate(ptName, ptId);
         this.ptName = ptName;
         this.ptId = ptId;
         this.ptDescription = ptDescription;
         this.ptPremium = ptPremium;
-        recorded_policyTypes.add(this);
+        recordedPolicyTypes.addPolicyType(this);
     }
 
     /**
@@ -94,35 +97,6 @@ public class PolicyType {
      */
     public int getPtPremium() {
         return this.ptPremium;
-    }
-
-    private static void checkIfDuplicate(String ptName, int ptId) throws PolicyTypeDuplicateException {
-        for (PolicyType pt2 : recorded_policyTypes) {
-            if (pt2.policyTypeEquals(ptName, ptId) != PolicyTypeEquality.NEITHER_EQUAL) {
-                throw new PolicyTypeDuplicateException(pt2);
-            }
-        }
-    }
-
-    /**
-     * Function for deleting policy type
-     *
-     * @param ptName of policy to be deleted
-     * @param ptId of policy to be deleted
-     * @throws PolicyTypeMissingException if policy type does not exist in record
-     */
-    public static void deletePolicyType(String ptName, int ptId) throws PolicyTypeMissingException {
-        boolean found = false;
-        for (PolicyType pt2 : recorded_policyTypes) {
-            if (pt2.policyTypeEquals(ptName, ptId) != PolicyTypeEquality.NEITHER_EQUAL) {
-                found = true;
-                recorded_policyTypes.remove(pt2);
-                break;
-            }
-        }
-        if (!found) {
-            throw new PolicyTypeMissingException(ptName, ptId);
-        }
     }
 
     /**
