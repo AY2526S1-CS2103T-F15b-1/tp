@@ -1,17 +1,19 @@
 package insurabook.logic.commands;
 
+import static insurabook.logic.commands.ViewCommand.CLIENT_VIEW;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Objects;
 
 import insurabook.commons.util.ToStringBuilder;
-
 /**
  * Represents the result of a command execution.
  */
 public class CommandResult {
 
     private final String feedbackToUser;
+
+    private String view;
 
     /** Help information should be shown to the user. */
     private final boolean showHelp;
@@ -24,6 +26,7 @@ public class CommandResult {
      */
     public CommandResult(String feedbackToUser, boolean showHelp, boolean exit) {
         this.feedbackToUser = requireNonNull(feedbackToUser);
+        this.view = CLIENT_VIEW;
         this.showHelp = showHelp;
         this.exit = exit;
     }
@@ -38,6 +41,14 @@ public class CommandResult {
 
     public String getFeedbackToUser() {
         return feedbackToUser;
+    }
+
+    public String getView() {
+        return view;
+    }
+
+    public void setView(String view) {
+        this.view = view;
     }
 
     public boolean isShowHelp() {
@@ -61,19 +72,21 @@ public class CommandResult {
 
         CommandResult otherCommandResult = (CommandResult) other;
         return feedbackToUser.equals(otherCommandResult.feedbackToUser)
+                && Objects.equals(view, otherCommandResult.view)
                 && showHelp == otherCommandResult.showHelp
                 && exit == otherCommandResult.exit;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(feedbackToUser, showHelp, exit);
+        return Objects.hash(feedbackToUser, view, showHelp, exit);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .add("feedbackToUser", feedbackToUser)
+                .add("view", view)
                 .add("showHelp", showHelp)
                 .add("exit", exit)
                 .toString();

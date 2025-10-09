@@ -22,6 +22,7 @@ import insurabook.logic.commands.ExitCommand;
 import insurabook.logic.commands.FindCommand;
 import insurabook.logic.commands.HelpCommand;
 import insurabook.logic.commands.ListCommand;
+import insurabook.logic.commands.ViewCommand;
 import insurabook.logic.parser.exceptions.ParseException;
 import insurabook.model.person.NameContainsKeywordsPredicate;
 import insurabook.model.person.Person;
@@ -86,6 +87,12 @@ public class AddressBookParserTest {
     public void parseCommand_list() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_view() throws Exception {
+        assertTrue(parser.parseCommand(ViewCommand.COMMAND_WORD + " -c") instanceof ViewCommand);
+        assertTrue(parser.parseCommand(ViewCommand.COMMAND_WORD + " -p") instanceof ViewCommand);
     }
 
     @Test
