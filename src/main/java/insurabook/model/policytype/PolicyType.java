@@ -3,6 +3,7 @@ package insurabook.model.policytype;
 import java.util.ArrayList;
 import java.util.List;
 
+import insurabook.model.policytype.enums.PolicyTypeEquality;
 import insurabook.model.policytype.exceptions.PolicyTypeDuplicateException;
 import insurabook.model.policytype.exceptions.PolicyTypeMissingException;
 
@@ -97,7 +98,7 @@ public class PolicyType {
 
     private static void checkIfDuplicate(String ptName, int ptId) throws PolicyTypeDuplicateException {
         for (PolicyType pt2 : recorded_policyTypes) {
-            if (pt2.equals(ptName, ptId)) {
+            if (pt2.policyTypeEquals(ptName, ptId) != PolicyTypeEquality.NEITHER_EQUAL) {
                 throw new PolicyTypeDuplicateException(pt2);
             }
         }
@@ -113,7 +114,7 @@ public class PolicyType {
     public static void deletePolicyType(String ptName, int ptId) throws PolicyTypeMissingException {
         boolean found = false;
         for (PolicyType pt2 : recorded_policyTypes) {
-            if (pt2.equals(ptName, ptId)) {
+            if (pt2.policyTypeEquals(ptName, ptId) != PolicyTypeEquality.NEITHER_EQUAL) {
                 found = true;
                 recorded_policyTypes.remove(pt2);
                 break;
@@ -131,7 +132,8 @@ public class PolicyType {
     @Override
     public boolean equals(Object o) {
         if (o instanceof PolicyType castedObject) {
-            return this.equals(castedObject.ptName, castedObject.ptId);
+            PolicyTypeEquality result = this.policyTypeEquals(castedObject.ptName, castedObject.ptId);
+            return result == PolicyTypeEquality.ID_EQUAL || result == PolicyTypeEquality.NAME_EQUAL;
         } else {
             return false;
         }
@@ -140,11 +142,19 @@ public class PolicyType {
     /**
      * Checks if this PolicyType shares either given name or ID.
      */
-    public boolean equals(String name, int id) {
+    public PolicyTypeEquality policyTypeEquals(String name, int id) {
         boolean isNameEqual = ptName.equals(name);
         boolean isIdEqual = ptId == id;
 
-        return isNameEqual || isIdEqual;
+        if (isNameEqual && isIdEqual) {
+            return PolicyTypeEquality.BOTH_EQUAL;
+        } else if (isNameEqual) {
+            return PolicyTypeEquality.NAME_EQUAL;
+        } else if (isIdEqual) {
+            return PolicyTypeEquality.ID_EQUAL;
+        } else {
+            return PolicyTypeEquality.NEITHER_EQUAL;
+        }
     }
 
 }
