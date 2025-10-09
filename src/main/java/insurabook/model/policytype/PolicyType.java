@@ -1,11 +1,7 @@
 package insurabook.model.policytype;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import insurabook.model.policytype.enums.PolicyTypeEquality;
 import insurabook.model.policytype.exceptions.PolicyTypeDuplicateException;
-import insurabook.model.policytype.exceptions.PolicyTypeMissingException;
 
 /**
  * Class representing policy type
@@ -49,8 +45,8 @@ public class PolicyType {
      *
      * @param ptName name of policy type
      * @param ptId id of policy type
-     * @param ptDescription additional description of policy type
-     * @param ptPremium specified starting premium of policy type
+     * @param ptDescription additional description of policy type (null if empty)
+     * @param ptPremium specified starting premium of policy type (negative if empty)
      * @throws PolicyTypeDuplicateException if duplicate policy type already exists
      */
     public PolicyType(String ptName, int ptId, String ptDescription, int ptPremium)
@@ -58,8 +54,12 @@ public class PolicyType {
         recordedPolicyTypes.checkDuplicate(ptName, ptId);
         this.ptName = ptName;
         this.ptId = ptId;
-        this.ptDescription = ptDescription;
-        this.ptPremium = ptPremium;
+        if (ptDescription != null) {
+            this.ptDescription = ptDescription;
+        }
+        if (ptPremium >= 0) {
+            this.ptPremium = ptPremium;
+        }
         recordedPolicyTypes.addPolicyType(this);
     }
 
