@@ -6,7 +6,7 @@ package insurabook.model.policytype.exceptions;
 public class PolicyTypeMissingException extends IllegalArgumentException {
 
     /**
-     * Generates a PolicyTypeDuplicateException.
+     * Generates a PolicyTypeMissingException.
      *
      * @param name name being searched for
      * @param id   ID being searched for
