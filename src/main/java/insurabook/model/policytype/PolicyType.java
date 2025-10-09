@@ -1,10 +1,10 @@
-package insurabook.model.policies;
+package insurabook.model.policytype;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import insurabook.model.policies.exceptions.PolicyTypeDuplicateException;
-import insurabook.model.policies.exceptions.PolicyTypeMissingException;
+import insurabook.model.policytype.exceptions.PolicyTypeDuplicateException;
+import insurabook.model.policytype.exceptions.PolicyTypeMissingException;
 
 /**
  * Class representing policy type

@@ -1,4 +1,4 @@
-package insurabook.model.policies.exceptions;
+package insurabook.model.policytype.exceptions;
 
 /**
  * Signals that the operation is unable to find a matching Policy Type.

@@ -2,6 +2,8 @@ package insurabook.model.policies;
 
 import java.time.LocalDateTime;
 
+import insurabook.model.policytype.PolicyType;
+
 /**
  * Class representing policy
  */
