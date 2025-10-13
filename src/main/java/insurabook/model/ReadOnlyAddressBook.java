@@ -1,6 +1,6 @@
 package insurabook.model;
 
-import insurabook.model.person.Person;
+import insurabook.model.client.Client;
 import javafx.collections.ObservableList;
 
 /**
@@ -12,6 +12,5 @@ public interface ReadOnlyAddressBook {
      * Returns an unmodifiable view of the persons list.
      * This list will not contain any duplicate persons.
      */
-    ObservableList<Person> getPersonList();
-
+    ObservableList<Client> getClientsList();
 }
