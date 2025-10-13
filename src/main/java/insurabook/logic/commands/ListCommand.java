@@ -1,6 +1,6 @@
 package insurabook.logic.commands;
 
-import static insurabook.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static insurabook.model.Model.PREDICATE_SHOW_ALL_CLIENTS;
 import static java.util.Objects.requireNonNull;
 
 import insurabook.model.Model;
@@ -18,7 +18,7 @@ public class ListCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredClientList(PREDICATE_SHOW_ALL_CLIENTS);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

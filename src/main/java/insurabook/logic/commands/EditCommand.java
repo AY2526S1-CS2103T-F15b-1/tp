@@ -1,19 +1,14 @@
 package insurabook.logic.commands;
 
-import static insurabook.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static insurabook.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static insurabook.logic.parser.CliSyntax.PREFIX_NAME;
 import static insurabook.logic.parser.CliSyntax.PREFIX_PHONE;
-import static insurabook.logic.parser.CliSyntax.PREFIX_TAG;
-import static insurabook.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static insurabook.model.Model.PREDICATE_SHOW_ALL_CLIENTS;
 import static java.util.Objects.requireNonNull;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
 import insurabook.commons.core.index.Index;
 import insurabook.commons.util.CollectionUtil;
@@ -21,12 +16,10 @@ import insurabook.commons.util.ToStringBuilder;
 import insurabook.logic.Messages;
 import insurabook.logic.commands.exceptions.CommandException;
 import insurabook.model.Model;
-import insurabook.model.person.Address;
-import insurabook.model.person.Email;
-import insurabook.model.person.Name;
-import insurabook.model.person.Person;
-import insurabook.model.person.Phone;
-import insurabook.model.tag.Tag;
+import insurabook.model.client.Client;
+import insurabook.model.client.ClientId;
+import insurabook.model.client.Name;
+import insurabook.model.client.Portfolio;
 
 /**
  * Edits the details of an existing person in the address book.
@@ -40,10 +33,6 @@ public class EditCommand extends Command {
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
-            + "[" + PREFIX_PHONE + "PHONE] "
-            + "[" + PREFIX_EMAIL + "EMAIL] "
-            + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
@@ -53,55 +42,53 @@ public class EditCommand extends Command {
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     private final Index index;
-    private final EditPersonDescriptor editPersonDescriptor;
+    private final EditClientDescriptor editClientDescriptor;
 
     /**
      * @param index of the person in the filtered person list to edit
-     * @param editPersonDescriptor details to edit the person with
+     * @param editClientDescriptor details to edit the person with
      */
-    public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
+    public EditCommand(Index index, EditClientDescriptor editClientDescriptor) {
         requireNonNull(index);
-        requireNonNull(editPersonDescriptor);
+        requireNonNull(editClientDescriptor);
 
         this.index = index;
-        this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
+        this.editClientDescriptor = new EditClientDescriptor(editClientDescriptor);
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Person> lastShownList = model.getFilteredPersonList();
+        List<Client> lastShownList = model.getFilteredClientList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        Person personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        Client clientToEdit = lastShownList.get(index.getZeroBased());
+        Client editedClient = createEditedClient(clientToEdit, editClientDescriptor);
 
-        if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
+        if (!clientToEdit.isSameClient(editedClient) && model.hasClient(editedClient)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
-        model.setPerson(personToEdit, editedPerson);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
+        model.setClient(clientToEdit, editedClient);
+        model.updateFilteredClientList(PREDICATE_SHOW_ALL_CLIENTS);
+        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedClient)));
     }
 
     /**
-     * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * edited with {@code editPersonDescriptor}.
+     * Creates and returns a {@code Person} with the details of {@code clientToEdit}
+     * edited with {@code editClientDescriptor}.
      */
-    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
-        assert personToEdit != null;
+    private static Client createEditedClient(Client clientToEdit, EditClientDescriptor editClientDescriptor) {
+        assert clientToEdit != null;
 
-        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-        Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-        Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Name updatedName = editClientDescriptor.getName().orElse(clientToEdit.getName());
+        ClientId updatedClientId = editClientDescriptor.getClientId().orElse(clientToEdit.getId());
+        Portfolio updatedPortfolio = editClientDescriptor.getPortfolio().orElse(clientToEdit.getPortfolio());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Client(updatedName, updatedClientId, updatedPortfolio);
     }
 
     @Override
@@ -117,14 +104,14 @@ public class EditCommand extends Command {
 
         EditCommand otherEditCommand = (EditCommand) other;
         return index.equals(otherEditCommand.index)
-                && editPersonDescriptor.equals(otherEditCommand.editPersonDescriptor);
+                && editClientDescriptor.equals(otherEditCommand.editClientDescriptor);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .add("index", index)
-                .add("editPersonDescriptor", editPersonDescriptor)
+                .add("editPersonDescriptor", editClientDescriptor)
                 .toString();
     }
 
@@ -132,32 +119,28 @@ public class EditCommand extends Command {
      * Stores the details to edit the person with. Each non-empty field value will replace the
      * corresponding field value of the person.
      */
-    public static class EditPersonDescriptor {
+    public static class EditClientDescriptor {
         private Name name;
-        private Phone phone;
-        private Email email;
-        private Address address;
-        private Set<Tag> tags;
+        private ClientId clientId;
+        private Portfolio portfolio;
 
-        public EditPersonDescriptor() {}
+        public EditClientDescriptor() {}
 
         /**
          * Copy constructor.
          * A defensive copy of {@code tags} is used internally.
          */
-        public EditPersonDescriptor(EditPersonDescriptor toCopy) {
+        public EditClientDescriptor(EditClientDescriptor toCopy) {
             setName(toCopy.name);
-            setPhone(toCopy.phone);
-            setEmail(toCopy.email);
-            setAddress(toCopy.address);
-            setTags(toCopy.tags);
+            setClientId(toCopy.clientId);
+            setPortfolio(toCopy.portfolio);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags);
+            return CollectionUtil.isAnyNonNull(name, clientId, portfolio);
         }
 
         public void setName(Name name) {
@@ -168,45 +151,20 @@ public class EditCommand extends Command {
             return Optional.ofNullable(name);
         }
 
-        public void setPhone(Phone phone) {
-            this.phone = phone;
+        public void setClientId(ClientId clientId) {
+            this.clientId = clientId;
         }
 
-        public Optional<Phone> getPhone() {
-            return Optional.ofNullable(phone);
+        public Optional<ClientId> getClientId() {
+            return Optional.ofNullable(clientId);
         }
 
-        public void setEmail(Email email) {
-            this.email = email;
+        public void setPortfolio(Portfolio portfolio) {
+            this.portfolio = portfolio;
         }
 
-        public Optional<Email> getEmail() {
-            return Optional.ofNullable(email);
-        }
-
-        public void setAddress(Address address) {
-            this.address = address;
-        }
-
-        public Optional<Address> getAddress() {
-            return Optional.ofNullable(address);
-        }
-
-        /**
-         * Sets {@code tags} to this object's {@code tags}.
-         * A defensive copy of {@code tags} is used internally.
-         */
-        public void setTags(Set<Tag> tags) {
-            this.tags = (tags != null) ? new HashSet<>(tags) : null;
-        }
-
-        /**
-         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
-         * if modification is attempted.
-         * Returns {@code Optional#empty()} if {@code tags} is null.
-         */
-        public Optional<Set<Tag>> getTags() {
-            return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
+        public Optional<Portfolio> getPortfolio() {
+            return Optional.ofNullable(portfolio);
         }
 
         @Override
@@ -216,26 +174,22 @@ public class EditCommand extends Command {
             }
 
             // instanceof handles nulls
-            if (!(other instanceof EditPersonDescriptor)) {
+            if (!(other instanceof EditClientDescriptor)) {
                 return false;
             }
 
-            EditPersonDescriptor otherEditPersonDescriptor = (EditPersonDescriptor) other;
+            EditClientDescriptor otherEditPersonDescriptor = (EditClientDescriptor) other;
             return Objects.equals(name, otherEditPersonDescriptor.name)
-                    && Objects.equals(phone, otherEditPersonDescriptor.phone)
-                    && Objects.equals(email, otherEditPersonDescriptor.email)
-                    && Objects.equals(address, otherEditPersonDescriptor.address)
-                    && Objects.equals(tags, otherEditPersonDescriptor.tags);
+                    && Objects.equals(clientId, otherEditPersonDescriptor.clientId)
+                    && Objects.equals(portfolio, otherEditPersonDescriptor.portfolio);
         }
 
         @Override
         public String toString() {
             return new ToStringBuilder(this)
                     .add("name", name)
-                    .add("phone", phone)
-                    .add("email", email)
-                    .add("address", address)
-                    .add("tags", tags)
+                    .add("clientId", clientId)
+                    .add("portfolio", portfolio)
                     .toString();
         }
     }

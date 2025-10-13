@@ -5,13 +5,13 @@ import static java.util.Objects.requireNonNull;
 import insurabook.commons.util.ToStringBuilder;
 import insurabook.logic.Messages;
 import insurabook.model.Model;
-import insurabook.model.person.NameContainsKeywordsPredicate;
+import insurabook.model.client.NameContainsKeywordsPredicate;
 
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
  * Keyword matching is case insensitive.
  */
-public class FindCommand extends Command {
+public class FindClientCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
 
@@ -22,16 +22,16 @@ public class FindCommand extends Command {
 
     private final NameContainsKeywordsPredicate predicate;
 
-    public FindCommand(NameContainsKeywordsPredicate predicate) {
+    public FindClientCommand(NameContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
     }
 
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        model.updateFilteredPersonList(predicate);
+        model.updateFilteredClientList(predicate);
         return new CommandResult(
-                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
+                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredClientList().size()));
     }
 
     @Override
@@ -41,12 +41,12 @@ public class FindCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof FindCommand)) {
+        if (!(other instanceof FindClientCommand)) {
             return false;
         }
 
-        FindCommand otherFindCommand = (FindCommand) other;
-        return predicate.equals(otherFindCommand.predicate);
+        FindClientCommand otherFindClientCommand = (FindClientCommand) other;
+        return predicate.equals(otherFindClientCommand.predicate);
     }
 
     @Override
