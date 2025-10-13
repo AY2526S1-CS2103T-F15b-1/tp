@@ -8,7 +8,7 @@ import insurabook.logic.commands.exceptions.CommandException;
 import insurabook.logic.parser.exceptions.ParseException;
 import insurabook.model.Model;
 import insurabook.model.ReadOnlyAddressBook;
-import insurabook.model.person.Person;
+import insurabook.model.client.Client;
 import javafx.collections.ObservableList;
 
 
@@ -33,7 +33,7 @@ public interface Logic {
     ReadOnlyAddressBook getAddressBook();
 
     /** Returns an unmodifiable view of the filtered list of persons */
-    ObservableList<Person> getFilteredPersonList();
+    ObservableList<Client> getFilteredClientList();
 
     /**
      * Returns the user prefs' address book file path.

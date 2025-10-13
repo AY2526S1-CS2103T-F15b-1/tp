@@ -14,7 +14,7 @@ import insurabook.logic.parser.AddressBookParser;
 import insurabook.logic.parser.exceptions.ParseException;
 import insurabook.model.Model;
 import insurabook.model.ReadOnlyAddressBook;
-import insurabook.model.person.Person;
+import insurabook.model.client.Client;
 import insurabook.storage.Storage;
 import javafx.collections.ObservableList;
 
@@ -67,8 +67,8 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public ObservableList<Person> getFilteredPersonList() {
-        return model.getFilteredPersonList();
+    public ObservableList<Client> getFilteredClientList() {
+        return model.getFilteredClientList();
     }
 
     @Override
