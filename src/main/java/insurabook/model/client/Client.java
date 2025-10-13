@@ -29,12 +29,26 @@ public class Client {
         this.portfolio = new Portfolio();
     }
 
+    /**
+     * Every field must be present and not null.
+     */
+    public Client(Name name, ClientId clientId, Portfolio portfolio) {
+        requireAllNonNull(name, clientId);
+        this.name = name;
+        this.clientId = clientId;
+        this.portfolio = portfolio;
+    }
+
     public Name getName() {
         return name;
     }
 
     public ClientId getId() {
         return clientId;
+    }
+
+    public Portfolio getPortfolio() {
+        return portfolio;
     }
 
     /**
