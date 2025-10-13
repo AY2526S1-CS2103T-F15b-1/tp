@@ -1,7 +1,7 @@
 package insurabook.logic.commands;
 
 import static insurabook.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static insurabook.testutil.TypicalPersons.getTypicalAddressBook;
+import static insurabook.testutil.TypicalClients.getTypicalAddressBook;
 
 import org.junit.jupiter.api.Test;
 

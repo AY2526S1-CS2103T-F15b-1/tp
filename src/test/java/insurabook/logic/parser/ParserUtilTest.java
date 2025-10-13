@@ -2,7 +2,7 @@ package insurabook.logic.parser;
 
 import static insurabook.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static insurabook.testutil.Assert.assertThrows;
-import static insurabook.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static insurabook.testutil.TypicalIndexes.INDEX_FIRST_CLIENT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -14,9 +14,9 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 import insurabook.logic.parser.exceptions.ParseException;
+import insurabook.model.client.Name;
 import insurabook.model.person.Address;
 import insurabook.model.person.Email;
-import insurabook.model.person.Name;
 import insurabook.model.person.Phone;
 import insurabook.model.tag.Tag;
 
@@ -50,10 +50,10 @@ public class ParserUtilTest {
     @Test
     public void parseIndex_validInput_success() throws Exception {
         // No whitespaces
-        assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("1"));
+        assertEquals(INDEX_FIRST_CLIENT, ParserUtil.parseIndex("1"));
 
         // Leading and trailing whitespaces
-        assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("  1  "));
+        assertEquals(INDEX_FIRST_CLIENT, ParserUtil.parseIndex("  1  "));
     }
 
     @Test
