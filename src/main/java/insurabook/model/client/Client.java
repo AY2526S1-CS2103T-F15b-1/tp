@@ -5,6 +5,7 @@ import static insurabook.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.Objects;
 
 import insurabook.commons.util.ToStringBuilder;
+import insurabook.model.claims.Claim;
 
 /**
  * Represents a Client in InsuraBook.
@@ -81,6 +82,15 @@ public class Client {
                 .add("name", name)
                 .add("clientId", clientId)
                 .toString();
+    }
+
+    /**
+     * Adds a claim to the client's portfolio.
+     *
+     * @param claim
+     */
+    public void addClaim(Claim claim) {
+        portfolio.addClaim(claim);
     }
 
 }

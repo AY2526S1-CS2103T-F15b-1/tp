@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import insurabook.commons.core.GuiSettings;
 import insurabook.commons.core.LogsCenter;
+import insurabook.model.claims.Claim;
 import insurabook.model.person.Person;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -23,6 +24,8 @@ public class ModelManager implements Model {
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
 
+    private final InsuraBook insuraBook;
+
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -33,11 +36,23 @@ public class ModelManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
+        this.insuraBook = new InsuraBook();
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
     }
 
+    public ModelManager(ReadOnlyInsuraBook insuraBook, ReadOnlyUserPrefs userPrefs) {
+        requireAllNonNull(insuraBook, userPrefs);
+
+        logger.fine("Initializing with insurabook: " + insuraBook + " and user prefs " + userPrefs);
+
+        this.addressBook = new AddressBook();
+        this.insuraBook = new InsuraBook(insuraBook);
+        this.userPrefs = new UserPrefs(userPrefs);
+        this.filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+    }
+
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new InsuraBook(), new UserPrefs());
     }
 
     //=========== UserPrefs ==================================================================================
@@ -143,6 +158,11 @@ public class ModelManager implements Model {
         return addressBook.equals(otherModelManager.addressBook)
                 && userPrefs.equals(otherModelManager.userPrefs)
                 && filteredPersons.equals(otherModelManager.filteredPersons);
+    }
+
+    @Override
+    public void addClaim(Claim claim) {
+        insuraBook.addClaim(claim);
     }
 
 }

@@ -12,6 +12,7 @@ import insurabook.model.policytype.PolicyType;
  */
 public class Policy {
 
+    private final PolicyId policyId;
     private final PolicyType policyType;
     private final LocalDateTime expiryDate;
     private final List<Claim> claim;
@@ -21,7 +22,8 @@ public class Policy {
      * @param policyType from parser
      * @param expiryDate datetime from parser
      */
-    public Policy(PolicyType policyType, LocalDateTime expiryDate) {
+    public Policy(PolicyId policyId, PolicyType policyType, LocalDateTime expiryDate) {
+        this.policyId = policyId;
         this.policyType = policyType;
         this.expiryDate = expiryDate;
         this.claim = new ArrayList<>();
@@ -49,6 +51,32 @@ public class Policy {
      */
     public List<Claim> getClaims() {
         return this.claim;
+    }
+
+    public PolicyId getPolicyId() {
+        return this.policyId;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof Policy)) {
+            return false;
+        }
+
+        Policy otherPolicy = (Policy) other;
+        return otherPolicy.getPolicyId().equals(this.getPolicyId());
+    }
+
+    /**
+     * Adds claim to policy
+     * @param claim to add
+     */
+    public void addClaim(Claim claim) {
+        this.claim.add(claim);
     }
     /*
      * Problem:

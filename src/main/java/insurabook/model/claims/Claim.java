@@ -1,7 +1,9 @@
 package insurabook.model.claims;
 
+import insurabook.model.client.ClientId;
 import insurabook.model.person.Person;
 import insurabook.model.policies.Policy;
+import insurabook.model.policies.PolicyId;
 
 /**
  * Represents a Claim in the insurance management system, from a Client with a Policy.
@@ -11,21 +13,46 @@ public class Claim {
     private static int claimCounter = 0;
 
     private final String claimId;
-    private final Person client;
-    private final Policy policy;
-    private final int amount;
-    private final String date;
-    private final String description;
+    private final ClientId client;
+    private final PolicyId policy;
+    private final ClaimAmount amount;
+    private final ClaimDate date;
+    private final ClaimMessage description;
 
     /**
      * Every field must be present and not null, except description which is optional.
      */
-    public Claim(Person client, Policy policy, int amount, String date, String ... description) {
+    public Claim(ClientId client, PolicyId policy, ClaimAmount amount, ClaimDate date, ClaimMessage ... description) {
         this.claimId = "C" + String.format("%04d", claimCounter++);
         this.client = client;
         this.policy = policy;
         this.amount = amount;
         this.date = date;
-        this.description = description.length != 0 ? description[0] : "NA";
+        this.description = description.length != 0 ? description[0] : new ClaimMessage("");
+    }
+
+    // Getters
+    public String getClaimId() {
+        return claimId;
+    }
+
+    public ClientId getClientId() {
+        return client;
+    }
+
+    public PolicyId getPolicyId() {
+        return policy;
+    }
+
+    public ClaimAmount getAmount() {
+        return amount;
+    }
+
+    public ClaimDate getDate() {
+        return date;
+    }
+
+    public ClaimMessage getDescription() {
+        return description;
     }
 }

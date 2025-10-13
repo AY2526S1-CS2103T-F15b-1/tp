@@ -147,4 +147,16 @@ public class UniqueClientList implements Iterable<Client> {
         }
         return true;
     }
+
+    /**
+     * Returns the client with the given clientId.
+     * Returns null if no such client exists.
+     */
+    public Client getClient(ClientId clientId) {
+        requireNonNull(clientId);
+        return internalList.stream()
+                .filter(client -> client.getId().equals(clientId))
+                .findFirst()
+                .orElse(null);
+    }
 }

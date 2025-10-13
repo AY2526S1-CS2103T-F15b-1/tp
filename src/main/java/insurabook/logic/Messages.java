@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import insurabook.logic.parser.Prefix;
+import insurabook.model.claims.Claim;
 import insurabook.model.person.Person;
 
 /**
@@ -45,6 +46,25 @@ public class Messages {
                 .append(person.getAddress())
                 .append("; Tags: ");
         person.getTags().forEach(builder::append);
+        return builder.toString();
+    }
+
+    /**
+     * Formats the {@code claim} for display to the user.
+     */
+    public static String format(Claim claim) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(claim.getClaimId())
+                .append("; Client Id: ")
+                .append(claim.getClientId())
+                .append("; Policy Id: ")
+                .append(claim.getPolicyId())
+                .append("; Claim amount: ")
+                .append(claim.getAmount())
+                .append("; Claim date: ")
+                .append(claim.getDate())
+                .append("; Description: ")
+                .append(claim.getDescription());
         return builder.toString();
     }
 

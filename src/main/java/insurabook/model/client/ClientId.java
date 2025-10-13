@@ -16,7 +16,7 @@ public class ClientId {
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = "\\p{Digit}";
+    public static final String VALIDATION_REGEX = "\\p{Digit}+";
 
     public final String clientId;
 
@@ -51,7 +51,7 @@ public class ClientId {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof Name)) {
+        if (!(other instanceof ClientId)) {
             return false;
         }
 
