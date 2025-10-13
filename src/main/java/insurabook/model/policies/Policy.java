@@ -16,6 +16,9 @@ public class Policy {
     private final LocalDateTime expiryDate;
     private final List<Claim> claim;
 
+    //temporary id assignment
+    private final int policyId;
+
     /**
      * Constructor
      * @param policyType from parser
@@ -25,6 +28,9 @@ public class Policy {
         this.policyType = policyType;
         this.expiryDate = expiryDate;
         this.claim = new ArrayList<>();
+
+        //temporary id assignment
+        this.policyId = 0;
     }
 
     /**
@@ -49,6 +55,14 @@ public class Policy {
      */
     public List<Claim> getClaims() {
         return this.claim;
+    }
+
+    /**
+     * Getter: TEMP
+     * @return id of policy
+     */
+    public int getPolicyId() {
+        return this.policyId;
     }
     /*
      * Problem:
