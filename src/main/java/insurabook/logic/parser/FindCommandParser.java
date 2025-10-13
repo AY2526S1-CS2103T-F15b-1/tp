@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 import insurabook.logic.commands.FindCommand;
 import insurabook.logic.parser.exceptions.ParseException;
-import insurabook.model.person.NameContainsKeywordsPredicate;
+import insurabook.model.client.NameContainsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new FindCommand object

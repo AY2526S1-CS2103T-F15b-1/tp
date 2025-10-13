@@ -1,6 +1,6 @@
 package insurabook.model.claims;
 
-import insurabook.model.person.Person;
+import insurabook.model.client.Client;
 import insurabook.model.policies.Policy;
 
 /**
@@ -11,7 +11,7 @@ public class Claim {
     private static int claimCounter = 0;
 
     private final String claimId;
-    private final Person client;
+    private final Client client;
     private final Policy policy;
     private final int amount;
     private final String date;
@@ -20,7 +20,7 @@ public class Claim {
     /**
      * Every field must be present and not null, except description which is optional.
      */
-    public Claim(Person client, Policy policy, int amount, String date, String ... description) {
+    public Claim(Client client, Policy policy, int amount, String date, String ... description) {
         this.claimId = "C" + String.format("%04d", claimCounter++);
         this.client = client;
         this.policy = policy;

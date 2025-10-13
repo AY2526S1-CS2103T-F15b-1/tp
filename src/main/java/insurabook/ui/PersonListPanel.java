@@ -3,7 +3,7 @@ package insurabook.ui;
 import java.util.logging.Logger;
 
 import insurabook.commons.core.LogsCenter;
-import insurabook.model.person.Person;
+import insurabook.model.client.Client;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
@@ -18,30 +18,30 @@ public class PersonListPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
 
     @FXML
-    private ListView<Person> personListView;
+    private ListView<Client> personListView;
 
     /**
      * Creates a {@code PersonListPanel} with the given {@code ObservableList}.
      */
-    public PersonListPanel(ObservableList<Person> personList) {
+    public PersonListPanel(ObservableList<Client> clientList) {
         super(FXML);
-        personListView.setItems(personList);
+        personListView.setItems(clientList);
         personListView.setCellFactory(listView -> new PersonListViewCell());
     }
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code Person} using a {@code PersonCard}.
      */
-    class PersonListViewCell extends ListCell<Person> {
+    class PersonListViewCell extends ListCell<Client> {
         @Override
-        protected void updateItem(Person person, boolean empty) {
-            super.updateItem(person, empty);
+        protected void updateItem(Client client, boolean empty) {
+            super.updateItem(client, empty);
 
-            if (empty || person == null) {
+            if (empty || client == null) {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new PersonCard(person, getIndex() + 1).getRoot());
+                setGraphic(new PersonCard(client, getIndex() + 1).getRoot());
             }
         }
     }

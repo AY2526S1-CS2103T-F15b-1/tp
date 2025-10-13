@@ -15,7 +15,7 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 import insurabook.commons.core.GuiSettings;
-import insurabook.model.person.NameContainsKeywordsPredicate;
+import insurabook.model.client.NameContainsKeywordsPredicate;
 import insurabook.testutil.AddressBookBuilder;
 
 public class ModelManagerTest {

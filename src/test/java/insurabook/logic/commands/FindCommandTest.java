@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 import insurabook.model.Model;
 import insurabook.model.ModelManager;
 import insurabook.model.UserPrefs;
-import insurabook.model.person.NameContainsKeywordsPredicate;
+import insurabook.model.client.NameContainsKeywordsPredicate;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
