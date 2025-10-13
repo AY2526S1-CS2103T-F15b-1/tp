@@ -9,9 +9,10 @@ import java.util.Set;
 import insurabook.commons.core.index.Index;
 import insurabook.commons.util.StringUtil;
 import insurabook.logic.parser.exceptions.ParseException;
+import insurabook.model.client.ClientId;
+import insurabook.model.client.Name;
 import insurabook.model.person.Address;
 import insurabook.model.person.Email;
-import insurabook.model.person.Name;
 import insurabook.model.person.Phone;
 import insurabook.model.tag.Tag;
 
@@ -48,6 +49,21 @@ public class ParserUtil {
             throw new ParseException(Name.MESSAGE_CONSTRAINTS);
         }
         return new Name(trimmedName);
+    }
+
+    /**
+     * Parses a {@code String clientId} into a {@code ClientId}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code clientId} is invalid.
+     */
+    public static ClientId parseClientId(String clientId) throws ParseException {
+        requireNonNull(clientId);
+        String trimmedId = clientId.trim();
+        if (!ClientId.isValidClientId(trimmedId)) {
+            throw new ParseException(Name.MESSAGE_CONSTRAINTS);
+        }
+        return new ClientId(trimmedId);
     }
 
     /**
