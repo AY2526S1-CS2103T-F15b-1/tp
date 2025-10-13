@@ -1,6 +1,6 @@
 package insurabook.model.client;
 
-import static insurabook.commons.util.AppUtil.checkArgument;
+//import static insurabook.commons.util.AppUtil.checkArgument;
 import static java.util.Objects.requireNonNull;
 
 /**
@@ -27,7 +27,7 @@ public class ClientId {
      */
     public ClientId(String clientId) {
         requireNonNull(clientId);
-        checkArgument(isValidClientId(clientId), MESSAGE_CONSTRAINTS);
+        //checkArgument(isValidClientId(clientId), MESSAGE_CONSTRAINTS);
         this.clientId = clientId;
     }
 
