@@ -1,9 +1,9 @@
 package insurabook.model.claims;
 
-import java.util.Date;
-
 import static insurabook.commons.util.AppUtil.checkArgument;
 import static java.util.Objects.requireNonNull;
+
+import java.util.Date;
 
 /**
  * Represents a Claim Date in the insurance management system.

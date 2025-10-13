@@ -1,11 +1,10 @@
 package insurabook.logic.commands;
 
-import static insurabook.logic.parser.CliSyntax.*;
-import static insurabook.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static insurabook.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static insurabook.logic.parser.CliSyntax.PREFIX_NAME;
-import static insurabook.logic.parser.CliSyntax.PREFIX_PHONE;
-import static insurabook.logic.parser.CliSyntax.PREFIX_TAG;
+import static insurabook.logic.parser.CliSyntax.PREFIX_AMOUNT;
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT;
+import static insurabook.logic.parser.CliSyntax.PREFIX_DATE;
+import static insurabook.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static insurabook.logic.parser.CliSyntax.PREFIX_POLICY;
 import static java.util.Objects.requireNonNull;
 
 import insurabook.logic.Messages;

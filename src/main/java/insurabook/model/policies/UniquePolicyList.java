@@ -1,14 +1,13 @@
 package insurabook.model.policies;
 
-import insurabook.model.client.Client;
-import insurabook.model.client.UniqueClientList;
+import java.util.Iterator;
+import java.util.List;
+
 import insurabook.model.policies.exceptions.DuplicatePolicyException;
 import insurabook.model.policies.exceptions.PolicyNotFoundException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * A list of policies that enforces uniqueness between its elements and does not allow nulls.

@@ -1,8 +1,6 @@
 package insurabook.model.claims;
 
 import insurabook.model.client.ClientId;
-import insurabook.model.person.Person;
-import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
 
 /**

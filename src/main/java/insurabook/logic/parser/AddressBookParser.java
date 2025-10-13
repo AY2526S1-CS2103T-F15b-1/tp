@@ -8,7 +8,17 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import insurabook.commons.core.LogsCenter;
-import insurabook.logic.commands.*;
+import insurabook.logic.commands.AddClaimCommand;
+import insurabook.logic.commands.AddCommand;
+import insurabook.logic.commands.ClearCommand;
+import insurabook.logic.commands.Command;
+import insurabook.logic.commands.DeleteCommand;
+import insurabook.logic.commands.EditCommand;
+import insurabook.logic.commands.ExitCommand;
+import insurabook.logic.commands.FindCommand;
+import insurabook.logic.commands.HelpCommand;
+import insurabook.logic.commands.ListCommand;
+import insurabook.logic.commands.ViewCommand;
 import insurabook.logic.parser.exceptions.ParseException;
 
 /**

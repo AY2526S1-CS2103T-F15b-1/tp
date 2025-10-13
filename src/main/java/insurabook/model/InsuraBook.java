@@ -1,17 +1,20 @@
 package insurabook.model;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.List;
+
 import insurabook.commons.util.ToStringBuilder;
 import insurabook.model.claims.Claim;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
-import insurabook.model.client.Name;
 import insurabook.model.client.UniqueClientList;
 import javafx.collections.ObservableList;
 
-import java.util.List;
-
-import static java.util.Objects.requireNonNull;
-
+/**
+ * Wraps all data at the insurabook level
+ * Duplicates are not allowed (by .isSameClient comparison)
+ */
 public class InsuraBook implements ReadOnlyInsuraBook {
     private final UniqueClientList clients;
 
@@ -100,6 +103,10 @@ public class InsuraBook implements ReadOnlyInsuraBook {
         return clients.getClient(clientId);
     }
 
+    /**
+     * Adds a claim to the client with the given clientId.
+     * If no such client exists, throws an exception.
+     */
     public void addClaim(Claim claim) {
         Client client = this.getClient(claim.getClientId());
         client.addClaim(claim);

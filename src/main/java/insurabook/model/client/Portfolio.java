@@ -52,6 +52,10 @@ public class Portfolio {
      */
     public void deletePolicy(Policy policy) {}
 
+    /**
+     * Function to add claim to a policy
+     * @param claim to add
+     */
     public void addClaim(Claim claim) {
         policies.stream()
                 .filter(policy -> policy.getPolicyId().equals(claim.getPolicyId()))
