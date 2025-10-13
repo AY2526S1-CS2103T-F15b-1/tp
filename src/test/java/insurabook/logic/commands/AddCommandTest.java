@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Predicate;
 
-import insurabook.model.claims.Claim;
 import org.junit.jupiter.api.Test;
 
 import insurabook.commons.core.GuiSettings;
@@ -22,6 +21,7 @@ import insurabook.model.AddressBook;
 import insurabook.model.Model;
 import insurabook.model.ReadOnlyAddressBook;
 import insurabook.model.ReadOnlyUserPrefs;
+import insurabook.model.claims.Claim;
 import insurabook.model.person.Person;
 import insurabook.testutil.PersonBuilder;
 import javafx.collections.ObservableList;
