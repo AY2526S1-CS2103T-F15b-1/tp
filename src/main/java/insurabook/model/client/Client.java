@@ -9,6 +9,7 @@ import java.util.Set;
 
 import insurabook.commons.util.ToStringBuilder;
 import insurabook.model.claims.Claim;
+import insurabook.model.policies.Policy;
 import insurabook.model.tag.Tag;
 
 /**
@@ -123,6 +124,10 @@ public class Client {
                 .add("tags", tags)
                 .add("clientId", clientId)
                 .toString();
+    }
+
+    public void addPolicy(Policy policy) {
+        portfolio.addPolicy(policy);
     }
 
     /**

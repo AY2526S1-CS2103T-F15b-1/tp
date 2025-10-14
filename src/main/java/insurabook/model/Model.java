@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 import insurabook.commons.core.GuiSettings;
 import insurabook.model.claims.Claim;
 import insurabook.model.client.Client;
+import insurabook.model.policies.Policy;
 import javafx.collections.ObservableList;
 
 /**
@@ -91,4 +92,10 @@ public interface Model {
      * {@code claim} must not already exist in the address book.
      */
     void addClaim(Claim toAdd);
+
+    /**
+     * Adds the given policy.
+     * {@code policy} must not already exist in the address book.
+     */
+    void addPolicy(Policy toAdd);
 }

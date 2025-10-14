@@ -9,6 +9,7 @@ import insurabook.model.claims.Claim;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
 import insurabook.model.client.UniqueClientList;
+import insurabook.model.policies.Policy;
 import javafx.collections.ObservableList;
 
 /**
@@ -101,6 +102,11 @@ public class InsuraBook implements ReadOnlyInsuraBook {
      */
     public Client getClient(ClientId clientId) {
         return clients.getClient(clientId);
+    }
+
+    public void addPolicy(Policy policy) {
+        Client client = this.getClient(policy.getClientId());
+        client.addPolicy(policy);
     }
 
     /**

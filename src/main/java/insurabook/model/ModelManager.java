@@ -11,6 +11,7 @@ import insurabook.commons.core.GuiSettings;
 import insurabook.commons.core.LogsCenter;
 import insurabook.model.claims.Claim;
 import insurabook.model.client.Client;
+import insurabook.model.policies.Policy;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 
@@ -168,4 +169,8 @@ public class ModelManager implements Model {
         insuraBook.addClaim(claim);
     }
 
+    @Override
+    public void addPolicy(Policy policy) {
+        insuraBook.addPolicy(policy);
+    }
 }

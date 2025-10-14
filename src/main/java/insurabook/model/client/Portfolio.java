@@ -44,7 +44,9 @@ public class Portfolio {
      * Function to insert policy
      * @param policy to insert
      */
-    public void addPolicy(Policy policy) {}
+    public void addPolicy(Policy policy) {
+        policies.add(policy);
+    }
 
     /**
      * Function to delete policy
