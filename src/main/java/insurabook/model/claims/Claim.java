@@ -10,7 +10,7 @@ import insurabook.model.policies.PolicyId;
 public class Claim {
     private static int claimCounter = 0;
 
-    private final String claimId;
+    private final ClaimId claimId;
     private final ClientId client;
     private final PolicyId policy;
     private final ClaimAmount amount;
@@ -21,7 +21,7 @@ public class Claim {
      * Every field must be present and not null, except description which is optional.
      */
     public Claim(ClientId client, PolicyId policy, ClaimAmount amount, InsuraDate date, ClaimMessage ... description) {
-        this.claimId = "C" + String.format("%04d", claimCounter++);
+        this.claimId = new ClaimId("C" + String.format("%04d", claimCounter++));
         this.client = client;
         this.policy = policy;
         this.amount = amount;
@@ -30,7 +30,7 @@ public class Claim {
     }
 
     // Getters
-    public String getClaimId() {
+    public ClaimId getClaimId() {
         return claimId;
     }
 

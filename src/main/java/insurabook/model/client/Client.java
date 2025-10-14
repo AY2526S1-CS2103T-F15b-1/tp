@@ -9,7 +9,9 @@ import java.util.Set;
 
 import insurabook.commons.util.ToStringBuilder;
 import insurabook.model.claims.Claim;
+import insurabook.model.claims.ClaimId;
 import insurabook.model.policies.Policy;
+import insurabook.model.policies.PolicyId;
 import insurabook.model.tag.Tag;
 
 /**
@@ -139,4 +141,7 @@ public class Client {
         portfolio.addClaim(claim);
     }
 
+    public Claim removeClaim(PolicyId policyId, ClaimId claimId) {
+        return portfolio.removeClaim(policyId, claimId);
+    }
 }

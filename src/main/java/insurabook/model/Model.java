@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import insurabook.commons.core.GuiSettings;
 import insurabook.model.claims.Claim;
+import insurabook.model.claims.ClaimId;
 import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
@@ -95,6 +96,12 @@ public interface Model {
      * {@code claim} must not already exist in the address book.
      */
     void addClaim(Claim toAdd);
+
+    /**
+     * Deletes the given claim.
+     * The claim must exist in the address book.
+     */
+    Claim deleteClaim(ClientId clientId, PolicyId policyId, ClaimId claimId);
 
     /**
      * Adds the given policy.

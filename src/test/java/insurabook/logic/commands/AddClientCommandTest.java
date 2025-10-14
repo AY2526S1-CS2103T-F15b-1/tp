@@ -22,6 +22,7 @@ import insurabook.model.Model;
 import insurabook.model.ReadOnlyAddressBook;
 import insurabook.model.ReadOnlyUserPrefs;
 import insurabook.model.claims.Claim;
+import insurabook.model.claims.ClaimId;
 import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
@@ -172,6 +173,11 @@ public class AddClientCommandTest {
         @Override
         public Policy addPolicy(PolicyId policyId, ClientId clientId, int policyTypeId, InsuraDate expiryDate) {
             return null;
+        }
+
+        @Override
+        public Claim deleteClaim(ClientId clientId, PolicyId policyId, ClaimId claimId) {
+            throw new AssertionError("This method should not be called.");
         }
     }
 

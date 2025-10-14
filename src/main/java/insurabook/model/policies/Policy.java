@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import insurabook.model.claims.Claim;
+import insurabook.model.claims.ClaimId;
 import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Client;
 import insurabook.model.policytype.PolicyType;
-
 
 /**
  * Class representing policy
@@ -89,6 +89,21 @@ public class Policy {
      */
     public void addClaim(Claim claim) {
         this.claim.add(claim);
+    }
+
+    /**
+     * Removes claim from policy
+     *
+     * @param claimId to remove
+     * @return removed claim
+     */
+    public Claim removeClaim(ClaimId claimId) {
+        Claim claim = this.claim.stream()
+                .filter(c -> c.getClaimId().equals(claimId))
+                .findFirst()
+                .orElse(null);
+        this.claim.remove(claim);
+        return claim;
     }
     /*
      * Problem:

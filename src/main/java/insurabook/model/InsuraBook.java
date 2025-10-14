@@ -6,6 +6,7 @@ import java.util.List;
 
 import insurabook.commons.util.ToStringBuilder;
 import insurabook.model.claims.Claim;
+import insurabook.model.claims.ClaimId;
 import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
@@ -137,6 +138,15 @@ public class InsuraBook implements ReadOnlyInsuraBook {
     public void addClaim(Claim claim) {
         Client client = this.getClient(claim.getClientId());
         client.addClaim(claim);
+    }
+
+    /**
+     * Removes the claim with the given claimId from the client with the given clientId.
+     * If no such client or claim exists, throws an exception.
+     */
+    public Claim removeClaim(ClientId clientId, PolicyId policyId, ClaimId claimId) {
+        Client client = this.getClient(clientId);
+        return client.removeClaim(policyId, claimId);
     }
 
     //// util methods

@@ -1,7 +1,9 @@
 package insurabook.model.client;
 
 import insurabook.model.claims.Claim;
+import insurabook.model.claims.ClaimId;
 import insurabook.model.policies.Policy;
+import insurabook.model.policies.PolicyId;
 import insurabook.model.policies.UniquePolicyList;
 
 /**
@@ -60,4 +62,15 @@ public class Portfolio {
         policies.getPolicy(claim.getPolicyId()).addClaim(claim);
     }
 
+    /**
+     * Function to remove claim from a policy
+     *
+     * @param policyId of policy to remove claim from
+     * @param claimId of claim to remove
+     * @return removed claim
+     */
+    public Claim removeClaim(PolicyId policyId, ClaimId claimId) {
+        Claim claim = policies.getPolicy(policyId).removeClaim(claimId);
+        return claim;
+    }
 }
