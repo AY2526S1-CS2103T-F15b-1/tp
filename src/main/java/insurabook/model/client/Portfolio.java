@@ -3,6 +3,7 @@ package insurabook.model.client;
 import java.util.ArrayList;
 import java.util.List;
 
+import insurabook.model.claims.Claim;
 import insurabook.model.policies.Policy;
 
 /**
@@ -50,5 +51,16 @@ public class Portfolio {
      * @param policy to delete
      */
     public void deletePolicy(Policy policy) {}
+
+    /**
+     * Function to add claim to a policy
+     * @param claim to add
+     */
+    public void addClaim(Claim claim) {
+        policies.stream()
+                .filter(policy -> policy.getPolicyId().equals(claim.getPolicyId()))
+                .findFirst()
+                .ifPresent(policy -> policy.addClaim(claim));
+    }
 
 }

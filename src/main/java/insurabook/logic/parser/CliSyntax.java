@@ -23,6 +23,6 @@ public class CliSyntax {
     public static final Prefix PREFIX_CLAIM_ID = new Prefix("-cl_id");
     public static final Prefix PREFIX_CLAIM_AMOUNT = new Prefix("-amt");
     public static final Prefix PREFIX_CLAIM_DATE = new Prefix("-date");
-
-
+    public static final Prefix PREFIX_INDEX = new Prefix("-index");
+    public static final Prefix PREFIX_KEYWORD = new Prefix("-m");
 }

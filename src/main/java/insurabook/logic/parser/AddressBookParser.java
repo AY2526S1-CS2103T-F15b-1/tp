@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import insurabook.commons.core.LogsCenter;
+import insurabook.logic.commands.AddClaimCommand;
 import insurabook.logic.commands.AddClientCommand;
 import insurabook.logic.commands.ClearCommand;
 import insurabook.logic.commands.Command;
@@ -28,7 +29,8 @@ public class AddressBookParser {
     /**
      * Used for initial separation of command word and args.
      */
-    private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
+    private static final Pattern BASIC_COMMAND_FORMAT = Pattern
+            .compile("^(?<command>[a-zA-Z]+(?:\\s+[a-zA-Z]+)*)(?<arguments>(?:\\s+(?:-|\\d).*)?)$");
     private static final Logger logger = LogsCenter.getLogger(AddressBookParser.class);
 
     /**
@@ -44,8 +46,8 @@ public class AddressBookParser {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
 
-        final String commandWord = matcher.group("commandWord");
-        final String arguments = matcher.group("arguments");
+        final String commandWord = matcher.group("command");
+        final String arguments = " " + matcher.group("arguments");
 
         // Note to developers: Change the log level in config.json to enable lower level (i.e., FINE, FINER and lower)
         // log messages such as the one below.
@@ -80,6 +82,9 @@ public class AddressBookParser {
 
         case ViewCommand.COMMAND_WORD:
             return new ViewCommandParser().parse(arguments);
+
+        case AddClaimCommand.COMMAND_WORD:
+            return new AddClaimCommandParser().parse(arguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);

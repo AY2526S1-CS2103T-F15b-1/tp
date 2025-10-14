@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.util.function.Predicate;
 
 import insurabook.commons.core.GuiSettings;
+import insurabook.model.claims.Claim;
 import insurabook.model.client.Client;
 import javafx.collections.ObservableList;
 
@@ -84,4 +85,10 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Client> predicate);
+
+    /**
+     * Adds the given claim.
+     * {@code claim} must not already exist in the address book.
+     */
+    void addClaim(Claim toAdd);
 }

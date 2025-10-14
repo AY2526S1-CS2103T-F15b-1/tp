@@ -34,8 +34,8 @@ public class DeleteClientCommandTest {
 
         String expectedMessage = String.format(DeleteClientCommand.MESSAGE_DELETE_PERSON_SUCCESS,
                 Messages.format(clientToDelete));
-
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+
         expectedModel.deletePerson(clientToDelete);
 
         assertCommandSuccess(deleteClientCommand, model, expectedMessage, expectedModel);

@@ -6,7 +6,7 @@ import java.util.List;
 
 import insurabook.commons.util.ToStringBuilder;
 import insurabook.model.client.Client;
-import insurabook.model.client.UniquePersonList;
+import insurabook.model.client.UniqueClientList;
 import javafx.collections.ObservableList;
 
 /**
@@ -15,7 +15,7 @@ import javafx.collections.ObservableList;
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
-    private final UniquePersonList persons;
+    private final UniqueClientList persons;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -25,7 +25,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *   among constructors.
      */
     {
-        persons = new UniquePersonList();
+        persons = new UniqueClientList();
     }
 
     public AddressBook() {}
@@ -45,7 +45,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * {@code persons} must not contain duplicate persons.
      */
     public void setPersons(List<Client> clients) {
-        this.persons.setPersons(clients);
+        this.persons.setClients(clients);
     }
 
     /**
@@ -83,7 +83,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setPerson(Client target, Client editedClient) {
         requireNonNull(editedClient);
 
-        persons.setPerson(target, editedClient);
+        persons.setClient(target, editedClient);
     }
 
     /**

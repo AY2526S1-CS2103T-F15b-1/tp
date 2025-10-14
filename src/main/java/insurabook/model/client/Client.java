@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import insurabook.commons.util.ToStringBuilder;
+import insurabook.model.claims.Claim;
 import insurabook.model.tag.Tag;
 
 /**
@@ -122,6 +123,15 @@ public class Client {
                 .add("tags", tags)
                 .add("clientId", clientId)
                 .toString();
+    }
+
+    /**
+     * Adds a claim to the client's portfolio.
+     *
+     * @param claim
+     */
+    public void addClaim(Claim claim) {
+        portfolio.addClaim(claim);
     }
 
 }

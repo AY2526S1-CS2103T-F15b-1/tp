@@ -9,11 +9,15 @@ import java.util.Set;
 import insurabook.commons.core.index.Index;
 import insurabook.commons.util.StringUtil;
 import insurabook.logic.parser.exceptions.ParseException;
+import insurabook.model.claims.ClaimAmount;
+import insurabook.model.claims.ClaimDate;
+import insurabook.model.claims.ClaimMessage;
 import insurabook.model.client.Address;
 import insurabook.model.client.ClientId;
 import insurabook.model.client.Email;
 import insurabook.model.client.Name;
 import insurabook.model.client.Phone;
+import insurabook.model.policies.PolicyId;
 import insurabook.model.tag.Tag;
 
 /**
@@ -124,17 +128,77 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String tag} into a {@code Tag}.
+     * Parses a {@code String clientId} into a {@code ClientId}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code tag} is invalid.
+     * @throws ParseException if the given {@code clientId} is invalid
      */
     public static ClientId parseClientId(String clientId) throws ParseException {
         requireNonNull(clientId);
-        String trimmedId = clientId.trim();
-        if (!ClientId.isValidClientId(trimmedId)) {
-            throw new ParseException(Tag.MESSAGE_CONSTRAINTS);
+        String trimmedClientId = clientId.trim();
+        if (!ClientId.isValidClientId(trimmedClientId)) {
+            throw new ParseException(ClientId.MESSAGE_CONSTRAINTS);
         }
-        return new ClientId(trimmedId);
+        return new ClientId(trimmedClientId);
+    }
+
+    /**
+     * Parses a {@code String policyId} into a {@code PolicyId}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code policyId} is invalid
+     */
+    public static PolicyId parsePolicyId(String policyId) throws ParseException {
+        requireNonNull(policyId);
+        String trimmedPolicyId = policyId.trim();
+        if (!PolicyId.isValidPolicyId(trimmedPolicyId)) {
+            throw new ParseException(PolicyId.MESSAGE_CONSTRAINTS);
+        }
+        return new PolicyId(trimmedPolicyId);
+    }
+
+    /**
+     * Parses a {@code String amount} into a {@code ClaimAmount}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code amount} is invalid.
+     */
+    public static ClaimAmount parseClaimAmount(String amount) throws ParseException {
+        requireNonNull(amount);
+        String trimmedAmount = amount.trim();
+        if (!ClaimAmount.isValidClaimAmount(trimmedAmount)) {
+            throw new ParseException(ClaimAmount.MESSAGE_CONSTRAINTS);
+        }
+        return new ClaimAmount(trimmedAmount);
+    }
+
+    /**
+     * Parses a {@code String date} into a {@code ClaimDate}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code date} is invalid.
+     */
+    public static ClaimDate parseClaimDate(String date) throws ParseException {
+        requireNonNull(date);
+        String trimmedDate = date.trim();
+        if (!ClaimDate.isValidClaimDate(trimmedDate)) {
+            throw new ParseException(ClaimDate.MESSAGE_CONSTRAINTS);
+        }
+        return new ClaimDate(trimmedDate);
+    }
+
+    /**
+     * Parses a {@code String message} into a {@code ClaimMessage}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code message} is invalid.
+     */
+    public static ClaimMessage parseClaimMessage(String message) throws ParseException {
+        requireNonNull(message);
+        String trimmedMessage = message.trim();
+        if (!ClaimMessage.isValidClaimMessage(trimmedMessage)) {
+            throw new ParseException(ClaimMessage.MESSAGE_CONSTRAINTS);
+        }
+        return new ClaimMessage(trimmedMessage);
     }
 }

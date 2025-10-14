@@ -16,7 +16,7 @@ public class ClientId {
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    // public static final String VALIDATION_REGEX = "\\p{Digit}"; this is buggy
+    public static final String VALIDATION_REGEX = "[A-Za-z0-9]+";
 
     public final String clientId;
 
@@ -35,8 +35,7 @@ public class ClientId {
      * Returns true if a given string is a valid clientId.
      */
     public static boolean isValidClientId(String test) {
-        // return test.matches(VALIDATION_REGEX); this is buggy
-        return true;
+        return test.matches(VALIDATION_REGEX);
     }
 
 
@@ -52,7 +51,7 @@ public class ClientId {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof Name)) {
+        if (!(other instanceof ClientId)) {
             return false;
         }
 

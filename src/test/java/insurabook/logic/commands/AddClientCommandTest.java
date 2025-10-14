@@ -21,6 +21,7 @@ import insurabook.model.AddressBook;
 import insurabook.model.Model;
 import insurabook.model.ReadOnlyAddressBook;
 import insurabook.model.ReadOnlyUserPrefs;
+import insurabook.model.claims.Claim;
 import insurabook.model.client.Client;
 import insurabook.testutil.PersonBuilder;
 import javafx.collections.ObservableList;
@@ -156,6 +157,11 @@ public class AddClientCommandTest {
 
         @Override
         public void updateFilteredPersonList(Predicate<Client> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addClaim(Claim claim) {
             throw new AssertionError("This method should not be called.");
         }
     }

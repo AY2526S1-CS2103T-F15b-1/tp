@@ -1,0 +1,148 @@
+package insurabook.model;
+
+import static java.util.Objects.requireNonNull;
+
+import java.util.List;
+
+import insurabook.commons.util.ToStringBuilder;
+import insurabook.model.claims.Claim;
+import insurabook.model.client.Client;
+import insurabook.model.client.ClientId;
+import insurabook.model.client.UniqueClientList;
+import javafx.collections.ObservableList;
+
+/**
+ * Wraps all data at the insurabook level
+ * Duplicates are not allowed (by .isSameClient comparison)
+ */
+public class InsuraBook implements ReadOnlyInsuraBook {
+    private final UniqueClientList clients;
+
+    /*
+     * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
+     * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
+     *
+     * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
+     *   among constructors.
+     */
+    {
+        clients = new UniqueClientList();
+    }
+
+    public InsuraBook() {}
+
+    /**
+     * Creates an InsuraBook using the Cilent in the {@code toBeCopied}
+     */
+    public InsuraBook(ReadOnlyInsuraBook toBeCopied) {
+        this();
+        resetData(toBeCopied);
+    }
+
+    //// list overwrite operations
+
+    /**
+     * Replaces the contents of the client list with {@code clients}.
+     * {@code clients} must not contain duplicate clients.
+     */
+    public void setClients(List<Client> clients) {
+        this.clients.setClients(clients);
+    }
+
+    /**
+     * Resets the existing data of this {@code InsuraBook} with {@code newData}.
+     */
+    public void resetData(ReadOnlyInsuraBook newData) {
+        requireNonNull(newData);
+
+        setClients(newData.getClientList());
+    }
+
+    //// client-level operations
+
+    /**
+     * Returns true if a client with the same identity as {@code client} exists in the insurabook.
+     */
+    public boolean hasClient(Client client) {
+        requireNonNull(client);
+        return clients.contains(client);
+    }
+
+    /**
+     * Adds a client to the address book.
+     * The client must not already exist in the address book.
+     */
+    public void addClient(Client p) {
+        clients.add(p);
+    }
+
+    /**
+     * Replaces the given client {@code target} in the list with {@code editedclient}.
+     * {@code target} must exist in the address book.
+     * The client identity of {@code editedclient} must not be the same as another existing client in the address book.
+     */
+    public void setClient(Client target, Client editedclient) {
+        requireNonNull(editedclient);
+
+        clients.setClient(target, editedclient);
+    }
+
+    /**
+     * Removes {@code key} from this {@code InsuraBook}.
+     * {@code key} must exist in the address book.
+     */
+    public void removeClient(Client key) {
+        clients.remove(key);
+    }
+
+    /**
+     * Returns the client with the given clientId.
+     * If no such client exists, returns null.
+     */
+    public Client getClient(ClientId clientId) {
+        return clients.getClient(clientId);
+    }
+
+    /**
+     * Adds a claim to the client with the given clientId.
+     * If no such client exists, throws an exception.
+     */
+    public void addClaim(Claim claim) {
+        Client client = this.getClient(claim.getClientId());
+        client.addClaim(claim);
+    }
+
+    //// util methods
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .add("clients", clients)
+                .toString();
+    }
+
+    @Override
+    public ObservableList<Client> getClientList() {
+        return clients.asUnmodifiableObservableList();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof InsuraBook)) {
+            return false;
+        }
+
+        InsuraBook otherInsuraBook = (InsuraBook) other;
+        return clients.equals(otherInsuraBook.clients);
+    }
+
+    @Override
+    public int hashCode() {
+        return clients.hashCode();
+    }
+}
