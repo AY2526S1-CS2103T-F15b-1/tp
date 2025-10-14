@@ -132,6 +132,14 @@ public class InsuraBook implements ReadOnlyInsuraBook {
     }
 
     /**
+     * Removes the policy with the given policyId from the client with the given clientId.
+     * If no such client or policy exists, throws an exception.
+     */
+    public Policy removePolicy(ClientId clientId, PolicyId policyId) {
+        Client client = this.getClient(clientId);
+        return client.removePolicy(policyId);
+    }
+    /**
      * Adds a claim to the client with the given clientId.
      * If no such client exists, throws an exception.
      */

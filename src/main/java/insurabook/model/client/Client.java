@@ -132,6 +132,10 @@ public class Client {
         portfolio.addPolicy(policy);
     }
 
+    public Policy removePolicy(PolicyId policyId) {
+        return portfolio.removePolicy(policyId);
+    }
+
     /**
      * Adds a claim to the client's portfolio.
      *
