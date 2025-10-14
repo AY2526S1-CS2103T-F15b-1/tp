@@ -52,7 +52,6 @@ public class AddClaimCommandParser implements Parser<AddClaimCommand> {
 
         Claim claim = new Claim(clientId, policyId, amount, date, message);
 
-        System.out.println("Hello");
         return new AddClaimCommand(claim);
     }
 

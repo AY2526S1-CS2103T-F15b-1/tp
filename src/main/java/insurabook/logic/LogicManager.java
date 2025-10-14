@@ -48,9 +48,7 @@ public class LogicManager implements Logic {
 
         CommandResult commandResult;
         Command command = addressBookParser.parseCommand(commandText);
-        System.out.println(command);
         commandResult = command.execute(model);
-        System.out.println(commandResult);
 
         try {
             storage.saveAddressBook(model.getAddressBook());
