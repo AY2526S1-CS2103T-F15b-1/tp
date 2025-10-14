@@ -1,8 +1,8 @@
 package insurabook.logic.commands;
 
 import static insurabook.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
 import static insurabook.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static insurabook.logic.parser.CliSyntax.PREFIX_NAME;
 import static insurabook.logic.parser.CliSyntax.PREFIX_PHONE;
 import static insurabook.logic.parser.CliSyntax.PREFIX_TAG;
 import static insurabook.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -21,11 +21,12 @@ import insurabook.commons.util.ToStringBuilder;
 import insurabook.logic.Messages;
 import insurabook.logic.commands.exceptions.CommandException;
 import insurabook.model.Model;
-import insurabook.model.person.Address;
-import insurabook.model.person.Email;
-import insurabook.model.person.Name;
-import insurabook.model.person.Person;
-import insurabook.model.person.Phone;
+import insurabook.model.client.Address;
+import insurabook.model.client.Client;
+import insurabook.model.client.ClientId;
+import insurabook.model.client.Email;
+import insurabook.model.client.Name;
+import insurabook.model.client.Phone;
 import insurabook.model.tag.Tag;
 
 /**
@@ -39,7 +40,7 @@ public class EditCommand extends Command {
             + "by the index number used in the displayed person list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_NAME + "NAME] "
+            + "[" + PREFIX_CLIENT_ID + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
@@ -70,38 +71,41 @@ public class EditCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Person> lastShownList = model.getFilteredPersonList();
+        List<Client> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        Person personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        Client clientToEdit = lastShownList.get(index.getZeroBased());
+        Client editedClient = createEditedPerson(clientToEdit, editPersonDescriptor);
 
-        if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
+        if (!clientToEdit.isSamePerson(editedClient) && model.hasPerson(editedClient)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
-        model.setPerson(personToEdit, editedPerson);
+        model.setPerson(clientToEdit, editedClient);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
+        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedClient)));
     }
 
     /**
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
      */
-    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
-        assert personToEdit != null;
+    private static Client createEditedPerson(Client clientToEdit, EditPersonDescriptor editPersonDescriptor) {
+        assert clientToEdit != null;
 
-        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-        Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-        Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Name updatedName = editPersonDescriptor.getName().orElse(clientToEdit.getName());
+        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(clientToEdit.getPhone());
+        Email updatedEmail = editPersonDescriptor.getEmail().orElse(clientToEdit.getEmail());
+        Address updatedAddress = editPersonDescriptor.getAddress().orElse(clientToEdit.getAddress());
+        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(clientToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        // keep the same client ID
+        ClientId clientId = clientToEdit.getClientId();
+
+        return new Client(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, clientId);
     }
 
     @Override

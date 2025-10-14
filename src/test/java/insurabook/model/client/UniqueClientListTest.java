@@ -1,4 +1,4 @@
-package insurabook.model.person;
+package insurabook.model.client;
 
 import static insurabook.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static insurabook.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
@@ -15,11 +15,11 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import insurabook.model.person.exceptions.DuplicatePersonException;
-import insurabook.model.person.exceptions.PersonNotFoundException;
+import insurabook.model.client.exceptions.ClientDuplicateException;
+import insurabook.model.client.exceptions.ClientMissingException;
 import insurabook.testutil.PersonBuilder;
 
-public class UniquePersonListTest {
+public class UniqueClientListTest {
 
     private final UniquePersonList uniquePersonList = new UniquePersonList();
 
@@ -42,7 +42,7 @@ public class UniquePersonListTest {
     @Test
     public void contains_personWithSameIdentityFieldsInList_returnsTrue() {
         uniquePersonList.add(ALICE);
-        Person editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+        Client editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
                 .build();
         assertTrue(uniquePersonList.contains(editedAlice));
     }
@@ -55,7 +55,7 @@ public class UniquePersonListTest {
     @Test
     public void add_duplicatePerson_throwsDuplicatePersonException() {
         uniquePersonList.add(ALICE);
-        assertThrows(DuplicatePersonException.class, () -> uniquePersonList.add(ALICE));
+        assertThrows(ClientDuplicateException.class, () -> uniquePersonList.add(ALICE));
     }
 
     @Test
@@ -70,7 +70,7 @@ public class UniquePersonListTest {
 
     @Test
     public void setPerson_targetPersonNotInList_throwsPersonNotFoundException() {
-        assertThrows(PersonNotFoundException.class, () -> uniquePersonList.setPerson(ALICE, ALICE));
+        assertThrows(ClientMissingException.class, () -> uniquePersonList.setPerson(ALICE, ALICE));
     }
 
     @Test
@@ -85,7 +85,7 @@ public class UniquePersonListTest {
     @Test
     public void setPerson_editedPersonHasSameIdentity_success() {
         uniquePersonList.add(ALICE);
-        Person editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+        Client editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
                 .build();
         uniquePersonList.setPerson(ALICE, editedAlice);
         UniquePersonList expectedUniquePersonList = new UniquePersonList();
@@ -106,7 +106,7 @@ public class UniquePersonListTest {
     public void setPerson_editedPersonHasNonUniqueIdentity_throwsDuplicatePersonException() {
         uniquePersonList.add(ALICE);
         uniquePersonList.add(BOB);
-        assertThrows(DuplicatePersonException.class, () -> uniquePersonList.setPerson(ALICE, BOB));
+        assertThrows(ClientDuplicateException.class, () -> uniquePersonList.setPerson(ALICE, BOB));
     }
 
     @Test
@@ -116,7 +116,7 @@ public class UniquePersonListTest {
 
     @Test
     public void remove_personDoesNotExist_throwsPersonNotFoundException() {
-        assertThrows(PersonNotFoundException.class, () -> uniquePersonList.remove(ALICE));
+        assertThrows(ClientMissingException.class, () -> uniquePersonList.remove(ALICE));
     }
 
     @Test
@@ -143,14 +143,14 @@ public class UniquePersonListTest {
 
     @Test
     public void setPersons_nullList_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> uniquePersonList.setPersons((List<Person>) null));
+        assertThrows(NullPointerException.class, () -> uniquePersonList.setPersons((List<Client>) null));
     }
 
     @Test
     public void setPersons_list_replacesOwnListWithProvidedList() {
         uniquePersonList.add(ALICE);
-        List<Person> personList = Collections.singletonList(BOB);
-        uniquePersonList.setPersons(personList);
+        List<Client> clientList = Collections.singletonList(BOB);
+        uniquePersonList.setPersons(clientList);
         UniquePersonList expectedUniquePersonList = new UniquePersonList();
         expectedUniquePersonList.add(BOB);
         assertEquals(expectedUniquePersonList, uniquePersonList);
@@ -158,8 +158,8 @@ public class UniquePersonListTest {
 
     @Test
     public void setPersons_listWithDuplicatePersons_throwsDuplicatePersonException() {
-        List<Person> listWithDuplicatePersons = Arrays.asList(ALICE, ALICE);
-        assertThrows(DuplicatePersonException.class, () -> uniquePersonList.setPersons(listWithDuplicatePersons));
+        List<Client> listWithDuplicateClients = Arrays.asList(ALICE, ALICE);
+        assertThrows(ClientDuplicateException.class, () -> uniquePersonList.setPersons(listWithDuplicateClients));
     }
 
     @Test

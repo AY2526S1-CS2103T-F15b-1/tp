@@ -1,8 +1,9 @@
 package insurabook.logic.commands;
 
 import static insurabook.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
 import static insurabook.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static insurabook.logic.parser.CliSyntax.PREFIX_NAME;
 import static insurabook.logic.parser.CliSyntax.PREFIX_PHONE;
 import static insurabook.logic.parser.CliSyntax.PREFIX_TAG;
 import static insurabook.testutil.Assert.assertThrows;
@@ -17,8 +18,8 @@ import insurabook.commons.core.index.Index;
 import insurabook.logic.commands.exceptions.CommandException;
 import insurabook.model.AddressBook;
 import insurabook.model.Model;
-import insurabook.model.person.NameContainsKeywordsPredicate;
-import insurabook.model.person.Person;
+import insurabook.model.client.Client;
+import insurabook.model.client.NameContainsKeywordsPredicate;
 import insurabook.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -36,9 +37,11 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
+    public static final String VALID_CLIENT_ID_AMY = "111";
+    public static final String VALID_CLIENT_ID_BOB = "222";
 
-    public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
-    public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
+    public static final String NAME_DESC_AMY = " " + PREFIX_CLIENT_NAME + VALID_NAME_AMY;
+    public static final String NAME_DESC_BOB = " " + PREFIX_CLIENT_NAME + VALID_NAME_BOB;
     public static final String PHONE_DESC_AMY = " " + PREFIX_PHONE + VALID_PHONE_AMY;
     public static final String PHONE_DESC_BOB = " " + PREFIX_PHONE + VALID_PHONE_BOB;
     public static final String EMAIL_DESC_AMY = " " + PREFIX_EMAIL + VALID_EMAIL_AMY;
@@ -47,8 +50,10 @@ public class CommandTestUtil {
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
+    public static final String CLIENT_ID_DESC_AMY = " " + PREFIX_CLIENT_ID + VALID_CLIENT_ID_AMY;
+    public static final String CLIENT_ID_DESC_BOB = " " + PREFIX_CLIENT_ID + VALID_CLIENT_ID_BOB;
 
-    public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
+    public static final String INVALID_NAME_DESC = " " + PREFIX_CLIENT_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
@@ -105,7 +110,7 @@ public class CommandTestUtil {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
         AddressBook expectedAddressBook = new AddressBook(actualModel.getAddressBook());
-        List<Person> expectedFilteredList = new ArrayList<>(actualModel.getFilteredPersonList());
+        List<Client> expectedFilteredList = new ArrayList<>(actualModel.getFilteredPersonList());
 
         assertThrows(CommandException.class, expectedMessage, () -> command.execute(actualModel));
         assertEquals(expectedAddressBook, actualModel.getAddressBook());
@@ -118,8 +123,8 @@ public class CommandTestUtil {
     public static void showPersonAtIndex(Model model, Index targetIndex) {
         assertTrue(targetIndex.getZeroBased() < model.getFilteredPersonList().size());
 
-        Person person = model.getFilteredPersonList().get(targetIndex.getZeroBased());
-        final String[] splitName = person.getName().fullName.split("\\s+");
+        Client client = model.getFilteredPersonList().get(targetIndex.getZeroBased());
+        final String[] splitName = client.getName().fullName.split("\\s+");
         model.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
         assertEquals(1, model.getFilteredPersonList().size());

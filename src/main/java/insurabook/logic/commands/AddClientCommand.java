@@ -1,8 +1,9 @@
 package insurabook.logic.commands;
 
 import static insurabook.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
 import static insurabook.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static insurabook.logic.parser.CliSyntax.PREFIX_NAME;
 import static insurabook.logic.parser.CliSyntax.PREFIX_PHONE;
 import static insurabook.logic.parser.CliSyntax.PREFIX_TAG;
 import static java.util.Objects.requireNonNull;
@@ -11,7 +12,7 @@ import insurabook.commons.util.ToStringBuilder;
 import insurabook.logic.Messages;
 import insurabook.logic.commands.exceptions.CommandException;
 import insurabook.model.Model;
-import insurabook.model.person.Person;
+import insurabook.model.client.Client;
 
 /**
  * Adds a person to the address book.
@@ -20,32 +21,34 @@ public class AddClientCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a client to the InsuraBook. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
             + "Parameters: "
-            + PREFIX_NAME + "NAME "
+            + PREFIX_CLIENT_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_TAG + "TAG]..."
+            + PREFIX_CLIENT_ID + "CLIENT_ID\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_NAME + "John Doe "
+            + PREFIX_CLIENT_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
             + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owesMoney";
+            + PREFIX_TAG + "owesMoney"
+            + PREFIX_CLIENT_ID + "C12345";
 
     public static final String MESSAGE_SUCCESS = "New client added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This client already exists in the address book";
 
-    private final Person toAdd;
+    private final Client toAdd;
 
     /**
      * Creates an AddCommand to add the specified {@code Person}
      */
-    public AddClientCommand(Person person) {
-        requireNonNull(person);
-        toAdd = person;
+    public AddClientCommand(Client client) {
+        requireNonNull(client);
+        toAdd = client;
     }
 
     @Override
@@ -71,8 +74,8 @@ public class AddClientCommand extends Command {
             return false;
         }
 
-        AddClientCommand otherAddCommand = (AddClientCommand) other;
-        return toAdd.equals(otherAddCommand.toAdd);
+        AddClientCommand otherAddClientCommand = (AddClientCommand) other;
+        return toAdd.equals(otherAddClientCommand.toAdd);
     }
 
     @Override

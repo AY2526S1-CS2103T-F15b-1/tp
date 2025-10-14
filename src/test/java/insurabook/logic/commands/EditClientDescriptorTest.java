@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 import insurabook.logic.commands.EditCommand.EditPersonDescriptor;
 import insurabook.testutil.EditPersonDescriptorBuilder;
 
-public class EditPersonDescriptorTest {
+public class EditClientDescriptorTest {
 
     @Test
     public void equals() {

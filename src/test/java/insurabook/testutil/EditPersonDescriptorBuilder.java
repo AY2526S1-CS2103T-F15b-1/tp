@@ -5,11 +5,11 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import insurabook.logic.commands.EditCommand.EditPersonDescriptor;
-import insurabook.model.person.Address;
-import insurabook.model.person.Email;
-import insurabook.model.person.Name;
-import insurabook.model.person.Person;
-import insurabook.model.person.Phone;
+import insurabook.model.client.Address;
+import insurabook.model.client.Client;
+import insurabook.model.client.Email;
+import insurabook.model.client.Name;
+import insurabook.model.client.Phone;
 import insurabook.model.tag.Tag;
 
 /**
@@ -30,13 +30,13 @@ public class EditPersonDescriptorBuilder {
     /**
      * Returns an {@code EditPersonDescriptor} with fields containing {@code person}'s details
      */
-    public EditPersonDescriptorBuilder(Person person) {
+    public EditPersonDescriptorBuilder(Client client) {
         descriptor = new EditPersonDescriptor();
-        descriptor.setName(person.getName());
-        descriptor.setPhone(person.getPhone());
-        descriptor.setEmail(person.getEmail());
-        descriptor.setAddress(person.getAddress());
-        descriptor.setTags(person.getTags());
+        descriptor.setName(client.getName());
+        descriptor.setPhone(client.getPhone());
+        descriptor.setEmail(client.getEmail());
+        descriptor.setAddress(client.getAddress());
+        descriptor.setTags(client.getTags());
     }
 
     /**

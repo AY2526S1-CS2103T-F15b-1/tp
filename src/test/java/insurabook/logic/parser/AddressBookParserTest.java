@@ -13,9 +13,9 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
-import insurabook.logic.commands.AddCommand;
+import insurabook.logic.commands.AddClientCommand;
 import insurabook.logic.commands.ClearCommand;
-import insurabook.logic.commands.DeleteCommand;
+import insurabook.logic.commands.DeleteClientCommand;
 import insurabook.logic.commands.EditCommand;
 import insurabook.logic.commands.EditCommand.EditPersonDescriptor;
 import insurabook.logic.commands.ExitCommand;
@@ -24,8 +24,8 @@ import insurabook.logic.commands.HelpCommand;
 import insurabook.logic.commands.ListCommand;
 import insurabook.logic.commands.ViewCommand;
 import insurabook.logic.parser.exceptions.ParseException;
-import insurabook.model.person.NameContainsKeywordsPredicate;
-import insurabook.model.person.Person;
+import insurabook.model.client.Client;
+import insurabook.model.client.NameContainsKeywordsPredicate;
 import insurabook.testutil.EditPersonDescriptorBuilder;
 import insurabook.testutil.PersonBuilder;
 import insurabook.testutil.PersonUtil;
@@ -36,9 +36,9 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_add() throws Exception {
-        Person person = new PersonBuilder().build();
-        AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
-        assertEquals(new AddCommand(person), command);
+        Client client = new PersonBuilder().build();
+        AddClientCommand command = (AddClientCommand) parser.parseCommand(PersonUtil.getAddClientCommand(client));
+        assertEquals(new AddClientCommand(client), command);
     }
 
     @Test
@@ -49,15 +49,15 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_delete() throws Exception {
-        DeleteCommand command = (DeleteCommand) parser.parseCommand(
-                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
+        DeleteClientCommand command = (DeleteClientCommand) parser.parseCommand(
+                DeleteClientCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new DeleteClientCommand(INDEX_FIRST_PERSON), command);
     }
 
     @Test
     public void parseCommand_edit() throws Exception {
-        Person person = new PersonBuilder().build();
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
+        Client client = new PersonBuilder().build();
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(client).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);

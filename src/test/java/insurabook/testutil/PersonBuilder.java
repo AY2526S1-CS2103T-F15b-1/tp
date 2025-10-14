@@ -3,11 +3,12 @@ package insurabook.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
-import insurabook.model.person.Address;
-import insurabook.model.person.Email;
-import insurabook.model.person.Name;
-import insurabook.model.person.Person;
-import insurabook.model.person.Phone;
+import insurabook.model.client.Address;
+import insurabook.model.client.Client;
+import insurabook.model.client.ClientId;
+import insurabook.model.client.Email;
+import insurabook.model.client.Name;
+import insurabook.model.client.Phone;
 import insurabook.model.tag.Tag;
 import insurabook.model.util.SampleDataUtil;
 
@@ -20,12 +21,14 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_CLIENT_ID = "1";
 
     private Name name;
     private Phone phone;
     private Email email;
     private Address address;
     private Set<Tag> tags;
+    private ClientId clientId;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -36,17 +39,19 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         tags = new HashSet<>();
+        clientId = new ClientId(DEFAULT_CLIENT_ID);
     }
 
     /**
      * Initializes the PersonBuilder with the data of {@code personToCopy}.
      */
-    public PersonBuilder(Person personToCopy) {
-        name = personToCopy.getName();
-        phone = personToCopy.getPhone();
-        email = personToCopy.getEmail();
-        address = personToCopy.getAddress();
-        tags = new HashSet<>(personToCopy.getTags());
+    public PersonBuilder(Client clientToCopy) {
+        name = clientToCopy.getName();
+        phone = clientToCopy.getPhone();
+        email = clientToCopy.getEmail();
+        address = clientToCopy.getAddress();
+        tags = new HashSet<>(clientToCopy.getTags());
+        clientId = clientToCopy.getClientId();
     }
 
     /**
@@ -89,8 +94,16 @@ public class PersonBuilder {
         return this;
     }
 
-    public Person build() {
-        return new Person(name, phone, email, address, tags);
+    /**
+     * Sets the {@code Email} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withClientId(String clientId) {
+        this.clientId = new ClientId(clientId);
+        return this;
+    }
+
+    public Client build() {
+        return new Client(name, phone, email, address, tags, clientId);
     }
 
 }

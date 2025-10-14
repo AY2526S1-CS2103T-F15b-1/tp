@@ -1,4 +1,4 @@
-package insurabook.model.person;
+package insurabook.model.client;
 
 import static insurabook.commons.util.AppUtil.checkArgument;
 import static java.util.Objects.requireNonNull;

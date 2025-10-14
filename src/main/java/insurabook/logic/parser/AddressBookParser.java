@@ -8,10 +8,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import insurabook.commons.core.LogsCenter;
-import insurabook.logic.commands.AddCommand;
+import insurabook.logic.commands.AddClientCommand;
 import insurabook.logic.commands.ClearCommand;
 import insurabook.logic.commands.Command;
-import insurabook.logic.commands.DeleteCommand;
+import insurabook.logic.commands.DeleteClientCommand;
 import insurabook.logic.commands.EditCommand;
 import insurabook.logic.commands.ExitCommand;
 import insurabook.logic.commands.FindCommand;
@@ -54,13 +54,13 @@ public class AddressBookParser {
 
         switch (commandWord) {
 
-        case AddCommand.COMMAND_WORD:
-            return new AddCommandParser().parse(arguments);
+        case AddClientCommand.COMMAND_WORD:
+            return new AddClientCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
 
-        case DeleteCommand.COMMAND_WORD:
+        case DeleteClientCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
