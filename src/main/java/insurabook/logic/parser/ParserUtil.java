@@ -12,11 +12,11 @@ import insurabook.logic.parser.exceptions.ParseException;
 import insurabook.model.claims.ClaimAmount;
 import insurabook.model.claims.ClaimDate;
 import insurabook.model.claims.ClaimMessage;
+import insurabook.model.client.Address;
 import insurabook.model.client.ClientId;
-import insurabook.model.person.Address;
-import insurabook.model.person.Email;
-import insurabook.model.person.Name;
-import insurabook.model.person.Phone;
+import insurabook.model.client.Email;
+import insurabook.model.client.Name;
+import insurabook.model.client.Phone;
 import insurabook.model.policies.PolicyId;
 import insurabook.model.tag.Tag;
 

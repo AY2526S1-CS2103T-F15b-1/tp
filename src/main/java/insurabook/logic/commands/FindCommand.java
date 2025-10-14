@@ -5,7 +5,7 @@ import static java.util.Objects.requireNonNull;
 import insurabook.commons.util.ToStringBuilder;
 import insurabook.logic.Messages;
 import insurabook.model.Model;
-import insurabook.model.person.NameContainsKeywordsPredicate;
+import insurabook.model.client.NameContainsKeywordsPredicate;
 
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.

@@ -12,7 +12,7 @@ import insurabook.model.policies.Policy;
  */
 public class Portfolio {
 
-    private Client client;
+    private insurabook.model.client.Client client;
     private List<Policy> policies;
 
     /**
@@ -22,7 +22,7 @@ public class Portfolio {
         this.policies = new ArrayList<>();
     }
 
-    public Client getClient() {
+    public insurabook.model.client.Client getClient() {
         return this.client;
     }
 

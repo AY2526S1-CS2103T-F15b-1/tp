@@ -1,11 +1,11 @@
 package insurabook.logic.parser;
 
 import static insurabook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static insurabook.logic.parser.CliSyntax.PREFIX_AMOUNT;
-import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT;
-import static insurabook.logic.parser.CliSyntax.PREFIX_DATE;
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLAIM_AMOUNT;
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLAIM_DATE;
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
 import static insurabook.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
-import static insurabook.logic.parser.CliSyntax.PREFIX_POLICY;
+import static insurabook.logic.parser.CliSyntax.PREFIX_POLICY_ID;
 
 import java.util.stream.Stream;
 
@@ -31,19 +31,20 @@ public class AddClaimCommandParser implements Parser<AddClaimCommand> {
     @Override
     public AddClaimCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_CLIENT, PREFIX_POLICY,
-                        PREFIX_AMOUNT, PREFIX_DATE, PREFIX_DESCRIPTION);
+                ArgumentTokenizer.tokenize(args, PREFIX_CLIENT_ID, PREFIX_POLICY_ID,
+                        PREFIX_CLAIM_AMOUNT, PREFIX_CLAIM_DATE, PREFIX_DESCRIPTION);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_CLIENT, PREFIX_POLICY, PREFIX_AMOUNT, PREFIX_DATE)
+        if (!arePrefixesPresent(argMultimap, PREFIX_CLIENT_ID, PREFIX_POLICY_ID, PREFIX_CLAIM_AMOUNT, PREFIX_CLAIM_DATE)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddClaimCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_CLIENT, PREFIX_POLICY, PREFIX_AMOUNT, PREFIX_DATE);
-        ClientId clientId = ParserUtil.parseClientId(argMultimap.getValue(PREFIX_CLIENT).get());
-        PolicyId policyId = ParserUtil.parsePolicyId(argMultimap.getValue(PREFIX_POLICY).get());
-        ClaimAmount amount = ParserUtil.parseClaimAmount(argMultimap.getValue(PREFIX_AMOUNT).get());
-        ClaimDate date = ParserUtil.parseClaimDate(argMultimap.getValue(PREFIX_DATE).get());
+        argMultimap.verifyNoDuplicatePrefixesFor(
+                PREFIX_CLIENT_ID, PREFIX_POLICY_ID, PREFIX_CLAIM_AMOUNT, PREFIX_CLAIM_DATE);
+        ClientId clientId = ParserUtil.parseClientId(argMultimap.getValue(PREFIX_CLIENT_ID).get());
+        PolicyId policyId = ParserUtil.parsePolicyId(argMultimap.getValue(PREFIX_POLICY_ID).get());
+        ClaimAmount amount = ParserUtil.parseClaimAmount(argMultimap.getValue(PREFIX_CLAIM_AMOUNT).get());
+        ClaimDate date = ParserUtil.parseClaimDate(argMultimap.getValue(PREFIX_CLAIM_DATE).get());
         ClaimMessage message = ParserUtil.parseClaimMessage(
                 argMultimap.getValue(PREFIX_DESCRIPTION).isEmpty()
                 ? ""

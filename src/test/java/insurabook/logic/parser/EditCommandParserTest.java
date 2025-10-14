@@ -38,10 +38,10 @@ import insurabook.commons.core.index.Index;
 import insurabook.logic.Messages;
 import insurabook.logic.commands.EditCommand;
 import insurabook.logic.commands.EditCommand.EditPersonDescriptor;
-import insurabook.model.person.Address;
-import insurabook.model.person.Email;
-import insurabook.model.person.Name;
-import insurabook.model.person.Phone;
+import insurabook.model.client.Address;
+import insurabook.model.client.Email;
+import insurabook.model.client.Name;
+import insurabook.model.client.Phone;
 import insurabook.model.tag.Tag;
 import insurabook.testutil.EditPersonDescriptorBuilder;
 

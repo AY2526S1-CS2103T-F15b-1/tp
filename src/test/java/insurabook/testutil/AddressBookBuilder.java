@@ -1,7 +1,7 @@
 package insurabook.testutil;
 
 import insurabook.model.AddressBook;
-import insurabook.model.person.Person;
+import insurabook.model.client.Client;
 
 /**
  * A utility class to help with building Addressbook objects.
@@ -23,8 +23,8 @@ public class AddressBookBuilder {
     /**
      * Adds a new {@code Person} to the {@code AddressBook} that we are building.
      */
-    public AddressBookBuilder withPerson(Person person) {
-        addressBook.addPerson(person);
+    public AddressBookBuilder withPerson(Client client) {
+        addressBook.addPerson(client);
         return this;
     }
 

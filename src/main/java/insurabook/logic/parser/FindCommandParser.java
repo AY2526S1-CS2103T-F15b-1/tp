@@ -1,12 +1,14 @@
 package insurabook.logic.parser;
 
 import static insurabook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static insurabook.logic.parser.CliSyntax.PREFIX_KEYWORD;
+import static java.util.Objects.requireNonNull;
 
 import java.util.Arrays;
 
 import insurabook.logic.commands.FindCommand;
 import insurabook.logic.parser.exceptions.ParseException;
-import insurabook.model.person.NameContainsKeywordsPredicate;
+import insurabook.model.client.NameContainsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new FindCommand object
@@ -19,7 +21,10 @@ public class FindCommandParser implements Parser<FindCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public FindCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
+        requireNonNull(args);
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_KEYWORD);
+        String trimmedArgs = argMultimap.getValue(PREFIX_KEYWORD).orElse("").trim();
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));

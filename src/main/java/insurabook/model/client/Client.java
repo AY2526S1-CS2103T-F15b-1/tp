@@ -2,10 +2,14 @@ package insurabook.model.client;
 
 import static insurabook.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import insurabook.commons.util.ToStringBuilder;
 import insurabook.model.claims.Claim;
+import insurabook.model.tag.Tag;
 
 /**
  * Represents a Client in InsuraBook.
@@ -14,18 +18,27 @@ import insurabook.model.claims.Claim;
 public class Client {
 
     // Identity fields
-    private final Name name;
     private final ClientId clientId;
+    private final Name name;
+    private final Phone phone;
+    private final Email email;
 
     // Data fields
+    private final Address address;
+    private final Set<Tag> tags = new HashSet<>();
     private final Portfolio portfolio;
 
     /**
      * Every field must be present and not null.
      */
-    public Client(Name name, ClientId clientId) {
-        requireAllNonNull(name, clientId);
+    public Client(Name name, Phone phone, Email email, Address address, Set<Tag> tags,
+                  ClientId clientId) {
+        requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.tags.addAll(tags);
         this.clientId = clientId;
         this.portfolio = new Portfolio();
     }
@@ -34,15 +47,39 @@ public class Client {
         return name;
     }
 
-    public ClientId getId() {
+    public Phone getPhone() {
+        return phone;
+    }
+
+    public Email getEmail() {
+        return email;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public ClientId getClientId() {
         return clientId;
+    }
+
+    public Portfolio getPortfolio() {
+        return portfolio;
+    }
+
+    /**
+     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Set<Tag> getTags() {
+        return Collections.unmodifiableSet(tags);
     }
 
     /**
      * Returns true if both persons have the same name.
      * This defines a weaker notion of equality between two persons.
      */
-    public boolean isSameClient(Client otherClient) {
+    public boolean isSamePerson(Client otherClient) {
         if (otherClient == this) {
             return true;
         }
@@ -67,19 +104,23 @@ public class Client {
         }
 
         Client otherClient = (Client) other;
-        return clientId.equals(otherClient.getId());
+        return clientId.clientId.equals(otherClient.clientId.clientId);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, clientId);
+        return Objects.hash(name, phone, email, address, tags);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .add("name", name)
+                .add("phone", phone)
+                .add("email", email)
+                .add("address", address)
+                .add("tags", tags)
                 .add("clientId", clientId)
                 .toString();
     }

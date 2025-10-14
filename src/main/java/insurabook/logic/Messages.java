@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 
 import insurabook.logic.parser.Prefix;
 import insurabook.model.claims.Claim;
-import insurabook.model.person.Person;
+import insurabook.model.client.Client;
 
 /**
  * Container for user visible messages.
@@ -35,17 +35,17 @@ public class Messages {
     /**
      * Formats the {@code person} for display to the user.
      */
-    public static String format(Person person) {
+    public static String format(Client client) {
         final StringBuilder builder = new StringBuilder();
-        builder.append(person.getName())
+        builder.append(client.getName())
                 .append("; Phone: ")
-                .append(person.getPhone())
+                .append(client.getPhone())
                 .append("; Email: ")
-                .append(person.getEmail())
+                .append(client.getEmail())
                 .append("; Address: ")
-                .append(person.getAddress())
+                .append(client.getAddress())
                 .append("; Tags: ");
-        person.getTags().forEach(builder::append);
+        client.getTags().forEach(builder::append);
         return builder.toString();
     }
 

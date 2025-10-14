@@ -9,10 +9,10 @@ import java.util.regex.Pattern;
 
 import insurabook.commons.core.LogsCenter;
 import insurabook.logic.commands.AddClaimCommand;
-import insurabook.logic.commands.AddCommand;
+import insurabook.logic.commands.AddClientCommand;
 import insurabook.logic.commands.ClearCommand;
 import insurabook.logic.commands.Command;
-import insurabook.logic.commands.DeleteCommand;
+import insurabook.logic.commands.DeleteClientCommand;
 import insurabook.logic.commands.EditCommand;
 import insurabook.logic.commands.ExitCommand;
 import insurabook.logic.commands.FindCommand;
@@ -30,8 +30,7 @@ public class AddressBookParser {
      * Used for initial separation of command word and args.
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern
-            .compile("^(?<command>.+?)?(\\s+(?<arguments>-.*))?$");
-    private static final Pattern AB3_COMMAND_FORMAT = Pattern.compile("(?<command>\\S+)(?<arguments>.*)");
+            .compile("^(?<command>[a-zA-Z]+(?:\\s+[a-zA-Z]+)*)(?<arguments>(?:\\s+(?:-|\\d).*)?)$");
     private static final Logger logger = LogsCenter.getLogger(AddressBookParser.class);
 
     /**
@@ -42,9 +41,7 @@ public class AddressBookParser {
      * @throws ParseException if the user input does not conform the expected format
      */
     public Command parseCommand(String userInput) throws ParseException {
-        final Matcher matcher = userInput.contains("-")
-                ? BASIC_COMMAND_FORMAT.matcher(userInput.trim())
-                : AB3_COMMAND_FORMAT.matcher(userInput.trim());
+        final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         if (!matcher.matches()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
@@ -59,13 +56,13 @@ public class AddressBookParser {
 
         switch (commandWord) {
 
-        case AddCommand.COMMAND_WORD:
-            return new AddCommandParser().parse(arguments);
+        case AddClientCommand.COMMAND_WORD:
+            return new AddClientCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
 
-        case DeleteCommand.COMMAND_WORD:
+        case DeleteClientCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:

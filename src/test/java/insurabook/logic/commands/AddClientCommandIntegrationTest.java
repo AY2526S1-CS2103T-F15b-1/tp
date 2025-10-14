@@ -11,13 +11,13 @@ import insurabook.logic.Messages;
 import insurabook.model.Model;
 import insurabook.model.ModelManager;
 import insurabook.model.UserPrefs;
-import insurabook.model.person.Person;
+import insurabook.model.client.Client;
 import insurabook.testutil.PersonBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code AddCommand}.
  */
-public class AddCommandIntegrationTest {
+public class AddClientCommandIntegrationTest {
 
     private Model model;
 
@@ -28,21 +28,21 @@ public class AddCommandIntegrationTest {
 
     @Test
     public void execute_newPerson_success() {
-        Person validPerson = new PersonBuilder().build();
+        Client validClient = new PersonBuilder().build();
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.addPerson(validPerson);
+        expectedModel.addPerson(validClient);
 
-        assertCommandSuccess(new AddCommand(validPerson), model,
-                String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validPerson)),
+        assertCommandSuccess(new AddClientCommand(validClient), model,
+                String.format(AddClientCommand.MESSAGE_SUCCESS, Messages.format(validClient)),
                 expectedModel);
     }
 
     @Test
     public void execute_duplicatePerson_throwsCommandException() {
-        Person personInList = model.getAddressBook().getPersonList().get(0);
-        assertCommandFailure(new AddCommand(personInList), model,
-                AddCommand.MESSAGE_DUPLICATE_PERSON);
+        Client clientInList = model.getAddressBook().getPersonList().get(0);
+        assertCommandFailure(new AddClientCommand(clientInList), model,
+                AddClientCommand.MESSAGE_DUPLICATE_PERSON);
     }
 
 }
