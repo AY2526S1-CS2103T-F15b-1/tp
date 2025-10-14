@@ -13,8 +13,8 @@ import insurabook.logic.commands.AddClaimCommand;
 import insurabook.logic.parser.exceptions.ParseException;
 import insurabook.model.claims.Claim;
 import insurabook.model.claims.ClaimAmount;
-import insurabook.model.claims.InsuraDate;
 import insurabook.model.claims.ClaimMessage;
+import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.ClientId;
 import insurabook.model.policies.PolicyId;
 

@@ -5,8 +5,10 @@ import java.util.function.Predicate;
 
 import insurabook.commons.core.GuiSettings;
 import insurabook.model.claims.Claim;
+import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Client;
-import insurabook.model.policies.Policy;
+import insurabook.model.client.ClientId;
+import insurabook.model.policies.PolicyId;
 import javafx.collections.ObservableList;
 
 /**
@@ -97,5 +99,5 @@ public interface Model {
      * Adds the given policy.
      * {@code policy} must not already exist in the address book.
      */
-    void addPolicy(Policy toAdd);
+    void addPolicy(PolicyId policyId, ClientId clientId, int policyTypeId, InsuraDate expiryDate);
 }

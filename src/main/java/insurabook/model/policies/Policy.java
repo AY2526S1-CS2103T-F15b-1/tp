@@ -5,8 +5,9 @@ import java.util.List;
 
 import insurabook.model.claims.Claim;
 import insurabook.model.claims.InsuraDate;
-import insurabook.model.client.ClientId;
+import insurabook.model.client.Client;
 import insurabook.model.policytype.PolicyType;
+
 
 /**
  * Class representing policy
@@ -14,7 +15,7 @@ import insurabook.model.policytype.PolicyType;
 public class Policy {
 
     private final PolicyId policyId;
-    private final ClientId client;
+    private final Client client;
     private final PolicyType policyType;
     private final InsuraDate expiryDate;
     private final List<Claim> claim;
@@ -24,7 +25,7 @@ public class Policy {
      * @param policyType from parser
      * @param expiryDate datetime from parser
      */
-    public Policy(PolicyId policyId, ClientId client, PolicyType policyType, InsuraDate expiryDate) {
+    public Policy(PolicyId policyId, Client client, PolicyType policyType, InsuraDate expiryDate) {
         this.policyId = policyId;
         this.client = client;
         this.policyType = policyType;
@@ -36,7 +37,7 @@ public class Policy {
      * Getter
      * @return client id of policy owner
      */
-    public ClientId getClientId() {
+    public Client getClient() {
         return this.client;
     }
 

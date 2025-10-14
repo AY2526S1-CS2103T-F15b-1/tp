@@ -10,8 +10,10 @@ import java.util.logging.Logger;
 import insurabook.commons.core.GuiSettings;
 import insurabook.commons.core.LogsCenter;
 import insurabook.model.claims.Claim;
+import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Client;
-import insurabook.model.policies.Policy;
+import insurabook.model.client.ClientId;
+import insurabook.model.policies.PolicyId;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 
@@ -170,7 +172,7 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void addPolicy(Policy policy) {
-        insuraBook.addPolicy(policy);
+    public void addPolicy(PolicyId policyId, ClientId clientId, int policyTypeId, InsuraDate expiryDate) {
+        insuraBook.addPolicy(policyId, clientId, policyTypeId, expiryDate);
     }
 }

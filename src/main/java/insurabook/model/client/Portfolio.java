@@ -1,10 +1,8 @@
 package insurabook.model.client;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import insurabook.model.claims.Claim;
 import insurabook.model.policies.Policy;
+import insurabook.model.policies.UniquePolicyList;
 
 /**
  * Represents a Client's record of policies and claims in InsuraBook.
@@ -13,20 +11,20 @@ import insurabook.model.policies.Policy;
 public class Portfolio {
 
     private insurabook.model.client.Client client;
-    private List<Policy> policies;
+    private UniquePolicyList policies;
 
     /**
      * Constructs a container for a Client's policies
      */
     public Portfolio() {
-        this.policies = new ArrayList<>();
+        this.policies = new UniquePolicyList();
     }
 
     public insurabook.model.client.Client getClient() {
         return this.client;
     }
 
-    public List<Policy> getPolicies() {
+    public UniquePolicyList getPolicies() {
         return this.policies;
     }
 
@@ -59,10 +57,7 @@ public class Portfolio {
      * @param claim to add
      */
     public void addClaim(Claim claim) {
-        policies.stream()
-                .filter(policy -> policy.getPolicyId().equals(claim.getPolicyId()))
-                .findFirst()
-                .ifPresent(policy -> policy.addClaim(claim));
+        policies.getPolicy(claim.getPolicyId()).addClaim(claim);
     }
 
 }

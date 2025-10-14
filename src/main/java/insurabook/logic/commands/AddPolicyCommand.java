@@ -9,7 +9,9 @@ import static java.util.Objects.requireNonNull;
 
 import insurabook.logic.commands.exceptions.CommandException;
 import insurabook.model.Model;
-import insurabook.model.policies.Policy;
+import insurabook.model.claims.InsuraDate;
+import insurabook.model.client.ClientId;
+import insurabook.model.policies.PolicyId;
 
 /**
  * Attach a policy to a client.
@@ -27,25 +29,34 @@ public class AddPolicyCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_POLICY_ID + "101 "
             + PREFIX_CLIENT_ID + "12345 "
-            + PREFIX_POLICY_TYPE_ID + "PT01 "
+            + PREFIX_POLICY_TYPE_ID + "123"
             + PREFIX_EXPIRY_DATE + "2025-10-01 ";
     public static final String MESSAGE_SUCCESS = "New policy added to client: %1$s";
     public static final String MESSAGE_CLIENT_NOT_FOUND = "The specified client ID does not exist.";
 
-    private final Policy toAdd;
+    private final PolicyId policyId;
+    private final ClientId clientId;
+    private final int policyTypeId;
+    private final InsuraDate expiryDate;
 
     /**
      * Creates an AddPolicyCommand to add the specified {@code Policy}
      */
-    public AddPolicyCommand(Policy policy) {
-        requireNonNull(policy);
-        this.toAdd = policy;
+    public AddPolicyCommand(PolicyId policyId, ClientId clientId, int policyTypeId, InsuraDate expiryDate) {
+        requireNonNull(clientId);
+        requireNonNull(policyId);
+        requireNonNull(policyTypeId);
+        requireNonNull(expiryDate);
+        this.clientId = clientId;
+        this.policyId = policyId;
+        this.policyTypeId = policyTypeId;
+        this.expiryDate = expiryDate;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-
-        return new CommandResult("Hello from AddPolicyCommand");
+        model.addPolicy(policyId, clientId, policyTypeId, expiryDate);
+        return new CommandResult(String.format(MESSAGE_SUCCESS));
     }
 }
