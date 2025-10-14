@@ -2,13 +2,14 @@ package insurabook.model;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.HashSet;
 import java.util.List;
 
 import insurabook.commons.util.ToStringBuilder;
 import insurabook.model.claims.Claim;
 import insurabook.model.claims.InsuraDate;
-import insurabook.model.client.*;
+import insurabook.model.client.Client;
+import insurabook.model.client.ClientId;
+import insurabook.model.client.UniqueClientList;
 import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
 import insurabook.model.policytype.PolicyType;
