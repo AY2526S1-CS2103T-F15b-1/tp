@@ -31,7 +31,7 @@ public class AddPolicyCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_POLICY_ID + "101 "
             + PREFIX_CLIENT_ID + "12345 "
-            + PREFIX_POLICY_TYPE_ID + "123"
+            + PREFIX_POLICY_TYPE_ID + "123 "
             + PREFIX_EXPIRY_DATE + "2025-10-01 ";
     public static final String MESSAGE_SUCCESS = "New policy added to client: %1$s";
     public static final String MESSAGE_CLIENT_NOT_FOUND = "The specified client ID does not exist.";
@@ -59,6 +59,6 @@ public class AddPolicyCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         Policy policy = model.addPolicy(policyId, clientId, policyTypeId, expiryDate);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(policy)));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(policy, 0)));
     }
 }

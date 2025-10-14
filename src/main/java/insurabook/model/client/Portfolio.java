@@ -49,6 +49,17 @@ public class Portfolio {
     }
 
     /**
+     * Function to remove policy
+     * @param policyId of policy to remove
+     * @return removed policy
+     */
+    public Policy removePolicy(PolicyId policyId) {
+        Policy policy = policies.getPolicy(policyId);
+        policies.remove(policy);
+        return policy;
+    }
+
+    /**
      * Function to delete policy
      * @param policy to delete
      */

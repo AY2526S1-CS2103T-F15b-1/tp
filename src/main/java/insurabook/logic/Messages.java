@@ -84,17 +84,23 @@ public class Messages {
     /**
      * Formats the {@code policy} for display to the user.
      */
-    public static String format(Policy policy) {
+    public static String format(Policy policy, int op) {
         final StringBuilder builder = new StringBuilder();
-        builder.append(policy.getPolicyId())
-                .append("; Policy Id: ")
-                .append(policy.getPolicyId())
-                .append("; Client Id: ")
-                .append(policy.getClient().getClientId())
-                .append("; PolicyTypeId: ")
-                .append(policy.getPolicyType().getPtId())
-                .append("; Expiry Date: ")
-                .append(policy.getExpiryDate());
+        if (op == 0) {
+            builder.append(policy.getPolicyId())
+                    .append("; Policy Id: ")
+                    .append(policy.getPolicyId())
+                    .append("; Client Id: ")
+                    .append(policy.getClient().getClientId())
+                    .append("; PolicyTypeId: ")
+                    .append(policy.getPolicyType().getPtId())
+                    .append("; Expiry Date: ")
+                    .append(policy.getExpiryDate());
+        } else {
+            builder.append(policy.getPolicyId())
+                    .append(" for client ")
+                    .append(policy.getClient().getClientId());
+        }
         return builder.toString();
     }
 

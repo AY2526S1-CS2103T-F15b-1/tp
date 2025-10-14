@@ -108,4 +108,6 @@ public interface Model {
      * {@code policy} must not already exist in the address book.
      */
     Policy addPolicy(PolicyId policyId, ClientId clientId, int policyTypeId, InsuraDate expiryDate);
+
+    Policy deletePolicy(ClientId clientId, PolicyId policyId);
 }

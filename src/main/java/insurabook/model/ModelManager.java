@@ -182,4 +182,9 @@ public class ModelManager implements Model {
     public Policy addPolicy(PolicyId policyId, ClientId clientId, int policyTypeId, InsuraDate expiryDate) {
         return insuraBook.addPolicy(policyId, clientId, policyTypeId, expiryDate);
     }
+
+    @Override
+    public Policy deletePolicy(ClientId clientId, PolicyId policyId) {
+        return insuraBook.removePolicy(clientId, policyId);
+    }
 }
