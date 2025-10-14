@@ -10,8 +10,8 @@ import insurabook.commons.core.index.Index;
 import insurabook.commons.util.StringUtil;
 import insurabook.logic.parser.exceptions.ParseException;
 import insurabook.model.claims.ClaimAmount;
-import insurabook.model.claims.ClaimDate;
 import insurabook.model.claims.ClaimMessage;
+import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Address;
 import insurabook.model.client.ClientId;
 import insurabook.model.client.Email;
@@ -158,6 +158,21 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String policyTypeId} into an {@code int}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code policyTypeId} is invalid
+     */
+    public static int parsePolicyTypeId(String policyTypeId) throws ParseException {
+        requireNonNull(policyTypeId);
+        String trimmedPolicyTypeId = policyTypeId.trim();
+        if (!StringUtil.isNonZeroUnsignedInteger(trimmedPolicyTypeId)) {
+            throw new ParseException("Policy Type Id should be a non-zero unsigned integer.");
+        }
+        return Integer.parseInt(trimmedPolicyTypeId);
+    }
+
+    /**
      * Parses a {@code String amount} into a {@code ClaimAmount}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -173,18 +188,18 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String date} into a {@code ClaimDate}.
+     * Parses a {@code String date} into a {@code InsuraDate}.
      * Leading and trailing whitespaces will be trimmed.
      *
      * @throws ParseException if the given {@code date} is invalid.
      */
-    public static ClaimDate parseClaimDate(String date) throws ParseException {
+    public static InsuraDate parseInsuraDate(String date) throws ParseException {
         requireNonNull(date);
         String trimmedDate = date.trim();
-        if (!ClaimDate.isValidClaimDate(trimmedDate)) {
-            throw new ParseException(ClaimDate.MESSAGE_CONSTRAINTS);
+        if (!InsuraDate.isValidInsuraDate(trimmedDate)) {
+            throw new ParseException(InsuraDate.MESSAGE_CONSTRAINTS);
         }
-        return new ClaimDate(trimmedDate);
+        return new InsuraDate(trimmedDate);
     }
 
     /**
