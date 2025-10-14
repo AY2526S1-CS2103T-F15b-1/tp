@@ -1,11 +1,12 @@
 package insurabook.model.policies;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import insurabook.model.claims.Claim;
 import insurabook.model.claims.ClaimId;
+import insurabook.model.claims.InsuraDate;
+import insurabook.model.client.Client;
 import insurabook.model.policytype.PolicyType;
 
 /**
@@ -14,8 +15,9 @@ import insurabook.model.policytype.PolicyType;
 public class Policy {
 
     private final PolicyId policyId;
+    private final Client client;
     private final PolicyType policyType;
-    private final LocalDateTime expiryDate;
+    private final InsuraDate expiryDate;
     private final List<Claim> claim;
 
     /**
@@ -23,11 +25,20 @@ public class Policy {
      * @param policyType from parser
      * @param expiryDate datetime from parser
      */
-    public Policy(PolicyId policyId, PolicyType policyType, LocalDateTime expiryDate) {
+    public Policy(PolicyId policyId, Client client, PolicyType policyType, InsuraDate expiryDate) {
         this.policyId = policyId;
+        this.client = client;
         this.policyType = policyType;
         this.expiryDate = expiryDate;
         this.claim = new ArrayList<>();
+    }
+
+    /**
+     * Getter
+     * @return client id of policy owner
+     */
+    public Client getClient() {
+        return this.client;
     }
 
     /**
@@ -42,7 +53,7 @@ public class Policy {
      * Getter
      * @return expiry date of policy
      */
-    public LocalDateTime getExpiryDate() {
+    public InsuraDate getExpiryDate() {
         return this.expiryDate;
     }
 

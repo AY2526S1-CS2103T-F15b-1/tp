@@ -13,8 +13,8 @@ import insurabook.logic.commands.AddClaimCommand;
 import insurabook.logic.parser.exceptions.ParseException;
 import insurabook.model.claims.Claim;
 import insurabook.model.claims.ClaimAmount;
-import insurabook.model.claims.ClaimDate;
 import insurabook.model.claims.ClaimMessage;
+import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.ClientId;
 import insurabook.model.policies.PolicyId;
 
@@ -45,7 +45,7 @@ public class AddClaimCommandParser implements Parser<AddClaimCommand> {
         ClientId clientId = ParserUtil.parseClientId(argMultimap.getValue(PREFIX_CLIENT_ID).get());
         PolicyId policyId = ParserUtil.parsePolicyId(argMultimap.getValue(PREFIX_POLICY_ID).get());
         ClaimAmount amount = ParserUtil.parseClaimAmount(argMultimap.getValue(PREFIX_CLAIM_AMOUNT).get());
-        ClaimDate date = ParserUtil.parseClaimDate(argMultimap.getValue(PREFIX_CLAIM_DATE).get());
+        InsuraDate date = ParserUtil.parseInsuraDate(argMultimap.getValue(PREFIX_CLAIM_DATE).get());
         ClaimMessage message = ParserUtil.parseClaimMessage(
                 argMultimap.getValue(PREFIX_DESCRIPTION).isEmpty()
                 ? ""

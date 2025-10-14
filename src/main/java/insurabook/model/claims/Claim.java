@@ -14,13 +14,13 @@ public class Claim {
     private final ClientId client;
     private final PolicyId policy;
     private final ClaimAmount amount;
-    private final ClaimDate date;
+    private final InsuraDate date;
     private final ClaimMessage description;
 
     /**
      * Every field must be present and not null, except description which is optional.
      */
-    public Claim(ClientId client, PolicyId policy, ClaimAmount amount, ClaimDate date, ClaimMessage ... description) {
+    public Claim(ClientId client, PolicyId policy, ClaimAmount amount, InsuraDate date, ClaimMessage ... description) {
         this.claimId = new ClaimId("C" + String.format("%04d", claimCounter++));
         this.client = client;
         this.policy = policy;
@@ -46,7 +46,7 @@ public class Claim {
         return amount;
     }
 
-    public ClaimDate getDate() {
+    public InsuraDate getDate() {
         return date;
     }
 

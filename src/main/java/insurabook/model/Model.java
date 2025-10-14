@@ -6,8 +6,10 @@ import java.util.function.Predicate;
 import insurabook.commons.core.GuiSettings;
 import insurabook.model.claims.Claim;
 import insurabook.model.claims.ClaimId;
+import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
+import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
 import javafx.collections.ObservableList;
 
@@ -100,4 +102,10 @@ public interface Model {
      * The claim must exist in the address book.
      */
     Claim deleteClaim(ClientId clientId, PolicyId policyId, ClaimId claimId);
+
+    /**
+     * Adds the given policy.
+     * {@code policy} must not already exist in the address book.
+     */
+    Policy addPolicy(PolicyId policyId, ClientId clientId, int policyTypeId, InsuraDate expiryDate);
 }

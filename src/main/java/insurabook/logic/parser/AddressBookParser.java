@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import insurabook.commons.core.LogsCenter;
 import insurabook.logic.commands.AddClaimCommand;
 import insurabook.logic.commands.AddClientCommand;
+import insurabook.logic.commands.AddPolicyCommand;
 import insurabook.logic.commands.ClearCommand;
 import insurabook.logic.commands.Command;
 import insurabook.logic.commands.DeleteClaimCommand;
@@ -90,6 +91,8 @@ public class AddressBookParser {
         case DeleteClaimCommand.COMMAND_WORD:
             return new DeleteClaimCommandParser().parse(arguments);
 
+        case AddPolicyCommand.COMMAND_WORD:
+            return new AddPolicyCommandParser().parse(arguments);
         default:
             logger.finer("This user input caused a ParseException: " + userInput);
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

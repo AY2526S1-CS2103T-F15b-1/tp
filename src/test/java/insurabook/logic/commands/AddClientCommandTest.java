@@ -23,8 +23,10 @@ import insurabook.model.ReadOnlyAddressBook;
 import insurabook.model.ReadOnlyUserPrefs;
 import insurabook.model.claims.Claim;
 import insurabook.model.claims.ClaimId;
+import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
+import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
 import insurabook.testutil.PersonBuilder;
 import javafx.collections.ObservableList;
@@ -166,6 +168,11 @@ public class AddClientCommandTest {
         @Override
         public void addClaim(Claim claim) {
             throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Policy addPolicy(PolicyId policyId, ClientId clientId, int policyTypeId, InsuraDate expiryDate) {
+            return null;
         }
 
         @Override

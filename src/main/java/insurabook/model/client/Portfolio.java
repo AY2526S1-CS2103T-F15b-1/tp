@@ -1,12 +1,10 @@
 package insurabook.model.client;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import insurabook.model.claims.Claim;
 import insurabook.model.claims.ClaimId;
 import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
+import insurabook.model.policies.UniquePolicyList;
 
 /**
  * Represents a Client's record of policies and claims in InsuraBook.
@@ -15,20 +13,20 @@ import insurabook.model.policies.PolicyId;
 public class Portfolio {
 
     private insurabook.model.client.Client client;
-    private List<Policy> policies;
+    private UniquePolicyList policies;
 
     /**
      * Constructs a container for a Client's policies
      */
     public Portfolio() {
-        this.policies = new ArrayList<>();
+        this.policies = new UniquePolicyList();
     }
 
     public insurabook.model.client.Client getClient() {
         return this.client;
     }
 
-    public List<Policy> getPolicies() {
+    public UniquePolicyList getPolicies() {
         return this.policies;
     }
 
@@ -46,7 +44,9 @@ public class Portfolio {
      * Function to insert policy
      * @param policy to insert
      */
-    public void addPolicy(Policy policy) {}
+    public void addPolicy(Policy policy) {
+        policies.add(policy);
+    }
 
     /**
      * Function to delete policy
@@ -59,10 +59,7 @@ public class Portfolio {
      * @param claim to add
      */
     public void addClaim(Claim claim) {
-        policies.stream()
-                .filter(policy -> policy.getPolicyId().equals(claim.getPolicyId()))
-                .findFirst()
-                .ifPresent(policy -> policy.addClaim(claim));
+        policies.getPolicy(claim.getPolicyId()).addClaim(claim);
     }
 
     /**
@@ -73,13 +70,7 @@ public class Portfolio {
      * @return removed claim
      */
     public Claim removeClaim(PolicyId policyId, ClaimId claimId) {
-        System.out.println("Looking for policyId: " + policyId);
-        policies.forEach(p -> System.out.println("Existing policy: " + p.getPolicyId()));
-        Claim claim = policies.stream()
-                .filter(policy -> policy.getPolicyId().equals(policyId))
-                .findFirst()
-                .map(policy -> policy.removeClaim(claimId))
-                .orElse(null);
+        Claim claim = policies.getPolicy(policyId).removeClaim(claimId);
         return claim;
     }
 }

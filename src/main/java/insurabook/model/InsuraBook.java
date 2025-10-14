@@ -7,10 +7,14 @@ import java.util.List;
 import insurabook.commons.util.ToStringBuilder;
 import insurabook.model.claims.Claim;
 import insurabook.model.claims.ClaimId;
+import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
 import insurabook.model.client.UniqueClientList;
+import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
+import insurabook.model.policytype.PolicyType;
+import insurabook.model.policytype.UniquePolicyTypeList;
 import javafx.collections.ObservableList;
 
 /**
@@ -19,6 +23,7 @@ import javafx.collections.ObservableList;
  */
 public class InsuraBook implements ReadOnlyInsuraBook {
     private final UniqueClientList clients;
+    private final UniquePolicyTypeList policyTypes;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -29,6 +34,7 @@ public class InsuraBook implements ReadOnlyInsuraBook {
      */
     {
         clients = new UniqueClientList();
+        policyTypes = new UniquePolicyTypeList();
     }
 
     public InsuraBook() {}
@@ -103,6 +109,26 @@ public class InsuraBook implements ReadOnlyInsuraBook {
      */
     public Client getClient(ClientId clientId) {
         return clients.getClient(clientId);
+    }
+
+    /**
+     * Returns the policy type with the given policyTypeId.
+     * If no such policy type exists, returns null.
+     */
+    public PolicyType getPolicyType(int policyTypeId) {
+        return policyTypes.getPolicyType(policyTypeId);
+    }
+
+    /**
+     * Adds a policy to the client with the given info.
+     * If no such client or policy type exists, throws an exception.
+     */
+    public Policy addPolicy(PolicyId policyId, ClientId clientId, int policyTypeId, InsuraDate expiryDate) {
+        Client client = this.getClient(clientId);
+        PolicyType policyType = this.getPolicyType(policyTypeId);
+        Policy policy = new Policy(policyId, client, policyType, expiryDate);
+        client.addPolicy(policy);
+        return policy;
     }
 
     /**
