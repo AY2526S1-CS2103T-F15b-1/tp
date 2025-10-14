@@ -32,7 +32,7 @@ public class AddClaimCommand extends Command {
             + PREFIX_CLAIM_AMOUNT + "5000 "
             + PREFIX_CLAIM_DATE + "2025-10-01 "
             + PREFIX_DESCRIPTION + "Car accident claim";
-    public static final String MESSAGE_SUCCESS = "New claim added: %1$s";
+    public static final String MESSAGE_SUCCESS = "Added claim %1$s";
 
     private final Claim toAdd;
 
@@ -50,6 +50,6 @@ public class AddClaimCommand extends Command {
 
         model.addClaim(toAdd);
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd, 0)));
     }
 }

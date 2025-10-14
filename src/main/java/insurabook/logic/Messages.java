@@ -51,20 +51,32 @@ public class Messages {
 
     /**
      * Formats the {@code claim} for display to the user.
+     * If op is 0, format for AddClaimCommand success message.
+     * If op is 1, format for DeleteClaimCommand display message.
      */
-    public static String format(Claim claim) {
+    public static String format(Claim claim, int op) {
         final StringBuilder builder = new StringBuilder();
-        builder.append(claim.getClaimId())
-                .append("; Client Id: ")
-                .append(claim.getClientId())
-                .append("; Policy Id: ")
-                .append(claim.getPolicyId())
-                .append("; Claim amount: ")
-                .append(claim.getAmount())
-                .append("; Claim date: ")
-                .append(claim.getDate())
-                .append("; Description: ")
-                .append(claim.getDescription());
+        if (op == 0) {
+            builder.append(claim.getClaimId())
+                    .append(" for client ")
+                    .append(claim.getClientId())
+                    .append(", policy ")
+                    .append(claim.getPolicyId())
+                    .append(" with an amount of $")
+                    .append(claim.getAmount())
+                    .append(" on date ")
+                    .append(claim.getDate())
+                    .append("; Description: ")
+                    .append(claim.getDescription());
+        } else {
+            builder.append(claim.getClaimId())
+                    .append(" on policy ")
+                    .append(claim.getPolicyId())
+                    .append(" for client ")
+                    .append(claim.getClientId())
+                    .append("; Description: ")
+                    .append(claim.getDescription());
+        }
         return builder.toString();
     }
 

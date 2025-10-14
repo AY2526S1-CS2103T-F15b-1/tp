@@ -15,7 +15,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_POLICY_ID = new Prefix("-p_id");
     public static final Prefix PREFIX_CLIENT_ID = new Prefix("-c_id");
     public static final Prefix PREFIX_CLIENT_NAME = new Prefix("-n");
-    public static final Prefix PREFIX_DESCRIPTION = new Prefix("-d");
+    public static final Prefix PREFIX_DESCRIPTION = new Prefix("-desc");
     public static final Prefix PREFIX_POLICY_TYPE = new Prefix("-pt");
     public static final Prefix PREFIX_POLICY_TYPE_ID = new Prefix("-pt_id");
     public static final Prefix PREFIX_PREMIUM = new Prefix("-pr");
