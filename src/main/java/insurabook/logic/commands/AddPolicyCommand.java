@@ -7,10 +7,12 @@ import static insurabook.logic.parser.CliSyntax.PREFIX_POLICY_ID;
 import static insurabook.logic.parser.CliSyntax.PREFIX_POLICY_TYPE_ID;
 import static java.util.Objects.requireNonNull;
 
+import insurabook.logic.Messages;
 import insurabook.logic.commands.exceptions.CommandException;
 import insurabook.model.Model;
 import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.ClientId;
+import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
 
 /**
@@ -56,7 +58,7 @@ public class AddPolicyCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        model.addPolicy(policyId, clientId, policyTypeId, expiryDate);
-        return new CommandResult(String.format(MESSAGE_SUCCESS));
+        Policy policy = model.addPolicy(policyId, clientId, policyTypeId, expiryDate);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(policy)));
     }
 }

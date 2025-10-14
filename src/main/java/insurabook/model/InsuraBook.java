@@ -122,11 +122,12 @@ public class InsuraBook implements ReadOnlyInsuraBook {
      * Adds a policy to the client with the given info.
      * If no such client or policy type exists, throws an exception.
      */
-    public void addPolicy(PolicyId policyId, ClientId clientId, int policyTypeId, InsuraDate expiryDate) {
+    public Policy addPolicy(PolicyId policyId, ClientId clientId, int policyTypeId, InsuraDate expiryDate) {
         Client client = this.getClient(clientId);
         PolicyType policyType = this.getPolicyType(policyTypeId);
         Policy policy = new Policy(policyId, client, policyType, expiryDate);
         client.addPolicy(policy);
+        return policy;
     }
 
     /**

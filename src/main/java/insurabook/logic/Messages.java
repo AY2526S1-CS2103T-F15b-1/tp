@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 import insurabook.logic.parser.Prefix;
 import insurabook.model.claims.Claim;
 import insurabook.model.client.Client;
+import insurabook.model.policies.Policy;
 
 /**
  * Container for user visible messages.
@@ -65,6 +66,23 @@ public class Messages {
                 .append(claim.getDate())
                 .append("; Description: ")
                 .append(claim.getDescription());
+        return builder.toString();
+    }
+
+    /**
+     * Formats the {@code policy} for display to the user.
+     */
+    public static String format(Policy policy) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(policy.getPolicyId())
+                .append("; Policy Id: ")
+                .append(policy.getPolicyId())
+                .append("; Client Id: ")
+                .append(policy.getClient().getClientId())
+                .append("; PolicyTypeId: ")
+                .append(policy.getPolicyType().getPtId())
+                .append("; Expiry Date: ")
+                .append(policy.getExpiryDate());
         return builder.toString();
     }
 

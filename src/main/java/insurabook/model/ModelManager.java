@@ -13,6 +13,7 @@ import insurabook.model.claims.Claim;
 import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
+import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -172,7 +173,7 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void addPolicy(PolicyId policyId, ClientId clientId, int policyTypeId, InsuraDate expiryDate) {
-        insuraBook.addPolicy(policyId, clientId, policyTypeId, expiryDate);
+    public Policy addPolicy(PolicyId policyId, ClientId clientId, int policyTypeId, InsuraDate expiryDate) {
+        return insuraBook.addPolicy(policyId, clientId, policyTypeId, expiryDate);
     }
 }

@@ -25,6 +25,7 @@ import insurabook.model.claims.Claim;
 import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
+import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
 import insurabook.testutil.PersonBuilder;
 import javafx.collections.ObservableList;
@@ -169,8 +170,8 @@ public class AddClientCommandTest {
         }
 
         @Override
-        public void addPolicy(PolicyId policyId, ClientId clientId, int policyTypeId, InsuraDate expiryDate) {
-
+        public Policy addPolicy(PolicyId policyId, ClientId clientId, int policyTypeId, InsuraDate expiryDate) {
+            return null;
         }
     }
 
