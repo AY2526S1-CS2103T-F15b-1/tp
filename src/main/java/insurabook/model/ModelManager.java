@@ -10,7 +10,10 @@ import java.util.logging.Logger;
 import insurabook.commons.core.GuiSettings;
 import insurabook.commons.core.LogsCenter;
 import insurabook.model.claims.Claim;
+import insurabook.model.claims.ClaimId;
 import insurabook.model.client.Client;
+import insurabook.model.client.ClientId;
+import insurabook.model.policies.PolicyId;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 
@@ -166,6 +169,11 @@ public class ModelManager implements Model {
     @Override
     public void addClaim(Claim claim) {
         insuraBook.addClaim(claim);
+    }
+
+    @Override
+    public Claim deleteClaim(ClientId clientId, PolicyId policyId, ClaimId claimId) {
+        return insuraBook.removeClaim(clientId, policyId, claimId);
     }
 
 }

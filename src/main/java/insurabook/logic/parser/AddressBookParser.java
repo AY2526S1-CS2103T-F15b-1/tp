@@ -12,6 +12,7 @@ import insurabook.logic.commands.AddClaimCommand;
 import insurabook.logic.commands.AddClientCommand;
 import insurabook.logic.commands.ClearCommand;
 import insurabook.logic.commands.Command;
+import insurabook.logic.commands.DeleteClaimCommand;
 import insurabook.logic.commands.DeleteClientCommand;
 import insurabook.logic.commands.EditCommand;
 import insurabook.logic.commands.ExitCommand;
@@ -85,6 +86,9 @@ public class AddressBookParser {
 
         case AddClaimCommand.COMMAND_WORD:
             return new AddClaimCommandParser().parse(arguments);
+
+        case DeleteClaimCommand.COMMAND_WORD:
+            return new DeleteClaimCommandParser().parse(arguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);

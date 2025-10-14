@@ -11,6 +11,7 @@ import insurabook.commons.util.StringUtil;
 import insurabook.logic.parser.exceptions.ParseException;
 import insurabook.model.claims.ClaimAmount;
 import insurabook.model.claims.ClaimDate;
+import insurabook.model.claims.ClaimId;
 import insurabook.model.claims.ClaimMessage;
 import insurabook.model.client.Address;
 import insurabook.model.client.ClientId;
@@ -200,5 +201,20 @@ public class ParserUtil {
             throw new ParseException(ClaimMessage.MESSAGE_CONSTRAINTS);
         }
         return new ClaimMessage(trimmedMessage);
+    }
+
+    /**
+     * Parses a {@code String claimId} into a {@code ClaimId}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code claimId} is invalid.
+     */
+    public static ClaimId parseClaimId(String claimId) throws ParseException {
+        requireNonNull(claimId);
+        String trimmedClaimId = claimId.trim();
+        if (!ClaimId.isValidClientId(trimmedClaimId)) {
+            throw new ParseException(ClaimId.MESSAGE_CONSTRAINTS);
+        }
+        return new ClaimId(trimmedClaimId);
     }
 }

@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import insurabook.model.claims.Claim;
+import insurabook.model.claims.ClaimId;
 import insurabook.model.policies.Policy;
+import insurabook.model.policies.PolicyId;
 
 /**
  * Represents a Client's record of policies and claims in InsuraBook.
@@ -63,4 +65,21 @@ public class Portfolio {
                 .ifPresent(policy -> policy.addClaim(claim));
     }
 
+    /**
+     * Function to remove claim from a policy
+     *
+     * @param policyId of policy to remove claim from
+     * @param claimId of claim to remove
+     * @return removed claim
+     */
+    public Claim removeClaim(PolicyId policyId, ClaimId claimId) {
+        System.out.println("Looking for policyId: " + policyId);
+        policies.forEach(p -> System.out.println("Existing policy: " + p.getPolicyId()));
+        Claim claim = policies.stream()
+                .filter(policy -> policy.getPolicyId().equals(policyId))
+                .findFirst()
+                .map(policy -> policy.removeClaim(claimId))
+                .orElse(null);
+        return claim;
+    }
 }
