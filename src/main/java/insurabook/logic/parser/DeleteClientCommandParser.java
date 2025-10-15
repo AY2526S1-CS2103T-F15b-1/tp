@@ -2,11 +2,9 @@ package insurabook.logic.parser;
 
 import static insurabook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
-import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
 
 import java.util.stream.Stream;
 
-import insurabook.commons.core.index.Index;
 import insurabook.logic.commands.DeleteClientCommand;
 import insurabook.logic.parser.exceptions.ParseException;
 import insurabook.model.client.Client;

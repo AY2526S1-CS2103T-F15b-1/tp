@@ -1,25 +1,16 @@
 package insurabook.logic.parser;
 
 import static insurabook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static insurabook.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
 import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
-import static insurabook.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static insurabook.logic.parser.CliSyntax.PREFIX_PHONE;
-import static insurabook.logic.parser.CliSyntax.PREFIX_TAG;
 
-import java.util.Set;
 import java.util.stream.Stream;
 
 import insurabook.logic.commands.AddClientCommand;
 import insurabook.logic.parser.exceptions.ParseException;
-import insurabook.model.client.Address;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
-import insurabook.model.client.Email;
 import insurabook.model.client.Name;
-import insurabook.model.client.Phone;
-import insurabook.model.tag.Tag;
 
 /**
  * Parses input arguments and creates a new AddCommand object

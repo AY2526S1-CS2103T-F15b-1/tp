@@ -3,9 +3,6 @@ package insurabook.logic.commands;
 import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
 import static java.util.Objects.requireNonNull;
 
-import java.util.List;
-
-import insurabook.commons.core.index.Index;
 import insurabook.commons.util.ToStringBuilder;
 import insurabook.logic.Messages;
 import insurabook.logic.commands.exceptions.CommandException;
@@ -30,6 +27,9 @@ public class DeleteClientCommand extends Command {
 
     private final Client toDelete;
 
+    /**
+     * Creates a DeleteCommand to delete the specified {@code Person}
+     */
     public DeleteClientCommand(Client client) {
         requireNonNull(client);
         toDelete = client;

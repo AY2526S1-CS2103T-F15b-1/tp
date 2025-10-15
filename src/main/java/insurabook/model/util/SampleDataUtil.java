@@ -6,12 +6,9 @@ import java.util.stream.Collectors;
 
 import insurabook.model.AddressBook;
 import insurabook.model.ReadOnlyAddressBook;
-import insurabook.model.client.Address;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
-import insurabook.model.client.Email;
 import insurabook.model.client.Name;
-import insurabook.model.client.Phone;
 import insurabook.model.tag.Tag;
 
 /**

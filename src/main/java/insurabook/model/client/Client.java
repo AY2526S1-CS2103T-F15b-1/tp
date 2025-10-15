@@ -2,17 +2,13 @@ package insurabook.model.client;
 
 import static insurabook.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 import insurabook.commons.util.ToStringBuilder;
 import insurabook.model.claims.Claim;
 import insurabook.model.claims.ClaimId;
 import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
-import insurabook.model.tag.Tag;
 
 /**
  * Represents a Client in InsuraBook.
