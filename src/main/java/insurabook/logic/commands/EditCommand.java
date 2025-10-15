@@ -1,6 +1,6 @@
 package insurabook.logic.commands;
 
-import static insurabook.logic.parser.CliSyntax.*;
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
 import static insurabook.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static java.util.Objects.requireNonNull;
 
