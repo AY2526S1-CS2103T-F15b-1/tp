@@ -4,19 +4,18 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import insurabook.model.policies.exceptions.DuplicatePolicyException;
-import insurabook.model.policies.exceptions.PolicyNotFoundException;
+import insurabook.commons.exceptions.IllegalValueException;
 import insurabook.model.policytype.enums.PolicyTypeEquality;
+import insurabook.model.policytype.exceptions.PolicyTypeDuplicateException;
 import insurabook.model.policytype.exceptions.PolicyTypeMissingException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-
 /**
  * A list of policy types that enforces uniqueness between its elements and does not allow nulls.
  * A policy is considered unique by comparing using {@code PolicyType#equals(Object)}. As such, adding and updating of
- * policies uses Policy#equals(Object) for equality so as to ensure that the policy being added or updated is
- * unique in terms of identity in the UniquePolicyList.
+ * policies uses PolicyType#equals(Object) for equality so as to ensure that the policy being added or updated is
+ * unique in terms of identity in the UniquePolicyTypeList.
  *
  * Supports a minimal set of list operations.
  */
@@ -26,38 +25,46 @@ public class UniquePolicyTypeList implements Iterable<PolicyType> {
             FXCollections.unmodifiableObservableList(internalList);
 
     /**
-     * Returns true if the list contains an equivalent policy as the given argument.
-     *
-     * @param toCheck
-     * @return
+     * Returns size of list.
      */
-    public boolean contains(PolicyType toCheck) {
-        return internalList.stream().anyMatch(toCheck::equals);
+    public int size() {
+        return internalList.size();
     }
 
     /**
-     * Adds a policy to the list.
-     * The policy must not already exist in the list.
+     * Checks if name or ID already exist within PolicyType list.
      *
-     * @param toAdd
+     * @param toCheck policy type to check if duplicate
+     * @throws PolicyTypeDuplicateException if duplicate is found
      */
-    public void add(PolicyType toAdd) {
-        if (contains(toAdd)) {
-            throw new DuplicatePolicyException();
+    public void checkDuplicate(PolicyType toCheck) throws PolicyTypeDuplicateException {
+        for (PolicyType pt: internalList) {
+            if (pt.equals(toCheck)) {
+                throw new PolicyTypeDuplicateException(pt);
+            }
         }
+    }
+
+    /**
+     * Adds a policy type to the list.
+     *
+     * @param toAdd policy type to add
+     * @throws PolicyTypeDuplicateException if policy already exists in list
+     */
+    public void add(PolicyType toAdd) throws PolicyTypeDuplicateException {
+        checkDuplicate(toAdd);
         internalList.add(toAdd);
     }
 
     /**
-     * Removes the equivalent policy from the list.
-     * The policy must exist in the list.
+     * Deletes a PolicyType from list by index.
      *
-     * @param toRemove
+     * @param index list index of PolicyType to remove (0-indexed)
+     * @throws IllegalValueException when index out of bounds
      */
-    public void remove(PolicyType toRemove) {
-        if (!internalList.remove(toRemove)) {
-            throw new PolicyNotFoundException();
-        }
+    public void remove(int index) throws IllegalValueException {
+        checkWithinRange(index);
+        internalList.remove(index);
     }
 
     /**
@@ -104,6 +111,18 @@ public class UniquePolicyTypeList implements Iterable<PolicyType> {
     }
 
     /**
+     * Returns PolicyType matching index in list.
+     *
+     * @param index index of PolicyType to return
+     * @return PolicyType matching index in list
+     * @throws IllegalValueException when index out of bounds
+     */
+    public PolicyType get(int index) throws IllegalValueException {
+        checkWithinRange(index);
+        return internalList.get(index);
+    }
+
+    /**
      * Finds PolicyTypes from search name and ID.
      * PolicyTypes are selected if they match either given name or ID exactly.
      *
@@ -123,16 +142,25 @@ public class UniquePolicyTypeList implements Iterable<PolicyType> {
         return result;
     }
 
-
+    /**
+     * Return internal list as unmodifiable observable list (for JavaFX).
+     */
     public ObservableList<PolicyType> asUnmodifiableObservableList() {
         return internalUnmodifiableList;
     }
 
+    /**
+     * Return internal list as iterator.
+     */
     @Override
     public Iterator<PolicyType> iterator() {
         return internalList.iterator();
     }
 
+    /**
+     * Returns true if provided Object is an equal UniquePolicyTypeList.
+     * Two UniquePolicyTypeLists are equal if their internal lists are equal.
+     */
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -159,7 +187,7 @@ public class UniquePolicyTypeList implements Iterable<PolicyType> {
     }
 
     /**
-     * Returns true if {@code policies} contains only unique persons.
+     * Returns true if {@code policyTypes} contains only unique policy types.
      */
     private boolean policyTypesAreUnique(List<PolicyType> policyTypes) {
         for (int i = 0; i < policyTypes.size() - 1; i++) {
@@ -173,16 +201,32 @@ public class UniquePolicyTypeList implements Iterable<PolicyType> {
     }
 
     /**
+     * Checks if index is within range of list.
+     * If out of range, throws IllegalValueException.
+     */
+    private void checkWithinRange(int index) throws IllegalValueException {
+        if (index >= internalList.size() || index < 0) {
+            throw new IllegalValueException(
+                    String.format("Index out of bounds of list of policy types. (Length is %s)",
+                            internalList.size()));
+        }
+    }
+
+    /**
      * Gets a PolicyType from the list using its PolicyTypeId
      *
      * @param policyTypeId
      * @return Policy
-     * @throws PolicyNotFoundException if no such policy could be found
+     * @throws PolicyTypeMissingException if no such policy could be found
      */
     public PolicyType getPolicyType(int policyTypeId) {
+        // NOTE: This function is for *internal use only*.
+        // Users should not access policy types by ID alone.
+        // See project docs for more information.
         return internalList.stream()
                 .filter(policyType -> policyType.getPtId() == policyTypeId)
                 .findFirst()
-                .orElseThrow(PolicyNotFoundException::new);
+                .orElseThrow(() -> new PolicyTypeMissingException(policyTypeId));
     }
+
 }
