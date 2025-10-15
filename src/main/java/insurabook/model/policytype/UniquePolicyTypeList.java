@@ -1,20 +1,22 @@
 package insurabook.model.policytype;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import insurabook.model.policies.exceptions.DuplicatePolicyException;
 import insurabook.model.policies.exceptions.PolicyNotFoundException;
+import insurabook.model.policytype.enums.PolicyTypeEquality;
+import insurabook.model.policytype.exceptions.PolicyTypeMissingException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 
 /**
- * A list of policies that enforces uniqueness between its elements and does not allow nulls.
- * A policy is considered unique by comparing using {@code Policy#isSamePolicy(Policy)}. As such, adding and updating of
- * policies uses Policy#isSamePolicy(Policy) for equality so as to ensure that the policy being added or updated is
- * unique in terms of identity in the UniquePolicyList. However, the removal of a policy uses Policy#equals(Object) so
- * as to ensure that the policy with exactly the same fields will be removed.
+ * A list of policy types that enforces uniqueness between its elements and does not allow nulls.
+ * A policy is considered unique by comparing using {@code PolicyType#equals(Object)}. As such, adding and updating of
+ * policies uses Policy#equals(Object) for equality so as to ensure that the policy being added or updated is
+ * unique in terms of identity in the UniquePolicyList.
  *
  * Supports a minimal set of list operations.
  */
@@ -56,6 +58,69 @@ public class UniquePolicyTypeList implements Iterable<PolicyType> {
         if (!internalList.remove(toRemove)) {
             throw new PolicyNotFoundException();
         }
+    }
+
+    /**
+     * Deletes a PolicyType from list matching name and ID.
+     * If matching PolicyType found and deleted, returns null.
+     * If only PolicyType(s) matching one of either name or ID is found, returns it as list.
+     * If no PolicyTypes matching either name or ID are found, throw exception.
+     *
+     * @param name name to search for
+     * @param id ID to search for
+     * @return null if successful, list of indices of half-matching PolicyTypes if available
+     * @throws PolicyTypeMissingException if no PolicyTypes found
+     */
+    public List<Integer> remove(String name, int id) throws PolicyTypeMissingException {
+        List<Integer> halfMatchings = new ArrayList<>();
+        boolean hasRemoved = false;
+        for (int i = 0; i < internalList.size() && !hasRemoved; i++) {
+            PolicyType pt = internalList.get(i);
+            PolicyTypeEquality equality = pt.policyTypeEquals(name, id);
+
+            switch (equality) {
+            case BOTH_EQUAL:
+                internalList.remove(i);
+                hasRemoved = true; // break the for loop
+                break;
+
+            case NAME_EQUAL:
+            case ID_EQUAL:
+                halfMatchings.add(i);
+                break;
+
+            default:
+                // do nothing
+            }
+        }
+
+        if (hasRemoved) {
+            return null;
+        } else if (!halfMatchings.isEmpty()) {
+            return halfMatchings;
+        } else {
+            throw new PolicyTypeMissingException(name, id);
+        }
+    }
+
+    /**
+     * Finds PolicyTypes from search name and ID.
+     * PolicyTypes are selected if they match either given name or ID exactly.
+     *
+     * @param name Given name to search with.
+     * @param id Given ID to search with.
+     * @return list of indices matching selected PolicyTypes
+     */
+    public List<Integer> findMatching(String name, int id) {
+        List<Integer> result = new ArrayList<>();
+        for (int i = 0; i < internalList.size(); i++) {
+            PolicyType pt = internalList.get(i);
+
+            if (pt.policyTypeEquals(name, id) != PolicyTypeEquality.NEITHER_EQUAL) {
+                result.add(i);
+            }
+        }
+        return result;
     }
 
 
