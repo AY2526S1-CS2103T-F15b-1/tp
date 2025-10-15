@@ -8,12 +8,6 @@ import insurabook.model.policytype.exceptions.PolicyTypeDuplicateException;
  */
 public class PolicyType {
 
-    /**
-     * List of all PolicyTypes.
-     * TODO: Shift ownership of this to main running class, not PolicyType class.
-     */
-    private static final PolicyTypeList recordedPolicyTypes = new PolicyTypeList();
-
     /** Name of policy type. */
     private final String ptName;
 
@@ -34,10 +28,8 @@ public class PolicyType {
      * @throws PolicyTypeDuplicateException if duplicate policy type already exists
      */
     public PolicyType(String ptName, int ptId) throws PolicyTypeDuplicateException {
-        recordedPolicyTypes.checkDuplicate(ptName, ptId);
         this.ptName = ptName;
         this.ptId = ptId;
-        recordedPolicyTypes.addPolicyType(this);
     }
 
     /**
@@ -51,7 +43,6 @@ public class PolicyType {
      */
     public PolicyType(String ptName, int ptId, String ptDescription, int ptPremium)
             throws PolicyTypeDuplicateException {
-        recordedPolicyTypes.checkDuplicate(ptName, ptId);
         this.ptName = ptName;
         this.ptId = ptId;
         if (ptDescription != null) {
@@ -60,7 +51,6 @@ public class PolicyType {
         if (ptPremium >= 0) {
             this.ptPremium = ptPremium;
         }
-        recordedPolicyTypes.addPolicyType(this);
     }
 
     /**
@@ -107,7 +97,7 @@ public class PolicyType {
     public boolean equals(Object o) {
         if (o instanceof PolicyType castedObject) {
             PolicyTypeEquality result = this.policyTypeEquals(castedObject.ptName, castedObject.ptId);
-            return result == PolicyTypeEquality.ID_EQUAL || result == PolicyTypeEquality.NAME_EQUAL;
+            return !(result == PolicyTypeEquality.NEITHER_EQUAL);
         } else {
             return false;
         }
