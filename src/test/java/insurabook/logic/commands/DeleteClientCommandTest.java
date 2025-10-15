@@ -37,8 +37,6 @@ import javafx.collections.ObservableList;
  */
 public class DeleteClientCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
     @Test
     public void execute_missingClientId_throwsCommandException() {
         Name name = new Name("Bob");
@@ -51,8 +49,6 @@ public class DeleteClientCommandTest {
                 DeleteClientCommand.MESSAGE_MISSING_CLIENT,
                 () -> deleteClientCommand.execute(modelStub));
     }
-
-
 
     @Test
     public void equals() {

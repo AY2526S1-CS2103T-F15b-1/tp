@@ -18,11 +18,11 @@ import insurabook.testutil.PersonBuilder;
 
 public class ClientTest {
 
-    @Test
-    public void asObservableList_modifyList_throwsUnsupportedOperationException() {
-        Client client = new PersonBuilder().build();
-        assertThrows(UnsupportedOperationException.class, () -> client.getTags().remove(0));
-    }
+    //@Test
+    //public void asObservableList_modifyList_throwsUnsupportedOperationException() {
+    //    Client client = new PersonBuilder().build();
+    //    assertThrows(UnsupportedOperationException.class, () -> client.remove(0));
+    //}
 
     @Test
     public void isSamePerson() {
@@ -33,8 +33,7 @@ public class ClientTest {
         assertFalse(ALICE.isSamePerson(null));
 
         // same name, all other attributes different -> returns true
-        Client editedAlice = new PersonBuilder(ALICE).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
-                .withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
+        Client editedAlice = new PersonBuilder(ALICE).build();
         assertTrue(ALICE.isSamePerson(editedAlice));
 
         // different name, all other attributes same -> returns false
@@ -92,8 +91,7 @@ public class ClientTest {
 
     @Test
     public void toStringMethod() {
-        String expected = Client.class.getCanonicalName() + "{name=" + ALICE.getName() + ", phone=" + ALICE.getPhone()
-                + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress() + ", tags=" + ALICE.getTags()
+        String expected = Client.class.getCanonicalName() + "{name=" + ALICE.getName()
                 + ", clientId=" + ALICE.getClientId() + "}";
         assertEquals(expected, ALICE.toString());
     }
