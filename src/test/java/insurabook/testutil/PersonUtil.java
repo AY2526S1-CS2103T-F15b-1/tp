@@ -1,18 +1,11 @@
 package insurabook.testutil;
 
-import static insurabook.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
 import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
-import static insurabook.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static insurabook.logic.parser.CliSyntax.PREFIX_PHONE;
-import static insurabook.logic.parser.CliSyntax.PREFIX_TAG;
-
-import java.util.Set;
 
 import insurabook.logic.commands.AddClientCommand;
 import insurabook.logic.commands.EditCommand.EditPersonDescriptor;
 import insurabook.model.client.Client;
-import insurabook.model.tag.Tag;
 
 /**
  * A utility class for Person.

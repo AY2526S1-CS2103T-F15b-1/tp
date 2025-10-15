@@ -5,10 +5,6 @@ import static insurabook.testutil.Assert.assertThrows;
 import static insurabook.testutil.TypicalPersons.BENSON;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.junit.jupiter.api.Test;
 
 import insurabook.commons.exceptions.IllegalValueException;

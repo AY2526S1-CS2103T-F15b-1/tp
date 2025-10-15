@@ -1,11 +1,6 @@
 package insurabook.model.client;
 
-import static insurabook.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static insurabook.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static insurabook.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static insurabook.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static insurabook.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static insurabook.testutil.Assert.assertThrows;
 import static insurabook.testutil.TypicalPersons.ALICE;
 import static insurabook.testutil.TypicalPersons.BOB;
 import static org.junit.jupiter.api.Assertions.assertEquals;

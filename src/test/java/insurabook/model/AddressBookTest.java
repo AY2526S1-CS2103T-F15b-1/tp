@@ -1,7 +1,5 @@
 package insurabook.model;
 
-import static insurabook.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static insurabook.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static insurabook.testutil.Assert.assertThrows;
 import static insurabook.testutil.TypicalPersons.ALICE;
 import static insurabook.testutil.TypicalPersons.getTypicalAddressBook;

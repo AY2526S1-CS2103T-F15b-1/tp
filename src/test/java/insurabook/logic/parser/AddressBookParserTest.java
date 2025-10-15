@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Test;
 
 import insurabook.logic.commands.AddClientCommand;
 import insurabook.logic.commands.ClearCommand;
-import insurabook.logic.commands.DeleteClientCommand;
 import insurabook.logic.commands.EditCommand;
 import insurabook.logic.commands.EditCommand.EditPersonDescriptor;
 import insurabook.logic.commands.ExitCommand;

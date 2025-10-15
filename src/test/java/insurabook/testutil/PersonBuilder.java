@@ -1,16 +1,8 @@
 package insurabook.testutil;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import insurabook.model.client.Address;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
-import insurabook.model.client.Email;
 import insurabook.model.client.Name;
-import insurabook.model.client.Phone;
-import insurabook.model.tag.Tag;
-import insurabook.model.util.SampleDataUtil;
 
 /**
  * A utility class to help with building Person objects.

@@ -16,34 +16,25 @@ import static insurabook.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
 import static insurabook.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static insurabook.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static insurabook.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
-import static insurabook.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static insurabook.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static insurabook.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
-import static insurabook.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static insurabook.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static insurabook.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static insurabook.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static insurabook.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static insurabook.logic.parser.CliSyntax.PREFIX_PHONE;
 import static insurabook.logic.parser.CliSyntax.PREFIX_TAG;
 import static insurabook.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static insurabook.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static insurabook.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static insurabook.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static insurabook.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 
 import org.junit.jupiter.api.Test;
 
 import insurabook.commons.core.index.Index;
 import insurabook.logic.Messages;
 import insurabook.logic.commands.EditCommand;
-import insurabook.logic.commands.EditCommand.EditPersonDescriptor;
 import insurabook.model.client.Address;
 import insurabook.model.client.Email;
 import insurabook.model.client.Name;
 import insurabook.model.client.Phone;
 import insurabook.model.tag.Tag;
-import insurabook.testutil.EditPersonDescriptorBuilder;
 
 public class EditCommandParserTest {
 

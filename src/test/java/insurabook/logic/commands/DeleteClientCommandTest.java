@@ -1,35 +1,16 @@
 package insurabook.logic.commands;
 
-import static insurabook.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static insurabook.testutil.Assert.assertThrows;
-import static insurabook.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static insurabook.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static insurabook.testutil.TypicalPersons.ALICE;
-import static insurabook.testutil.TypicalPersons.getTypicalAddressBook;
-import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.function.Predicate;
-
 import org.junit.jupiter.api.Test;
 
-import insurabook.commons.core.GuiSettings;
-import insurabook.commons.core.index.Index;
-import insurabook.logic.commands.exceptions.CommandException;
 import insurabook.model.*;
-import insurabook.model.claims.Claim;
-import insurabook.model.claims.ClaimId;
-import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
 import insurabook.model.client.Name;
-import insurabook.model.policies.Policy;
-import insurabook.model.policies.PolicyId;
-import javafx.collections.ObservableList;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for

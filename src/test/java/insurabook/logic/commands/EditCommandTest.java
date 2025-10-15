@@ -3,8 +3,6 @@ package insurabook.logic.commands;
 import static insurabook.logic.commands.CommandTestUtil.DESC_AMY;
 import static insurabook.logic.commands.CommandTestUtil.DESC_BOB;
 import static insurabook.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static insurabook.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static insurabook.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static insurabook.logic.commands.CommandTestUtil.assertCommandFailure;
 import static insurabook.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static insurabook.logic.commands.CommandTestUtil.showPersonAtIndex;

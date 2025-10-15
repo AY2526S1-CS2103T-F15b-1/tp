@@ -2,8 +2,6 @@ package insurabook.logic.parser;
 
 import static insurabook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static insurabook.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static insurabook.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static insurabook.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.jupiter.api.Test;
 

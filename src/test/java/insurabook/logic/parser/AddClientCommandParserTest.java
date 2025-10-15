@@ -25,7 +25,6 @@ import static insurabook.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static insurabook.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static insurabook.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static insurabook.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static insurabook.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static insurabook.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
 import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
