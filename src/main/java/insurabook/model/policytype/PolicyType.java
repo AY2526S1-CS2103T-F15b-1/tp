@@ -12,7 +12,7 @@ public class PolicyType {
     private final String ptName;
 
     /** ID of policy type. */
-    private final int ptId;
+    private final String ptId;
 
     /** Description of policy type. */
     private String ptDescription = "";
@@ -27,7 +27,7 @@ public class PolicyType {
      * @param ptId id of policy type
      * @throws PolicyTypeDuplicateException if duplicate policy type already exists
      */
-    public PolicyType(String ptName, int ptId) throws PolicyTypeDuplicateException {
+    public PolicyType(String ptName, String ptId) throws PolicyTypeDuplicateException {
         this.ptName = ptName;
         this.ptId = ptId;
     }
@@ -41,7 +41,7 @@ public class PolicyType {
      * @param ptPremium specified starting premium of policy type (negative if empty)
      * @throws PolicyTypeDuplicateException if duplicate policy type already exists
      */
-    public PolicyType(String ptName, int ptId, String ptDescription, int ptPremium)
+    public PolicyType(String ptName, String ptId, String ptDescription, int ptPremium)
             throws PolicyTypeDuplicateException {
         this.ptName = ptName;
         this.ptId = ptId;
@@ -67,7 +67,7 @@ public class PolicyType {
      *
      * @return int policy type id
      */
-    public int getPtId() {
+    public String getPtId() {
         return this.ptId;
     }
 
@@ -106,9 +106,9 @@ public class PolicyType {
     /**
      * Checks if this PolicyType shares either given name or ID.
      */
-    public PolicyTypeEquality policyTypeEquals(String name, int id) {
+    public PolicyTypeEquality policyTypeEquals(String name, String id) {
         boolean isNameEqual = ptName.equals(name);
-        boolean isIdEqual = ptId == id;
+        boolean isIdEqual = ptId.equals(id);
 
         if (isNameEqual && isIdEqual) {
             return PolicyTypeEquality.BOTH_EQUAL;

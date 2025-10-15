@@ -117,7 +117,7 @@ public class InsuraBook implements ReadOnlyInsuraBook {
      * Returns the policy type with the given policyTypeId.
      * If no such policy type exists, returns null.
      */
-    public PolicyType getPolicyType(int policyTypeId) {
+    public PolicyType getPolicyType(String policyTypeId) {
         // NOTE: This function is for *internal use only*.
         // Users should not access policy types by ID alone.
         // See project docs for more information.
@@ -144,7 +144,7 @@ public class InsuraBook implements ReadOnlyInsuraBook {
      * @return null if successful, list of indices of half-matching PolicyTypes if available
      * @throws PolicyTypeMissingException if no PolicyTypes found
      */
-    public List<Integer> removePolicyType(String name, int id) throws PolicyTypeMissingException {
+    public List<Integer> removePolicyType(String name, String id) throws PolicyTypeMissingException {
         return policyTypes.remove(name, id);
     }
 
@@ -152,7 +152,7 @@ public class InsuraBook implements ReadOnlyInsuraBook {
      * Adds a policy to the client with the given info.
      * If no such client or policy type exists, throws an exception.
      */
-    public Policy addPolicy(PolicyId policyId, ClientId clientId, int policyTypeId, InsuraDate expiryDate) {
+    public Policy addPolicy(PolicyId policyId, ClientId clientId, String policyTypeId, InsuraDate expiryDate) {
         Client client = this.getClient(clientId);
         PolicyType policyType = this.getPolicyType(policyTypeId);
         Policy policy = new Policy(policyId, client, policyType, expiryDate);
