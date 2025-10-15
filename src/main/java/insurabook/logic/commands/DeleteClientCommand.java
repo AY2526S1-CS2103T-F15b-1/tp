@@ -1,5 +1,6 @@
 package insurabook.logic.commands;
 
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
@@ -18,31 +19,32 @@ public class DeleteClientCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the person identified by the index number used in the displayed person list.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes a client from InsuraBook. "
+            + "Parameters: "
+            + PREFIX_CLIENT_ID + "CLIENT_ID\n"
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_CLIENT_ID + "12345";
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_MISSING_CLIENT = "This client does not exist.";
 
-    private final Index targetIndex;
+    private final Client toDelete;
 
-    public DeleteClientCommand(Index targetIndex) {
-        this.targetIndex = targetIndex;
+    public DeleteClientCommand(Client client) {
+        requireNonNull(client);
+        toDelete = client;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Client> lastShownList = model.getFilteredPersonList();
 
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        if (!model.hasPerson(toDelete)) {
+            throw new CommandException(MESSAGE_MISSING_CLIENT);
         }
 
-        Client clientToDelete = lastShownList.get(targetIndex.getZeroBased());
-        model.deletePerson(clientToDelete);
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(clientToDelete)));
+        model.deletePerson(toDelete);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toDelete)));
     }
 
     @Override
@@ -57,13 +59,13 @@ public class DeleteClientCommand extends Command {
         }
 
         DeleteClientCommand otherDeleteClientCommand = (DeleteClientCommand) other;
-        return targetIndex.equals(otherDeleteClientCommand.targetIndex);
+        return toDelete.equals(otherDeleteClientCommand.toDelete);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("targetIndex", targetIndex)
+                .add("toDelete", toDelete)
                 .toString();
     }
 }

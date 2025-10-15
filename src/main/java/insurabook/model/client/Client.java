@@ -23,25 +23,17 @@ public class Client {
     // Identity fields
     private final ClientId clientId;
     private final Name name;
-    private final Phone phone;
-    private final Email email;
 
     // Data fields
-    private final Address address;
-    private final Set<Tag> tags = new HashSet<>();
     private final Portfolio portfolio;
 
     /**
      * Every field must be present and not null.
      */
-    public Client(Name name, Phone phone, Email email, Address address, Set<Tag> tags,
-                  ClientId clientId) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Client(Name name, ClientId clientId) {
+        requireAllNonNull(name, clientId);
         this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        this.tags.addAll(tags);
+
         this.clientId = clientId;
         this.portfolio = new Portfolio();
     }
@@ -50,32 +42,12 @@ public class Client {
         return name;
     }
 
-    public Phone getPhone() {
-        return phone;
-    }
-
-    public Email getEmail() {
-        return email;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
     public ClientId getClientId() {
         return clientId;
     }
 
     public Portfolio getPortfolio() {
         return portfolio;
-    }
-
-    /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
-     * if modification is attempted.
-     */
-    public Set<Tag> getTags() {
-        return Collections.unmodifiableSet(tags);
     }
 
     /**
@@ -88,7 +60,7 @@ public class Client {
         }
 
         return otherClient != null
-                && otherClient.getName().equals(getName());
+                && otherClient.getClientId().equals(getClientId());
     }
 
     /**
@@ -113,17 +85,13 @@ public class Client {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, clientId);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .add("name", name)
-                .add("phone", phone)
-                .add("email", email)
-                .add("address", address)
-                .add("tags", tags)
                 .add("clientId", clientId)
                 .toString();
     }

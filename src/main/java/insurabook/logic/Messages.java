@@ -39,14 +39,8 @@ public class Messages {
     public static String format(Client client) {
         final StringBuilder builder = new StringBuilder();
         builder.append(client.getName())
-                .append("; Phone: ")
-                .append(client.getPhone())
-                .append("; Email: ")
-                .append(client.getEmail())
-                .append("; Address: ")
-                .append(client.getAddress())
-                .append("; Tags: ");
-        client.getTags().forEach(builder::append);
+                .append("; ClientId: ")
+                .append(client.getClientId());
         return builder.toString();
     }
 

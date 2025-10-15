@@ -18,7 +18,7 @@ import insurabook.logic.commands.DeleteClientCommand;
  */
 public class DeleteClientCommandParserTest {
 
-    private DeleteCommandParser parser = new DeleteCommandParser();
+    private DeleteClientCommandParser parser = new DeleteClientCommandParser();
 
     @Test
     public void parse_validArgs_returnsDeleteCommand() {
