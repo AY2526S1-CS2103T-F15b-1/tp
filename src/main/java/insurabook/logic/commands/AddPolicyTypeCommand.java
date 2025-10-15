@@ -19,7 +19,7 @@ import insurabook.model.policytype.PolicyTypePremium;
  * This class represents the command to add a new policy type.
  */
 public class AddPolicyTypeCommand extends Command {
-    public static final String COMMAND_WORD = "new_policy";
+    public static final String COMMAND_WORD = "new_policy_type";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a policy type. "
             + "Parameters: "
@@ -32,8 +32,7 @@ public class AddPolicyTypeCommand extends Command {
             + PREFIX_POLICY_TYPE_ID + "BRH001 "
             + PREFIX_DESCRIPTION + "Comprehensive Health and Budget Needs "
             + PREFIX_PREMIUM + "1000";
-    public static final String MESSAGE_SUCCESS = "New policy type added: %1$s";
-    public static final String MESSAGE_CLIENT_NOT_FOUND = "The specified client ID does not exist.";
+    public static final String MESSAGE_SUCCESS = "Added %1$s";
 
     private final PolicyTypeName ptName;
     private final PolicyTypeId ptId;
