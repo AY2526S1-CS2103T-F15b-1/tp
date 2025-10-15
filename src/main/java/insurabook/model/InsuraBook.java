@@ -15,6 +15,8 @@ import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
 import insurabook.model.policytype.PolicyType;
 import insurabook.model.policytype.UniquePolicyTypeList;
+import insurabook.model.policytype.exceptions.PolicyTypeDuplicateException;
+import insurabook.model.policytype.exceptions.PolicyTypeMissingException;
 import javafx.collections.ObservableList;
 
 /**
@@ -116,7 +118,34 @@ public class InsuraBook implements ReadOnlyInsuraBook {
      * If no such policy type exists, returns null.
      */
     public PolicyType getPolicyType(int policyTypeId) {
+        // NOTE: This function is for *internal use only*.
+        // Users should not access policy types by ID alone.
+        // See project docs for more information.
         return policyTypes.getPolicyType(policyTypeId);
+    }
+
+    /**
+     * Adds a policy type.
+     * Policy type must not already exist in the list.
+     */
+    public void addPolicyType(PolicyType pt) throws PolicyTypeDuplicateException {
+        requireNonNull(pt);
+        policyTypes.add(pt);
+    }
+
+    /**
+     * Deletes a PolicyType from list matching name and ID.
+     * If matching PolicyType found and deleted, returns null.
+     * If only PolicyType(s) matching one of either name or ID is found, returns it as list.
+     * If no PolicyTypes matching either name or ID are found, throw exception.
+     *
+     * @param name name to search for
+     * @param id ID to search for
+     * @return null if successful, list of indices of half-matching PolicyTypes if available
+     * @throws PolicyTypeMissingException if no PolicyTypes found
+     */
+    public List<Integer> removePolicyType(String name, int id) throws PolicyTypeMissingException {
+        return policyTypes.remove(name, id);
     }
 
     /**
@@ -169,6 +198,11 @@ public class InsuraBook implements ReadOnlyInsuraBook {
     @Override
     public ObservableList<Client> getClientList() {
         return clients.asUnmodifiableObservableList();
+    }
+
+    @Override
+    public ObservableList<PolicyType> getPolicyTypes() {
+        return policyTypes.asUnmodifiableObservableList();
     }
 
     @Override
