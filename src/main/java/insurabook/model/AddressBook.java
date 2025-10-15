@@ -7,19 +7,17 @@ import java.util.List;
 import insurabook.commons.util.ToStringBuilder;
 import insurabook.model.client.Client;
 import insurabook.model.client.UniqueClientList;
-import insurabook.model.policytype.PolicyType;
-import insurabook.model.policytype.PolicyTypeList;
 import javafx.collections.ObservableList;
 
 /**
  * Wraps all data at the address-book level
  * Duplicates are not allowed (by .isSamePerson comparison)
+ *
+ * Deprecated, move to InsuraBook.
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniqueClientList persons;
-
-    private final PolicyTypeList policyTypes;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -30,7 +28,6 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     {
         persons = new UniqueClientList();
-        policyTypes = new PolicyTypeList();
     }
 
     public AddressBook() {}
@@ -111,11 +108,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Client> getPersonList() {
         return persons.asUnmodifiableObservableList();
-    }
-
-    @Override
-    public ObservableList<PolicyType> getPolicyTypes() {
-        return policyTypes.asUnmodifiableObservableList();
     }
 
     @Override

@@ -15,10 +15,4 @@ public interface ReadOnlyAddressBook {
      */
     ObservableList<Client> getPersonList();
 
-    /**
-     * Returns an unmodifiable view of the policy types list.
-     * This list will not contain any duplicate policy types.
-     */
-    ObservableList<PolicyType> getPolicyTypes();
-
 }
