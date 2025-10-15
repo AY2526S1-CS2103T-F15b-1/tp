@@ -198,9 +198,7 @@ public class ModelManager implements Model {
      * Adds the given policy type.
      */
     @Override
-    public void addPolicyType(PolicyTypeName ptName, PolicyTypeId ptId,
-                              PolicyTypeDescription ptDescription, PolicyTypePremium ptPremium) {
-        PolicyType toAdd = new PolicyType(ptName, ptId, ptDescription, ptPremium);
+    public void addPolicyType(PolicyType toAdd) {
         insuraBook.addPolicyType(toAdd);
     }
 

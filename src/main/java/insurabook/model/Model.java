@@ -120,8 +120,7 @@ public interface Model {
     /**
      * Adds the given policy type.
      */
-    void addPolicyType(PolicyTypeName ptName, PolicyTypeId ptId,
-                       PolicyTypeDescription ptDescription, PolicyTypePremium ptPremium);
+    void addPolicyType(PolicyType toAdd);
 
     /**
      * Deletes the policy type based on name and ID.

@@ -34,7 +34,7 @@ public class AddPolicyCommandParser implements Parser<AddPolicyCommand> {
                 PREFIX_CLIENT_ID, PREFIX_POLICY_ID, PREFIX_POLICY_TYPE_ID, PREFIX_EXPIRY_DATE);
         PolicyId policyId = ParserUtil.parsePolicyId(argMultimap.getValue(PREFIX_POLICY_ID).get());
         ClientId clientId = ParserUtil.parseClientId(argMultimap.getValue(PREFIX_CLIENT_ID).get());
-        PolicyTypeId policyTypeId = ParserUtil.parsePolicyTypeId(argMultimap.getValue(PREFIX_POLICY_TYPE_ID).get());
+        PolicyTypeId policyTypeId = ParserUtil.parsePtId(argMultimap.getValue(PREFIX_POLICY_TYPE_ID).get());
         InsuraDate expiryDate = ParserUtil.parseInsuraDate(argMultimap.getValue(PREFIX_EXPIRY_DATE).get());
         return new AddPolicyCommand(policyId, clientId, policyTypeId, expiryDate);
     }
