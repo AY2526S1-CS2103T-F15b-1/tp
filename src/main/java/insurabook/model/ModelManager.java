@@ -4,6 +4,7 @@ import static insurabook.commons.util.CollectionUtil.requireAllNonNull;
 import static java.util.Objects.requireNonNull;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -16,6 +17,10 @@ import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
 import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
+import insurabook.model.policytype.PolicyType;
+import insurabook.model.policytype.PolicyTypeId;
+import insurabook.model.policytype.PolicyTypeName;
+import insurabook.model.policytype.exceptions.PolicyTypeMissingException;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 
@@ -179,12 +184,28 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public Policy addPolicy(PolicyId policyId, ClientId clientId, int policyTypeId, InsuraDate expiryDate) {
+    public Policy addPolicy(PolicyId policyId, ClientId clientId, PolicyTypeId policyTypeId, InsuraDate expiryDate) {
         return insuraBook.addPolicy(policyId, clientId, policyTypeId, expiryDate);
     }
 
     @Override
     public Policy deletePolicy(ClientId clientId, PolicyId policyId) {
         return insuraBook.removePolicy(clientId, policyId);
+    }
+
+    /**
+     * Adds the given policy type.
+     */
+    @Override
+    public void addPolicyType(PolicyType toAdd) {
+        insuraBook.addPolicyType(toAdd);
+    }
+
+    /**
+     * Deletes the policy type based on name and ID.
+     */
+    @Override
+    public List<Integer> deletePolicyType(PolicyTypeName ptName, PolicyTypeId ptId) throws PolicyTypeMissingException {
+        return insuraBook.deletePolicyType(ptName, ptId);
     }
 }

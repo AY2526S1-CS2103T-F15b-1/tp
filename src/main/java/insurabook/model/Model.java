@@ -1,6 +1,7 @@
 package insurabook.model;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.function.Predicate;
 
 import insurabook.commons.core.GuiSettings;
@@ -11,6 +12,9 @@ import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
 import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
+import insurabook.model.policytype.PolicyType;
+import insurabook.model.policytype.PolicyTypeId;
+import insurabook.model.policytype.PolicyTypeName;
 import javafx.collections.ObservableList;
 
 /**
@@ -107,7 +111,17 @@ public interface Model {
      * Adds the given policy.
      * {@code policy} must not already exist in the address book.
      */
-    Policy addPolicy(PolicyId policyId, ClientId clientId, int policyTypeId, InsuraDate expiryDate);
+    Policy addPolicy(PolicyId policyId, ClientId clientId, PolicyTypeId policyTypeId, InsuraDate expiryDate);
 
     Policy deletePolicy(ClientId clientId, PolicyId policyId);
+
+    /**
+     * Adds the given policy type.
+     */
+    void addPolicyType(PolicyType toAdd);
+
+    /**
+     * Deletes the policy type based on name and ID.
+     */
+    List<Integer> deletePolicyType(PolicyTypeName ptName, PolicyTypeId ptId);
 }

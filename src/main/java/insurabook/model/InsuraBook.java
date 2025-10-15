@@ -14,7 +14,11 @@ import insurabook.model.client.UniqueClientList;
 import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
 import insurabook.model.policytype.PolicyType;
+import insurabook.model.policytype.PolicyTypeId;
+import insurabook.model.policytype.PolicyTypeName;
 import insurabook.model.policytype.UniquePolicyTypeList;
+import insurabook.model.policytype.exceptions.PolicyTypeDuplicateException;
+import insurabook.model.policytype.exceptions.PolicyTypeMissingException;
 import javafx.collections.ObservableList;
 
 /**
@@ -115,15 +119,42 @@ public class InsuraBook implements ReadOnlyInsuraBook {
      * Returns the policy type with the given policyTypeId.
      * If no such policy type exists, returns null.
      */
-    public PolicyType getPolicyType(int policyTypeId) {
+    public PolicyType getPolicyType(PolicyTypeId policyTypeId) {
+        // NOTE: This function is for *internal use only*.
+        // Users should not access policy types by ID alone.
+        // See project docs for more information.
         return policyTypes.getPolicyType(policyTypeId);
+    }
+
+    /**
+     * Adds a policy type.
+     * Policy type must not already exist in the list.
+     */
+    public void addPolicyType(PolicyType pt) throws PolicyTypeDuplicateException {
+        requireNonNull(pt);
+        policyTypes.add(pt);
+    }
+
+    /**
+     * Deletes a PolicyType from list matching name and ID.
+     * If matching PolicyType found and deleted, returns null.
+     * If only PolicyType(s) matching one of either name or ID is found, returns it as list.
+     * If no PolicyTypes matching either name or ID are found, throw exception.
+     *
+     * @param name name to search for
+     * @param id ID to search for
+     * @return null if successful, list of indices of half-matching PolicyTypes if available
+     * @throws PolicyTypeMissingException if no PolicyTypes found
+     */
+    public List<Integer> deletePolicyType(PolicyTypeName name, PolicyTypeId id) throws PolicyTypeMissingException {
+        return policyTypes.remove(name, id);
     }
 
     /**
      * Adds a policy to the client with the given info.
      * If no such client or policy type exists, throws an exception.
      */
-    public Policy addPolicy(PolicyId policyId, ClientId clientId, int policyTypeId, InsuraDate expiryDate) {
+    public Policy addPolicy(PolicyId policyId, ClientId clientId, PolicyTypeId policyTypeId, InsuraDate expiryDate) {
         Client client = this.getClient(clientId);
         PolicyType policyType = this.getPolicyType(policyTypeId);
         Policy policy = new Policy(policyId, client, policyType, expiryDate);
@@ -169,6 +200,11 @@ public class InsuraBook implements ReadOnlyInsuraBook {
     @Override
     public ObservableList<Client> getClientList() {
         return clients.asUnmodifiableObservableList();
+    }
+
+    @Override
+    public ObservableList<PolicyType> getPolicyTypes() {
+        return policyTypes.asUnmodifiableObservableList();
     }
 
     @Override
