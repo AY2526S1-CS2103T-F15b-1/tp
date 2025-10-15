@@ -22,6 +22,7 @@ import insurabook.model.policytype.PolicyTypeDescription;
 import insurabook.model.policytype.PolicyTypeId;
 import insurabook.model.policytype.PolicyTypeName;
 import insurabook.model.policytype.PolicyTypePremium;
+import insurabook.model.policytype.exceptions.PolicyTypeMissingException;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 
@@ -206,7 +207,7 @@ public class ModelManager implements Model {
      * Deletes the policy type based on name and ID.
      */
     @Override
-    public List<Integer> deletePolicyType(PolicyTypeName ptName, PolicyTypeId ptId) {
-        return insuraBook.removePolicyType(ptName, ptId);
+    public List<Integer> deletePolicyType(PolicyTypeName ptName, PolicyTypeId ptId) throws PolicyTypeMissingException {
+        return insuraBook.deletePolicyType(ptName, ptId);
     }
 }

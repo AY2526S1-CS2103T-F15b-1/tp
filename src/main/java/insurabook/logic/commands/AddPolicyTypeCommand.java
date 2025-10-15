@@ -40,7 +40,7 @@ public class AddPolicyTypeCommand extends Command {
     private final PolicyTypePremium ptPremium;
 
     /**
-     * Creates an AddPolicyCommand to add the specified {@code Policy}
+     * Creates an AddPolicyTypeCommand.
      */
     public AddPolicyTypeCommand(PolicyTypeName ptName, PolicyTypeId ptId,
                                 PolicyTypeDescription ptDescription, PolicyTypePremium ptPremium) {

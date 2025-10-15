@@ -146,7 +146,7 @@ public class InsuraBook implements ReadOnlyInsuraBook {
      * @return null if successful, list of indices of half-matching PolicyTypes if available
      * @throws PolicyTypeMissingException if no PolicyTypes found
      */
-    public List<Integer> removePolicyType(PolicyTypeName name, PolicyTypeId id) throws PolicyTypeMissingException {
+    public List<Integer> deletePolicyType(PolicyTypeName name, PolicyTypeId id) throws PolicyTypeMissingException {
         return policyTypes.remove(name, id);
     }
 
