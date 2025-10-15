@@ -26,17 +26,17 @@ public class AddClientCommandIntegrationTest {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     }
 
-//    @Test
-//    public void execute_newPerson_success() {
-//        Client validClient = new PersonBuilder().build();
-//
-//        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-//        expectedModel.addPerson(validClient);
-//
-//        assertCommandSuccess(new AddClientCommand(validClient), model,
-//                String.format(AddClientCommand.MESSAGE_SUCCESS, Messages.format(validClient)),
-//                expectedModel);
-//    }
+    //    @Test
+    //    public void execute_newPerson_success() {
+    //        Client validClient = new PersonBuilder().build();
+    //
+    //        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+    //        expectedModel.addPerson(validClient);
+    //
+    //        assertCommandSuccess(new AddClientCommand(validClient), model,
+    //                String.format(AddClientCommand.MESSAGE_SUCCESS, Messages.format(validClient)),
+    //                expectedModel);
+    //    }
 
     @Test
     public void execute_duplicatePerson_throwsCommandException() {

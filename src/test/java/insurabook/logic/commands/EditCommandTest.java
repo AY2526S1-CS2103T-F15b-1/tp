@@ -97,26 +97,26 @@ public class EditCommandTest {
     //    assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     //}
 
-//    @Test
-//    public void execute_duplicatePersonUnfilteredList_failure() {
-//        Client firstClient = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-//        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(firstClient).build();
-//        EditCommand editCommand = new EditCommand(INDEX_SECOND_PERSON, descriptor);
-//
-//        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PERSON);
-//    }
+    //    @Test
+    //    public void execute_duplicatePersonUnfilteredList_failure() {
+    //        Client firstClient = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+    //        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(firstClient).build();
+    //        EditCommand editCommand = new EditCommand(INDEX_SECOND_PERSON, descriptor);
+    //
+    //        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PERSON);
+    //    }
 
-//    @Test
-//    public void execute_duplicatePersonFilteredList_failure() {
-//        showPersonAtIndex(model, INDEX_FIRST_PERSON);
-//
-//        // edit person in filtered list into a duplicate in address book
-//        Client clientInList = model.getAddressBook().getPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
-//        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON,
-//                new EditPersonDescriptorBuilder(clientInList).build());
-//
-//        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PERSON);
-//    }
+    //    @Test
+    //    public void execute_duplicatePersonFilteredList_failure() {
+    //        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+    //
+    //        // edit person in filtered list into a duplicate in address book
+    //        Client clientInList = model.getAddressBook().getPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+    //        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON,
+    //                new EditPersonDescriptorBuilder(clientInList).build());
+    //
+    //        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PERSON);
+    //    }
 
     @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() {
