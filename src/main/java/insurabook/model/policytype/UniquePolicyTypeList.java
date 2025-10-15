@@ -4,12 +4,21 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import insurabook.model.client.Client;
+import insurabook.model.client.UniqueClientList;
+import insurabook.model.client.exceptions.ClientDuplicateException;
+import insurabook.model.policies.exceptions.DuplicatePolicyException;
+import insurabook.model.policies.exceptions.PolicyNotFoundException;
 import insurabook.commons.exceptions.IllegalValueException;
 import insurabook.model.policytype.enums.PolicyTypeEquality;
 import insurabook.model.policytype.exceptions.PolicyTypeDuplicateException;
 import insurabook.model.policytype.exceptions.PolicyTypeMissingException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import static insurabook.commons.util.CollectionUtil.requireAllNonNull;
+import static java.util.Objects.requireNonNull;
+
 
 /**
  * A list of policy types that enforces uniqueness between its elements and does not allow nulls.
@@ -109,6 +118,19 @@ public class UniquePolicyTypeList implements Iterable<PolicyType> {
             throw new PolicyTypeMissingException(name, id);
         }
     }
+    public void setPolicyTypes(UniquePolicyTypeList replacement) {
+        requireNonNull(replacement);
+        internalList.setAll(replacement.internalList);
+    }
+
+    /**
+     * Replaces the contents of this list with {@code persons}.
+     */
+    public void setPolicyTypes(List<PolicyType> policyTypes) {
+        requireAllNonNull(policyTypes);
+        internalList.setAll(policyTypes);
+    }
+
 
     /**
      * Returns PolicyType matching index in list.
