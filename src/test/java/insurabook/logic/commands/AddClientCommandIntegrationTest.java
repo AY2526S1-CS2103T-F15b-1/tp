@@ -30,7 +30,7 @@ public class AddClientCommandIntegrationTest {
     public void execute_newPerson_success() {
         Client validClient = new PersonBuilder().build();
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getInsuraBook(), new UserPrefs());
         expectedModel.addPerson(validClient);
 
         assertCommandSuccess(new AddClientCommand(validClient), model,
@@ -40,7 +40,7 @@ public class AddClientCommandIntegrationTest {
 
     @Test
     public void execute_duplicatePerson_throwsCommandException() {
-        Client clientInList = model.getAddressBook().getPersonList().get(0);
+        Client clientInList = model.getInsuraBook().getClientList().get(0);
         assertCommandFailure(new AddClientCommand(clientInList), model,
                 AddClientCommand.MESSAGE_DUPLICATE_PERSON);
     }
