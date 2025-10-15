@@ -2,7 +2,6 @@ package insurabook.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import insurabook.model.AddressBook;
 import insurabook.model.InsuraBook;
 import insurabook.model.Model;
 

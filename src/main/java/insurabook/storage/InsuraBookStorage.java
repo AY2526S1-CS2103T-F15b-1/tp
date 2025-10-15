@@ -1,12 +1,12 @@
 package insurabook.storage;
 
-import insurabook.commons.exceptions.DataLoadingException;
-import insurabook.model.InsuraBook;
-import insurabook.model.ReadOnlyInsuraBook;
-
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
+
+import insurabook.commons.exceptions.DataLoadingException;
+import insurabook.model.InsuraBook;
+import insurabook.model.ReadOnlyInsuraBook;
 
 /**
  * Represents a storage for {@link InsuraBook}.

@@ -18,7 +18,6 @@ import org.junit.jupiter.api.io.TempDir;
 import insurabook.commons.exceptions.DataLoadingException;
 import insurabook.model.InsuraBook;
 import insurabook.model.ReadOnlyInsuraBook;
-import insurabook.model.ReadOnlyAddressBook;
 
 public class JsonAddressBookStorageTest {
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "JsonAddressBookStorageTest");
@@ -27,12 +26,12 @@ public class JsonAddressBookStorageTest {
     public Path testFolder;
 
     @Test
-    public void readAddressBook_nullFilePath_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> readAddressBook(null));
+    public void readInsuraBook_nullFilePath_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> readInsuraBook(null));
     }
 
-    private java.util.Optional<ReadOnlyAddressBook> readAddressBook(String filePath) throws Exception {
-        return new JsonAddressBookStorage(Paths.get(filePath)).readAddressBook(addToTestDataPathIfNotNull(filePath));
+    private java.util.Optional<ReadOnlyInsuraBook> readInsuraBook(String filePath) throws Exception {
+        return new JsonInsuraBookStorage(Paths.get(filePath)).readInsuraBook(addToTestDataPathIfNotNull(filePath));
     }
 
     private Path addToTestDataPathIfNotNull(String prefsFileInTestDataFolder) {
@@ -43,26 +42,26 @@ public class JsonAddressBookStorageTest {
 
     @Test
     public void read_missingFile_emptyResult() throws Exception {
-        assertFalse(readAddressBook("NonExistentFile.json").isPresent());
+        assertFalse(readInsuraBook("NonExistentFile.json").isPresent());
     }
 
     @Test
     public void read_notJsonFormat_exceptionThrown() {
-        assertThrows(DataLoadingException.class, () -> readAddressBook("notJsonFormatAddressBook.json"));
+        assertThrows(DataLoadingException.class, () -> readInsuraBook("notJsonFormatAddressBook.json"));
     }
 
     @Test
-    public void readAddressBook_invalidPersonAddressBook_throwDataLoadingException() {
-        assertThrows(DataLoadingException.class, () -> readAddressBook("invalidPersonAddressBook.json"));
+    public void readInsuraBook_invalidPersonAddressBook_throwDataLoadingException() {
+        assertThrows(DataLoadingException.class, () -> readInsuraBook("invalidPersonAddressBook.json"));
     }
 
     @Test
-    public void readAddressBook_invalidAndValidPersonAddressBook_throwDataLoadingException() {
-        assertThrows(DataLoadingException.class, () -> readAddressBook("invalidAndValidPersonAddressBook.json"));
+    public void readInsuraBook_invalidAndValidPersonAddressBook_throwDataLoadingException() {
+        assertThrows(DataLoadingException.class, () -> readInsuraBook("invalidAndValidPersonAddressBook.json"));
     }
 
     @Test
-    public void readAndSaveAddressBook_allInOrder_success() throws Exception {
+    public void readAndSaveInsuraBook_allInOrder_success() throws Exception {
         Path filePath = testFolder.resolve("TempAddressBook.json");
         InsuraBook original = getTypicalAddressBook();
         JsonInsuraBookStorage jsonInsuraBookStorage = new JsonInsuraBookStorage(filePath);
@@ -88,7 +87,7 @@ public class JsonAddressBookStorageTest {
     }
 
     @Test
-    public void saveAddressBook_nullAddressBook_throwsNullPointerException() {
+    public void saveInsuraBook_nullAddressBook_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> saveInsuraBook(null, "SomeFile.json"));
     }
 
@@ -105,7 +104,7 @@ public class JsonAddressBookStorageTest {
     }
 
     @Test
-    public void saveAddressBook_nullFilePath_throwsNullPointerException() {
+    public void saveInsuraBook_nullFilePath_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> saveInsuraBook(new InsuraBook(), null));
     }
 }

@@ -193,17 +193,19 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     private void applyView(String viewFlag) {
-        if (viewFlag == null) return;
+        if (viewFlag == null) {
+            return;
+        }
 
         switch (viewFlag.toLowerCase()) {
-            case VIEW_POLICY:
-                listPanelPlaceholder.getChildren().setAll(policiesNode);
-                break;
-            case VIEW_CLIENT:
-                listPanelPlaceholder.getChildren().setAll(clientsNode);
-                break;
-            default:
-                logger.warning("Unknown view flag: " + viewFlag);
+        case VIEW_POLICY:
+            listPanelPlaceholder.getChildren().setAll(policiesNode);
+            break;
+        case VIEW_CLIENT:
+            listPanelPlaceholder.getChildren().setAll(clientsNode);
+            break;
+        default:
+            logger.warning("Unknown view flag: " + viewFlag);
         }
     }
 

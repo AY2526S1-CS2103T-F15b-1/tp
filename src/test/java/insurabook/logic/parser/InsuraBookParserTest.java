@@ -7,6 +7,10 @@ import static insurabook.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.junit.jupiter.api.Test;
 
 import insurabook.logic.commands.AddClientCommand;
@@ -25,10 +29,6 @@ import insurabook.model.client.NameContainsKeywordsPredicate;
 import insurabook.testutil.EditPersonDescriptorBuilder;
 import insurabook.testutil.PersonBuilder;
 import insurabook.testutil.PersonUtil;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 
 public class InsuraBookParserTest {

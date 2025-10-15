@@ -2,6 +2,7 @@ package insurabook.storage;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import insurabook.commons.exceptions.IllegalValueException;
 import insurabook.model.client.Client;
 import insurabook.model.policytype.PolicyType;

@@ -1,23 +1,18 @@
 package insurabook.model.policytype;
 
+import static insurabook.commons.util.CollectionUtil.requireAllNonNull;
+import static java.util.Objects.requireNonNull;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import insurabook.model.client.Client;
-import insurabook.model.client.UniqueClientList;
-import insurabook.model.client.exceptions.ClientDuplicateException;
-import insurabook.model.policies.exceptions.DuplicatePolicyException;
-import insurabook.model.policies.exceptions.PolicyNotFoundException;
 import insurabook.commons.exceptions.IllegalValueException;
 import insurabook.model.policytype.enums.PolicyTypeEquality;
 import insurabook.model.policytype.exceptions.PolicyTypeDuplicateException;
 import insurabook.model.policytype.exceptions.PolicyTypeMissingException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import static insurabook.commons.util.CollectionUtil.requireAllNonNull;
-import static java.util.Objects.requireNonNull;
 
 
 /**

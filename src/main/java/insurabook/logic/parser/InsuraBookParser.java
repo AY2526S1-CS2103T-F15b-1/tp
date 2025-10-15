@@ -1,5 +1,12 @@
 package insurabook.logic.parser;
 
+import static insurabook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static insurabook.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
+
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import insurabook.commons.core.LogsCenter;
 import insurabook.logic.commands.AddClaimCommand;
 import insurabook.logic.commands.AddClientCommand;
@@ -16,13 +23,6 @@ import insurabook.logic.commands.HelpCommand;
 import insurabook.logic.commands.ListCommand;
 import insurabook.logic.commands.ViewCommand;
 import insurabook.logic.parser.exceptions.ParseException;
-
-import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import static insurabook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static insurabook.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 
 /**
  * Parses user input.

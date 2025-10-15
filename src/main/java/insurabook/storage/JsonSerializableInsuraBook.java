@@ -1,16 +1,17 @@
 package insurabook.storage;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
+
 import insurabook.commons.exceptions.IllegalValueException;
 import insurabook.model.InsuraBook;
 import insurabook.model.ReadOnlyInsuraBook;
 import insurabook.model.client.Client;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * An Immutable AddressBook that is serializable to JSON format.

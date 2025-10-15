@@ -1,5 +1,7 @@
 package insurabook.ui;
 
+import java.util.logging.Logger;
+
 import insurabook.commons.core.LogsCenter;
 import insurabook.model.policytype.PolicyType;
 import javafx.collections.ObservableList;
@@ -7,8 +9,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
-
-import java.util.logging.Logger;
 
 /**
  * Panel containing the list of persons.

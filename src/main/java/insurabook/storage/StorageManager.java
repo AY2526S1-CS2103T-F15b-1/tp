@@ -7,7 +7,6 @@ import java.util.logging.Logger;
 
 import insurabook.commons.core.LogsCenter;
 import insurabook.commons.exceptions.DataLoadingException;
-import insurabook.model.ReadOnlyAddressBook;
 import insurabook.model.ReadOnlyInsuraBook;
 import insurabook.model.ReadOnlyUserPrefs;
 import insurabook.model.UserPrefs;
