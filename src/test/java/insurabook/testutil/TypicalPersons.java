@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import insurabook.model.AddressBook;
+import insurabook.model.InsuraBook;
 import insurabook.model.client.Client;
 
 /**
@@ -61,6 +62,8 @@ public class TypicalPersons {
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
             .withClientId(VALID_CLIENT_ID_BOB).build();
 
+
+
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
     private TypicalPersons() {} // prevents instantiation
@@ -68,15 +71,15 @@ public class TypicalPersons {
     /**
      * Returns an {@code AddressBook} with all the typical persons.
      */
-    public static AddressBook getTypicalAddressBook() {
-        AddressBook ab = new AddressBook();
-        for (Client client : getTypicalPersons()) {
-            ab.addPerson(client);
+    public static InsuraBook getTypicalAddressBook() {
+        InsuraBook ib = new InsuraBook();
+        for (Client client : getTypicalClients()) {
+            ib.addClient(client);
         }
-        return ab;
+        return ib;
     }
 
-    public static List<Client> getTypicalPersons() {
+    public static List<Client> getTypicalClients() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
 }

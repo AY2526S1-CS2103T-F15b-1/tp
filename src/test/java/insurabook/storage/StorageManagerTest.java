@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import insurabook.commons.core.GuiSettings;
-import insurabook.model.AddressBook;
-import insurabook.model.ReadOnlyAddressBook;
+import insurabook.model.InsuraBook;
+import insurabook.model.ReadOnlyInsuraBook;
 import insurabook.model.UserPrefs;
 
 public class StorageManagerTest {
@@ -24,9 +24,9 @@ public class StorageManagerTest {
 
     @BeforeEach
     public void setUp() {
-        JsonAddressBookStorage addressBookStorage = new JsonAddressBookStorage(getTempFilePath("ab"));
+        JsonInsuraBookStorage insuraBookStorage = new JsonInsuraBookStorage(getTempFilePath("ab"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
-        storageManager = new StorageManager(addressBookStorage, userPrefsStorage);
+        storageManager = new StorageManager(insuraBookStorage, userPrefsStorage);
     }
 
     private Path getTempFilePath(String fileName) {
@@ -54,15 +54,15 @@ public class StorageManagerTest {
          * {@link JsonAddressBookStorage} class.
          * More extensive testing of UserPref saving/reading is done in {@link JsonAddressBookStorageTest} class.
          */
-        AddressBook original = getTypicalAddressBook();
-        storageManager.saveAddressBook(original);
-        ReadOnlyAddressBook retrieved = storageManager.readAddressBook().get();
-        assertEquals(original, new AddressBook(retrieved));
+        InsuraBook original = getTypicalAddressBook();
+        storageManager.saveInsuraBook(original);
+        ReadOnlyInsuraBook retrieved = storageManager.readInsuraBook().get();
+        assertEquals(original, new InsuraBook(retrieved));
     }
 
     @Test
     public void getAddressBookFilePath() {
-        assertNotNull(storageManager.getAddressBookFilePath());
+        assertNotNull(storageManager.getInsuraBookFilePath());
     }
 
 }

@@ -62,12 +62,21 @@ public class InsuraBook implements ReadOnlyInsuraBook {
     }
 
     /**
+     * Replaces the contents of the client list with {@code clients}.
+     * {@code clients} must not contain duplicate clients.
+     */
+    public void setPolicyTypes(List<PolicyType> policyTypes) {
+        this.policyTypes.setPolicyTypes(policyTypes);
+    }
+
+    /**
      * Resets the existing data of this {@code InsuraBook} with {@code newData}.
      */
     public void resetData(ReadOnlyInsuraBook newData) {
         requireNonNull(newData);
 
         setClients(newData.getClientList());
+        setPolicyTypes(newData.getPolicyTypeList());
     }
 
     //// client-level operations
@@ -203,7 +212,7 @@ public class InsuraBook implements ReadOnlyInsuraBook {
     }
 
     @Override
-    public ObservableList<PolicyType> getPolicyTypes() {
+    public ObservableList<PolicyType> getPolicyTypeList() {
         return policyTypes.asUnmodifiableObservableList();
     }
 

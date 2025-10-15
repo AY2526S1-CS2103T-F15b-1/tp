@@ -16,7 +16,6 @@ public interface ReadOnlyInsuraBook {
 
     /**
      * Returns an unmodifiable view of the policy types list.
-     * This list will not contain any duplicate policy types.
      */
-    ObservableList<PolicyType> getPolicyTypes();
+    ObservableList<PolicyType> getPolicyTypeList();
 }

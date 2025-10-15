@@ -47,20 +47,20 @@ public interface Model {
     /**
      * Returns the user prefs' address book file path.
      */
-    Path getAddressBookFilePath();
+    Path getInsuraBookFilePath();
 
     /**
      * Sets the user prefs' address book file path.
      */
-    void setAddressBookFilePath(Path addressBookFilePath);
+    void setInsuraBookFilePath(Path insuraBookFilePath);
 
     /**
-     * Replaces address book data with the data in {@code addressBook}.
+     * Replaces InsuraBook data with the data in {@code insuraBook}.
      */
-    void setAddressBook(ReadOnlyAddressBook addressBook);
+    void setInsuraBook(InsuraBook insuraBook);
 
-    /** Returns the AddressBook */
-    ReadOnlyAddressBook getAddressBook();
+    /** Returns the InsuraBook */
+    ReadOnlyInsuraBook getInsuraBook();
 
     /**
      * Returns true if a person with the same identity as {@code person} exists in the address book.
@@ -94,6 +94,15 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Client> predicate);
+
+    /** Returns an unmodifiable view of the filtered policy types list */
+    ObservableList<PolicyType> getFilteredPolicyTypeList();
+
+    /**
+     * Updates the filter of the filtered policy types list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredPolicyTypeList(Predicate<PolicyType> predicate);
 
     /**
      * Adds the given claim.

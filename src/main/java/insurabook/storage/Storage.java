@@ -6,13 +6,14 @@ import java.util.Optional;
 
 import insurabook.commons.exceptions.DataLoadingException;
 import insurabook.model.ReadOnlyAddressBook;
+import insurabook.model.ReadOnlyInsuraBook;
 import insurabook.model.ReadOnlyUserPrefs;
 import insurabook.model.UserPrefs;
 
 /**
  * API of the Storage component
  */
-public interface Storage extends AddressBookStorage, UserPrefsStorage {
+public interface Storage extends InsuraBookStorage, UserPrefsStorage {
 
     @Override
     Optional<UserPrefs> readUserPrefs() throws DataLoadingException;
@@ -21,12 +22,12 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage {
     void saveUserPrefs(ReadOnlyUserPrefs userPrefs) throws IOException;
 
     @Override
-    Path getAddressBookFilePath();
+    Path getInsuraBookFilePath();
 
     @Override
-    Optional<ReadOnlyAddressBook> readAddressBook() throws DataLoadingException;
+    Optional<ReadOnlyInsuraBook> readInsuraBook() throws DataLoadingException;
 
     @Override
-    void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
+    void saveInsuraBook(ReadOnlyInsuraBook insuraBook) throws IOException;
 
 }

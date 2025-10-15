@@ -29,26 +29,12 @@ import javafx.collections.transformation.FilteredList;
  */
 public class ModelManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
-
-    private final AddressBook addressBook;
-    private final UserPrefs userPrefs;
-    private final FilteredList<Client> filteredClients;
+    private static final Predicate<PolicyType> PREDICATE_SHOW_ALL_POLICY_TYPES = unused -> true;
 
     private final InsuraBook insuraBook;
-
-    /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
-     */
-    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyUserPrefs userPrefs) {
-        requireAllNonNull(addressBook, userPrefs);
-
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
-
-        this.addressBook = new AddressBook(addressBook);
-        this.userPrefs = new UserPrefs(userPrefs);
-        this.insuraBook = new InsuraBook();
-        filteredClients = new FilteredList<>(this.addressBook.getPersonList());
-    }
+    private final UserPrefs userPrefs;
+    private final FilteredList<Client> filteredClients;
+    private final FilteredList<PolicyType> filteredPolicyTypes;
 
     /**
      * Initializes a ModelManager with the given insuraBook and userPrefs.
@@ -58,10 +44,11 @@ public class ModelManager implements Model {
 
         logger.fine("Initializing with insurabook: " + insuraBook + " and user prefs " + userPrefs);
 
-        this.addressBook = new AddressBook();
         this.insuraBook = new InsuraBook(insuraBook);
         this.userPrefs = new UserPrefs(userPrefs);
-        this.filteredClients = new FilteredList<>(this.addressBook.getPersonList());
+        this.filteredClients = new FilteredList<>(this.insuraBook.getClientList());
+        this.filteredPolicyTypes = new FilteredList<>(this.insuraBook.getPolicyTypeList());
+        updateFilteredPolicyTypeList(PREDICATE_SHOW_ALL_POLICY_TYPES);
     }
 
     public ModelManager() {
@@ -93,50 +80,14 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public Path getAddressBookFilePath() {
-        return userPrefs.getAddressBookFilePath();
+    public Path getInsuraBookFilePath() {
+        return userPrefs.getInsuraBookFilePath();
     }
 
     @Override
-    public void setAddressBookFilePath(Path addressBookFilePath) {
-        requireNonNull(addressBookFilePath);
-        userPrefs.setAddressBookFilePath(addressBookFilePath);
-    }
-
-    //=========== AddressBook ================================================================================
-
-    @Override
-    public void setAddressBook(ReadOnlyAddressBook addressBook) {
-        this.addressBook.resetData(addressBook);
-    }
-
-    @Override
-    public ReadOnlyAddressBook getAddressBook() {
-        return addressBook;
-    }
-
-    @Override
-    public boolean hasPerson(Client client) {
-        requireNonNull(client);
-        return addressBook.hasPerson(client);
-    }
-
-    @Override
-    public void deletePerson(Client target) {
-        addressBook.removePerson(target);
-    }
-
-    @Override
-    public void addPerson(Client client) {
-        addressBook.addPerson(client);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-    }
-
-    @Override
-    public void setPerson(Client target, Client editedClient) {
-        requireAllNonNull(target, editedClient);
-
-        addressBook.setPerson(target, editedClient);
+    public void setInsuraBookFilePath(Path insuraBookFilePath) {
+        requireNonNull(insuraBookFilePath);
+        userPrefs.setInsuraBookFilePath(insuraBookFilePath);
     }
 
     //=========== Filtered Person List Accessors =============================================================
@@ -168,7 +119,7 @@ public class ModelManager implements Model {
         }
 
         ModelManager otherModelManager = (ModelManager) other;
-        return addressBook.equals(otherModelManager.addressBook)
+        return insuraBook.equals(otherModelManager.insuraBook)
                 && userPrefs.equals(otherModelManager.userPrefs)
                 && filteredClients.equals(otherModelManager.filteredClients);
     }
@@ -191,6 +142,50 @@ public class ModelManager implements Model {
     @Override
     public Policy deletePolicy(ClientId clientId, PolicyId policyId) {
         return insuraBook.removePolicy(clientId, policyId);
+    }
+
+    //=========== InsuraBook ================================================================================
+    @Override
+    public void setInsuraBook(InsuraBook insuraBook) {
+        this.insuraBook.resetData(insuraBook);
+    }
+
+    @Override
+    public ReadOnlyInsuraBook getInsuraBook() {
+        return insuraBook;
+    }
+
+    @Override
+    public boolean hasPerson(Client client) {
+        return insuraBook.hasClient(client);
+    }
+
+    @Override
+    public void deletePerson(Client target) {
+        insuraBook.removeClient(target);
+    }
+
+    @Override
+    public void addPerson(Client client) {
+        insuraBook.addClient(client);
+    }
+
+    @Override
+    public void setPerson(Client target, Client editedClient) {
+        requireAllNonNull(target, editedClient);
+
+        insuraBook.setClient(target, editedClient);
+    }
+
+    @Override
+    public ObservableList<PolicyType> getFilteredPolicyTypeList() {
+        return filteredPolicyTypes;
+    }
+
+    @Override
+    public void updateFilteredPolicyTypeList(Predicate<PolicyType> predicate) {
+        requireNonNull(predicate);
+        filteredPolicyTypes.setPredicate(predicate);
     }
 
     /**

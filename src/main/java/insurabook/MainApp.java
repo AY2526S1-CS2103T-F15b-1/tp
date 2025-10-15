@@ -14,14 +14,18 @@ import insurabook.commons.util.StringUtil;
 import insurabook.logic.Logic;
 import insurabook.logic.LogicManager;
 import insurabook.model.AddressBook;
+import insurabook.model.InsuraBook;
 import insurabook.model.Model;
 import insurabook.model.ModelManager;
 import insurabook.model.ReadOnlyAddressBook;
+import insurabook.model.ReadOnlyInsuraBook;
 import insurabook.model.ReadOnlyUserPrefs;
 import insurabook.model.UserPrefs;
 import insurabook.model.util.SampleDataUtil;
 import insurabook.storage.AddressBookStorage;
+import insurabook.storage.InsuraBookStorage;
 import insurabook.storage.JsonAddressBookStorage;
+import insurabook.storage.JsonInsuraBookStorage;
 import insurabook.storage.JsonUserPrefsStorage;
 import insurabook.storage.Storage;
 import insurabook.storage.StorageManager;
@@ -58,8 +62,8 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         UserPrefs userPrefs = initPrefs(userPrefsStorage);
-        AddressBookStorage addressBookStorage = new JsonAddressBookStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        InsuraBookStorage insuraBookStorage = new JsonInsuraBookStorage(userPrefs.getInsuraBookFilePath());
+        storage = new StorageManager(insuraBookStorage, userPrefsStorage);
 
         model = initModelManager(storage, userPrefs);
 
@@ -74,21 +78,21 @@ public class MainApp extends Application {
      * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
      */
     private Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {
-        logger.info("Using data file : " + storage.getAddressBookFilePath());
+        logger.info("Using data file : " + storage.getInsuraBookFilePath());
 
-        Optional<ReadOnlyAddressBook> addressBookOptional;
-        ReadOnlyAddressBook initialData;
+        Optional<ReadOnlyInsuraBook> insuraBookOptional;
+        ReadOnlyInsuraBook initialData;
         try {
-            addressBookOptional = storage.readAddressBook();
-            if (!addressBookOptional.isPresent()) {
-                logger.info("Creating a new data file " + storage.getAddressBookFilePath()
+            insuraBookOptional = storage.readInsuraBook();
+            if (!insuraBookOptional.isPresent()) {
+                logger.info("Creating a new data file " + storage.getInsuraBookFilePath()
                         + " populated with a sample AddressBook.");
             }
-            initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+            initialData = insuraBookOptional.orElseGet(SampleDataUtil::getSamepleInsuraBook);
         } catch (DataLoadingException e) {
-            logger.warning("Data file at " + storage.getAddressBookFilePath() + " could not be loaded."
+            logger.warning("Data file at " + storage.getInsuraBookFilePath() + " could not be loaded."
                     + " Will be starting with an empty AddressBook.");
-            initialData = new AddressBook();
+            initialData = new InsuraBook();
         }
 
         return new ModelManager(initialData, userPrefs);
@@ -171,7 +175,7 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        logger.info("Starting AddressBook " + MainApp.VERSION);
+        logger.info("Starting InsuraBook " + MainApp.VERSION);
         ui.start(primaryStage);
     }
 

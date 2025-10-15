@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import insurabook.commons.core.LogsCenter;
 import insurabook.commons.exceptions.DataLoadingException;
 import insurabook.model.ReadOnlyAddressBook;
+import insurabook.model.ReadOnlyInsuraBook;
 import insurabook.model.ReadOnlyUserPrefs;
 import insurabook.model.UserPrefs;
 
@@ -17,14 +18,14 @@ import insurabook.model.UserPrefs;
 public class StorageManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
-    private AddressBookStorage addressBookStorage;
+    private InsuraBookStorage insuraBookStorage;
     private UserPrefsStorage userPrefsStorage;
 
     /**
      * Creates a {@code StorageManager} with the given {@code AddressBookStorage} and {@code UserPrefStorage}.
      */
-    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
-        this.addressBookStorage = addressBookStorage;
+    public StorageManager(InsuraBookStorage insuraBookStorage, UserPrefsStorage userPrefsStorage) {
+        this.insuraBookStorage = insuraBookStorage;
         this.userPrefsStorage = userPrefsStorage;
     }
 
@@ -46,33 +47,33 @@ public class StorageManager implements Storage {
     }
 
 
-    // ================ AddressBook methods ==============================
+    // ================ InsuraBook methods ==============================
 
     @Override
-    public Path getAddressBookFilePath() {
-        return addressBookStorage.getAddressBookFilePath();
+    public Path getInsuraBookFilePath() {
+        return insuraBookStorage.getInsuraBookFilePath();
     }
 
     @Override
-    public Optional<ReadOnlyAddressBook> readAddressBook() throws DataLoadingException {
-        return readAddressBook(addressBookStorage.getAddressBookFilePath());
+    public Optional<ReadOnlyInsuraBook> readInsuraBook() throws DataLoadingException {
+        return readInsuraBook(insuraBookStorage.getInsuraBookFilePath());
     }
 
     @Override
-    public Optional<ReadOnlyAddressBook> readAddressBook(Path filePath) throws DataLoadingException {
+    public Optional<ReadOnlyInsuraBook> readInsuraBook(Path filePath) throws DataLoadingException {
         logger.fine("Attempting to read data from file: " + filePath);
-        return addressBookStorage.readAddressBook(filePath);
+        return insuraBookStorage.readInsuraBook(filePath);
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
-        saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath());
+    public void saveInsuraBook(ReadOnlyInsuraBook insuraBook) throws IOException {
+        saveInsuraBook(insuraBook, insuraBookStorage.getInsuraBookFilePath());
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyAddressBook addressBook, Path filePath) throws IOException {
+    public void saveInsuraBook(ReadOnlyInsuraBook insuraBook, Path filePath) throws IOException {
         logger.fine("Attempting to write to data file: " + filePath);
-        addressBookStorage.saveAddressBook(addressBook, filePath);
+        insuraBookStorage.saveInsuraBook(insuraBook, filePath);
     }
 
 }
