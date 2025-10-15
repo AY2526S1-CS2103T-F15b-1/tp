@@ -8,7 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import insurabook.commons.exceptions.IllegalValueException;
-import insurabook.model.client.*;
+import insurabook.model.client.ClientId;
+import insurabook.model.client.Name;
 
 public class JsonAdaptedClientTest {
     private static final String INVALID_NAME = "R@chel";
