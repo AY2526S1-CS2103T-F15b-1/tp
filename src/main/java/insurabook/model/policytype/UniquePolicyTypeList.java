@@ -78,7 +78,7 @@ public class UniquePolicyTypeList implements Iterable<PolicyType> {
      * @return null if successful, list of indices of half-matching PolicyTypes if available
      * @throws PolicyTypeMissingException if no PolicyTypes found
      */
-    public List<Integer> remove(String name, String id) throws PolicyTypeMissingException {
+    public List<Integer> remove(PolicyTypeName name, PolicyTypeId id) throws PolicyTypeMissingException {
         List<Integer> halfMatchings = new ArrayList<>();
         boolean hasRemoved = false;
         for (int i = 0; i < internalList.size() && !hasRemoved; i++) {
@@ -130,7 +130,7 @@ public class UniquePolicyTypeList implements Iterable<PolicyType> {
      * @param id Given ID to search with.
      * @return list of indices matching selected PolicyTypes
      */
-    public List<Integer> findMatching(String name, String id) {
+    public List<Integer> findMatching(PolicyTypeName name, PolicyTypeId id) {
         List<Integer> result = new ArrayList<>();
         for (int i = 0; i < internalList.size(); i++) {
             PolicyType pt = internalList.get(i);
@@ -219,7 +219,7 @@ public class UniquePolicyTypeList implements Iterable<PolicyType> {
      * @return Policy
      * @throws PolicyTypeMissingException if no such policy could be found
      */
-    public PolicyType getPolicyType(String policyTypeId) {
+    public PolicyType getPolicyType(PolicyTypeId policyTypeId) {
         // NOTE: This function is for *internal use only*.
         // Users should not access policy types by ID alone.
         // See project docs for more information.

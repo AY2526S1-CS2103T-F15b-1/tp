@@ -14,6 +14,8 @@ import insurabook.model.client.UniqueClientList;
 import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
 import insurabook.model.policytype.PolicyType;
+import insurabook.model.policytype.PolicyTypeId;
+import insurabook.model.policytype.PolicyTypeName;
 import insurabook.model.policytype.UniquePolicyTypeList;
 import insurabook.model.policytype.exceptions.PolicyTypeDuplicateException;
 import insurabook.model.policytype.exceptions.PolicyTypeMissingException;
@@ -117,7 +119,7 @@ public class InsuraBook implements ReadOnlyInsuraBook {
      * Returns the policy type with the given policyTypeId.
      * If no such policy type exists, returns null.
      */
-    public PolicyType getPolicyType(String policyTypeId) {
+    public PolicyType getPolicyType(PolicyTypeId policyTypeId) {
         // NOTE: This function is for *internal use only*.
         // Users should not access policy types by ID alone.
         // See project docs for more information.
@@ -144,7 +146,7 @@ public class InsuraBook implements ReadOnlyInsuraBook {
      * @return null if successful, list of indices of half-matching PolicyTypes if available
      * @throws PolicyTypeMissingException if no PolicyTypes found
      */
-    public List<Integer> removePolicyType(String name, String id) throws PolicyTypeMissingException {
+    public List<Integer> removePolicyType(PolicyTypeName name, PolicyTypeId id) throws PolicyTypeMissingException {
         return policyTypes.remove(name, id);
     }
 
@@ -152,7 +154,7 @@ public class InsuraBook implements ReadOnlyInsuraBook {
      * Adds a policy to the client with the given info.
      * If no such client or policy type exists, throws an exception.
      */
-    public Policy addPolicy(PolicyId policyId, ClientId clientId, String policyTypeId, InsuraDate expiryDate) {
+    public Policy addPolicy(PolicyId policyId, ClientId clientId, PolicyTypeId policyTypeId, InsuraDate expiryDate) {
         Client client = this.getClient(clientId);
         PolicyType policyType = this.getPolicyType(policyTypeId);
         Policy policy = new Policy(policyId, client, policyType, expiryDate);

@@ -14,6 +14,7 @@ import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.ClientId;
 import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
+import insurabook.model.policytype.PolicyTypeId;
 
 /**
  * Attach a policy to a client.
@@ -38,13 +39,13 @@ public class AddPolicyCommand extends Command {
 
     private final PolicyId policyId;
     private final ClientId clientId;
-    private final int policyTypeId;
+    private final PolicyTypeId policyTypeId;
     private final InsuraDate expiryDate;
 
     /**
      * Creates an AddPolicyCommand to add the specified {@code Policy}
      */
-    public AddPolicyCommand(PolicyId policyId, ClientId clientId, int policyTypeId, InsuraDate expiryDate) {
+    public AddPolicyCommand(PolicyId policyId, ClientId clientId, PolicyTypeId policyTypeId, InsuraDate expiryDate) {
         requireNonNull(clientId);
         requireNonNull(policyId);
         requireNonNull(policyTypeId);

@@ -19,6 +19,7 @@ import insurabook.model.client.Email;
 import insurabook.model.client.Name;
 import insurabook.model.client.Phone;
 import insurabook.model.policies.PolicyId;
+import insurabook.model.policytype.PolicyTypeId;
 import insurabook.model.tag.Tag;
 
 /**
@@ -159,18 +160,18 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String policyTypeId} into an {@code int}.
+     * Parses a {@code String policyTypeId} into a {@code String}.
      * Leading and trailing whitespaces will be trimmed.
      *
      * @throws ParseException if the given {@code policyTypeId} is invalid
      */
-    public static int parsePolicyTypeId(String policyTypeId) throws ParseException {
+    public static PolicyTypeId parsePolicyTypeId(String policyTypeId) throws ParseException {
         requireNonNull(policyTypeId);
         String trimmedPolicyTypeId = policyTypeId.trim();
-        if (!StringUtil.isNonZeroUnsignedInteger(trimmedPolicyTypeId)) {
+        if (!PolicyTypeId.isValidPtId(trimmedPolicyTypeId)) {
             throw new ParseException("Policy Type Id should be a non-zero unsigned integer.");
         }
-        return Integer.parseInt(trimmedPolicyTypeId);
+        return new PolicyTypeId(policyTypeId);
     }
 
     /**

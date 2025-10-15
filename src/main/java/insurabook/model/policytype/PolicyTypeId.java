@@ -25,7 +25,7 @@ public class PolicyTypeId {
         requireNonNull(ptId);
 
         String trimmed = ptId.trim();
-        checkArgument(isValidPtID(trimmed), MESSAGE_CONSTRAINTS);
+        checkArgument(isValidPtId(trimmed), MESSAGE_CONSTRAINTS);
 
         this.ptId = trimmed;
     }
@@ -37,7 +37,7 @@ public class PolicyTypeId {
      * - does not start with '-'
      * - is not empty
      */
-    public static boolean isValidPtID(String ptId) {
+    public static boolean isValidPtId(String ptId) {
         return ptId.matches(VALIDATION_REGEX);
     }
 
