@@ -9,16 +9,16 @@ import insurabook.model.policytype.exceptions.PolicyTypeDuplicateException;
 public class PolicyType {
 
     /** Name of policy type. */
-    private final String ptName;
+    private final PolicyTypeName ptName;
 
     /** ID of policy type. */
-    private final String ptId;
+    private final PolicyTypeId ptId;
 
     /** Description of policy type. */
-    private String ptDescription = "";
+    private final PolicyTypeDescription ptDescription;
 
     /** Starting premium of policy type. */
-    private int ptPremium = 0;
+    private final PolicyTypePremium ptPremium;
 
     /**
      * Constructor for PolicyType
@@ -27,9 +27,11 @@ public class PolicyType {
      * @param ptId id of policy type
      * @throws PolicyTypeDuplicateException if duplicate policy type already exists
      */
-    public PolicyType(String ptName, String ptId) throws PolicyTypeDuplicateException {
+    public PolicyType(PolicyTypeName ptName, PolicyTypeId ptId) throws PolicyTypeDuplicateException {
         this.ptName = ptName;
         this.ptId = ptId;
+        this.ptDescription = new PolicyTypeDescription();
+        this.ptPremium = new PolicyTypePremium();
     }
 
     /**
@@ -41,16 +43,13 @@ public class PolicyType {
      * @param ptPremium specified starting premium of policy type (negative if empty)
      * @throws PolicyTypeDuplicateException if duplicate policy type already exists
      */
-    public PolicyType(String ptName, String ptId, String ptDescription, int ptPremium)
+    public PolicyType(PolicyTypeName ptName, PolicyTypeId ptId,
+                      PolicyTypeDescription ptDescription, PolicyTypePremium ptPremium)
             throws PolicyTypeDuplicateException {
         this.ptName = ptName;
         this.ptId = ptId;
-        if (ptDescription != null) {
-            this.ptDescription = ptDescription;
-        }
-        if (ptPremium >= 0) {
-            this.ptPremium = ptPremium;
-        }
+        this.ptDescription = ptDescription;
+        this.ptPremium = ptPremium;
     }
 
     /**
@@ -58,7 +57,7 @@ public class PolicyType {
      *
      * @return String policy type name
      */
-    public String getPtName() {
+    public PolicyTypeName getPtName() {
         return this.ptName;
     }
 
@@ -67,7 +66,7 @@ public class PolicyType {
      *
      * @return int policy type id
      */
-    public String getPtId() {
+    public PolicyTypeId getPtId() {
         return this.ptId;
     }
 
@@ -76,7 +75,7 @@ public class PolicyType {
      *
      * @return String description of policy
      */
-    public String getPtDescription() {
+    public PolicyTypeDescription getPtDescription() {
         return this.ptDescription;
     }
 
@@ -85,7 +84,7 @@ public class PolicyType {
      *
      * @return int premium of policy
      */
-    public int getPtPremium() {
+    public PolicyTypePremium getPtPremium() {
         return this.ptPremium;
     }
 
@@ -106,7 +105,7 @@ public class PolicyType {
     /**
      * Checks if this PolicyType shares either given name or ID.
      */
-    public PolicyTypeEquality policyTypeEquals(String name, String id) {
+    public PolicyTypeEquality policyTypeEquals(PolicyTypeName name, PolicyTypeId id) {
         boolean isNameEqual = ptName.equals(name);
         boolean isIdEqual = ptId.equals(id);
 
