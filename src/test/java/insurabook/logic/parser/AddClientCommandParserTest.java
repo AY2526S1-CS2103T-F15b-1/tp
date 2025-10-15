@@ -4,7 +4,7 @@ import static insurabook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 //import static insurabook.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static insurabook.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
 //import static insurabook.logic.commands.CommandTestUtil.CLIENT_ID_DESC_AMY;
-import static insurabook.logic.commands.CommandTestUtil.CLIENT_ID_DESC_BOB;
+//import static insurabook.logic.commands.CommandTestUtil.CLIENT_ID_DESC_BOB;
 //import static insurabook.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static insurabook.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 //import static insurabook.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
