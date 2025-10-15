@@ -8,6 +8,7 @@ import insurabook.logic.parser.Prefix;
 import insurabook.model.claims.Claim;
 import insurabook.model.client.Client;
 import insurabook.model.policies.Policy;
+import insurabook.model.policytype.PolicyType;
 
 /**
  * Container for user visible messages.
@@ -94,6 +95,21 @@ public class Messages {
             builder.append(policy.getPolicyId())
                     .append(" for client ")
                     .append(policy.getClient().getClientId());
+        }
+        return builder.toString();
+    }
+
+    /**
+     * Formats the {@code policyType} for display to the user.
+     * If op is 0, format for AddPolicyTypeCommand
+     */
+    public static String format(PolicyType policyType, int op) {
+        final StringBuilder builder = new StringBuilder();
+        if (op == 0) {
+            builder.append("Policy Type ")
+                    .append(policyType.getPtName())
+                    .append(" with ID ")
+                    .append(policyType.getPtId());
         }
         return builder.toString();
     }

@@ -19,6 +19,10 @@ import insurabook.model.client.Email;
 import insurabook.model.client.Name;
 import insurabook.model.client.Phone;
 import insurabook.model.policies.PolicyId;
+import insurabook.model.policytype.PolicyTypeDescription;
+import insurabook.model.policytype.PolicyTypeId;
+import insurabook.model.policytype.PolicyTypeName;
+import insurabook.model.policytype.PolicyTypePremium;
 import insurabook.model.tag.Tag;
 
 /**
@@ -159,21 +163,6 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String policyTypeId} into an {@code int}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code policyTypeId} is invalid
-     */
-    public static int parsePolicyTypeId(String policyTypeId) throws ParseException {
-        requireNonNull(policyTypeId);
-        String trimmedPolicyTypeId = policyTypeId.trim();
-        if (!StringUtil.isNonZeroUnsignedInteger(trimmedPolicyTypeId)) {
-            throw new ParseException("Policy Type Id should be a non-zero unsigned integer.");
-        }
-        return Integer.parseInt(trimmedPolicyTypeId);
-    }
-
-    /**
      * Parses a {@code String amount} into a {@code ClaimAmount}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -232,4 +221,71 @@ public class ParserUtil {
         }
         return new ClaimId(trimmedClaimId);
     }
+
+    /**
+     * Parses a {@code String ptName} into a {@code PolicyTypeName}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code ptName} is invalid.
+     */
+    public static PolicyTypeName parsePtName(String ptName) throws ParseException {
+        requireNonNull(ptName);
+        String trimmedPtName = ptName.trim();
+        if (!PolicyTypeName.isValidPtName(trimmedPtName)) {
+            throw new ParseException(PolicyTypeName.MESSAGE_CONSTRAINTS);
+        }
+        return new PolicyTypeName(trimmedPtName);
+    }
+
+    /**
+     * Parses a {@code String ptId} into a {@code PolicyTypeId}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code ptId} is invalid.
+     */
+    public static PolicyTypeId parsePtId(String ptId) throws ParseException {
+        requireNonNull(ptId);
+        String trimmedPtId = ptId.trim();
+        if (!PolicyTypeId.isValidPtId(trimmedPtId)) {
+            throw new ParseException(PolicyTypeId.MESSAGE_CONSTRAINTS);
+        }
+        return new PolicyTypeId(trimmedPtId);
+    }
+
+    /**
+     * Parses a {@code String ptDesc} into a {@code PolicyTypeId}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code ptDesc} is invalid.
+     */
+    public static PolicyTypeDescription parsePtDescription(String ptDesc) throws ParseException {
+        if (!ptDesc.isBlank()) {
+            String trimmedPtDesc = ptDesc.trim();
+            if (!PolicyTypeDescription.isValidPtDescription(trimmedPtDesc)) {
+                throw new ParseException(PolicyTypeDescription.MESSAGE_CONSTRAINTS);
+            }
+            return new PolicyTypeDescription(trimmedPtDesc);
+        } else {
+            return new PolicyTypeDescription();
+        }
+    }
+
+    /**
+     * Parses a {@code String ptDesc} into a {@code PolicyTypeId}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code ptDesc} is invalid.
+     */
+    public static PolicyTypePremium parsePtPremium(String ptPremium) throws ParseException {
+        if (!ptPremium.isBlank()) {
+            String trimmedPtPremium = ptPremium.trim();
+            if (!PolicyTypePremium.isValidPtPremium(trimmedPtPremium)) {
+                throw new ParseException(PolicyTypePremium.MESSAGE_CONSTRAINTS);
+            }
+            return new PolicyTypePremium(trimmedPtPremium);
+        } else {
+            return new PolicyTypePremium();
+        }
+    }
+
 }

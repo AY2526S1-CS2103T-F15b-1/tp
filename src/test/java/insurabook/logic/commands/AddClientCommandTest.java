@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
@@ -28,6 +29,9 @@ import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
 import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
+import insurabook.model.policytype.PolicyType;
+import insurabook.model.policytype.PolicyTypeId;
+import insurabook.model.policytype.PolicyTypeName;
 import insurabook.testutil.PersonBuilder;
 import javafx.collections.ObservableList;
 
@@ -171,13 +175,24 @@ public class AddClientCommandTest {
         }
 
         @Override
-        public Policy addPolicy(PolicyId policyId, ClientId clientId, int policyTypeId, InsuraDate expiryDate) {
+        public Policy addPolicy(PolicyId policyId, ClientId clientId,
+                                PolicyTypeId policyTypeId, InsuraDate expiryDate) {
             return null;
         }
 
         @Override
         public Policy deletePolicy(ClientId clientId, PolicyId policyId) {
             return null;
+        }
+
+        @Override
+        public void addPolicyType(PolicyType toAdd) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public List<Integer> deletePolicyType(PolicyTypeName ptName, PolicyTypeId ptId) {
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override

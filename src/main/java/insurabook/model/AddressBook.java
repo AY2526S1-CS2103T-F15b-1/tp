@@ -12,6 +12,8 @@ import javafx.collections.ObservableList;
 /**
  * Wraps all data at the address-book level
  * Duplicates are not allowed (by .isSamePerson comparison)
+ *
+ * Deprecated, move to InsuraBook.
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
