@@ -19,7 +19,7 @@ import insurabook.model.policytype.PolicyTypePremium;
  * This class represents the command to add a new policy type.
  */
 public class AddPolicyTypeCommand extends Command {
-    public static final String COMMAND_WORD = "new_policy_type";
+    public static final String COMMAND_WORD = "add policy type";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a policy type. "
             + "Parameters: "

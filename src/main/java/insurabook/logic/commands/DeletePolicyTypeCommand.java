@@ -17,7 +17,7 @@ import insurabook.model.policytype.exceptions.PolicyTypeMissingException;
  */
 public class DeletePolicyTypeCommand extends Command {
 
-    public static final String COMMAND_WORD = "delete_policy_type";
+    public static final String COMMAND_WORD = "delete policy type";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes a policy type. "
             + "Parameters: "
