@@ -13,10 +13,8 @@ import insurabook.model.client.ClientId;
 import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
 import insurabook.model.policytype.PolicyType;
-import insurabook.model.policytype.PolicyTypeDescription;
 import insurabook.model.policytype.PolicyTypeId;
 import insurabook.model.policytype.PolicyTypeName;
-import insurabook.model.policytype.PolicyTypePremium;
 import javafx.collections.ObservableList;
 
 /**

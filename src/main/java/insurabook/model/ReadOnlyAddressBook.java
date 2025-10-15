@@ -1,7 +1,6 @@
 package insurabook.model;
 
 import insurabook.model.client.Client;
-import insurabook.model.policytype.PolicyType;
 import javafx.collections.ObservableList;
 
 /**
