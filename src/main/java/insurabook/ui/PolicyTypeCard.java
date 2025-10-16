@@ -1,6 +1,8 @@
 package insurabook.ui;
 
 import insurabook.model.policytype.PolicyType;
+import insurabook.model.policytype.PolicyTypeDescription;
+import insurabook.model.policytype.PolicyTypePremium;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -45,7 +47,17 @@ public class PolicyTypeCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         ptName.setText(policyType.getPtName().toString());
         ptId.setText("Policy Type Id: " + policyType.getPtId().toString());
-        ptDescription.setText(policyType.getPtDescription().toString());
-        ptPremium.setText("Policy Type Premium: " + policyType.getPtPremium());
+
+        PolicyTypeDescription ptDescValue = policyType.getPtDescription();
+        ptDescription.setText(
+                !ptDescValue.isEmpty
+                        ? ptDescValue.toString()
+                        : "");
+
+        PolicyTypePremium ptPremValue = policyType.getPtPremium();
+        ptPremium.setText(
+                !ptPremValue.isEmpty
+                        ? "Policy Type Premium: " + policyType.getPtPremium()
+                        : "");
     }
 }

@@ -11,11 +11,13 @@ import insurabook.commons.core.LogsCenter;
 import insurabook.logic.commands.AddClaimCommand;
 import insurabook.logic.commands.AddClientCommand;
 import insurabook.logic.commands.AddPolicyCommand;
+import insurabook.logic.commands.AddPolicyTypeCommand;
 import insurabook.logic.commands.ClearCommand;
 import insurabook.logic.commands.Command;
 import insurabook.logic.commands.DeleteClaimCommand;
 import insurabook.logic.commands.DeleteClientCommand;
 import insurabook.logic.commands.DeletePolicyCommand;
+import insurabook.logic.commands.DeletePolicyTypeCommand;
 import insurabook.logic.commands.EditCommand;
 import insurabook.logic.commands.ExitCommand;
 import insurabook.logic.commands.FindCommand;
@@ -97,6 +99,12 @@ public class InsuraBookParser {
 
         case DeletePolicyCommand.COMMAND_WORD:
             return new DeletePolicyCommandParser().parse(arguments);
+
+        case AddPolicyTypeCommand.COMMAND_WORD:
+            return new AddPolicyTypeCommandParser().parse(arguments);
+
+        case DeletePolicyTypeCommand.COMMAND_WORD:
+            return new DeletePolicyTypeCommandParser().parse(arguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);
