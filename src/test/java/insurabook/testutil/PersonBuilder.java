@@ -1,16 +1,8 @@
 package insurabook.testutil;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import insurabook.model.client.Address;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
-import insurabook.model.client.Email;
 import insurabook.model.client.Name;
-import insurabook.model.client.Phone;
-import insurabook.model.tag.Tag;
-import insurabook.model.util.SampleDataUtil;
 
 /**
  * A utility class to help with building Person objects.
@@ -18,16 +10,9 @@ import insurabook.model.util.SampleDataUtil;
 public class PersonBuilder {
 
     public static final String DEFAULT_NAME = "Amy Bee";
-    public static final String DEFAULT_PHONE = "85355255";
-    public static final String DEFAULT_EMAIL = "amy@gmail.com";
-    public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6";
     public static final String DEFAULT_CLIENT_ID = "1";
 
     private Name name;
-    private Phone phone;
-    private Email email;
-    private Address address;
-    private Set<Tag> tags;
     private ClientId clientId;
 
     /**
@@ -35,10 +20,6 @@ public class PersonBuilder {
      */
     public PersonBuilder() {
         name = new Name(DEFAULT_NAME);
-        phone = new Phone(DEFAULT_PHONE);
-        email = new Email(DEFAULT_EMAIL);
-        address = new Address(DEFAULT_ADDRESS);
-        tags = new HashSet<>();
         clientId = new ClientId(DEFAULT_CLIENT_ID);
     }
 
@@ -47,10 +28,6 @@ public class PersonBuilder {
      */
     public PersonBuilder(Client clientToCopy) {
         name = clientToCopy.getName();
-        phone = clientToCopy.getPhone();
-        email = clientToCopy.getEmail();
-        address = clientToCopy.getAddress();
-        tags = new HashSet<>(clientToCopy.getTags());
         clientId = clientToCopy.getClientId();
     }
 
@@ -63,38 +40,6 @@ public class PersonBuilder {
     }
 
     /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Person} that we are building.
-     */
-    public PersonBuilder withTags(String ... tags) {
-        this.tags = SampleDataUtil.getTagSet(tags);
-        return this;
-    }
-
-    /**
-     * Sets the {@code Address} of the {@code Person} that we are building.
-     */
-    public PersonBuilder withAddress(String address) {
-        this.address = new Address(address);
-        return this;
-    }
-
-    /**
-     * Sets the {@code Phone} of the {@code Person} that we are building.
-     */
-    public PersonBuilder withPhone(String phone) {
-        this.phone = new Phone(phone);
-        return this;
-    }
-
-    /**
-     * Sets the {@code Email} of the {@code Person} that we are building.
-     */
-    public PersonBuilder withEmail(String email) {
-        this.email = new Email(email);
-        return this;
-    }
-
-    /**
      * Sets the {@code Email} of the {@code Person} that we are building.
      */
     public PersonBuilder withClientId(String clientId) {
@@ -103,7 +48,7 @@ public class PersonBuilder {
     }
 
     public Client build() {
-        return new Client(name, phone, email, address, tags, clientId);
+        return new Client(name, clientId);
     }
 
 }

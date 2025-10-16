@@ -1,7 +1,5 @@
 package insurabook.model;
 
-import static insurabook.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static insurabook.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static insurabook.testutil.Assert.assertThrows;
 import static insurabook.testutil.TypicalPersons.ALICE;
 import static insurabook.testutil.TypicalPersons.getTypicalAddressBook;
@@ -46,8 +44,7 @@ public class AddressBookTest {
     @Test
     public void resetData_withDuplicatePersons_throwsDuplicatePersonException() {
         // Two persons with the same identity fields
-        Client editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
-                .build();
+        Client editedAlice = new PersonBuilder(ALICE).build();
         List<Client> newClients = Arrays.asList(ALICE, editedAlice);
         AddressBookStub newData = new AddressBookStub(newClients);
 
@@ -73,8 +70,7 @@ public class AddressBookTest {
     @Test
     public void hasPerson_personWithSameIdentityFieldsInAddressBook_returnsTrue() {
         addressBook.addPerson(ALICE);
-        Client editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
-                .build();
+        Client editedAlice = new PersonBuilder(ALICE).build();
         assertTrue(addressBook.hasPerson(editedAlice));
     }
 
