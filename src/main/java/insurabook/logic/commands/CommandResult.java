@@ -1,11 +1,13 @@
 package insurabook.logic.commands;
 
-import static insurabook.logic.commands.ViewCommand.CLIENT_VIEW;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Objects;
 
 import insurabook.commons.util.ToStringBuilder;
+import insurabook.ui.MainWindow;
+import insurabook.ui.enums.View;
+
 /**
  * Represents the result of a command execution.
  */
@@ -13,7 +15,7 @@ public class CommandResult {
 
     private final String feedbackToUser;
 
-    private String view;
+    private View view;
 
     /** Help information should be shown to the user. */
     private final boolean showHelp;
@@ -26,7 +28,8 @@ public class CommandResult {
      */
     public CommandResult(String feedbackToUser, boolean showHelp, boolean exit) {
         this.feedbackToUser = requireNonNull(feedbackToUser);
-        this.view = CLIENT_VIEW;
+        View currentView = MainWindow.getCurrentView();
+        this.view = Objects.requireNonNullElse(currentView, View.CLIENT_VIEW); // usually activated during stub testing
         this.showHelp = showHelp;
         this.exit = exit;
     }
@@ -43,11 +46,11 @@ public class CommandResult {
         return feedbackToUser;
     }
 
-    public String getView() {
+    public View getView() {
         return view;
     }
 
-    public void setView(String view) {
+    public void setView(View view) {
         this.view = view;
     }
 
@@ -86,7 +89,7 @@ public class CommandResult {
     public String toString() {
         return new ToStringBuilder(this)
                 .add("feedbackToUser", feedbackToUser)
-                .add("view", view)
+                .add("view", view.toString())
                 .add("showHelp", showHelp)
                 .add("exit", exit)
                 .toString();

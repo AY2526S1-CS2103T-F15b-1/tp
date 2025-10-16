@@ -1,7 +1,6 @@
 package insurabook.ui;
 
-import static insurabook.logic.commands.ViewCommand.CLIENT_VIEW;
-
+import insurabook.ui.enums.View;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Region;
@@ -28,8 +27,8 @@ public class ViewChangeDisplay extends UiPart<Region> {
      * Updates the display to show the current view.
      * @param view The current view, either "client" or "policy".
      */
-    public void setViewForUser(String view) {
-        if (view.equals(CLIENT_VIEW)) {
+    public void setViewForUser(View view) {
+        if (view.equals(View.CLIENT_VIEW)) {
             viewChangeDisplay.setText("Client View");
         } else {
             viewChangeDisplay.setText("Policy View");
