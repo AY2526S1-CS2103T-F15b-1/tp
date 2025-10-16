@@ -4,6 +4,7 @@ import static insurabook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static insurabook.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static insurabook.testutil.Assert.assertThrows;
 import static insurabook.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static insurabook.testutil.TypicalPersons.ALICE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -51,8 +52,8 @@ public class InsuraBookParserTest {
     @Test
     public void parseCommand_delete() throws Exception {
         DeleteClientCommand command = (DeleteClientCommand) parser.parseCommand(
-                DeleteClientCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new DeleteClientCommand(INDEX_FIRST_PERSON), command);
+                DeleteClientCommand.COMMAND_WORD + " " + "-c_id" + ALICE.getClientId());
+        assertEquals(new DeleteClientCommand(ALICE), command);
     }
 
     @Test
