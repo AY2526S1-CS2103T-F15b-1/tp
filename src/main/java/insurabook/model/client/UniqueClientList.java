@@ -8,7 +8,6 @@ import java.util.List;
 
 import insurabook.model.client.exceptions.ClientDuplicateException;
 import insurabook.model.client.exceptions.ClientMissingException;
-import insurabook.model.policies.exceptions.PolicyNotFoundException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
