@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.Objects;
 
 import insurabook.commons.util.ToStringBuilder;
+import insurabook.ui.MainWindow;
 import insurabook.ui.enums.View;
 
 /**
@@ -27,7 +28,7 @@ public class CommandResult {
      */
     public CommandResult(String feedbackToUser, boolean showHelp, boolean exit) {
         this.feedbackToUser = requireNonNull(feedbackToUser);
-        this.view = View.CLIENT_VIEW;
+        this.view = MainWindow.getCurrentView();
         this.showHelp = showHelp;
         this.exit = exit;
     }

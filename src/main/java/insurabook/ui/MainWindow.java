@@ -26,6 +26,7 @@ import javafx.stage.Stage;
 public class MainWindow extends UiPart<Stage> {
 
     private static final String FXML = "MainWindow.fxml";
+    private static View currentView;
 
     private final Logger logger = LogsCenter.getLogger(getClass());
 
@@ -69,6 +70,8 @@ public class MainWindow extends UiPart<Stage> {
         this.primaryStage = primaryStage;
         this.logic = logic;
 
+        this.currentView = View.CLIENT_VIEW;
+
         // Configure the UI
         setWindowDefaultSize(logic.getGuiSettings());
 
@@ -79,6 +82,10 @@ public class MainWindow extends UiPart<Stage> {
 
     public Stage getPrimaryStage() {
         return primaryStage;
+    }
+
+    public static View getCurrentView() {
+        return currentView;
     }
 
     private void setAccelerators() {
@@ -196,6 +203,7 @@ public class MainWindow extends UiPart<Stage> {
             return;
         }
 
+        currentView = viewFlag;
         switch (viewFlag) {
         case POLICY_VIEW:
             listPanelPlaceholder.getChildren().setAll(policiesNode);
@@ -203,7 +211,7 @@ public class MainWindow extends UiPart<Stage> {
         case CLIENT_VIEW:
             listPanelPlaceholder.getChildren().setAll(clientsNode);
             break;
-        default:
+        default: // should not happen due to enum
             logger.warning("Unknown view flag: " + viewFlag);
         }
     }
