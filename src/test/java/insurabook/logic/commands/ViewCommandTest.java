@@ -6,6 +6,7 @@ import static org.mockito.Mockito.mock;
 import org.junit.jupiter.api.Test;
 
 import insurabook.model.Model;
+import insurabook.ui.enums.View;
 
 class ViewCommandTest {
 
@@ -17,7 +18,7 @@ class ViewCommandTest {
         CommandResult result = command.execute(model);
 
         assertEquals(ViewCommand.MESSAGE_SUCCESS_CLIENT, result.getFeedbackToUser());
-        assertEquals(ViewCommand.CLIENT_VIEW, result.getView());
+        assertEquals(View.CLIENT_VIEW, result.getView());
     }
 
     @Test
@@ -26,7 +27,7 @@ class ViewCommandTest {
         CommandResult result = command.execute(model);
 
         assertEquals(ViewCommand.MESSAGE_SUCCESS_POLICY, result.getFeedbackToUser());
-        assertEquals(ViewCommand.POLICY_VIEW, result.getView());
+        assertEquals(View.POLICY_VIEW, result.getView());
     }
 
     @Test
@@ -35,6 +36,6 @@ class ViewCommandTest {
         CommandResult result = command.execute(model);
 
         assertEquals("Invalid flag! Use -c for Client View and -p for Policy View", result.getFeedbackToUser());
-        assertEquals(result.getView(), "client"); // defaults to client view
+        assertEquals(result.getView(), View.CLIENT_VIEW); // defaults to client view
     }
 }

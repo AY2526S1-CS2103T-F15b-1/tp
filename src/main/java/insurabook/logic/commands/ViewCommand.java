@@ -40,6 +40,9 @@ public class ViewCommand extends Command {
         }
 
         // default to client view if flag is invalid
-        return new CommandResult("Invalid flag! Use -c for Client View and -p for Policy View");
+        CommandResult res = new CommandResult(
+                "Invalid flag! Use -c for Client View and -p for Policy View");
+        res.setView(View.CLIENT_VIEW);
+        return res;
     }
 }

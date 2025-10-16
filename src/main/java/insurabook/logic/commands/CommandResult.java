@@ -28,7 +28,8 @@ public class CommandResult {
      */
     public CommandResult(String feedbackToUser, boolean showHelp, boolean exit) {
         this.feedbackToUser = requireNonNull(feedbackToUser);
-        this.view = MainWindow.getCurrentView();
+        View currentView = MainWindow.getCurrentView();
+        this.view = Objects.requireNonNullElse(currentView, View.CLIENT_VIEW); // usually activated during stub testing
         this.showHelp = showHelp;
         this.exit = exit;
     }
@@ -88,7 +89,7 @@ public class CommandResult {
     public String toString() {
         return new ToStringBuilder(this)
                 .add("feedbackToUser", feedbackToUser)
-                .add("view", view)
+                .add("view", view.toString())
                 .add("showHelp", showHelp)
                 .add("exit", exit)
                 .toString();
