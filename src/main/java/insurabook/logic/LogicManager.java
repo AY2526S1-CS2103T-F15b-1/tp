@@ -49,7 +49,12 @@ public class LogicManager implements Logic {
 
         CommandResult commandResult;
         Command command = insuraBookParser.parseCommand(commandText);
-        commandResult = command.execute(model);
+
+        try {
+            commandResult = command.execute(model);
+        } catch (RuntimeException e) {
+            throw new CommandException(String.format(e.getMessage()), e);
+        }
 
         try {
             storage.saveInsuraBook(model.getInsuraBook());
