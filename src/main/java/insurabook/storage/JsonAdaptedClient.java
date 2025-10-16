@@ -21,7 +21,7 @@ class JsonAdaptedClient {
 
     private final String name;
     private final String clientId;
-    private final List<JsonAdaptedPolicy> polices;
+    private final List<JsonAdaptedPolicy> policies;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -29,10 +29,10 @@ class JsonAdaptedClient {
     @JsonCreator
     public JsonAdaptedClient(@JsonProperty("name") String name,
                              @JsonProperty("clientId") String clientId,
-                             @JsonProperty("polices") List<JsonAdaptedPolicy> polices) {
+                             @JsonProperty("polices") List<JsonAdaptedPolicy> policies) {
         this.name = name;
         this.clientId = clientId;
-        this.polices = polices;
+        this.policies = policies;
     }
 
     /**
@@ -41,7 +41,7 @@ class JsonAdaptedClient {
     public JsonAdaptedClient(Client source) {
         name = source.getName().fullName;
         clientId = source.getClientId().clientId;
-        polices = source.getPortfolio().getPolicies().asUnmodifiableObservableList().stream()
+        policies = source.getPortfolio().getPolicies().asUnmodifiableObservableList().stream()
                 .map(JsonAdaptedPolicy::new)
                 .toList();
     }
@@ -69,10 +69,10 @@ class JsonAdaptedClient {
         }
         final ClientId modelClientId = new ClientId(clientId);
 
-        if (polices == null) {
+        if (policies == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "polices"));
         }
-        final List<Policy> modelPolicies = polices.stream()
+        final List<Policy> modelPolicies = policies.stream()
                 .map(jsonAdaptedPolicy -> {
                     try {
                         return jsonAdaptedPolicy.toModelType(insuraBook);
@@ -111,7 +111,7 @@ class JsonAdaptedClient {
     }
 
     public List<JsonAdaptedPolicy> getPolicies() {
-        return polices;
+        return policies;
     }
 
 }
