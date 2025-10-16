@@ -82,8 +82,7 @@ public class Messages {
     public static String format(Policy policy, int op) {
         final StringBuilder builder = new StringBuilder();
         if (op == 0) {
-            builder.append(policy.getPolicyId())
-                    .append("; Policy Id: ")
+            builder.append("Policy Id: ")
                     .append(policy.getPolicyId())
                     .append("; Client Id: ")
                     .append(policy.getClient().getClientId())
