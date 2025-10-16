@@ -8,6 +8,7 @@ import insurabook.logic.Logic;
 import insurabook.logic.commands.CommandResult;
 import insurabook.logic.commands.exceptions.CommandException;
 import insurabook.logic.parser.exceptions.ParseException;
+import insurabook.ui.enums.View;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -25,8 +26,6 @@ import javafx.stage.Stage;
 public class MainWindow extends UiPart<Stage> {
 
     private static final String FXML = "MainWindow.fxml";
-    private static final String VIEW_CLIENT = "client";
-    private static final String VIEW_POLICY = "policy";
 
     private final Logger logger = LogsCenter.getLogger(getClass());
 
@@ -192,16 +191,16 @@ public class MainWindow extends UiPart<Stage> {
         return personListPanel;
     }
 
-    private void applyView(String viewFlag) {
+    private void applyView(View viewFlag) {
         if (viewFlag == null) {
             return;
         }
 
-        switch (viewFlag.toLowerCase()) {
-        case VIEW_POLICY:
+        switch (viewFlag) {
+        case POLICY_VIEW:
             listPanelPlaceholder.getChildren().setAll(policiesNode);
             break;
-        case VIEW_CLIENT:
+        case CLIENT_VIEW:
             listPanelPlaceholder.getChildren().setAll(clientsNode);
             break;
         default:
