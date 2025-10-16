@@ -4,7 +4,6 @@ import static insurabook.logic.commands.CommandTestUtil.assertCommandFailure;
 import static insurabook.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static insurabook.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static insurabook.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static insurabook.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static insurabook.testutil.TypicalPersons.ALICE;
 import static insurabook.testutil.TypicalPersons.getTypicalAddressBook;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import insurabook.commons.core.index.Index;
 import insurabook.logic.Messages;
 import insurabook.model.Model;
 import insurabook.model.ModelManager;
@@ -33,9 +31,9 @@ public class DeleteClientCommandTest {
     @Test
     public void execute_validIndexUnfilteredList_success() {
         Client clientToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(INDEX_FIRST_PERSON);
+        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(ALICE);
 
-        String expectedMessage = String.format(DeleteClientCommand.MESSAGE_DELETE_PERSON_SUCCESS,
+        String expectedMessage = String.format(DeleteClientCommand.MESSAGE_SUCCESS,
                 Messages.format(clientToDelete));
         ModelManager expectedModel = new ModelManager(model.getInsuraBook(), new UserPrefs());
 
@@ -46,8 +44,8 @@ public class DeleteClientCommandTest {
 
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(outOfBoundIndex);
+        Client testClient = new Client(new Name("Bob"), new ClientId("12345"));
+        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(testClient);
 
         assertCommandFailure(deleteClientCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
@@ -64,9 +62,9 @@ public class DeleteClientCommandTest {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
         Client clientToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(INDEX_FIRST_PERSON);
+        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(ALICE);
 
-        String expectedMessage = String.format(DeleteClientCommand.MESSAGE_DELETE_PERSON_SUCCESS,
+        String expectedMessage = String.format(DeleteClientCommand.MESSAGE_SUCCESS,
                 Messages.format(clientToDelete));
 
         Model expectedModel = new ModelManager(model.getInsuraBook(), new UserPrefs());
@@ -79,19 +77,12 @@ public class DeleteClientCommandTest {
     @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
+        Client testClient = new Client(new Name("Bob"), new ClientId("12345"));
 
-        Index outOfBoundIndex = INDEX_SECOND_PERSON;
-        // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getInsuraBook().getClientList().size());
-
-        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(outOfBoundIndex);
+        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(testClient);
 
         assertCommandFailure(deleteClientCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
-    //    assertThrows(CommandException.class,
-    //            DeleteClientCommand.MESSAGE_MISSING_CLIENT,
-    //            () -> deleteClientCommand.execute(modelStub));
-    //}
 
     @Test
     public void equals() {
