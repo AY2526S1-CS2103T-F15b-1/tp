@@ -5,5 +5,10 @@ package insurabook.ui.enums;
  */
 public enum View {
     CLIENT_VIEW,
-    POLICY_VIEW
+    POLICY_VIEW;
+
+    @Override
+    public String toString() {
+        return super.name();
+    }
 }
