@@ -6,11 +6,9 @@ import java.util.stream.Collectors;
 
 import insurabook.model.InsuraBook;
 import insurabook.model.ReadOnlyInsuraBook;
-import insurabook.model.client.Address;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
 import insurabook.model.client.Name;
-import insurabook.model.client.Phone;
 import insurabook.model.policytype.PolicyType;
 import insurabook.model.policytype.PolicyTypeDescription;
 import insurabook.model.policytype.PolicyTypeId;
