@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Test;
 
 import insurabook.logic.commands.AddClientCommand;
 import insurabook.logic.commands.ClearCommand;
-import insurabook.logic.commands.DeleteClientCommand;
 import insurabook.logic.commands.EditCommand;
 import insurabook.logic.commands.EditCommand.EditPersonDescriptor;
 import insurabook.logic.commands.ExitCommand;
@@ -45,13 +44,6 @@ public class AddressBookParserTest {
     public void parseCommand_clear() throws Exception {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD + " 3") instanceof ClearCommand);
-    }
-
-    @Test
-    public void parseCommand_delete() throws Exception {
-        DeleteClientCommand command = (DeleteClientCommand) parser.parseCommand(
-                DeleteClientCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new DeleteClientCommand(INDEX_FIRST_PERSON), command);
     }
 
     @Test

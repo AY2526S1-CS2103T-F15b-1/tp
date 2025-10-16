@@ -1,10 +1,6 @@
 package insurabook.logic.commands;
 
-import static insurabook.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
-import static insurabook.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static insurabook.logic.parser.CliSyntax.PREFIX_PHONE;
-import static insurabook.logic.parser.CliSyntax.PREFIX_TAG;
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
 import static insurabook.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static java.util.Objects.requireNonNull;
 
@@ -39,15 +35,10 @@ public class EditCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
             + "by the index number used in the displayed person list. "
             + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_CLIENT_ID + "NAME] "
-            + "[" + PREFIX_PHONE + "PHONE] "
-            + "[" + PREFIX_EMAIL + "EMAIL] "
-            + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "Parameters: CLIENT_ID "
+            + "[" + PREFIX_CLIENT_NAME + "NAME] "
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com";
+            + PREFIX_CLIENT_NAME + "Jonn";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -97,15 +88,11 @@ public class EditCommand extends Command {
         assert clientToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(clientToEdit.getName());
-        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(clientToEdit.getPhone());
-        Email updatedEmail = editPersonDescriptor.getEmail().orElse(clientToEdit.getEmail());
-        Address updatedAddress = editPersonDescriptor.getAddress().orElse(clientToEdit.getAddress());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(clientToEdit.getTags());
 
         // keep the same client ID
         ClientId clientId = clientToEdit.getClientId();
 
-        return new Client(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, clientId);
+        return new Client(updatedName, clientId);
     }
 
     @Override

@@ -5,6 +5,7 @@ import static insurabook.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static insurabook.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static insurabook.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static insurabook.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static insurabook.testutil.TypicalPersons.ALICE;
 import static insurabook.testutil.TypicalPersons.getTypicalAddressBook;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -18,6 +19,8 @@ import insurabook.model.Model;
 import insurabook.model.ModelManager;
 import insurabook.model.UserPrefs;
 import insurabook.model.client.Client;
+import insurabook.model.client.ClientId;
+import insurabook.model.client.Name;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for
@@ -48,6 +51,13 @@ public class DeleteClientCommandTest {
 
         assertCommandFailure(deleteClientCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
+    //@Test
+    //public void execute_missingClientId_throwsCommandException() {
+    //    Name name = new Name("Bob");
+    //    ClientId clientId = new ClientId("");
+    //    Client invalidClient = new Client(name, clientId);
+    //    DeleteClientCommand deleteClientCommand = new DeleteClientCommand(invalidClient);
+    //    ModelStub modelStub = new ModelStubWithPerson(invalidClient);
 
     @Test
     public void execute_validIndexFilteredList_success() {
@@ -78,17 +88,24 @@ public class DeleteClientCommandTest {
 
         assertCommandFailure(deleteClientCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
+    //    assertThrows(CommandException.class,
+    //            DeleteClientCommand.MESSAGE_MISSING_CLIENT,
+    //            () -> deleteClientCommand.execute(modelStub));
+    //}
 
     @Test
     public void equals() {
-        DeleteClientCommand deleteFirstCommand = new DeleteClientCommand(INDEX_FIRST_PERSON);
-        DeleteClientCommand deleteSecondCommand = new DeleteClientCommand(INDEX_SECOND_PERSON);
+        Client firstClient = new Client(new Name("Bob"), new ClientId("12345"));
+        Client secondClient = new Client(new Name("Amy"), new ClientId("54321"));
+
+        DeleteClientCommand deleteFirstCommand = new DeleteClientCommand(firstClient);
+        DeleteClientCommand deleteSecondCommand = new DeleteClientCommand(secondClient);
 
         // same object -> returns true
         assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
 
         // same values -> returns true
-        DeleteClientCommand deleteFirstCommandCopy = new DeleteClientCommand(INDEX_FIRST_PERSON);
+        DeleteClientCommand deleteFirstCommandCopy = new DeleteClientCommand(firstClient);
         assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
 
         // different types -> returns false
@@ -103,9 +120,8 @@ public class DeleteClientCommandTest {
 
     @Test
     public void toStringMethod() {
-        Index targetIndex = Index.fromOneBased(1);
-        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(targetIndex);
-        String expected = DeleteClientCommand.class.getCanonicalName() + "{targetIndex=" + targetIndex + "}";
+        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(ALICE);
+        String expected = DeleteClientCommand.class.getCanonicalName() + "{toDelete=" + ALICE + "}";
         assertEquals(expected, deleteClientCommand.toString());
     }
 

@@ -47,8 +47,7 @@ public class InsuraBookTest {
     @Test
     public void resetData_withDuplicatePersons_throwsDuplicatePersonException() {
         // Two persons with the same identity fields
-        Client editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
-                .build();
+        Client editedAlice = new PersonBuilder(ALICE).build();
         List<Client> newClients = Arrays.asList(ALICE, editedAlice);
         InsuraBookStub newData = new InsuraBookStub(newClients);
 
@@ -74,8 +73,7 @@ public class InsuraBookTest {
     @Test
     public void hasPerson_personWithSameIdentityFieldsInAddressBook_returnsTrue() {
         insuraBook.addClient(ALICE);
-        Client editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
-                .build();
+        Client editedAlice = new PersonBuilder(ALICE).build();
         assertTrue(insuraBook.hasClient(editedAlice));
     }
 

@@ -1,16 +1,8 @@
 package insurabook.testutil;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import insurabook.logic.commands.EditCommand.EditPersonDescriptor;
-import insurabook.model.client.Address;
 import insurabook.model.client.Client;
-import insurabook.model.client.Email;
 import insurabook.model.client.Name;
-import insurabook.model.client.Phone;
-import insurabook.model.tag.Tag;
 
 /**
  * A utility class to help with building EditPersonDescriptor objects.
@@ -33,10 +25,6 @@ public class EditPersonDescriptorBuilder {
     public EditPersonDescriptorBuilder(Client client) {
         descriptor = new EditPersonDescriptor();
         descriptor.setName(client.getName());
-        descriptor.setPhone(client.getPhone());
-        descriptor.setEmail(client.getEmail());
-        descriptor.setAddress(client.getAddress());
-        descriptor.setTags(client.getTags());
     }
 
     /**
@@ -47,41 +35,8 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
-    /**
-     * Sets the {@code Phone} of the {@code EditPersonDescriptor} that we are building.
-     */
-    public EditPersonDescriptorBuilder withPhone(String phone) {
-        descriptor.setPhone(new Phone(phone));
-        return this;
-    }
-
-    /**
-     * Sets the {@code Email} of the {@code EditPersonDescriptor} that we are building.
-     */
-    public EditPersonDescriptorBuilder withEmail(String email) {
-        descriptor.setEmail(new Email(email));
-        return this;
-    }
-
-    /**
-     * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
-     */
-    public EditPersonDescriptorBuilder withAddress(String address) {
-        descriptor.setAddress(new Address(address));
-        return this;
-    }
-
-    /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
-     * that we are building.
-     */
-    public EditPersonDescriptorBuilder withTags(String... tags) {
-        Set<Tag> tagSet = Stream.of(tags).map(Tag::new).collect(Collectors.toSet());
-        descriptor.setTags(tagSet);
-        return this;
-    }
-
     public EditPersonDescriptor build() {
         return descriptor;
     }
+
 }
