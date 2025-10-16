@@ -16,7 +16,7 @@ import java.util.List;
 
 import insurabook.commons.core.index.Index;
 import insurabook.logic.commands.exceptions.CommandException;
-import insurabook.model.AddressBook;
+import insurabook.model.InsuraBook;
 import insurabook.model.Model;
 import insurabook.model.client.Client;
 import insurabook.model.client.NameContainsKeywordsPredicate;
@@ -105,11 +105,11 @@ public class CommandTestUtil {
     public static void assertCommandFailure(Command command, Model actualModel, String expectedMessage) {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
-        AddressBook expectedAddressBook = new AddressBook(actualModel.getAddressBook());
+        InsuraBook expectedInsuraBook = new InsuraBook(actualModel.getInsuraBook());
         List<Client> expectedFilteredList = new ArrayList<>(actualModel.getFilteredPersonList());
 
         assertThrows(CommandException.class, expectedMessage, () -> command.execute(actualModel));
-        assertEquals(expectedAddressBook, actualModel.getAddressBook());
+        assertEquals(expectedInsuraBook, actualModel.getInsuraBook());
         assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
     }
     /**

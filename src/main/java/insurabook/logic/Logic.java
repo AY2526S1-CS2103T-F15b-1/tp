@@ -7,8 +7,9 @@ import insurabook.logic.commands.CommandResult;
 import insurabook.logic.commands.exceptions.CommandException;
 import insurabook.logic.parser.exceptions.ParseException;
 import insurabook.model.Model;
-import insurabook.model.ReadOnlyAddressBook;
+import insurabook.model.ReadOnlyInsuraBook;
 import insurabook.model.client.Client;
+import insurabook.model.policytype.PolicyType;
 import javafx.collections.ObservableList;
 
 
@@ -26,20 +27,19 @@ public interface Logic {
     CommandResult execute(String commandText) throws CommandException, ParseException;
 
     /**
-     * Returns the AddressBook.
+     * Returns the InsuraBook.
      *
-     * @see Model#getAddressBook()
+     * @see Model#getInsuraBook()
      */
-    ReadOnlyAddressBook getAddressBook();
+    ReadOnlyInsuraBook getInsuraBook();
 
-    /** Returns an unmodifiable view of the filtered list of persons */
-    ObservableList<Client> getFilteredPersonList();
+    /** Returns an unmodifiable view of the filtered list of clients */
+    ObservableList<Client> getFilteredClientList();
 
-    /**
-     * Returns the user prefs' address book file path.
-     */
-    Path getAddressBookFilePath();
+    /** Returns an unmodifiable view of the filtered list of policy types */
+    ObservableList<PolicyType> getFilteredPolicyTypeList();
 
+    Path getInsuraBookFilePath();
     /**
      * Returns the user prefs' GUI settings.
      */

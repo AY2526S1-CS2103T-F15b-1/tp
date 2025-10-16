@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 import insurabook.commons.core.index.Index;
 import insurabook.logic.Messages;
 import insurabook.logic.commands.EditCommand.EditPersonDescriptor;
-import insurabook.model.AddressBook;
+import insurabook.model.InsuraBook;
 import insurabook.model.Model;
 import insurabook.model.ModelManager;
 import insurabook.model.UserPrefs;
@@ -61,7 +61,7 @@ public class EditCommandTest {
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedClient));
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new InsuraBook(model.getInsuraBook()), new UserPrefs());
         expectedModel.setPerson(lastClient, editedClient);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
@@ -74,7 +74,7 @@ public class EditCommandTest {
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedClient));
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new InsuraBook(model.getInsuraBook()), new UserPrefs());
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
@@ -97,26 +97,26 @@ public class EditCommandTest {
     //    assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     //}
 
-    //    @Test
-    //    public void execute_duplicatePersonUnfilteredList_failure() {
-    //        Client firstClient = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-    //        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(firstClient).build();
-    //        EditCommand editCommand = new EditCommand(INDEX_SECOND_PERSON, descriptor);
-    //
-    //        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PERSON);
-    //    }
+    //@Test
+    //public void execute_duplicatePersonUnfilteredList_failure() {
+    //    Client firstClient = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+    //    EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(firstClient).build();
+    //    EditCommand editCommand = new EditCommand(INDEX_SECOND_PERSON, descriptor);
 
-    //    @Test
-    //    public void execute_duplicatePersonFilteredList_failure() {
-    //        showPersonAtIndex(model, INDEX_FIRST_PERSON);
-    //
-    //        // edit person in filtered list into a duplicate in address book
-    //        Client clientInList = model.getAddressBook().getPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
-    //        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON,
-    //                new EditPersonDescriptorBuilder(clientInList).build());
-    //
-    //        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PERSON);
-    //    }
+    //    assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PERSON);
+    //}
+
+    //@Test
+    //public void execute_duplicatePersonFilteredList_failure() {
+    //    showPersonAtIndex(model, INDEX_FIRST_PERSON);
+
+    //    // edit person in filtered list into a duplicate in address book
+    //    Client clientInList = model.getInsuraBook().getClientList().get(INDEX_SECOND_PERSON.getZeroBased());
+    //    EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON,
+    //            new EditPersonDescriptorBuilder(clientInList).build());
+
+    //    assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PERSON);
+    //}
 
     @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() {
@@ -136,7 +136,7 @@ public class EditCommandTest {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
         // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getInsuraBook().getClientList().size());
 
         EditCommand editCommand = new EditCommand(outOfBoundIndex,
                 new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());

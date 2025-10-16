@@ -10,11 +10,12 @@ import insurabook.commons.core.LogsCenter;
 import insurabook.logic.commands.Command;
 import insurabook.logic.commands.CommandResult;
 import insurabook.logic.commands.exceptions.CommandException;
-import insurabook.logic.parser.AddressBookParser;
+import insurabook.logic.parser.InsuraBookParser;
 import insurabook.logic.parser.exceptions.ParseException;
 import insurabook.model.Model;
-import insurabook.model.ReadOnlyAddressBook;
+import insurabook.model.ReadOnlyInsuraBook;
 import insurabook.model.client.Client;
+import insurabook.model.policytype.PolicyType;
 import insurabook.storage.Storage;
 import javafx.collections.ObservableList;
 
@@ -31,7 +32,7 @@ public class LogicManager implements Logic {
 
     private final Model model;
     private final Storage storage;
-    private final AddressBookParser addressBookParser;
+    private final InsuraBookParser insuraBookParser;
 
     /**
      * Constructs a {@code LogicManager} with the given {@code Model} and {@code Storage}.
@@ -39,7 +40,7 @@ public class LogicManager implements Logic {
     public LogicManager(Model model, Storage storage) {
         this.model = model;
         this.storage = storage;
-        addressBookParser = new AddressBookParser();
+        insuraBookParser = new InsuraBookParser();
     }
 
     @Override
@@ -47,11 +48,11 @@ public class LogicManager implements Logic {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
 
         CommandResult commandResult;
-        Command command = addressBookParser.parseCommand(commandText);
+        Command command = insuraBookParser.parseCommand(commandText);
         commandResult = command.execute(model);
 
         try {
-            storage.saveAddressBook(model.getAddressBook());
+            storage.saveInsuraBook(model.getInsuraBook());
         } catch (AccessDeniedException e) {
             throw new CommandException(String.format(FILE_OPS_PERMISSION_ERROR_FORMAT, e.getMessage()), e);
         } catch (IOException ioe) {
@@ -62,18 +63,23 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public ReadOnlyAddressBook getAddressBook() {
-        return model.getAddressBook();
+    public ReadOnlyInsuraBook getInsuraBook() {
+        return model.getInsuraBook();
     }
 
     @Override
-    public ObservableList<Client> getFilteredPersonList() {
+    public ObservableList<Client> getFilteredClientList() {
         return model.getFilteredPersonList();
     }
 
     @Override
-    public Path getAddressBookFilePath() {
-        return model.getAddressBookFilePath();
+    public ObservableList<PolicyType> getFilteredPolicyTypeList() {
+        return model.getFilteredPolicyTypeList();
+    }
+
+    @Override
+    public Path getInsuraBookFilePath() {
+        return model.getInsuraBookFilePath();
     }
 
     @Override

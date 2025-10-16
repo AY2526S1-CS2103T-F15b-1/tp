@@ -10,6 +10,7 @@ import insurabook.logic.commands.exceptions.CommandException;
 import insurabook.logic.parser.exceptions.ParseException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
@@ -24,6 +25,8 @@ import javafx.stage.Stage;
 public class MainWindow extends UiPart<Stage> {
 
     private static final String FXML = "MainWindow.fxml";
+    private static final String VIEW_CLIENT = "client";
+    private static final String VIEW_POLICY = "policy";
 
     private final Logger logger = LogsCenter.getLogger(getClass());
 
@@ -31,10 +34,13 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private PersonListPanel personListPanel;
     private ResultDisplay resultDisplay;
     private ViewChangeDisplay viewChangeDisplay;
     private HelpWindow helpWindow;
+    private PersonListPanel personListPanel;
+    private PolicyTypeListPanel policyTypeListPanel;
+    private Node clientsNode;
+    private Node policiesNode;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -43,7 +49,7 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane personListPanelPlaceholder;
+    private StackPane listPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -114,8 +120,20 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        var clients = logic.getFilteredClientList();
+        var policies = logic.getFilteredPolicyTypeList();
+
+        logger.info("clients size=" + clients.size());
+        logger.info("policies size=" + policies.size());
+
+        personListPanel = new PersonListPanel(clients);
+        policyTypeListPanel = new PolicyTypeListPanel(policies);
+
+        clientsNode = personListPanel.getRoot();
+        policiesNode = policyTypeListPanel.getRoot();
+
+        //shows client list by default
+        listPanelPlaceholder.getChildren().setAll(clientsNode);
 
         viewChangeDisplay = new ViewChangeDisplay();
         viewChangeDisplayPlaceholder.getChildren().add(viewChangeDisplay.getRoot());
@@ -123,7 +141,7 @@ public class MainWindow extends UiPart<Stage> {
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getInsuraBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(this::executeCommand);
@@ -174,6 +192,23 @@ public class MainWindow extends UiPart<Stage> {
         return personListPanel;
     }
 
+    private void applyView(String viewFlag) {
+        if (viewFlag == null) {
+            return;
+        }
+
+        switch (viewFlag.toLowerCase()) {
+        case VIEW_POLICY:
+            listPanelPlaceholder.getChildren().setAll(policiesNode);
+            break;
+        case VIEW_CLIENT:
+            listPanelPlaceholder.getChildren().setAll(clientsNode);
+            break;
+        default:
+            logger.warning("Unknown view flag: " + viewFlag);
+        }
+    }
+
     /**
      * Executes the command and returns the result.
      *
@@ -185,6 +220,8 @@ public class MainWindow extends UiPart<Stage> {
             logger.info("Result: " + commandResult.getFeedbackToUser() + " View: " + commandResult.getView());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
             viewChangeDisplay.setViewForUser(commandResult.getView());
+
+            applyView(commandResult.getView());
 
             if (commandResult.isShowHelp()) {
                 handleHelp();

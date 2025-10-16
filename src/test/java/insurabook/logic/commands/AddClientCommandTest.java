@@ -18,9 +18,9 @@ import org.junit.jupiter.api.Test;
 import insurabook.commons.core.GuiSettings;
 import insurabook.logic.Messages;
 import insurabook.logic.commands.exceptions.CommandException;
-import insurabook.model.AddressBook;
+import insurabook.model.InsuraBook;
 import insurabook.model.Model;
-import insurabook.model.ReadOnlyAddressBook;
+import insurabook.model.ReadOnlyInsuraBook;
 import insurabook.model.ReadOnlyUserPrefs;
 import insurabook.model.claims.Claim;
 import insurabook.model.claims.ClaimId;
@@ -120,27 +120,27 @@ public class AddClientCommandTest {
         }
 
         @Override
-        public Path getAddressBookFilePath() {
+        public Path getInsuraBookFilePath() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void setAddressBookFilePath(Path addressBookFilePath) {
+        public void setInsuraBookFilePath(Path insuraBookFilePath) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setInsuraBook(InsuraBook insuraBook) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ReadOnlyInsuraBook getInsuraBook() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
         public void addPerson(Client client) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void setAddressBook(ReadOnlyAddressBook newData) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -166,6 +166,16 @@ public class AddClientCommandTest {
 
         @Override
         public void updateFilteredPersonList(Predicate<Client> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<PolicyType> getFilteredPolicyTypeList() {
+            return null;
+        }
+
+        @Override
+        public void updateFilteredPolicyTypeList(Predicate<PolicyType> predicate) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -238,8 +248,8 @@ public class AddClientCommandTest {
         }
 
         @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
+        public ReadOnlyInsuraBook getInsuraBook() {
+            return null;
         }
     }
 
