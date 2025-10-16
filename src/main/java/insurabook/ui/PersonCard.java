@@ -40,6 +40,6 @@ public class PersonCard extends UiPart<Region> {
         this.client = client;
         id.setText(displayedIndex + ". ");
         name.setText(client.getName().fullName);
-        clientId.setText(client.getClientId().clientId);
+        clientId.setText(client.getClientId().toString());
     }
 }
