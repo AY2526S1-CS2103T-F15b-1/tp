@@ -40,9 +40,9 @@ class JsonSerializableInsuraBook {
      * @param source future changes to this will not affect the created {@code JsonSerializableAddressBook}.
      */
     public JsonSerializableInsuraBook(ReadOnlyInsuraBook source) {
-        clients.addAll(source.getClientList().stream().map(JsonAdaptedClient::new).collect(Collectors.toList()));
         policyTypes.addAll(source.getPolicyTypeList().stream()
                 .map(JsonAdaptedPolicyType::new).collect(Collectors.toList()));
+        clients.addAll(source.getClientList().stream().map(JsonAdaptedClient::new).collect(Collectors.toList()));
     }
 
     /**
@@ -52,15 +52,23 @@ class JsonSerializableInsuraBook {
      */
     public InsuraBook toModelType() throws IllegalValueException {
         InsuraBook insuraBook = new InsuraBook();
+        for (JsonAdaptedPolicyType jsonAdaptedPolicyTypes : policyTypes) {
+            insuraBook.addPolicyType(jsonAdaptedPolicyTypes.toModelType());
+        }
+
         for (JsonAdaptedClient jsonAdaptedClient : clients) {
-            Client client = jsonAdaptedClient.toModelType();
+            Client client = jsonAdaptedClient.toModelTypeWithoutPolicies();
             if (insuraBook.hasClient(client)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
             }
             insuraBook.addClient(client);
         }
-        for (JsonAdaptedPolicyType jsonAdaptedPolicyTypes : policyTypes) {
-            insuraBook.addPolicyType(jsonAdaptedPolicyTypes.toModelType());
+
+        for (JsonAdaptedClient jsonClient : clients) {
+            Client client = insuraBook.getClient(jsonClient.getClientId());
+            for (JsonAdaptedPolicy jsonPolicy : jsonClient.getPolicies()) {
+                client.addPolicy(jsonPolicy.toModelType(insuraBook));
+            }
         }
         return insuraBook;
     }

@@ -23,6 +23,21 @@ public class UniquePolicyList implements Iterable<Policy> {
     private final ObservableList<Policy> internalUnmodifiableList =
             FXCollections.unmodifiableObservableList(internalList);
 
+    public UniquePolicyList() {}
+
+    /**
+     * Creates a UniquePolicyList using the Policies in the {@code policies} list.
+     *
+     * @param policies
+     * @throws DuplicatePolicyException if there are any duplicate policies in the given list.
+     */
+    public UniquePolicyList(List<Policy> policies) {
+        if (!policiesAreUnique(policies)) {
+            throw new DuplicatePolicyException();
+        }
+        internalList.addAll(policies);
+    }
+
     /**
      * Returns true if the list contains an equivalent policy as the given argument.
      *

@@ -84,7 +84,7 @@ public class MainApp extends Application {
                 logger.info("Creating a new data file " + storage.getInsuraBookFilePath()
                         + " populated with a sample AddressBook.");
             }
-            initialData = insuraBookOptional.orElseGet(SampleDataUtil::getSamepleInsuraBook);
+            initialData = insuraBookOptional.orElseGet(SampleDataUtil::getSampleInsuraBook);
         } catch (DataLoadingException e) {
             logger.warning("Data file at " + storage.getInsuraBookFilePath() + " could not be loaded."
                     + " Will be starting with an empty AddressBook.");

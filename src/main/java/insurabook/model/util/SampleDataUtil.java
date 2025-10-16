@@ -51,7 +51,7 @@ public class SampleDataUtil {
         };
     }
 
-    public static ReadOnlyInsuraBook getSamepleInsuraBook() {
+    public static ReadOnlyInsuraBook getSampleInsuraBook() {
         InsuraBook sampleAb = new InsuraBook();
         for (Client sampleClient : getSamplePersons()) {
             sampleAb.addClient(sampleClient);

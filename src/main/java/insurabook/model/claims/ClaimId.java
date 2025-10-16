@@ -5,7 +5,7 @@ import static java.util.Objects.requireNonNull;
 
 /**
  * Represents a Claim's id in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidClientId(String)}
+ * Guarantees: immutable; is valid as declared in {@link #isValidClaimId(String)}
  */
 public class ClaimId {
 
@@ -24,14 +24,14 @@ public class ClaimId {
      */
     public ClaimId(String claimId) {
         requireNonNull(claimId);
-        checkArgument(isValidClientId(claimId), MESSAGE_CONSTRAINTS);
+        checkArgument(isValidClaimId(claimId), MESSAGE_CONSTRAINTS);
         this.claimId = claimId;
     }
 
     /**
      * Returns true if a given string is a valid claimId.
      */
-    public static boolean isValidClientId(String test) {
+    public static boolean isValidClaimId(String test) {
         return test.matches(VALIDATION_REGEX);
     }
 

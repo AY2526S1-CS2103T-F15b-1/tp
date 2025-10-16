@@ -1,5 +1,7 @@
 package insurabook.model.client;
 
+import java.util.List;
+
 import insurabook.model.claims.Claim;
 import insurabook.model.claims.ClaimId;
 import insurabook.model.policies.Policy;
@@ -20,6 +22,10 @@ public class Portfolio {
      */
     public Portfolio() {
         this.policies = new UniquePolicyList();
+    }
+
+    public Portfolio(List<Policy> policies) {
+        this.policies = new UniquePolicyList(policies);
     }
 
     public insurabook.model.client.Client getClient() {
