@@ -2,6 +2,7 @@ package insurabook.model.client;
 
 import static insurabook.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.List;
 import java.util.Objects;
 
 import insurabook.commons.util.ToStringBuilder;
@@ -29,9 +30,18 @@ public class Client {
     public Client(Name name, ClientId clientId) {
         requireAllNonNull(name, clientId);
         this.name = name;
-
         this.clientId = clientId;
         this.portfolio = new Portfolio();
+    }
+
+    /**
+     * Every field must be present and not null.
+     */
+    public Client(Name name, ClientId clientId, List<Policy> policies) {
+        requireAllNonNull(name, clientId, policies);
+        this.name = name;
+        this.clientId = clientId;
+        this.portfolio = new Portfolio(policies);
     }
 
     public Name getName() {

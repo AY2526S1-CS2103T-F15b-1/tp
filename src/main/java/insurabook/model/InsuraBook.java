@@ -44,7 +44,7 @@ public class InsuraBook implements ReadOnlyInsuraBook {
     public InsuraBook() {}
 
     /**
-     * Creates an InsuraBook using the Cilent in the {@code toBeCopied}
+     * Creates an InsuraBook using the Client in the {@code toBeCopied}
      */
     public InsuraBook(ReadOnlyInsuraBook toBeCopied) {
         this();

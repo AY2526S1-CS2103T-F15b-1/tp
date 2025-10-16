@@ -216,7 +216,7 @@ public class ParserUtil {
     public static ClaimId parseClaimId(String claimId) throws ParseException {
         requireNonNull(claimId);
         String trimmedClaimId = claimId.trim();
-        if (!ClaimId.isValidClientId(trimmedClaimId)) {
+        if (!ClaimId.isValidClaimId(trimmedClaimId)) {
             throw new ParseException(ClaimId.MESSAGE_CONSTRAINTS);
         }
         return new ClaimId(trimmedClaimId);

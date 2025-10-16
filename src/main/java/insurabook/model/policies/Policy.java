@@ -7,7 +7,9 @@ import insurabook.model.claims.Claim;
 import insurabook.model.claims.ClaimId;
 import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Client;
+import insurabook.model.client.ClientId;
 import insurabook.model.policytype.PolicyType;
+import insurabook.model.policytype.PolicyTypeId;
 
 /**
  * Class representing policy
@@ -34,6 +36,21 @@ public class Policy {
     }
 
     /**
+     * Constructor
+     * @param policyType from parser
+     * @param expiryDate datetime from parser
+     * @param claims list of claims under this policy
+     */
+    public Policy(PolicyId policyId, Client client, PolicyType policyType, InsuraDate expiryDate, List<Claim> claims) {
+        this.policyId = policyId;
+        this.client = client;
+        this.policyType = policyType;
+        this.expiryDate = expiryDate;
+        this.claim = new ArrayList<>(claims);
+
+    }
+
+    /**
      * Getter
      * @return client id of policy owner
      */
@@ -43,10 +60,26 @@ public class Policy {
 
     /**
      * Getter
+     * @return client id of policy owner
+     */
+    public ClientId getClientId() {
+        return this.client.getClientId();
+    }
+
+    /**
+     * Getter
      * @return policy type of policy
      */
     public PolicyType getPolicyType() {
         return this.policyType;
+    }
+
+    /**
+     * Getter
+     * @return policy type id of policy
+     */
+    public PolicyTypeId getPolicyTypeId() {
+        return this.policyType.getPtId();
     }
 
     /**

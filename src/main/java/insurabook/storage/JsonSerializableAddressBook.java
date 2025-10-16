@@ -48,7 +48,7 @@ class JsonSerializableAddressBook {
     public AddressBook toModelType() throws IllegalValueException {
         AddressBook addressBook = new AddressBook();
         for (JsonAdaptedClient jsonAdaptedClient : persons) {
-            Client client = jsonAdaptedClient.toModelType();
+            Client client = jsonAdaptedClient.toModelType(null);
             if (addressBook.hasPerson(client)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
             }
