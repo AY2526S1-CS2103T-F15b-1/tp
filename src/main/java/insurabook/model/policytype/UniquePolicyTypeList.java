@@ -160,6 +160,30 @@ public class UniquePolicyTypeList implements Iterable<PolicyType> {
     }
 
     /**
+     * Returns true if given PolicyTypeName already exists in list.
+     */
+    public boolean containsName(PolicyTypeName name) {
+        for (PolicyType pt: this) {
+            if (pt.getPtName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if given PolicyTypeId already exists in list.
+     */
+    public boolean containsId(PolicyTypeId id) {
+        for (PolicyType pt: this) {
+            if (pt.getPtId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Return internal list as unmodifiable observable list (for JavaFX).
      */
     public ObservableList<PolicyType> asUnmodifiableObservableList() {
@@ -233,7 +257,7 @@ public class UniquePolicyTypeList implements Iterable<PolicyType> {
      * Gets a PolicyType from the list using its PolicyTypeId
      *
      * @param policyTypeId
-     * @return Policy
+     * @return PolicyType
      * @throws PolicyTypeMissingException if no such policy could be found
      */
     public PolicyType getPolicyType(PolicyTypeId policyTypeId) {
