@@ -15,6 +15,7 @@ import insurabook.logic.parser.exceptions.ParseException;
 import insurabook.model.Model;
 import insurabook.model.ReadOnlyInsuraBook;
 import insurabook.model.client.Client;
+import insurabook.model.policies.Policy;
 import insurabook.model.policytype.PolicyType;
 import insurabook.storage.Storage;
 import javafx.collections.ObservableList;
@@ -80,6 +81,11 @@ public class LogicManager implements Logic {
     @Override
     public ObservableList<PolicyType> getFilteredPolicyTypeList() {
         return model.getFilteredPolicyTypeList();
+    }
+
+    @Override
+    public ObservableList<Policy> getClientPolicyList() {
+        return model.getClientPolicyList();
     }
 
     @Override

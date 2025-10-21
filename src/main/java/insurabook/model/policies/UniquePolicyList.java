@@ -1,5 +1,7 @@
 package insurabook.model.policies;
 
+import static insurabook.commons.util.CollectionUtil.requireAllNonNull;
+
 import java.util.Iterator;
 import java.util.List;
 
@@ -7,7 +9,6 @@ import insurabook.model.policies.exceptions.DuplicatePolicyException;
 import insurabook.model.policies.exceptions.PolicyNotFoundException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 
 /**
  * A list of policies that enforces uniqueness between its elements and does not allow nulls.
@@ -36,6 +37,14 @@ public class UniquePolicyList implements Iterable<Policy> {
             throw new DuplicatePolicyException();
         }
         internalList.addAll(policies);
+    }
+
+    /**
+     * Replaces the contents of this list with {@code policies}.
+     */
+    public void setPolicies(List<Policy> policies) {
+        requireAllNonNull(policies);
+        internalList.setAll(policies);
     }
 
     /**

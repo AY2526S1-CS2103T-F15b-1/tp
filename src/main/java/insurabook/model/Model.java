@@ -16,6 +16,7 @@ import insurabook.model.policytype.PolicyType;
 import insurabook.model.policytype.PolicyTypeId;
 import insurabook.model.policytype.PolicyTypeName;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 
 /**
  * The API of the Model component.
@@ -103,6 +104,15 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPolicyTypeList(Predicate<PolicyType> predicate);
+
+    /** Returns an unmodifiable view of client's policy list */
+    FilteredList<Policy> getClientPolicyList();
+
+    /**
+     * Updates the filter of the filtered policy types list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateClientPolicyList(Predicate<Policy> predicate);
 
     /**
      * Adds the given claim.

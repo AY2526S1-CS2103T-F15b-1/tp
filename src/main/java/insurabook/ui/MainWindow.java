@@ -39,7 +39,9 @@ public class MainWindow extends UiPart<Stage> {
     private HelpWindow helpWindow;
     private PersonListPanel personListPanel;
     private PolicyTypeListPanel policyTypeListPanel;
+    private PolicyListPanel policyListPanel;
     private Node clientsNode;
+    private Node policyTypesNode;
     private Node policiesNode;
 
     @FXML
@@ -127,16 +129,19 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
         var clients = logic.getFilteredClientList();
-        var policies = logic.getFilteredPolicyTypeList();
+        var policyTypes = logic.getFilteredPolicyTypeList();
+        var policies = logic.getClientPolicyList();
 
         logger.info("clients size=" + clients.size());
-        logger.info("policies size=" + policies.size());
+        logger.info("policyTypes size=" + policyTypes.size());
 
         personListPanel = new PersonListPanel(clients);
-        policyTypeListPanel = new PolicyTypeListPanel(policies);
+        policyTypeListPanel = new PolicyTypeListPanel(policyTypes);
+        policyListPanel = new PolicyListPanel(policies);
 
         clientsNode = personListPanel.getRoot();
-        policiesNode = policyTypeListPanel.getRoot();
+        policyTypesNode = policyTypeListPanel.getRoot();
+        policiesNode = policyListPanel.getRoot();
 
         //shows client list by default
         listPanelPlaceholder.getChildren().setAll(clientsNode);
@@ -205,6 +210,9 @@ public class MainWindow extends UiPart<Stage> {
 
         currentView = viewFlag;
         switch (viewFlag) {
+        case POLICY_TYPE_VIEW:
+            listPanelPlaceholder.getChildren().setAll(policyTypesNode);
+            break;
         case POLICY_VIEW:
             listPanelPlaceholder.getChildren().setAll(policiesNode);
             break;
