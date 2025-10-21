@@ -24,27 +24,34 @@ class ViewCommandParserTest {
 
     @Test
     void parse_validFlagC_returnsViewCommandWithFlagC() throws Exception {
-        ViewCommand cmd = parser.parse("-c");
+        ViewCommand cmd = parser.parse("view -client");
         assertTrue(cmd instanceof ViewCommand);
-        assertFlagEquals(cmd, "-c");
+        assertFlagEquals(cmd, "-client");
     }
 
     @Test
     void parse_validFlagP_returnsViewCommandWithFlagP() throws Exception {
-        ViewCommand cmd = parser.parse("-p");
+        ViewCommand cmd = parser.parse("view -policy");
         assertTrue(cmd instanceof ViewCommand);
-        assertFlagEquals(cmd, "-p");
+        assertFlagEquals(cmd, "-policy");
     }
 
     @Test
     void parse_trimsAndTakesFirstToken() throws Exception {
-        ViewCommand cmd = parser.parse("   -c   ");
+        ViewCommand cmd = parser.parse("view   -client   ");
         assertTrue(cmd instanceof ViewCommand);
-        assertFlagEquals(cmd, "-c");
+        assertFlagEquals(cmd, "-client");
 
-        ViewCommand cmdWithExtra = parser.parse("-p extra tokens");
+        ViewCommand cmdWithExtra = parser.parse("view -policy extra tokens");
         assertTrue(cmdWithExtra instanceof ViewCommand);
-        assertFlagEquals(cmdWithExtra, "-p");
+        assertFlagEquals(cmdWithExtra, "-policy");
+    }
+
+    @Test
+    void parse_validFlagClientId_returnsViewCommandWithFlagClientId() throws Exception {
+        ViewCommand cmd = parser.parse("view -c_id 1");
+        assertTrue(cmd instanceof ViewCommand);
+        assertFlagEquals(cmd, "-c_id");
     }
 
     // helper to read private 'flag' field from ViewCommand via reflection

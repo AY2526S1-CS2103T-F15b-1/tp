@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 
 import insurabook.model.client.Client;
 import insurabook.model.client.exceptions.ClientDuplicateException;
+import insurabook.model.policies.Policy;
 import insurabook.model.policytype.PolicyType;
 import insurabook.testutil.PersonBuilder;
 import javafx.collections.FXCollections;
@@ -93,10 +94,12 @@ public class InsuraBookTest {
     private static class InsuraBookStub implements ReadOnlyInsuraBook {
         private final ObservableList<Client> clients = FXCollections.observableArrayList();
         private final ObservableList<PolicyType> policyTypes = FXCollections.observableArrayList();
+        private final ObservableList<Policy> policies = FXCollections.observableArrayList();
 
         InsuraBookStub(Collection<Client> clients) {
             this.clients.setAll(clients);
             this.policyTypes.setAll(policyTypes);
+            this.policies.setAll(policies);
         }
 
         @Override
@@ -107,6 +110,11 @@ public class InsuraBookTest {
         @Override
         public ObservableList<PolicyType> getPolicyTypeList() {
             return policyTypes;
+        }
+
+        @Override
+        public ObservableList<Policy> getClientPolicyList() {
+            return policies;
         }
     }
 
