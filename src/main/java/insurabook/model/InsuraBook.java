@@ -160,6 +160,17 @@ public class InsuraBook implements ReadOnlyInsuraBook {
     }
 
     /**
+     * Replaces the given client {@code target} in the list with {@code editedPolicyType}.
+     * {@code target} must exist in the address book.
+     * The client identity of {@code editedPolicyType} must not be the same as another existing client in the address book.
+     */
+    public void setPolicyType(PolicyType target, PolicyType editedPolicyType) {
+        requireNonNull(editedPolicyType);
+
+        policyTypes.setPolicyType(target, editedPolicyType);
+    }
+
+    /**
      * Adds a policy to the client with the given info.
      * If no such client or policy type exists, throws an exception.
      */

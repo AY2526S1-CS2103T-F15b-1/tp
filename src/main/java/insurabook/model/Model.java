@@ -133,4 +133,12 @@ public interface Model {
      * Deletes the policy type based on name and ID.
      */
     List<Integer> deletePolicyType(PolicyTypeName ptName, PolicyTypeId ptId);
+
+    /**
+     * Replaces the given person {@code target} with {@code editedPolicyType}.
+     * {@code target} must exist in the address book.
+     * The person identity of {@code editedPolicyType} must not be the same as
+     * another existing person in the address book.
+     */
+    void setPolicyType(PolicyType target, PolicyType editedPolicyType);
 }

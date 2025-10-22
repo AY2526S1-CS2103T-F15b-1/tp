@@ -203,4 +203,11 @@ public class ModelManager implements Model {
     public List<Integer> deletePolicyType(PolicyTypeName ptName, PolicyTypeId ptId) throws PolicyTypeMissingException {
         return insuraBook.deletePolicyType(ptName, ptId);
     }
+
+    @Override
+    public void setPolicyType(PolicyType target, PolicyType editedPolicyType) {
+        requireAllNonNull(target, editedPolicyType);
+
+        insuraBook.setPolicyType(target, editedPolicyType);
+    }
 }
