@@ -82,6 +82,21 @@ public class UniquePolicyList implements Iterable<Policy> {
         }
     }
 
+    public void setPolicy(Policy target, Policy editedPolicy) {
+        requireAllNonNull(target, editedPolicy);
+
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new PolicyNotFoundException();
+        }
+
+        if (!target.equals(editedPolicy) && contains(editedPolicy)) {
+            throw new DuplicatePolicyException();
+        }
+
+        internalList.set(index, editedPolicy);
+    }
+
 
     public ObservableList<Policy> asUnmodifiableObservableList() {
         return internalUnmodifiableList;

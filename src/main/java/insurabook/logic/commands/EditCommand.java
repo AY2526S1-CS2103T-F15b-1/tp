@@ -38,7 +38,7 @@ public class EditCommand extends Command {
             + "Parameters: CLIENT_ID "
             + "[" + PREFIX_CLIENT_NAME + "NAME] "
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_CLIENT_NAME + "Jonn";
+            + PREFIX_CLIENT_NAME + "John";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";

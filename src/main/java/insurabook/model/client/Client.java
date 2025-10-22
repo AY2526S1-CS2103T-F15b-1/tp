@@ -110,6 +110,10 @@ public class Client {
         return portfolio.removePolicy(policyId);
     }
 
+    public void setPolicy(Policy target, Policy editedPolicy) {
+        portfolio.setPolicy(target, editedPolicy);
+    }
+
     /**
      * Adds a claim to the client's portfolio.
      *

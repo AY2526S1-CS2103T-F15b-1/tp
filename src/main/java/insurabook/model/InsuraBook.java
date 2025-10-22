@@ -179,6 +179,7 @@ public class InsuraBook implements ReadOnlyInsuraBook {
         PolicyType policyType = this.getPolicyType(policyTypeId);
         Policy policy = new Policy(policyId, client, policyType, expiryDate);
         client.addPolicy(policy);
+        clientPolicies.add(policy);
         return policy;
     }
 
@@ -190,6 +191,13 @@ public class InsuraBook implements ReadOnlyInsuraBook {
         Client client = this.getClient(clientId);
         return client.removePolicy(policyId);
     }
+
+    public void setPolicy(Policy target, Policy editedPolicy) {
+        requireNonNull(editedPolicy);
+        Client client = this.getClient(target.getClientId());
+        client.setPolicy(target, editedPolicy);
+    }
+
     /**
      * Adds a claim to the client with the given clientId.
      * If no such client exists, throws an exception.
