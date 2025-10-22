@@ -125,4 +125,17 @@ public class Messages {
         return builder.toString();
     }
 
+    /**
+     * Formats the {@code policy} for display to the user for expiring policy reminders.
+     */
+    public static String formatExpiringPolicies(Policy policy) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append("Client ID: ")
+                .append(policy.getClient().getClientId())
+                .append(", Policy ID: ")
+                .append(policy.getPolicyId())
+                .append(", Expiry Date: ")
+                .append(policy.getExpiryDate());
+        return builder.toString();
+    }
 }

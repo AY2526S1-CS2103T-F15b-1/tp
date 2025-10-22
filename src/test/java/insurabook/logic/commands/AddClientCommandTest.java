@@ -225,6 +225,11 @@ public class AddClientCommandTest {
         public List<Client> getBirthdayClients() {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public List<Policy> getExpiringPolicies() {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 
     /**

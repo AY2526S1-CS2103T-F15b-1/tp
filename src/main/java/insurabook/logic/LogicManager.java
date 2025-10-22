@@ -111,4 +111,12 @@ public class LogicManager implements Logic {
     public List<Client> getBirthdayClients() {
         return model.getBirthdayClients();
     }
+
+    /**
+     * Returns a list of policies that are expiring within the next 3 days.
+     */
+    @Override
+    public List<Policy> getExpiringPolicies() {
+        return model.getExpiringPolicies();
+    }
 }

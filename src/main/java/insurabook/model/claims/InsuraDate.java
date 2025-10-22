@@ -42,9 +42,20 @@ public class InsuraDate extends Date {
         ZoneId sgZone = ZoneId.of("Asia/Singapore");
         LocalDate now = ZonedDateTime.now(sgZone).toLocalDate();
         String[] dateParts = this.date.split("-");
-        int month = Integer.parseInt(dateParts[1]); // Months are 0-based in Date
+        int month = Integer.parseInt(dateParts[1]);
         int day = Integer.parseInt(dateParts[2]);
         return (now.getMonthValue() == month) && (now.getDayOfMonth() == day);
+    }
+
+    /**
+     * Returns true if the date is in three days' time in Singapore timezone.
+     */
+    public boolean isExpiringInThreeDays() {
+        ZoneId sgZone = ZoneId.of("Asia/Singapore");
+        LocalDate today = ZonedDateTime.now(sgZone).toLocalDate();
+        LocalDate expiryDate = LocalDate.parse(this.date);
+        LocalDate threeDaysLater = today.plusDays(3);
+        return (!expiryDate.isBefore(today)) && (expiryDate.isBefore(threeDaysLater));
     }
 
     /**

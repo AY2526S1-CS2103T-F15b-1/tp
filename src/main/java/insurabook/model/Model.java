@@ -148,4 +148,9 @@ public interface Model {
      * Returns a list of clients whose birthday is today.
      */
     List<Client> getBirthdayClients();
+
+    /**
+     * Returns a list of policies that are expiring within the next 3 days.
+     */
+    List<Policy> getExpiringPolicies();
 }

@@ -238,6 +238,13 @@ public class InsuraBook implements ReadOnlyInsuraBook {
                 .toList();
     }
 
+    public List<Policy> getExpiringPolicies() {
+        return clients.asUnmodifiableObservableList().stream()
+                .flatMap(client -> client.getPortfolio().getPolicies().asUnmodifiableObservableList().stream())
+                .filter(policy -> policy.getExpiryDate().isExpiringInThreeDays())
+                .toList();
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {

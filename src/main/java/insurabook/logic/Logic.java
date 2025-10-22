@@ -56,4 +56,6 @@ public interface Logic {
     void setGuiSettings(GuiSettings guiSettings);
 
     List<Client> getBirthdayClients();
+
+    List<Policy> getExpiringPolicies();
 }

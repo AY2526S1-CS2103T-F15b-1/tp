@@ -236,4 +236,12 @@ public class ModelManager implements Model {
     public List<Client> getBirthdayClients() {
         return insuraBook.getBirthdayClients();
     }
+
+    /**
+     * Returns a list of policies that are expiring within 3 days.
+     */
+    @Override
+    public List<Policy> getExpiringPolicies() {
+        return insuraBook.getExpiringPolicies();
+    }
 }
