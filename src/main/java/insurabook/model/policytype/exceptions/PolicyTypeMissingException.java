@@ -27,4 +27,13 @@ public class PolicyTypeMissingException extends IllegalArgumentException {
         super(String.format("No Policy Type found matching %s", id));
     }
 
+    /**
+     * Generates a PolicyTypeMissingException.
+     *
+     * @param name   Name being searched for
+     */
+    public PolicyTypeMissingException(PolicyTypeName name) {
+        super(String.format("No Policy Type found matching %s", name));
+    }
+
 }
