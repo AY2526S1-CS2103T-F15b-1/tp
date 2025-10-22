@@ -1,6 +1,7 @@
 package insurabook.logic.parser;
 
 import static insurabook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static insurabook.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
 import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
 
@@ -8,6 +9,7 @@ import java.util.stream.Stream;
 
 import insurabook.logic.commands.AddClientCommand;
 import insurabook.logic.parser.exceptions.ParseException;
+import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
 import insurabook.model.client.Name;
@@ -24,18 +26,19 @@ public class AddClientCommandParser implements Parser<AddClientCommand> {
      */
     public AddClientCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_CLIENT_NAME, PREFIX_CLIENT_ID);
+                ArgumentTokenizer.tokenize(args, PREFIX_CLIENT_NAME, PREFIX_BIRTHDAY, PREFIX_CLIENT_ID);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_CLIENT_NAME, PREFIX_CLIENT_ID)
+        if (!arePrefixesPresent(argMultimap, PREFIX_CLIENT_NAME, PREFIX_BIRTHDAY, PREFIX_CLIENT_ID)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddClientCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_CLIENT_NAME, PREFIX_CLIENT_ID);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_CLIENT_NAME, PREFIX_BIRTHDAY, PREFIX_CLIENT_ID);
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_CLIENT_NAME).get());
+        InsuraDate birthday = ParserUtil.parseInsuraDate(argMultimap.getValue(PREFIX_BIRTHDAY).get());
         ClientId clientId = ParserUtil.parseClientId(argMultimap.getValue(PREFIX_CLIENT_ID).get());
 
-        Client client = new Client(name, clientId);
+        Client client = new Client(name, birthday, clientId);
 
         return new AddClientCommand(client);
     }
