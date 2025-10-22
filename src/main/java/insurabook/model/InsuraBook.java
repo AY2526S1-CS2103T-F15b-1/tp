@@ -13,6 +13,7 @@ import insurabook.model.client.ClientId;
 import insurabook.model.client.UniqueClientList;
 import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
+import insurabook.model.policies.UniquePolicyList;
 import insurabook.model.policytype.PolicyType;
 import insurabook.model.policytype.PolicyTypeId;
 import insurabook.model.policytype.PolicyTypeName;
@@ -28,6 +29,7 @@ import javafx.collections.ObservableList;
 public class InsuraBook implements ReadOnlyInsuraBook {
     private final UniqueClientList clients;
     private final UniquePolicyTypeList policyTypes;
+    private final UniquePolicyList clientPolicies;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -39,6 +41,7 @@ public class InsuraBook implements ReadOnlyInsuraBook {
     {
         clients = new UniqueClientList();
         policyTypes = new UniquePolicyTypeList();
+        clientPolicies = new UniquePolicyList();
     }
 
     public InsuraBook() {}
@@ -62,11 +65,18 @@ public class InsuraBook implements ReadOnlyInsuraBook {
     }
 
     /**
-     * Replaces the contents of the client list with {@code clients}.
-     * {@code clients} must not contain duplicate clients.
+     * Replaces the contents of the policy types list with {@code policy types}.
      */
     public void setPolicyTypes(List<PolicyType> policyTypes) {
         this.policyTypes.setPolicyTypes(policyTypes);
+    }
+
+    /**
+     * Replaces the contents of the policies list with {@code policies}.
+     *
+     */
+    public void setClientPolicies(List<Policy> policies) {
+        this.clientPolicies.setPolicies(policies);
     }
 
     /**
@@ -77,6 +87,7 @@ public class InsuraBook implements ReadOnlyInsuraBook {
 
         setClients(newData.getClientList());
         setPolicyTypes(newData.getPolicyTypeList());
+        setClientPolicies(newData.getClientPolicyList());
     }
 
     //// client-level operations
@@ -214,6 +225,11 @@ public class InsuraBook implements ReadOnlyInsuraBook {
     @Override
     public ObservableList<PolicyType> getPolicyTypeList() {
         return policyTypes.asUnmodifiableObservableList();
+    }
+
+    @Override
+    public ObservableList<Policy> getClientPolicyList() {
+        return clientPolicies.asUnmodifiableObservableList();
     }
 
     @Override

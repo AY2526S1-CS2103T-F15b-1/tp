@@ -119,7 +119,7 @@ public class UniquePolicyTypeList implements Iterable<PolicyType> {
     }
 
     /**
-     * Replaces the contents of this list with {@code persons}.
+     * Replaces the contents of this list with {@code policyTypes}.
      */
     public void setPolicyTypes(List<PolicyType> policyTypes) {
         requireAllNonNull(policyTypes);

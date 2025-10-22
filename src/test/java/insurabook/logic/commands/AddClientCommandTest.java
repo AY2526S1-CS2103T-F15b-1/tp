@@ -34,6 +34,7 @@ import insurabook.model.policytype.PolicyTypeId;
 import insurabook.model.policytype.PolicyTypeName;
 import insurabook.testutil.PersonBuilder;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 
 public class AddClientCommandTest {
 
@@ -176,6 +177,16 @@ public class AddClientCommandTest {
 
         @Override
         public void updateFilteredPolicyTypeList(Predicate<PolicyType> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public FilteredList<Policy> getClientPolicyList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateClientPolicyList(Predicate<Policy> predicate) {
             throw new AssertionError("This method should not be called.");
         }
 
