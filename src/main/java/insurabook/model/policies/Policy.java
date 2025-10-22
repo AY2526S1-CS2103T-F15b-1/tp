@@ -138,6 +138,16 @@ public class Policy {
         this.claim.remove(claim);
         return claim;
     }
+
+    /**
+     * Sets claim in policy
+     */
+    public void setClaim(Claim target, Claim editedClaim) {
+        int index = this.claim.indexOf(target);
+        if (index != -1) {
+            this.claim.set(index, editedClaim);
+        }
+    }
     /*
      * Problem:
      * How do we add/delete if we are using id only.

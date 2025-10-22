@@ -90,4 +90,11 @@ public class Portfolio {
         Claim claim = policies.getPolicy(policyId).removeClaim(claimId);
         return claim;
     }
+
+    /**
+     * Function to set claim
+     */
+    public void setClaim(Claim target, Claim editedClaim) {
+        policies.getPolicy(target.getPolicyId()).setClaim(target, editedClaim);
+    }
 }

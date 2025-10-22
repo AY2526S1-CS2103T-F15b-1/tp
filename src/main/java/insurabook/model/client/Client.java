@@ -119,7 +119,20 @@ public class Client {
         portfolio.addClaim(claim);
     }
 
+    /**
+     * Removes a claim from the client's portfolio.
+     */
     public Claim removeClaim(PolicyId policyId, ClaimId claimId) {
         return portfolio.removeClaim(policyId, claimId);
+    }
+
+    /**
+     * Replaces the given claim {@code target} with {@code editedClaim}.
+     * {@code target} must exist in the client's portfolio.
+     * The claim identity of {@code editedClaim} must not be the same as
+     * another existing claim in the client's portfolio.
+     */
+    public void setClaim(Claim target, Claim editedClaim) {
+        portfolio.setClaim(target, editedClaim);
     }
 }

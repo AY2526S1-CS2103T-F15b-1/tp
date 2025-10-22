@@ -208,6 +208,17 @@ public class InsuraBook implements ReadOnlyInsuraBook {
         return client.removeClaim(policyId, claimId);
     }
 
+    /**
+     * Replaces the given claim {@code target} with {@code editedClaim}.
+     * {@code target} must exist in the address book.
+     * The claim identity of {@code editedClaim} must not be the same as another existing claim in the address book.
+     */
+    public void setClaim(Claim target, Claim editedClaim) {
+        requireNonNull(editedClaim);
+        Client client = this.getClient(target.getClientId());
+        client.setClaim(target, editedClaim);
+    }
+
     //// util methods
 
     @Override

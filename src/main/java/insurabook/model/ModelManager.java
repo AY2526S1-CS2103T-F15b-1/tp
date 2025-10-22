@@ -149,6 +149,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void setClaim(Claim target, Claim editedClaim) {
+        requireAllNonNull(target, editedClaim);
+        insuraBook.setClaim(target, editedClaim);
+    }
+
+    @Override
     public Policy addPolicy(PolicyId policyId, ClientId clientId, PolicyTypeId policyTypeId, InsuraDate expiryDate) {
         return insuraBook.addPolicy(policyId, clientId, policyTypeId, expiryDate);
     }
