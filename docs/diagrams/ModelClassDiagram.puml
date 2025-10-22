@@ -49,7 +49,7 @@ UserPrefs .up.|> ReadOnlyUserPrefs
 InsuraBook *--> "1" UniqueClientList
 InsuraBook *--> "1" UniquePolicyList
 InsuraBook *--> "1" UniquePolicyTypeList
-UniqueClientList --> "~* all" Client
+UniqueClientList o--> "~* all" Client
 UniquePolicyList --> "~* all" Policy
 
 Client *--> "1" Name
@@ -78,4 +78,6 @@ UniquePolicyList -[hidden]left-> UniqueClientList
 
 
 ModelManager --> "~* filtered" Client
+ModelManager --> "~* filtered" Policy
+ModelManager --> "~* filtered" Claim
 @enduml
