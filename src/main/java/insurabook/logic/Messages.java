@@ -100,7 +100,8 @@ public class Messages {
 
     /**
      * Formats the {@code policyType} for display to the user.
-     * If op is 0, format for AddPolicyTypeCommand
+     * If op is 0, format for AddPolicyTypeCommand (name, ID)
+     * If op is 0, format for EditPolicyTypeCommand (all fields)
      */
     public static String format(PolicyType policyType, int op) {
         final StringBuilder builder = new StringBuilder();
@@ -109,6 +110,19 @@ public class Messages {
                     .append(policyType.getPtName())
                     .append(" with ID ")
                     .append(policyType.getPtId());
+        } else if (op == 1) {
+            builder.append("Name: ")
+                    .append(policyType.getPtName())
+                    .append(", ID: ")
+                    .append(policyType.getPtId());
+            if (!policyType.getPtDescription().isEmpty) {
+                builder.append(", Desc: ")
+                        .append(policyType.getPtDescription());
+            }
+            if (!policyType.getPtPremium().isEmpty) {
+                builder.append(", Premium: ")
+                        .append(policyType.getPtPremium());
+            }
         }
         return builder.toString();
     }
