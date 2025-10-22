@@ -220,6 +220,11 @@ public class AddClientCommandTest {
         public Claim deleteClaim(ClientId clientId, PolicyId policyId, ClaimId claimId) {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public List<Client> getBirthdayClients() {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 
     /**

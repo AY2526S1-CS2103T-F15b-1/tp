@@ -228,4 +228,12 @@ public class ModelManager implements Model {
     public List<Integer> deletePolicyType(PolicyTypeName ptName, PolicyTypeId ptId) throws PolicyTypeMissingException {
         return insuraBook.deletePolicyType(ptName, ptId);
     }
+
+    /**
+     * Returns a list of clients whose birthday is today.
+     */
+    @Override
+    public List<Client> getBirthdayClients() {
+        return insuraBook.getBirthdayClients();
+    }
 }

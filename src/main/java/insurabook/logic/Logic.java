@@ -1,6 +1,7 @@
 package insurabook.logic;
 
 import java.nio.file.Path;
+import java.util.List;
 
 import insurabook.commons.core.GuiSettings;
 import insurabook.logic.commands.CommandResult;
@@ -53,4 +54,6 @@ public interface Logic {
      * Set the user prefs' GUI settings.
      */
     void setGuiSettings(GuiSettings guiSettings);
+
+    List<Client> getBirthdayClients();
 }

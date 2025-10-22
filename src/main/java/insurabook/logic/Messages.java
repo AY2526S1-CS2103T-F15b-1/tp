@@ -113,4 +113,16 @@ public class Messages {
         return builder.toString();
     }
 
+    /**
+     * Formats the {@code client} for display to the user for birthday reminders.
+     */
+    public static String formatBirthdayClients(Client client) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append("Client " + client.getName())
+                .append(" (ClientId: ")
+                .append(client.getClientId())
+                .append(")");
+        return builder.toString();
+    }
+
 }

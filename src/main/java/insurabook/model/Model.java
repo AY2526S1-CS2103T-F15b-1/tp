@@ -143,4 +143,9 @@ public interface Model {
      * Deletes the policy type based on name and ID.
      */
     List<Integer> deletePolicyType(PolicyTypeName ptName, PolicyTypeId ptId);
+
+    /**
+     * Returns a list of clients whose birthday is today.
+     */
+    List<Client> getBirthdayClients();
 }

@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import insurabook.commons.core.GuiSettings;
 import insurabook.commons.core.LogsCenter;
 import insurabook.logic.Logic;
+import insurabook.logic.Messages;
 import insurabook.logic.commands.CommandResult;
 import insurabook.logic.commands.exceptions.CommandException;
 import insurabook.logic.parser.exceptions.ParseException;
@@ -221,6 +222,21 @@ public class MainWindow extends UiPart<Stage> {
             break;
         default: // should not happen due to enum
             logger.warning("Unknown view flag: " + viewFlag);
+        }
+    }
+
+    /**
+     * Displays birthday reminders to the user.
+     */
+    public void showBirthdayReminders() {
+        String reminders = logic.getBirthdayClients().stream()
+                .map(client -> Messages.formatBirthdayClients(client))
+                .reduce("", (a, b) -> a + "\n" + b);
+        if (reminders.isEmpty()) {
+            resultDisplay.setFeedbackToUser("No birthday reminders for today!");
+        } else {
+            resultDisplay.setFeedbackToUser(
+                    "Birthday Reminders for Today:" + reminders + "Wish them a happy birthday!");
         }
     }
 

@@ -3,6 +3,9 @@ package insurabook.model.claims;
 import static insurabook.commons.util.AppUtil.checkArgument;
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 /**
@@ -30,6 +33,18 @@ public class InsuraDate extends Date {
      */
     public static boolean isValidInsuraDate(String test) {
         return test.matches(VALIDATION_REGEX);
+    }
+
+    /**
+     * Returns true if the date is today in Singapore timezone.
+     */
+    public boolean isToday() {
+        ZoneId sgZone = ZoneId.of("Asia/Singapore");
+        LocalDate now = ZonedDateTime.now(sgZone).toLocalDate();
+        String[] dateParts = this.date.split("-");
+        int month = Integer.parseInt(dateParts[1]); // Months are 0-based in Date
+        int day = Integer.parseInt(dateParts[2]);
+        return (now.getMonthValue() == month) && (now.getDayOfMonth() == day);
     }
 
     /**

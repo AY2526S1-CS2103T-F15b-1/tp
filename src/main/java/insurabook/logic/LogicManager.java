@@ -3,6 +3,7 @@ package insurabook.logic;
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.logging.Logger;
 
 import insurabook.commons.core.GuiSettings;
@@ -101,5 +102,13 @@ public class LogicManager implements Logic {
     @Override
     public void setGuiSettings(GuiSettings guiSettings) {
         model.setGuiSettings(guiSettings);
+    }
+
+    /**
+     * Returns a list of clients whose birthdays are today.
+     */
+    @Override
+    public List<Client> getBirthdayClients() {
+        return model.getBirthdayClients();
     }
 }
