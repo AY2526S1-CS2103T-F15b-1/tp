@@ -126,6 +126,32 @@ public class UniquePolicyTypeList implements Iterable<PolicyType> {
         internalList.setAll(policyTypes);
     }
 
+    /**
+     * Replaces the person {@code target} in the list with {@code editedPolicyType}.
+     * {@code target} must exist in the list.
+     * The person identity of {@code editedPolicyType} must not be the same as another existing person in the list.
+     */
+    public void setPolicyType(PolicyType target, PolicyType editedPolicyType) {
+        requireAllNonNull(target, editedPolicyType);
+
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new PolicyTypeMissingException(target.getPtName(), target.getPtId());
+        }
+
+        boolean hasExistingName = containsName(editedPolicyType.getPtName());
+        boolean hasExistingId = containsId(editedPolicyType.getPtId());
+        if (!target.equals(editedPolicyType) && (hasExistingId || hasExistingName)) {
+            throw new PolicyTypeDuplicateException(
+                    hasExistingId
+                            ? getPolicyType(editedPolicyType.getPtId())
+                            : getPolicyType(editedPolicyType.getPtName())
+            );
+        }
+
+        internalList.set(index, editedPolicyType);
+    }
+
 
     /**
      * Returns PolicyType matching index in list.
