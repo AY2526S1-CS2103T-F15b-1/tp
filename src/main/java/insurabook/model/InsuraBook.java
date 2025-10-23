@@ -3,6 +3,7 @@ package insurabook.model;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import insurabook.commons.util.ToStringBuilder;
 import insurabook.model.claims.Claim;
@@ -87,7 +88,14 @@ public class InsuraBook implements ReadOnlyInsuraBook {
 
         setClients(newData.getClientList());
         setPolicyTypes(newData.getPolicyTypeList());
-        setClientPolicies(newData.getClientPolicyList());
+        if (this.clients != null) {
+            List<Policy> allPolicies = this.clients.asUnmodifiableObservableList().stream()
+                    .flatMap(client -> client.getPortfolio().getPolicies().asUnmodifiableObservableList().stream())
+                    .collect(Collectors.toList());
+            this.clientPolicies.setPolicies(allPolicies);
+        } else {
+            this.clientPolicies.setPolicies(List.of()); // Handle case where there are no clients
+        }
     }
 
     //// client-level operations
