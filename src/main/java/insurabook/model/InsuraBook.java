@@ -195,6 +195,7 @@ public class InsuraBook implements ReadOnlyInsuraBook {
         requireNonNull(editedPolicy);
         Client client = this.getClient(target.getClientId());
         client.setPolicy(target, editedPolicy);
+        this.clientPolicies.setPolicy(target, editedPolicy);
     }
 
     /**
