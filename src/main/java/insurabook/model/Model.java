@@ -163,7 +163,24 @@ public interface Model {
     List<Integer> deletePolicyType(PolicyTypeName ptName, PolicyTypeId ptId);
 
     /**
+     * Returns true if InsuraBook can be undone
+     * @return boolean, if InsuraBook can be undone
+     */
+    boolean canUndoInsuraBook();
+
+    /**
+     * Restores InsuraBook to its previous state
+     */
+    void undoInsuraBook();
+
+    /**
+     * Save current state of InsuraBook
+     */
+    void commitInsuraBook();
+
+    /**
      * Returns a list of clients whose birthday is today.
+     * @return list of clients whose birthday is today
      */
     List<Client> getBirthdayClients();
 

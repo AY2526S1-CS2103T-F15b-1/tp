@@ -52,6 +52,7 @@ public class DeletePolicyTypeCommand extends Command {
             List<Integer> result = model.deletePolicyType(ptName, ptId);
             if (result == null) {
                 // success
+                model.commitInsuraBook();
                 return new CommandResult(String.format(MESSAGE_SUCCESS, ptName, ptId));
             } else {
                 // for now, treat as not found
