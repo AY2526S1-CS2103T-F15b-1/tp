@@ -245,6 +245,19 @@ public class InsuraBook implements ReadOnlyInsuraBook {
         return clientPolicies.asUnmodifiableObservableList();
     }
 
+    public List<Client> getBirthdayClients() {
+        return clients.asUnmodifiableObservableList().stream()
+                .filter(client -> client.getBirthday().isToday())
+                .toList();
+    }
+
+    public List<Policy> getExpiringPolicies() {
+        return clients.asUnmodifiableObservableList().stream()
+                .flatMap(client -> client.getPortfolio().getPolicies().asUnmodifiableObservableList().stream())
+                .filter(policy -> policy.getExpiryDate().isExpiringInThreeDays())
+                .toList();
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {

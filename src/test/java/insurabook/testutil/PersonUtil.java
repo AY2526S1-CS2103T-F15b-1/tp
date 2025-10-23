@@ -1,5 +1,6 @@
 package insurabook.testutil;
 
+import static insurabook.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
 import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
 
@@ -25,6 +26,7 @@ public class PersonUtil {
     public static String getPersonDetails(Client client) {
         StringBuilder sb = new StringBuilder();
         sb.append(PREFIX_CLIENT_NAME + client.getName().fullName + " ");
+        sb.append(PREFIX_BIRTHDAY + client.getBirthday().toString() + " ");
         sb.append(PREFIX_CLIENT_ID + client.getClientId().clientId + " ");
         return sb.toString();
     }
