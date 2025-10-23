@@ -126,6 +126,32 @@ public class UniquePolicyTypeList implements Iterable<PolicyType> {
         internalList.setAll(policyTypes);
     }
 
+    /**
+     * Replaces the person {@code target} in the list with {@code editedPolicyType}.
+     * {@code target} must exist in the list.
+     * The person identity of {@code editedPolicyType} must not be the same as another existing person in the list.
+     */
+    public void setPolicyType(PolicyType target, PolicyType editedPolicyType) {
+        requireAllNonNull(target, editedPolicyType);
+
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new PolicyTypeMissingException(target.getPtName(), target.getPtId());
+        }
+
+        boolean hasExistingName = containsName(editedPolicyType.getPtName());
+        boolean hasExistingId = containsId(editedPolicyType.getPtId());
+        if (!target.equals(editedPolicyType) && (hasExistingId || hasExistingName)) {
+            throw new PolicyTypeDuplicateException(
+                    hasExistingId
+                            ? getPolicyType(editedPolicyType.getPtId())
+                            : getPolicyType(editedPolicyType.getPtName())
+            );
+        }
+
+        internalList.set(index, editedPolicyType);
+    }
+
 
     /**
      * Returns PolicyType matching index in list.
@@ -157,6 +183,30 @@ public class UniquePolicyTypeList implements Iterable<PolicyType> {
             }
         }
         return result;
+    }
+
+    /**
+     * Returns true if given PolicyTypeName already exists in list.
+     */
+    public boolean containsName(PolicyTypeName name) {
+        for (PolicyType pt: this) {
+            if (pt.getPtName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if given PolicyTypeId already exists in list.
+     */
+    public boolean containsId(PolicyTypeId id) {
+        for (PolicyType pt: this) {
+            if (pt.getPtId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -230,16 +280,23 @@ public class UniquePolicyTypeList implements Iterable<PolicyType> {
     }
 
     /**
+     * Gets a PolicyType from the list using its PolicyTypeName.
+     *
+     * @throws PolicyTypeMissingException if no such policy could be found
+     */
+    public PolicyType getPolicyType(PolicyTypeName policyTypeName) {
+        return internalList.stream()
+                .filter(policyType -> policyType.getPtName().equals(policyTypeName))
+                .findFirst()
+                .orElseThrow(() -> new PolicyTypeMissingException(policyTypeName));
+    }
+
+    /**
      * Gets a PolicyType from the list using its PolicyTypeId
      *
-     * @param policyTypeId
-     * @return Policy
      * @throws PolicyTypeMissingException if no such policy could be found
      */
     public PolicyType getPolicyType(PolicyTypeId policyTypeId) {
-        // NOTE: This function is for *internal use only*.
-        // Users should not access policy types by ID alone.
-        // See project docs for more information.
         return internalList.stream()
                 .filter(policyType -> policyType.getPtId().equals(policyTypeId))
                 .findFirst()

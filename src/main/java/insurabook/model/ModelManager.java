@@ -236,6 +236,19 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void setPolicyType(PolicyType target, PolicyType editedPolicyType) {
+        requireAllNonNull(target, editedPolicyType);
+
+        insuraBook.setPolicyType(target, editedPolicyType);
+    }
+
+    @Override
+    public boolean containsPolicyTypeName(PolicyTypeName name) {
+        requireNonNull(name);
+
+        return insuraBook.containsPolicyTypeName(name);
+    }
+
     public boolean canUndoInsuraBook() {
         return currentStatePointer > 0;
     }
@@ -271,4 +284,5 @@ public class ModelManager implements Model {
     public List<Policy> getExpiringPolicies() {
         return insuraBook.getExpiringPolicies();
     }
+
 }

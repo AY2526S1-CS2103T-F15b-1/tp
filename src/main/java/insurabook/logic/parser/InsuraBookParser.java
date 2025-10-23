@@ -21,6 +21,7 @@ import insurabook.logic.commands.DeletePolicyTypeCommand;
 import insurabook.logic.commands.EditClaimCommand;
 import insurabook.logic.commands.EditCommand;
 import insurabook.logic.commands.EditPolicyCommand;
+import insurabook.logic.commands.EditPolicyTypeCommand;
 import insurabook.logic.commands.ExitCommand;
 import insurabook.logic.commands.FindCommand;
 import insurabook.logic.commands.HelpCommand;
@@ -104,6 +105,9 @@ public class InsuraBookParser {
 
         case AddPolicyTypeCommand.COMMAND_WORD:
             return new AddPolicyTypeCommandParser().parse(arguments);
+
+        case EditPolicyTypeCommand.COMMAND_WORD:
+            return new EditPolicyTypeCommandParser().parse(arguments);
 
         case DeletePolicyTypeCommand.COMMAND_WORD:
             return new DeletePolicyTypeCommandParser().parse(arguments);

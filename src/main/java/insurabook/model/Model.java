@@ -163,6 +163,19 @@ public interface Model {
     List<Integer> deletePolicyType(PolicyTypeName ptName, PolicyTypeId ptId);
 
     /**
+     * Replaces the given person {@code target} with {@code editedPolicyType}.
+     * {@code target} must exist in the address book.
+     * The person identity of {@code editedPolicyType} must not be the same as
+     * another existing person in the address book.
+     */
+    void setPolicyType(PolicyType target, PolicyType editedPolicyType);
+
+    /**
+     * Returns true if given PolicyTypeName already exists in list of PolicyTypes.
+     */
+    boolean containsPolicyTypeName(PolicyTypeName name);
+
+    /**
      * Returns true if InsuraBook can be undone
      * @return boolean, if InsuraBook can be undone
      */
@@ -188,4 +201,5 @@ public interface Model {
      * Returns a list of policies that are expiring within the next 3 days.
      */
     List<Policy> getExpiringPolicies();
+
 }
