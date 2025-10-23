@@ -247,6 +247,8 @@ public class ModelManager implements Model {
         requireNonNull(name);
 
         return insuraBook.containsPolicyTypeName(name);
+    }
+
     public boolean canUndoInsuraBook() {
         return currentStatePointer > 0;
     }
