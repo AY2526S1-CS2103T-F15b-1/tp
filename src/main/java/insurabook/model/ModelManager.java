@@ -255,8 +255,6 @@ public class ModelManager implements Model {
         insuraBookStateList.add(new InsuraBook(insuraBook));
         currentStatePointer++;
     }
-    
-    // whitespace here is gone
 
     /**
      * Returns a list of clients whose birthday is today.
