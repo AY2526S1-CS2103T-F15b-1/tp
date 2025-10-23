@@ -221,6 +221,16 @@ public class AddClientCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
+        /**
+         * Returns true if given PolicyTypeName already exists in list of PolicyTypes.
+         *
+         * @param name
+         */
+        @Override
+        public boolean containsPolicyTypeName(PolicyTypeName name) {
+            throw new AssertionError("This method should not be called.");
+        }
+
         @Override
         public Claim deleteClaim(ClientId clientId, PolicyId policyId, ClaimId claimId) {
             throw new AssertionError("This method should not be called.");
