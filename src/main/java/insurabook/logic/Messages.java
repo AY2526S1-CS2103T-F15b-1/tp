@@ -101,7 +101,7 @@ public class Messages {
     /**
      * Formats the {@code policyType} for display to the user.
      * If op is 0, format for AddPolicyTypeCommand (name, ID)
-     * If op is 0, format for EditPolicyTypeCommand (all fields)
+     * If op is 1, format for EditPolicyTypeCommand (all fields)
      */
     public static String format(PolicyType policyType, int op) {
         final StringBuilder builder = new StringBuilder();
