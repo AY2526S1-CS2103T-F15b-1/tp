@@ -200,10 +200,6 @@ public class MainWindow extends UiPart<Stage> {
         primaryStage.hide();
     }
 
-    public ClientListPanel getPersonListPanel() {
-        return clientListPanel;
-    }
-
     private void applyView(View viewFlag) {
         if (viewFlag == null) {
             return;
