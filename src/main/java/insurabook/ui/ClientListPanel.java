@@ -11,28 +11,28 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 
 /**
- * Panel containing the list of persons.
+ * Panel containing the list of clients.
  */
-public class PersonListPanel extends UiPart<Region> {
-    private static final String FXML = "PersonListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
+public class ClientListPanel extends UiPart<Region> {
+    private static final String FXML = "ClientListPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(ClientListPanel.class);
 
     @FXML
     private ListView<Client> personListView;
 
     /**
-     * Creates a {@code PersonListPanel} with the given {@code ObservableList}.
+     * Creates a {@code ClientListPanel} with the given {@code ObservableList}.
      */
-    public PersonListPanel(ObservableList<Client> clientList) {
+    public ClientListPanel(ObservableList<Client> clientList) {
         super(FXML);
         personListView.setItems(clientList);
-        personListView.setCellFactory(listView -> new PersonListViewCell());
+        personListView.setCellFactory(listView -> new ClientListViewCell());
     }
 
     /**
-     * Custom {@code ListCell} that displays the graphics of a {@code Person} using a {@code PersonCard}.
+     * Custom {@code ListCell} that displays the graphics of a {@code Client} using a {@code ClientCard}.
      */
-    class PersonListViewCell extends ListCell<Client> {
+    class ClientListViewCell extends ListCell<Client> {
         @Override
         protected void updateItem(Client client, boolean empty) {
             super.updateItem(client, empty);
@@ -41,7 +41,7 @@ public class PersonListPanel extends UiPart<Region> {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new PersonCard(client, getIndex() + 1).getRoot());
+                setGraphic(new ClientCard(client, getIndex() + 1).getRoot());
             }
         }
     }
