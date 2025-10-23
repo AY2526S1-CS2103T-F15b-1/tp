@@ -8,7 +8,7 @@ import insurabook.model.policies.PolicyId;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Claim {
-    private static int claimCounter = 0;
+    private static int claimCounter = 1;
 
     private final ClaimId claimId;
     private final ClientId client;
@@ -27,6 +27,19 @@ public class Claim {
         this.amount = amount;
         this.date = date;
         this.description = description.length != 0 ? description[0] : new ClaimMessage("");
+    }
+
+    /**
+     * Constructor with explicit ClaimId (used for editing claim)
+     */
+    public Claim(ClaimId claimId, ClientId client, PolicyId policy,
+                 ClaimAmount amount, InsuraDate date, ClaimMessage description) {
+        this.claimId = claimId;
+        this.client = client;
+        this.policy = policy;
+        this.amount = amount;
+        this.date = date;
+        this.description = description;
     }
 
     // Getters
