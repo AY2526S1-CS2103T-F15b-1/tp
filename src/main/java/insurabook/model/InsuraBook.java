@@ -179,6 +179,7 @@ public class InsuraBook implements ReadOnlyInsuraBook {
         PolicyType policyType = this.getPolicyType(policyTypeId);
         Policy policy = new Policy(policyId, client, policyType, expiryDate);
         client.addPolicy(policy);
+        this.clientPolicies.add(policy);
         return policy;
     }
 
@@ -188,7 +189,11 @@ public class InsuraBook implements ReadOnlyInsuraBook {
      */
     public Policy removePolicy(ClientId clientId, PolicyId policyId) {
         Client client = this.getClient(clientId);
-        return client.removePolicy(policyId);
+        Policy policy = client.removePolicy(policyId);
+        if (policy != null) {
+            this.clientPolicies.remove(policy);
+        }
+        return policy;
     }
 
     /**

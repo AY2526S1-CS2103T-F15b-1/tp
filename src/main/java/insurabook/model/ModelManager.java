@@ -51,22 +51,12 @@ public class ModelManager implements Model {
         this.userPrefs = new UserPrefs(userPrefs);
         this.filteredClients = new FilteredList<>(this.insuraBook.getClientList());
         this.filteredPolicyTypes = new FilteredList<>(this.insuraBook.getPolicyTypeList());
-        this.filteredClientPolicies = getAllPolicies();
+        this.filteredClientPolicies = new FilteredList<>(this.insuraBook.getClientPolicyList());
         updateFilteredPolicyTypeList(PREDICATE_SHOW_ALL_POLICY_TYPES);
     }
 
     public ModelManager() {
         this(new InsuraBook(), new UserPrefs());
-    }
-
-    private FilteredList<Policy> getAllPolicies() {
-        ObservableList<Policy> allPolicies = FXCollections.observableArrayList();
-        allPolicies.setAll(
-            insuraBook.getClientList().stream()
-                .flatMap(client -> client.getPortfolio().getPolicies().asUnmodifiableObservableList().stream())
-                .collect(Collectors.toList())
-        );
-        return new FilteredList<>(allPolicies);
     }
 
     //=========== UserPrefs ==================================================================================
