@@ -5,7 +5,6 @@ import static insurabook.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static insurabook.testutil.TypicalPersons.ALICE;
 import static insurabook.testutil.TypicalPersons.BENSON;
 import static insurabook.testutil.TypicalPersons.CARL;
-import static insurabook.testutil.TypicalPersons.getTypicalAddressBook;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
