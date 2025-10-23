@@ -191,6 +191,11 @@ public class InsuraBook implements ReadOnlyInsuraBook {
         return client.removePolicy(policyId);
     }
 
+    /**
+     * Replaces the given policy {@code target} in the list with {@code editedPolicy}.
+     * {@code target} must exist in the address book.
+     * The policy identity of {@code editedPolicy} must not be the same as another existing policy in the address book.
+     */
     public void setPolicy(Policy target, Policy editedPolicy) {
         requireNonNull(editedPolicy);
         Client client = this.getClient(target.getClientId());
