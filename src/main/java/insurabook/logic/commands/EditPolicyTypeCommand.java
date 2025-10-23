@@ -60,8 +60,8 @@ public class EditPolicyTypeCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         // verify no duplicates
         Optional<PolicyTypeName> editedName = editData.getName();
-        if (editedName.isPresent()) {
-
+        if (editedName.isPresent() && model.containsPolicyTypeName(editedName.get())) {
+            throw new CommandException(MESSAGE_DUPLICATE_POLICY_TYPE);
         }
 
         // find PolicyType to edit
