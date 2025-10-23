@@ -143,4 +143,20 @@ public interface Model {
      * Deletes the policy type based on name and ID.
      */
     List<Integer> deletePolicyType(PolicyTypeName ptName, PolicyTypeId ptId);
+
+    /**
+     * Returns true if InsuraBook can be undone
+     * @return boolean, if InsuraBook can be undone
+     */
+    boolean canUndoInsuraBook();
+
+    /**
+     * Restores InsuraBook to its previous state
+     */
+    void undoInsuraBook();
+
+    /**
+     * Save current state of InsuraBook
+     */
+    void commitInsuraBook();
 }

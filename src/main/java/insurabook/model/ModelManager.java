@@ -4,6 +4,7 @@ import static insurabook.commons.util.CollectionUtil.requireAllNonNull;
 import static java.util.Objects.requireNonNull;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -38,6 +39,8 @@ public class ModelManager implements Model {
     private final FilteredList<Client> filteredClients;
     private final FilteredList<PolicyType> filteredPolicyTypes;
     private final FilteredList<Policy> filteredClientPolicies;
+    private final List<ReadOnlyInsuraBook> insuraBookStateList;
+    private int currentStatePointer;
 
     /**
      * Initializes a ModelManager with the given insuraBook and userPrefs.
@@ -53,6 +56,9 @@ public class ModelManager implements Model {
         this.filteredPolicyTypes = new FilteredList<>(this.insuraBook.getPolicyTypeList());
         this.filteredClientPolicies = getAllPolicies();
         updateFilteredPolicyTypeList(PREDICATE_SHOW_ALL_POLICY_TYPES);
+        this.insuraBookStateList = new ArrayList<>();
+        this.insuraBookStateList.add(new InsuraBook(this.insuraBook));
+        this.currentStatePointer = 0;
     }
 
     public ModelManager() {
@@ -227,5 +233,26 @@ public class ModelManager implements Model {
     @Override
     public List<Integer> deletePolicyType(PolicyTypeName ptName, PolicyTypeId ptId) throws PolicyTypeMissingException {
         return insuraBook.deletePolicyType(ptName, ptId);
+    }
+
+    @Override
+    public boolean canUndoInsuraBook() {
+        return currentStatePointer > 0;
+    }
+
+    @Override
+    public void undoInsuraBook() {
+        if (!canUndoInsuraBook()) {
+            return;
+        }
+        currentStatePointer--;
+        insuraBook.resetData(insuraBookStateList.get(currentStatePointer));
+    }
+
+    @Override
+    public void commitInsuraBook() {
+        insuraBookStateList.subList(currentStatePointer + 1, insuraBookStateList.size()).clear();
+        insuraBookStateList.add(new InsuraBook(insuraBook));
+        currentStatePointer++;
     }
 }

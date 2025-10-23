@@ -49,6 +49,7 @@ public class AddClaimCommand extends Command {
         requireNonNull(model);
 
         model.addClaim(toAdd);
+        model.commitInsuraBook();
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd, 0)));
     }
