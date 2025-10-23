@@ -5,20 +5,31 @@ skinparam arrowColor MODEL_COLOR
 skinparam classBackgroundColor MODEL_COLOR
 
 Package Model as ModelPackage <<Rectangle>>{
-Class "<<interface>>\nReadOnlyAddressBook" as ReadOnlyAddressBook
+Class "<<interface>>\nReadOnlyInsuraBook" as ReadOnlyInsuraBook
 Class "<<interface>>\nReadOnlyUserPrefs" as ReadOnlyUserPrefs
 Class "<<interface>>\nModel" as Model
-Class AddressBook
+Class InsuraBook
 Class ModelManager
 Class UserPrefs
 
-Class UniquePersonList
-Class Person
-Class Address
-Class Email
+Class UniqueClientList
+Class UniquePolicyList
+Class UniquePolicyTypeList
+Class Client
+Class ClientId
 Class Name
-Class Phone
-Class Tag
+Class Portfolio
+Class Policy
+Class PolicyId
+Class PolicyType
+Class InsuraDate
+Class Claim
+Class ClaimId
+Class ClientId
+Class PolicyId
+Class ClaimAmount
+Class InsuraDate
+Class ClaimMessage
 
 Class I #FFFFFF
 }
@@ -26,29 +37,47 @@ Class I #FFFFFF
 Class HiddenOutside #FFFFFF
 HiddenOutside ..> Model
 
-AddressBook .up.|> ReadOnlyAddressBook
+InsuraBook .up.|> ReadOnlyInsuraBook
 
 ModelManager .up.|> Model
 Model .right.> ReadOnlyUserPrefs
-Model .left.> ReadOnlyAddressBook
-ModelManager -left-> "1" AddressBook
+Model .left.> ReadOnlyInsuraBook
+ModelManager -left-> "1" InsuraBook
 ModelManager -right-> "1" UserPrefs
 UserPrefs .up.|> ReadOnlyUserPrefs
 
-AddressBook *--> "1" UniquePersonList
-UniquePersonList --> "~* all" Person
-Person *--> Name
-Person *--> Phone
-Person *--> Email
-Person *--> Address
-Person *--> "*" Tag
+InsuraBook *--> "1" UniqueClientList
+InsuraBook *--> "1" UniquePolicyList
+InsuraBook *--> "1" UniquePolicyTypeList
+UniqueClientList o--> "~* all" Client
+UniquePolicyList --> "~* all" Policy
 
-Person -[hidden]up--> I
-UniquePersonList -[hidden]right-> I
+Client *--> "1" Name
+Client *--> "1" ClientId
+Client *--> "1" Portfolio
 
-Name -[hidden]right-> Phone
-Phone -[hidden]right-> Address
-Address -[hidden]right-> Email
+Portfolio *--> "1" UniquePolicyList
+Portfolio *--> "attached to" Client
 
-ModelManager --> "~* filtered" Person
+Policy *--> "1" PolicyId
+Policy *--> "1" PolicyType
+Policy *--> "1" InsuraDate
+Policy o--> "0..* claims" Claim
+
+Claim *--> "1" ClaimId
+Claim *--> "1" ClientId
+Claim *--> "1" PolicyId
+Claim *--> "1" ClaimAmount
+Claim *--> "1" InsuraDate
+Claim ---> "0..1" ClaimMessage
+
+
+Client -[hidden]up--> I
+UniqueClientList -[hidden]right-> I
+UniquePolicyList -[hidden]left-> UniqueClientList
+
+
+ModelManager --> "~* filtered" Client
+ModelManager --> "~* filtered" Policy
+ModelManager --> "~* filtered" Claim
 @enduml
