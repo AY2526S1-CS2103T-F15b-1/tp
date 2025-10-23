@@ -7,7 +7,6 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 import insurabook.commons.core.GuiSettings;
 import insurabook.commons.core.LogsCenter;
@@ -22,7 +21,6 @@ import insurabook.model.policytype.PolicyType;
 import insurabook.model.policytype.PolicyTypeId;
 import insurabook.model.policytype.PolicyTypeName;
 import insurabook.model.policytype.exceptions.PolicyTypeMissingException;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 
