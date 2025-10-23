@@ -38,6 +38,7 @@ Class HiddenOutside #FFFFFF
 HiddenOutside ..> Model
 
 InsuraBook .up.|> ReadOnlyInsuraBook
+InsuraBook .[hidden]left.|> ModelManager
 
 ModelManager .up.|> Model
 Model .right.> ReadOnlyUserPrefs
@@ -45,6 +46,7 @@ Model .left.> ReadOnlyInsuraBook
 ModelManager -left-> "1" InsuraBook
 ModelManager -right-> "1" UserPrefs
 UserPrefs .up.|> ReadOnlyUserPrefs
+Client .up.|> UniqueClientList
 
 InsuraBook *--> "1" UniqueClientList
 InsuraBook *--> "1" UniquePolicyList
@@ -55,6 +57,7 @@ UniquePolicyList --> "~* all" Policy
 Client *--> "1" Name
 Client *--> "1" ClientId
 Client *--> "1" Portfolio
+Client *--> "1 birthday" InsuraDate
 
 Portfolio *--> "1" UniquePolicyList
 Portfolio *--> "attached to" Client
@@ -71,11 +74,9 @@ Claim *--> "1" ClaimAmount
 Claim *--> "1" InsuraDate
 Claim ---> "0..1" ClaimMessage
 
-
-Client -[hidden]up--> I
+Policy -[hidden]right-> Claim
 UniqueClientList -[hidden]right-> I
 UniquePolicyList -[hidden]left-> UniqueClientList
-
 
 ModelManager --> "~* filtered" Client
 ModelManager --> "~* filtered" Policy
