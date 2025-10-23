@@ -132,7 +132,18 @@ public interface Model {
      */
     Policy addPolicy(PolicyId policyId, ClientId clientId, PolicyTypeId policyTypeId, InsuraDate expiryDate);
 
+    /**
+     * Deletes the given policy.
+     * The policy must exist in the address book.
+     */
     Policy deletePolicy(ClientId clientId, PolicyId policyId);
+
+    /**
+     * Replaces the given policy {@code target} with {@code editedPolicy}.
+     * {@code target} must exist in the address book.
+     * The policy identity of {@code editedPolicy} must not be the same as another existing policy in the address book.
+     */
+    void setPolicy(Policy target, Policy editedPolicy);
 
     /**
      * Adds the given policy type.
