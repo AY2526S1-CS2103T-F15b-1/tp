@@ -139,7 +139,18 @@ public interface Model {
      */
     Policy addPolicy(PolicyId policyId, ClientId clientId, PolicyTypeId policyTypeId, InsuraDate expiryDate);
 
+    /**
+     * Deletes the given policy.
+     * The policy must exist in the address book.
+     */
     Policy deletePolicy(ClientId clientId, PolicyId policyId);
+
+    /**
+     * Replaces the given policy {@code target} with {@code editedPolicy}.
+     * {@code target} must exist in the address book.
+     * The policy identity of {@code editedPolicy} must not be the same as another existing policy in the address book.
+     */
+    void setPolicy(Policy target, Policy editedPolicy);
 
     /**
      * Adds the given policy type.
@@ -150,4 +161,14 @@ public interface Model {
      * Deletes the policy type based on name and ID.
      */
     List<Integer> deletePolicyType(PolicyTypeName ptName, PolicyTypeId ptId);
+
+    /**
+     * Returns a list of clients whose birthday is today.
+     */
+    List<Client> getBirthdayClients();
+
+    /**
+     * Returns a list of policies that are expiring within the next 3 days.
+     */
+    List<Policy> getExpiringPolicies();
 }

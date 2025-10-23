@@ -207,6 +207,11 @@ public class AddClientCommandTest {
         }
 
         @Override
+        public void setPolicy(Policy target, Policy editedPolicy) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void addPolicyType(PolicyType toAdd) {
             throw new AssertionError("This method should not be called.");
         }
@@ -223,6 +228,16 @@ public class AddClientCommandTest {
 
         @Override
         public void setClaim(Claim target, Claim editedClaim) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public List<Client> getBirthdayClients() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public List<Policy> getExpiringPolicies() {
             throw new AssertionError("This method should not be called.");
         }
     }

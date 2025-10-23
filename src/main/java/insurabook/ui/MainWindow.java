@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import insurabook.commons.core.GuiSettings;
 import insurabook.commons.core.LogsCenter;
 import insurabook.logic.Logic;
+import insurabook.logic.Messages;
 import insurabook.logic.commands.CommandResult;
 import insurabook.logic.commands.exceptions.CommandException;
 import insurabook.logic.parser.exceptions.ParseException;
@@ -221,6 +222,47 @@ public class MainWindow extends UiPart<Stage> {
             break;
         default: // should not happen due to enum
             logger.warning("Unknown view flag: " + viewFlag);
+        }
+    }
+
+    /**
+     * Displays birthday reminders to the user.
+     */
+    public String showBirthdayReminders() {
+        String birthdayClients = logic.getBirthdayClients().stream()
+                .map(client -> Messages.formatBirthdayClients(client))
+                .reduce("", (a, b) -> a + "\n" + b);
+        return birthdayClients;
+    }
+
+    /**
+     * Displays expiring policy reminders to the user.
+     */
+    public String showExpiringPolicies() {
+        String expiringPolicies = logic.getExpiringPolicies().stream()
+                .map(Messages::formatExpiringPolicies)
+                .reduce("", (a, b) -> a + "\n" + b);
+        return expiringPolicies;
+    }
+
+    /**
+     * Displays both birthday and expiring policy reminders to the user.
+     */
+    public void showReminders() {
+        String birthdayReminders = showBirthdayReminders();
+        String expiringPolicies = showExpiringPolicies();
+        if (birthdayReminders.isEmpty() && expiringPolicies.isEmpty()) {
+            resultDisplay.setFeedbackToUser("No client birthdays today nor expiring policies.");
+        } else if (!birthdayReminders.isEmpty() && expiringPolicies.isEmpty()) {
+            resultDisplay.setFeedbackToUser(
+                    "Birthday Reminders:" + birthdayReminders + "\nWish them a happy birthday!");
+        } else if (birthdayReminders.isEmpty() && !expiringPolicies.isEmpty()) {
+            resultDisplay.setFeedbackToUser(
+                    "Expiring Policy Reminders:" + expiringPolicies + "\nPlease follow up with the clients.");
+        } else {
+            resultDisplay.setFeedbackToUser("Birthday Reminders:" + birthdayReminders
+                    + "\nWish them a happy birthday!\n\nExpiring Policy Reminders:" + expiringPolicies
+                    + "\nPlease follow up with the clients.");
         }
     }
 

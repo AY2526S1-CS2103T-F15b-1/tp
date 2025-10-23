@@ -8,6 +8,7 @@ import java.util.Objects;
 import insurabook.commons.util.ToStringBuilder;
 import insurabook.model.claims.Claim;
 import insurabook.model.claims.ClaimId;
+import insurabook.model.claims.InsuraDate;
 import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
 
@@ -20,6 +21,7 @@ public class Client {
     // Identity fields
     private final ClientId clientId;
     private final Name name;
+    private final InsuraDate birthday;
 
     // Data fields
     private final Portfolio portfolio;
@@ -27,9 +29,10 @@ public class Client {
     /**
      * Every field must be present and not null.
      */
-    public Client(Name name, ClientId clientId) {
-        requireAllNonNull(name, clientId);
+    public Client(Name name, InsuraDate birthday, ClientId clientId) {
+        requireAllNonNull(name, birthday, clientId);
         this.name = name;
+        this.birthday = birthday;
         this.clientId = clientId;
         this.portfolio = new Portfolio();
     }
@@ -37,15 +40,20 @@ public class Client {
     /**
      * Every field must be present and not null.
      */
-    public Client(Name name, ClientId clientId, List<Policy> policies) {
-        requireAllNonNull(name, clientId, policies);
+    public Client(Name name, InsuraDate birthday, ClientId clientId, List<Policy> policies) {
+        requireAllNonNull(name, birthday, clientId, policies);
         this.name = name;
+        this.birthday = birthday;
         this.clientId = clientId;
         this.portfolio = new Portfolio(policies);
     }
 
     public Name getName() {
         return name;
+    }
+
+    public InsuraDate getBirthday() {
+        return birthday;
     }
 
     public ClientId getClientId() {
@@ -108,6 +116,10 @@ public class Client {
 
     public Policy removePolicy(PolicyId policyId) {
         return portfolio.removePolicy(policyId);
+    }
+
+    public void setPolicy(Policy target, Policy editedPolicy) {
+        portfolio.setPolicy(target, editedPolicy);
     }
 
     /**

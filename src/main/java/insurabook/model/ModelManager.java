@@ -198,6 +198,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void setPolicy(Policy target, Policy editedPolicy) {
+        requireAllNonNull(target, editedPolicy);
+        insuraBook.setPolicy(target, editedPolicy);
+    }
+
+    @Override
     public ObservableList<PolicyType> getFilteredPolicyTypeList() {
         return filteredPolicyTypes;
     }
@@ -233,5 +239,21 @@ public class ModelManager implements Model {
     @Override
     public List<Integer> deletePolicyType(PolicyTypeName ptName, PolicyTypeId ptId) throws PolicyTypeMissingException {
         return insuraBook.deletePolicyType(ptName, ptId);
+    }
+
+    /**
+     * Returns a list of clients whose birthday is today.
+     */
+    @Override
+    public List<Client> getBirthdayClients() {
+        return insuraBook.getBirthdayClients();
+    }
+
+    /**
+     * Returns a list of policies that are expiring within 3 days.
+     */
+    @Override
+    public List<Policy> getExpiringPolicies() {
+        return insuraBook.getExpiringPolicies();
     }
 }

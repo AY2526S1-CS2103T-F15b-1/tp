@@ -65,11 +65,9 @@ public class Portfolio {
         return policy;
     }
 
-    /**
-     * Function to delete policy
-     * @param policy to delete
-     */
-    public void deletePolicy(Policy policy) {}
+    public void setPolicy(Policy target, Policy editedPolicy) {
+        policies.setPolicy(target, editedPolicy);
+    }
 
     /**
      * Function to add claim to a policy
