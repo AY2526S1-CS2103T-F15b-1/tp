@@ -16,6 +16,7 @@ import insurabook.model.policytype.PolicyType;
 import insurabook.model.policytype.PolicyTypeId;
 import insurabook.model.policytype.PolicyTypeName;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 
 /**
  * The API of the Model component.
@@ -104,6 +105,15 @@ public interface Model {
      */
     void updateFilteredPolicyTypeList(Predicate<PolicyType> predicate);
 
+    /** Returns an unmodifiable view of client's policy list */
+    FilteredList<Policy> getClientPolicyList();
+
+    /**
+     * Updates the filter of the filtered policy types list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateClientPolicyList(Predicate<Policy> predicate);
+
     /**
      * Adds the given claim.
      * {@code claim} must not already exist in the address book.
@@ -133,6 +143,16 @@ public interface Model {
      * Deletes the policy type based on name and ID.
      */
     List<Integer> deletePolicyType(PolicyTypeName ptName, PolicyTypeId ptId);
+
+    /**
+     * Returns a list of clients whose birthday is today.
+     */
+    List<Client> getBirthdayClients();
+
+    /**
+     * Returns a list of policies that are expiring within the next 3 days.
+     */
+    List<Policy> getExpiringPolicies();
 
     /**
      * Replaces the given person {@code target} with {@code editedPolicyType}.

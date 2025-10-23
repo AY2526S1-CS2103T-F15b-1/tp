@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import insurabook.commons.core.GuiSettings;
 import insurabook.commons.core.LogsCenter;
 import insurabook.logic.Logic;
+import insurabook.logic.Messages;
 import insurabook.logic.commands.CommandResult;
 import insurabook.logic.commands.exceptions.CommandException;
 import insurabook.logic.parser.exceptions.ParseException;
@@ -39,7 +40,9 @@ public class MainWindow extends UiPart<Stage> {
     private HelpWindow helpWindow;
     private PersonListPanel personListPanel;
     private PolicyTypeListPanel policyTypeListPanel;
+    private PolicyListPanel policyListPanel;
     private Node clientsNode;
+    private Node policyTypesNode;
     private Node policiesNode;
 
     @FXML
@@ -127,16 +130,19 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
         var clients = logic.getFilteredClientList();
-        var policies = logic.getFilteredPolicyTypeList();
+        var policyTypes = logic.getFilteredPolicyTypeList();
+        var policies = logic.getClientPolicyList();
 
         logger.info("clients size=" + clients.size());
-        logger.info("policies size=" + policies.size());
+        logger.info("policyTypes size=" + policyTypes.size());
 
         personListPanel = new PersonListPanel(clients);
-        policyTypeListPanel = new PolicyTypeListPanel(policies);
+        policyTypeListPanel = new PolicyTypeListPanel(policyTypes);
+        policyListPanel = new PolicyListPanel(policies);
 
         clientsNode = personListPanel.getRoot();
-        policiesNode = policyTypeListPanel.getRoot();
+        policyTypesNode = policyTypeListPanel.getRoot();
+        policiesNode = policyListPanel.getRoot();
 
         //shows client list by default
         listPanelPlaceholder.getChildren().setAll(clientsNode);
@@ -205,6 +211,9 @@ public class MainWindow extends UiPart<Stage> {
 
         currentView = viewFlag;
         switch (viewFlag) {
+        case POLICY_TYPE_VIEW:
+            listPanelPlaceholder.getChildren().setAll(policyTypesNode);
+            break;
         case POLICY_VIEW:
             listPanelPlaceholder.getChildren().setAll(policiesNode);
             break;
@@ -213,6 +222,47 @@ public class MainWindow extends UiPart<Stage> {
             break;
         default: // should not happen due to enum
             logger.warning("Unknown view flag: " + viewFlag);
+        }
+    }
+
+    /**
+     * Displays birthday reminders to the user.
+     */
+    public String showBirthdayReminders() {
+        String birthdayClients = logic.getBirthdayClients().stream()
+                .map(client -> Messages.formatBirthdayClients(client))
+                .reduce("", (a, b) -> a + "\n" + b);
+        return birthdayClients;
+    }
+
+    /**
+     * Displays expiring policy reminders to the user.
+     */
+    public String showExpiringPolicies() {
+        String expiringPolicies = logic.getExpiringPolicies().stream()
+                .map(Messages::formatExpiringPolicies)
+                .reduce("", (a, b) -> a + "\n" + b);
+        return expiringPolicies;
+    }
+
+    /**
+     * Displays both birthday and expiring policy reminders to the user.
+     */
+    public void showReminders() {
+        String birthdayReminders = showBirthdayReminders();
+        String expiringPolicies = showExpiringPolicies();
+        if (birthdayReminders.isEmpty() && expiringPolicies.isEmpty()) {
+            resultDisplay.setFeedbackToUser("No client birthdays today nor expiring policies.");
+        } else if (!birthdayReminders.isEmpty() && expiringPolicies.isEmpty()) {
+            resultDisplay.setFeedbackToUser(
+                    "Birthday Reminders:" + birthdayReminders + "\nWish them a happy birthday!");
+        } else if (birthdayReminders.isEmpty() && !expiringPolicies.isEmpty()) {
+            resultDisplay.setFeedbackToUser(
+                    "Expiring Policy Reminders:" + expiringPolicies + "\nPlease follow up with the clients.");
+        } else {
+            resultDisplay.setFeedbackToUser("Birthday Reminders:" + birthdayReminders
+                    + "\nWish them a happy birthday!\n\nExpiring Policy Reminders:" + expiringPolicies
+                    + "\nPlease follow up with the clients.");
         }
     }
 

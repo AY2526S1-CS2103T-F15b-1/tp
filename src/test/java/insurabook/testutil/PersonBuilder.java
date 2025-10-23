@@ -1,5 +1,6 @@
 package insurabook.testutil;
 
+import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
 import insurabook.model.client.Name;
@@ -10,9 +11,11 @@ import insurabook.model.client.Name;
 public class PersonBuilder {
 
     public static final String DEFAULT_NAME = "Amy Bee";
+    public static final String DEFAULT_BIRTHDAY = "1970-01-01";
     public static final String DEFAULT_CLIENT_ID = "1";
 
     private Name name;
+    private InsuraDate birthday;
     private ClientId clientId;
 
     /**
@@ -20,6 +23,7 @@ public class PersonBuilder {
      */
     public PersonBuilder() {
         name = new Name(DEFAULT_NAME);
+        birthday = new InsuraDate(DEFAULT_BIRTHDAY);
         clientId = new ClientId(DEFAULT_CLIENT_ID);
     }
 
@@ -28,6 +32,7 @@ public class PersonBuilder {
      */
     public PersonBuilder(Client clientToCopy) {
         name = clientToCopy.getName();
+        birthday = clientToCopy.getBirthday();
         clientId = clientToCopy.getClientId();
     }
 
@@ -40,6 +45,14 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the {@code Birthday} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withBirthday(String birthday) {
+        this.birthday = new InsuraDate(birthday);
+        return this;
+    }
+
+    /**
      * Sets the {@code Email} of the {@code Person} that we are building.
      */
     public PersonBuilder withClientId(String clientId) {
@@ -48,7 +61,7 @@ public class PersonBuilder {
     }
 
     public Client build() {
-        return new Client(name, clientId);
+        return new Client(name, birthday, clientId);
     }
 
 }

@@ -1,6 +1,7 @@
 package insurabook.logic;
 
 import java.nio.file.Path;
+import java.util.List;
 
 import insurabook.commons.core.GuiSettings;
 import insurabook.logic.commands.CommandResult;
@@ -9,6 +10,7 @@ import insurabook.logic.parser.exceptions.ParseException;
 import insurabook.model.Model;
 import insurabook.model.ReadOnlyInsuraBook;
 import insurabook.model.client.Client;
+import insurabook.model.policies.Policy;
 import insurabook.model.policytype.PolicyType;
 import javafx.collections.ObservableList;
 
@@ -39,6 +41,9 @@ public interface Logic {
     /** Returns an unmodifiable view of the filtered list of policy types */
     ObservableList<PolicyType> getFilteredPolicyTypeList();
 
+    /** Returns an unmodifiable view of the list of a specific client has bought */
+    ObservableList<Policy> getClientPolicyList();
+
     Path getInsuraBookFilePath();
     /**
      * Returns the user prefs' GUI settings.
@@ -49,4 +54,8 @@ public interface Logic {
      * Set the user prefs' GUI settings.
      */
     void setGuiSettings(GuiSettings guiSettings);
+
+    List<Client> getBirthdayClients();
+
+    List<Policy> getExpiringPolicies();
 }

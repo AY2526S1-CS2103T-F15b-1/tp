@@ -3,6 +3,7 @@ package insurabook.logic;
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.logging.Logger;
 
 import insurabook.commons.core.GuiSettings;
@@ -15,6 +16,7 @@ import insurabook.logic.parser.exceptions.ParseException;
 import insurabook.model.Model;
 import insurabook.model.ReadOnlyInsuraBook;
 import insurabook.model.client.Client;
+import insurabook.model.policies.Policy;
 import insurabook.model.policytype.PolicyType;
 import insurabook.storage.Storage;
 import javafx.collections.ObservableList;
@@ -83,6 +85,11 @@ public class LogicManager implements Logic {
     }
 
     @Override
+    public ObservableList<Policy> getClientPolicyList() {
+        return model.getClientPolicyList();
+    }
+
+    @Override
     public Path getInsuraBookFilePath() {
         return model.getInsuraBookFilePath();
     }
@@ -95,5 +102,21 @@ public class LogicManager implements Logic {
     @Override
     public void setGuiSettings(GuiSettings guiSettings) {
         model.setGuiSettings(guiSettings);
+    }
+
+    /**
+     * Returns a list of clients whose birthdays are today.
+     */
+    @Override
+    public List<Client> getBirthdayClients() {
+        return model.getBirthdayClients();
+    }
+
+    /**
+     * Returns a list of policies that are expiring within the next 3 days.
+     */
+    @Override
+    public List<Policy> getExpiringPolicies() {
+        return model.getExpiringPolicies();
     }
 }

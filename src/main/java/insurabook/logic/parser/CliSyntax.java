@@ -24,5 +24,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_CLAIM_AMOUNT = new Prefix("-amt");
     public static final Prefix PREFIX_CLAIM_DATE = new Prefix("-date");
     public static final Prefix PREFIX_INDEX = new Prefix("-index");
-    public static final Prefix PREFIX_KEYWORD = new Prefix("-m");
+    public static final Prefix PREFIX_POLICY_VIEW = new Prefix("-policy");
+    public static final Prefix PREFIX_CLIENT_VIEW = new Prefix("-client");
+    public static final Prefix PREFIX_BIRTHDAY = new Prefix("-b");
 }
