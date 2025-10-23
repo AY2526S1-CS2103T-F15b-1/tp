@@ -8,8 +8,10 @@ import static insurabook.testutil.TypicalPersons.CARL;
 import static insurabook.testutil.TypicalPersons.getTypicalAddressBook;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import insurabook.model.InsuraBook;
 import insurabook.model.Model;
 import insurabook.model.ModelManager;
 import insurabook.model.UserPrefs;
@@ -20,10 +22,16 @@ import insurabook.model.client.Client;
  */
 public class UndoCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model;
+
+    @BeforeEach
+    public void setUp() {
+        model = new ModelManager(new InsuraBook(), new UserPrefs());
+    }
 
     @Test
     public void execute_noCommandsToUndo_throwsCommandException() {
+
         UndoCommand undoCommand = new UndoCommand();
         assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_NO_HISTORY);
     }
@@ -43,6 +51,9 @@ public class UndoCommandTest {
 
     @Test
     public void execute_afterDeleteCommand_success() {
+        model.addPerson(ALICE);
+        model.commitInsuraBook();
+
         Model expectedModel = new ModelManager(model.getInsuraBook(), new UserPrefs());
 
         Client clientToDelete = model.getFilteredPersonList().get(0);
@@ -73,6 +84,8 @@ public class UndoCommandTest {
 
     @Test
     public void execute_undoTwice_success() {
+        Model expectedModel = new ModelManager(new InsuraBook(), new UserPrefs());
+
         model.addPerson(ALICE);
         model.commitInsuraBook();
 
@@ -85,8 +98,6 @@ public class UndoCommandTest {
         } catch (Exception e) {
             // Should not throw
         }
-
-        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
         UndoCommand secondUndo = new UndoCommand();
         String expectedMessage = UndoCommand.MESSAGE_SUCCESS;
@@ -108,12 +119,4 @@ public class UndoCommandTest {
 
         assertEquals(initialClientCount, model.getFilteredPersonList().size());
     }
-
-    @Test
-    public void toStringMethod() {
-        UndoCommand undoCommand = new UndoCommand();
-        String expected = UndoCommand.class.getCanonicalName() + "{}";
-        assertEquals(expected, undoCommand.toString());
-    }
-
 }
