@@ -38,7 +38,7 @@ public class MainWindow extends UiPart<Stage> {
     private ResultDisplay resultDisplay;
     private ViewChangeDisplay viewChangeDisplay;
     private HelpWindow helpWindow;
-    private PersonListPanel personListPanel;
+    private ClientListPanel clientListPanel;
     private PolicyTypeListPanel policyTypeListPanel;
     private PolicyListPanel policyListPanel;
     private Node clientsNode;
@@ -136,11 +136,11 @@ public class MainWindow extends UiPart<Stage> {
         logger.info("clients size=" + clients.size());
         logger.info("policyTypes size=" + policyTypes.size());
 
-        personListPanel = new PersonListPanel(clients);
+        clientListPanel = new ClientListPanel(clients);
         policyTypeListPanel = new PolicyTypeListPanel(policyTypes);
         policyListPanel = new PolicyListPanel(policies);
 
-        clientsNode = personListPanel.getRoot();
+        clientsNode = clientListPanel.getRoot();
         policyTypesNode = policyTypeListPanel.getRoot();
         policiesNode = policyListPanel.getRoot();
 
@@ -200,8 +200,8 @@ public class MainWindow extends UiPart<Stage> {
         primaryStage.hide();
     }
 
-    public PersonListPanel getPersonListPanel() {
-        return personListPanel;
+    public ClientListPanel getPersonListPanel() {
+        return clientListPanel;
     }
 
     private void applyView(View viewFlag) {
