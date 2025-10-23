@@ -7,7 +7,6 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 import insurabook.commons.core.GuiSettings;
 import insurabook.commons.core.LogsCenter;
@@ -22,7 +21,6 @@ import insurabook.model.policytype.PolicyType;
 import insurabook.model.policytype.PolicyTypeId;
 import insurabook.model.policytype.PolicyTypeName;
 import insurabook.model.policytype.exceptions.PolicyTypeMissingException;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 
@@ -51,22 +49,12 @@ public class ModelManager implements Model {
         this.userPrefs = new UserPrefs(userPrefs);
         this.filteredClients = new FilteredList<>(this.insuraBook.getClientList());
         this.filteredPolicyTypes = new FilteredList<>(this.insuraBook.getPolicyTypeList());
-        this.filteredClientPolicies = getAllPolicies();
+        this.filteredClientPolicies = new FilteredList<>(this.insuraBook.getClientPolicyList());
         updateFilteredPolicyTypeList(PREDICATE_SHOW_ALL_POLICY_TYPES);
     }
 
     public ModelManager() {
         this(new InsuraBook(), new UserPrefs());
-    }
-
-    private FilteredList<Policy> getAllPolicies() {
-        ObservableList<Policy> allPolicies = FXCollections.observableArrayList();
-        allPolicies.setAll(
-            insuraBook.getClientList().stream()
-                .flatMap(client -> client.getPortfolio().getPolicies().asUnmodifiableObservableList().stream())
-                .collect(Collectors.toList())
-        );
-        return new FilteredList<>(allPolicies);
     }
 
     //=========== UserPrefs ==================================================================================
@@ -146,6 +134,12 @@ public class ModelManager implements Model {
     @Override
     public Claim deleteClaim(ClientId clientId, PolicyId policyId, ClaimId claimId) {
         return insuraBook.removeClaim(clientId, policyId, claimId);
+    }
+
+    @Override
+    public void setClaim(Claim target, Claim editedClaim) {
+        requireAllNonNull(target, editedClaim);
+        insuraBook.setClaim(target, editedClaim);
     }
 
     @Override

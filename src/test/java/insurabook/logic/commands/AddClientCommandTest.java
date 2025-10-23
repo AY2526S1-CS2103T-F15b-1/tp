@@ -227,6 +227,11 @@ public class AddClientCommandTest {
         }
 
         @Override
+        public void setClaim(Claim target, Claim editedClaim) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public List<Client> getBirthdayClients() {
             throw new AssertionError("This method should not be called.");
         }
