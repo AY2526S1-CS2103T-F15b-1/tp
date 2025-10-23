@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import insurabook.commons.exceptions.IllegalValueException;
 import insurabook.model.InsuraBook;
+import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
 import insurabook.model.client.Name;
@@ -20,6 +21,7 @@ class JsonAdaptedClient {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
 
     private final String name;
+    private final String birthday;
     private final String clientId;
     private final List<JsonAdaptedPolicy> policies;
 
@@ -28,9 +30,11 @@ class JsonAdaptedClient {
      */
     @JsonCreator
     public JsonAdaptedClient(@JsonProperty("name") String name,
+                             @JsonProperty("birthday") String birthday,
                              @JsonProperty("clientId") String clientId,
                              @JsonProperty("polices") List<JsonAdaptedPolicy> policies) {
         this.name = name;
+        this.birthday = birthday;
         this.clientId = clientId;
         this.policies = policies;
     }
@@ -40,6 +44,7 @@ class JsonAdaptedClient {
      */
     public JsonAdaptedClient(Client source) {
         name = source.getName().fullName;
+        birthday = source.getBirthday().toString();
         clientId = source.getClientId().clientId;
         policies = source.getPortfolio().getPolicies().asUnmodifiableObservableList().stream()
                 .map(JsonAdaptedPolicy::new)
@@ -59,6 +64,15 @@ class JsonAdaptedClient {
             throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
         }
         final Name modelName = new Name(name);
+
+        if (birthday == null) {
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, InsuraDate.class.getSimpleName()));
+        }
+        if (!InsuraDate.isValidInsuraDate(birthday)) {
+            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
+        }
+        final InsuraDate modelBirthday = new InsuraDate(birthday);
 
         if (clientId == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
@@ -82,7 +96,7 @@ class JsonAdaptedClient {
                 })
                 .toList();
 
-        return new Client(modelName, modelClientId, modelPolicies);
+        return new Client(modelName, modelBirthday, modelClientId, modelPolicies);
     }
 
     public Client toModelTypeWithoutPolicies() throws IllegalValueException {
@@ -94,6 +108,15 @@ class JsonAdaptedClient {
         }
         final Name modelName = new Name(name);
 
+        if (birthday == null) {
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, InsuraDate.class.getSimpleName()));
+        }
+        if (!InsuraDate.isValidInsuraDate(birthday)) {
+            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
+        }
+        final InsuraDate modelBirthday = new InsuraDate(birthday);
+
         if (clientId == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     ClientId.class.getSimpleName()));
@@ -103,7 +126,7 @@ class JsonAdaptedClient {
         }
         final ClientId modelClientId = new ClientId(clientId);
 
-        return new Client(modelName, modelClientId);
+        return new Client(modelName, modelBirthday, modelClientId);
     }
 
     public ClientId getClientId() {
