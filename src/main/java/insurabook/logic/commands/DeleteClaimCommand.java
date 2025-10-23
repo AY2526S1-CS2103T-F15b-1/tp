@@ -50,6 +50,7 @@ public class DeleteClaimCommand extends Command {
         requireNonNull(model);
 
         Claim claim = model.deleteClaim(toDeleteClientId, toDeletePolicyId, toDeleteId);
+        model.commitInsuraBook();
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(claim, 1)));
     }

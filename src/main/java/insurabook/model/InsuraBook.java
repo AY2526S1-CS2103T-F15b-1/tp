@@ -3,6 +3,7 @@ package insurabook.model;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import insurabook.commons.util.ToStringBuilder;
 import insurabook.model.claims.Claim;
@@ -87,7 +88,14 @@ public class InsuraBook implements ReadOnlyInsuraBook {
 
         setClients(newData.getClientList());
         setPolicyTypes(newData.getPolicyTypeList());
-        setClientPolicies(newData.getClientPolicyList());
+        if (this.clients != null) {
+            List<Policy> allPolicies = this.clients.asUnmodifiableObservableList().stream()
+                    .flatMap(client -> client.getPortfolio().getPolicies().asUnmodifiableObservableList().stream())
+                    .collect(Collectors.toList());
+            this.clientPolicies.setPolicies(allPolicies);
+        } else {
+            this.clientPolicies.setPolicies(List.of()); // Handle case where there are no clients
+        }
     }
 
     //// client-level operations
@@ -179,6 +187,7 @@ public class InsuraBook implements ReadOnlyInsuraBook {
         PolicyType policyType = this.getPolicyType(policyTypeId);
         Policy policy = new Policy(policyId, client, policyType, expiryDate);
         client.addPolicy(policy);
+        this.clientPolicies.add(policy);
         return policy;
     }
 
@@ -188,8 +197,25 @@ public class InsuraBook implements ReadOnlyInsuraBook {
      */
     public Policy removePolicy(ClientId clientId, PolicyId policyId) {
         Client client = this.getClient(clientId);
-        return client.removePolicy(policyId);
+        Policy policy = client.removePolicy(policyId);
+        if (policy != null) {
+            this.clientPolicies.remove(policy);
+        }
+        return policy;
     }
+
+    /**
+     * Replaces the given policy {@code target} in the list with {@code editedPolicy}.
+     * {@code target} must exist in the address book.
+     * The policy identity of {@code editedPolicy} must not be the same as another existing policy in the address book.
+     */
+    public void setPolicy(Policy target, Policy editedPolicy) {
+        requireNonNull(editedPolicy);
+        Client client = this.getClient(target.getClientId());
+        client.setPolicy(target, editedPolicy);
+        this.clientPolicies.setPolicy(target, editedPolicy);
+    }
+
     /**
      * Adds a claim to the client with the given clientId.
      * If no such client exists, throws an exception.
@@ -206,6 +232,17 @@ public class InsuraBook implements ReadOnlyInsuraBook {
     public Claim removeClaim(ClientId clientId, PolicyId policyId, ClaimId claimId) {
         Client client = this.getClient(clientId);
         return client.removeClaim(policyId, claimId);
+    }
+
+    /**
+     * Replaces the given claim {@code target} with {@code editedClaim}.
+     * {@code target} must exist in the address book.
+     * The claim identity of {@code editedClaim} must not be the same as another existing claim in the address book.
+     */
+    public void setClaim(Claim target, Claim editedClaim) {
+        requireNonNull(editedClaim);
+        Client client = this.getClient(target.getClientId());
+        client.setClaim(target, editedClaim);
     }
 
     //// util methods

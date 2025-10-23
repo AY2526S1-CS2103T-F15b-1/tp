@@ -44,6 +44,8 @@ public class DeleteClientCommand extends Command {
         }
 
         model.deletePerson(toDelete);
+        model.commitInsuraBook();
+
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toDelete)));
     }
 

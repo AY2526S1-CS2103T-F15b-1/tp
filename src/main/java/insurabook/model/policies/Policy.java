@@ -113,7 +113,11 @@ public class Policy {
         }
 
         Policy otherPolicy = (Policy) other;
-        return otherPolicy.getPolicyId().equals(this.getPolicyId());
+        return otherPolicy.getPolicyId().equals(this.getPolicyId())
+                && otherPolicy.getClient().equals(this.getClient())
+                && otherPolicy.getPolicyType().equals(this.getPolicyType())
+                && otherPolicy.getExpiryDate().equals(this.getExpiryDate())
+                && otherPolicy.getClaims().equals(this.getClaims());
     }
 
     /**
@@ -137,6 +141,16 @@ public class Policy {
                 .orElse(null);
         this.claim.remove(claim);
         return claim;
+    }
+
+    /**
+     * Sets claim in policy
+     */
+    public void setClaim(Claim target, Claim editedClaim) {
+        int index = this.claim.indexOf(target);
+        if (index != -1) {
+            this.claim.set(index, editedClaim);
+        }
     }
     /*
      * Problem:

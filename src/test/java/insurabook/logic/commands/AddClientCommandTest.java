@@ -207,6 +207,11 @@ public class AddClientCommandTest {
         }
 
         @Override
+        public void setPolicy(Policy target, Policy editedPolicy) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void addPolicyType(PolicyType toAdd) {
             throw new AssertionError("This method should not be called.");
         }
@@ -220,6 +225,24 @@ public class AddClientCommandTest {
         public Claim deleteClaim(ClientId clientId, PolicyId policyId, ClaimId claimId) {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public void setClaim(Claim target, Claim editedClaim) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean canUndoInsuraBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void undoInsuraBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void commitInsuraBook() {}
 
         @Override
         public List<Client> getBirthdayClients() {

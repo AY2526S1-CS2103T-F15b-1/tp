@@ -21,6 +21,7 @@ public class Messages {
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
     public static final String MESSAGE_DUPLICATE_FIELDS =
                 "Multiple values specified for the following single-valued field(s): ";
+    public static final String MESSAGE_INVALID_CLAIM = "This claim does not exist.";
 
     /**
      * Returns an error message indicating the duplicate prefixes.
@@ -47,7 +48,7 @@ public class Messages {
 
     /**
      * Formats the {@code claim} for display to the user.
-     * If op is 0, format for AddClaimCommand success message.
+     * If op is 0, format for AddClaimCommand or EditClaimCommand success message.
      * If op is 1, format for DeleteClaimCommand display message.
      */
     public static String format(Claim claim, int op) {
