@@ -192,6 +192,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void setPolicy(Policy target, Policy editedPolicy) {
+        requireAllNonNull(target, editedPolicy);
+        insuraBook.setPolicy(target, editedPolicy);
+    }
+
+    @Override
     public ObservableList<PolicyType> getFilteredPolicyTypeList() {
         return filteredPolicyTypes;
     }
