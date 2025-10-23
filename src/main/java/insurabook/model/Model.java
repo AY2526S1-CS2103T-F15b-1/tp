@@ -177,7 +177,10 @@ public interface Model {
      * Save current state of InsuraBook
      */
     void commitInsuraBook();
+
+    /**
      * Returns a list of clients whose birthday is today.
+     * @return list of clients whose birthday is today
      */
     List<Client> getBirthdayClients();
 

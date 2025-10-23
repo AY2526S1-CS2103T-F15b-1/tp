@@ -34,5 +34,4 @@ public class UndoCommand extends Command {
     public boolean equals(Object other) {
         return other instanceof UndoCommand;
     }
-
 }
