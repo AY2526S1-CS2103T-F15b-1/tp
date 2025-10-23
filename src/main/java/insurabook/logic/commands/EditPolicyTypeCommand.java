@@ -1,6 +1,7 @@
 package insurabook.logic.commands;
 
 import static insurabook.logic.parser.CliSyntax.PREFIX_POLICY_TYPE;
+import static insurabook.logic.parser.CliSyntax.PREFIX_POLICY_TYPE_ID;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
@@ -26,12 +27,14 @@ public class EditPolicyTypeCommand extends Command {
     public static final String COMMAND_WORD = "edit policy type";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the policy type identified "
-            + "by the index number used in the displayed policy type list. "
+            + "by its policy type ID. "
             + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: POLICY_TYPE_ID "
+            + "Parameters: "
+            + PREFIX_POLICY_TYPE_ID + " POLICY_TYPE_ID "
             + "[" + PREFIX_POLICY_TYPE + "NAME] "
-            + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_POLICY_TYPE + "Jonn";
+            + "Example: " + COMMAND_WORD
+            + PREFIX_POLICY_TYPE_ID + " BRH001 "
+            + "[" + PREFIX_POLICY_TYPE + "BRUHealthTwo] ";
 
     public static final String MESSAGE_EDIT_POLICY_TYPE_SUCCESS = "Edited Policy Type: %1$s";
     public static final String MESSAGE_MISSING_EDIT_FIELD = "At least one field to edit must be provided.";

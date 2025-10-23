@@ -206,6 +206,11 @@ public class AddClientCommandTest {
         }
 
         @Override
+        public void setPolicyType(PolicyType target, PolicyType editedPolicyType) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public Claim deleteClaim(ClientId clientId, PolicyId policyId, ClaimId claimId) {
             throw new AssertionError("This method should not be called.");
         }
