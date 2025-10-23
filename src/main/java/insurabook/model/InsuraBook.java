@@ -183,6 +183,14 @@ public class InsuraBook implements ReadOnlyInsuraBook {
     }
 
     /**
+     * Returns true if given PolicyTypeName already exists in list of PolicyTypes.
+     */
+    public boolean containsPolicyTypeName(PolicyTypeName ptName) {
+        requireNonNull(ptName);
+        return policyTypes.containsName(ptName);
+    }
+
+    /**
      * Adds a policy to the client with the given info.
      * If no such client or policy type exists, throws an exception.
      */

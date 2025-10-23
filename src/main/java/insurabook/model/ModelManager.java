@@ -229,6 +229,20 @@ public class ModelManager implements Model {
         return insuraBook.deletePolicyType(ptName, ptId);
     }
 
+    @Override
+    public void setPolicyType(PolicyType target, PolicyType editedPolicyType) {
+        requireAllNonNull(target, editedPolicyType);
+
+        insuraBook.setPolicyType(target, editedPolicyType);
+    }
+
+    @Override
+    public boolean containsPolicyTypeName(PolicyTypeName name) {
+        requireNonNull(name);
+
+        return insuraBook.containsPolicyTypeName(name);
+    }
+
     /**
      * Returns a list of clients whose birthday is today.
      */
@@ -245,10 +259,4 @@ public class ModelManager implements Model {
         return insuraBook.getExpiringPolicies();
     }
 
-    @Override
-    public void setPolicyType(PolicyType target, PolicyType editedPolicyType) {
-        requireAllNonNull(target, editedPolicyType);
-
-        insuraBook.setPolicyType(target, editedPolicyType);
-    }
 }
