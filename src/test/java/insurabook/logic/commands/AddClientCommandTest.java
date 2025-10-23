@@ -242,6 +242,24 @@ public class AddClientCommandTest {
         }
 
         @Override
+        public void setClaim(Claim target, Claim editedClaim) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean canUndoInsuraBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void undoInsuraBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void commitInsuraBook() {}
+
+        @Override
         public List<Client> getBirthdayClients() {
             throw new AssertionError("This method should not be called.");
         }

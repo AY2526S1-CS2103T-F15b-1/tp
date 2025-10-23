@@ -13,6 +13,10 @@ Class HelpWindow
 Class ResultDisplay
 Class PersonListPanel
 Class PersonCard
+Class PolicyListPanel
+Class PolicyCard
+Class PolicyTypeListPanel
+Class PolicyTypeCard
 Class StatusBarFooter
 Class CommandBox
 }
@@ -33,10 +37,14 @@ UiManager -down-> "1" MainWindow
 MainWindow *-down->  "1" CommandBox
 MainWindow *-down-> "1" ResultDisplay
 MainWindow *-down-> "1" PersonListPanel
+MainWindow *-down-> "1" PolicyListPanel
+MainWindow *-down-> "1" PolicyTypeListPanel
 MainWindow *-down-> "1" StatusBarFooter
 MainWindow --> "0..1" HelpWindow
 
 PersonListPanel -down-> "*" PersonCard
+PolicyListPanel -down-> "*" PolicyCard
+PolicyTypeListPanel -down-> "*" PolicyTypeCard
 
 MainWindow -left-|> UiPart
 
@@ -44,17 +52,28 @@ ResultDisplay --|> UiPart
 CommandBox --|> UiPart
 PersonListPanel --|> UiPart
 PersonCard --|> UiPart
+PolicyListPanel --|> UiPart
+PolicyCard --|> UiPart
+PolicyTypeListPanel --|> UiPart
+PolicyTypeCard --|> UiPart
 StatusBarFooter --|> UiPart
 HelpWindow --|> UiPart
 
 PersonCard ..> Model
+PolicyCard ..> Model
+PolicyTypeCard ..> Model
 UiManager -right-> Logic
 MainWindow -left-> Logic
 
+PolicyTypeListPanel -[hidden]left- PolicyListPanel
+PolicyListPanel -[hidden]left- PersonListPanel
 PersonListPanel -[hidden]left- HelpWindow
 HelpWindow -[hidden]left- CommandBox
 CommandBox -[hidden]left- ResultDisplay
 ResultDisplay -[hidden]left- StatusBarFooter
+
+PolicyTypeCard -[hidden]left- PolicyCard
+PolicyCard -[hidden]left- PersonCard
 
 MainWindow -[hidden]-|> UiPart
 @enduml

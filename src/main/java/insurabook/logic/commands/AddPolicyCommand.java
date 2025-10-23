@@ -60,6 +60,7 @@ public class AddPolicyCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         Policy policy = model.addPolicy(policyId, clientId, policyTypeId, expiryDate);
+        model.commitInsuraBook();
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(policy, 0)));
     }
 }

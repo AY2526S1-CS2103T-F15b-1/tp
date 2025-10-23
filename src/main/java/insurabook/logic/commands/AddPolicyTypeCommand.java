@@ -57,6 +57,7 @@ public class AddPolicyTypeCommand extends Command {
         requireNonNull(model);
         PolicyType policyType = new PolicyType(ptName, ptId, ptDescription, ptPremium);
         model.addPolicyType(policyType);
+        model.commitInsuraBook();
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(policyType, 0)));
     }
 }

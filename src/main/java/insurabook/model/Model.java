@@ -127,6 +127,13 @@ public interface Model {
     Claim deleteClaim(ClientId clientId, PolicyId policyId, ClaimId claimId);
 
     /**
+     * Replaces the given claim {@code target} with {@code editedClaim}.
+     * {@code target} must exist in the address book.
+     * The claim identity of {@code editedClaim} must not be the same as another existing claim in the address book.
+     */
+    void setClaim(Claim target, Claim editedClaim);
+
+    /**
      * Adds the given policy.
      * {@code policy} must not already exist in the address book.
      */
@@ -169,7 +176,24 @@ public interface Model {
     boolean containsPolicyTypeName(PolicyTypeName name);
 
     /**
+     * Returns true if InsuraBook can be undone
+     * @return boolean, if InsuraBook can be undone
+     */
+    boolean canUndoInsuraBook();
+
+    /**
+     * Restores InsuraBook to its previous state
+     */
+    void undoInsuraBook();
+
+    /**
+     * Save current state of InsuraBook
+     */
+    void commitInsuraBook();
+
+    /**
      * Returns a list of clients whose birthday is today.
+     * @return list of clients whose birthday is today
      */
     List<Client> getBirthdayClients();
 
