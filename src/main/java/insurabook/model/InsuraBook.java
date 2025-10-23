@@ -190,6 +190,19 @@ public class InsuraBook implements ReadOnlyInsuraBook {
         Client client = this.getClient(clientId);
         return client.removePolicy(policyId);
     }
+
+    /**
+     * Replaces the given policy {@code target} in the list with {@code editedPolicy}.
+     * {@code target} must exist in the address book.
+     * The policy identity of {@code editedPolicy} must not be the same as another existing policy in the address book.
+     */
+    public void setPolicy(Policy target, Policy editedPolicy) {
+        requireNonNull(editedPolicy);
+        Client client = this.getClient(target.getClientId());
+        client.setPolicy(target, editedPolicy);
+        this.clientPolicies.setPolicy(target, editedPolicy);
+    }
+
     /**
      * Adds a claim to the client with the given clientId.
      * If no such client exists, throws an exception.
@@ -206,6 +219,17 @@ public class InsuraBook implements ReadOnlyInsuraBook {
     public Claim removeClaim(ClientId clientId, PolicyId policyId, ClaimId claimId) {
         Client client = this.getClient(clientId);
         return client.removeClaim(policyId, claimId);
+    }
+
+    /**
+     * Replaces the given claim {@code target} with {@code editedClaim}.
+     * {@code target} must exist in the address book.
+     * The claim identity of {@code editedClaim} must not be the same as another existing claim in the address book.
+     */
+    public void setClaim(Claim target, Claim editedClaim) {
+        requireNonNull(editedClaim);
+        Client client = this.getClient(target.getClientId());
+        client.setClaim(target, editedClaim);
     }
 
     //// util methods
@@ -230,6 +254,19 @@ public class InsuraBook implements ReadOnlyInsuraBook {
     @Override
     public ObservableList<Policy> getClientPolicyList() {
         return clientPolicies.asUnmodifiableObservableList();
+    }
+
+    public List<Client> getBirthdayClients() {
+        return clients.asUnmodifiableObservableList().stream()
+                .filter(client -> client.getBirthday().isToday())
+                .toList();
+    }
+
+    public List<Policy> getExpiringPolicies() {
+        return clients.asUnmodifiableObservableList().stream()
+                .flatMap(client -> client.getPortfolio().getPolicies().asUnmodifiableObservableList().stream())
+                .filter(policy -> policy.getExpiryDate().isExpiringInThreeDays())
+                .toList();
     }
 
     @Override

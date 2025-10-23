@@ -155,6 +155,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void setClaim(Claim target, Claim editedClaim) {
+        requireAllNonNull(target, editedClaim);
+        insuraBook.setClaim(target, editedClaim);
+    }
+
+    @Override
     public Policy addPolicy(PolicyId policyId, ClientId clientId, PolicyTypeId policyTypeId, InsuraDate expiryDate) {
         return insuraBook.addPolicy(policyId, clientId, policyTypeId, expiryDate);
     }
@@ -195,6 +201,12 @@ public class ModelManager implements Model {
         requireAllNonNull(target, editedClient);
 
         insuraBook.setClient(target, editedClient);
+    }
+
+    @Override
+    public void setPolicy(Policy target, Policy editedPolicy) {
+        requireAllNonNull(target, editedPolicy);
+        insuraBook.setPolicy(target, editedPolicy);
     }
 
     @Override
@@ -254,5 +266,19 @@ public class ModelManager implements Model {
         insuraBookStateList.subList(currentStatePointer + 1, insuraBookStateList.size()).clear();
         insuraBookStateList.add(new InsuraBook(insuraBook));
         currentStatePointer++;
+    /**
+     * Returns a list of clients whose birthday is today.
+     */
+    @Override
+    public List<Client> getBirthdayClients() {
+        return insuraBook.getBirthdayClients();
+    }
+
+    /**
+     * Returns a list of policies that are expiring within 3 days.
+     */
+    @Override
+    public List<Policy> getExpiringPolicies() {
+        return insuraBook.getExpiringPolicies();
     }
 }

@@ -17,6 +17,7 @@ import insurabook.commons.util.ToStringBuilder;
 import insurabook.logic.Messages;
 import insurabook.logic.commands.exceptions.CommandException;
 import insurabook.model.Model;
+import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Address;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
@@ -38,7 +39,7 @@ public class EditCommand extends Command {
             + "Parameters: CLIENT_ID "
             + "[" + PREFIX_CLIENT_NAME + "NAME] "
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_CLIENT_NAME + "Jonn";
+            + PREFIX_CLIENT_NAME + "John";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -91,9 +92,10 @@ public class EditCommand extends Command {
         Name updatedName = editPersonDescriptor.getName().orElse(clientToEdit.getName());
 
         // keep the same client ID
+        InsuraDate birthday = clientToEdit.getBirthday();
         ClientId clientId = clientToEdit.getClientId();
 
-        return new Client(updatedName, clientId);
+        return new Client(updatedName, birthday, clientId);
     }
 
     @Override

@@ -127,12 +127,30 @@ public interface Model {
     Claim deleteClaim(ClientId clientId, PolicyId policyId, ClaimId claimId);
 
     /**
+     * Replaces the given claim {@code target} with {@code editedClaim}.
+     * {@code target} must exist in the address book.
+     * The claim identity of {@code editedClaim} must not be the same as another existing claim in the address book.
+     */
+    void setClaim(Claim target, Claim editedClaim);
+
+    /**
      * Adds the given policy.
      * {@code policy} must not already exist in the address book.
      */
     Policy addPolicy(PolicyId policyId, ClientId clientId, PolicyTypeId policyTypeId, InsuraDate expiryDate);
 
+    /**
+     * Deletes the given policy.
+     * The policy must exist in the address book.
+     */
     Policy deletePolicy(ClientId clientId, PolicyId policyId);
+
+    /**
+     * Replaces the given policy {@code target} with {@code editedPolicy}.
+     * {@code target} must exist in the address book.
+     * The policy identity of {@code editedPolicy} must not be the same as another existing policy in the address book.
+     */
+    void setPolicy(Policy target, Policy editedPolicy);
 
     /**
      * Adds the given policy type.
@@ -159,4 +177,12 @@ public interface Model {
      * Save current state of InsuraBook
      */
     void commitInsuraBook();
+     * Returns a list of clients whose birthday is today.
+     */
+    List<Client> getBirthdayClients();
+
+    /**
+     * Returns a list of policies that are expiring within the next 3 days.
+     */
+    List<Policy> getExpiringPolicies();
 }

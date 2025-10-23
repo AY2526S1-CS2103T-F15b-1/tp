@@ -18,7 +18,9 @@ import insurabook.logic.commands.DeleteClaimCommand;
 import insurabook.logic.commands.DeleteClientCommand;
 import insurabook.logic.commands.DeletePolicyCommand;
 import insurabook.logic.commands.DeletePolicyTypeCommand;
+import insurabook.logic.commands.EditClaimCommand;
 import insurabook.logic.commands.EditCommand;
+import insurabook.logic.commands.EditPolicyCommand;
 import insurabook.logic.commands.ExitCommand;
 import insurabook.logic.commands.FindCommand;
 import insurabook.logic.commands.HelpCommand;
@@ -105,6 +107,12 @@ public class InsuraBookParser {
 
         case DeletePolicyTypeCommand.COMMAND_WORD:
             return new DeletePolicyTypeCommandParser().parse(arguments);
+
+        case EditClaimCommand.COMMAND_WORD:
+            return new EditClaimCommandParser().parse(arguments);
+
+        case EditPolicyCommand.COMMAND_WORD:
+            return new EditPolicyCommandParser().parse(arguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);
