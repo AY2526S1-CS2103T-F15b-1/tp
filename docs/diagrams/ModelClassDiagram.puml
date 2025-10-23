@@ -69,7 +69,7 @@ Claim *--> "1" ClientId
 Claim *--> "1" PolicyId
 Claim *--> "1" ClaimAmount
 Claim *--> "1" InsuraDate
-Claim *--> "1" ClaimMessage
+Claim ---> "0..1" ClaimMessage
 
 
 Client -[hidden]up--> I
