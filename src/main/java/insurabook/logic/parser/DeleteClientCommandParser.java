@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 
 import insurabook.logic.commands.DeleteClientCommand;
 import insurabook.logic.parser.exceptions.ParseException;
+import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
 import insurabook.model.client.Name;
@@ -33,8 +34,9 @@ public class DeleteClientCommandParser implements Parser<DeleteClientCommand> {
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_CLIENT_ID);
         ClientId clientId = ParserUtil.parseClientId(argMultimap.getValue(PREFIX_CLIENT_ID).get());
         Name name = new Name("Bob");
+        InsuraDate birthday = new InsuraDate("1970-01-01");
 
-        Client client = new Client(name, clientId);
+        Client client = new Client(name, birthday, clientId);
 
         return new DeleteClientCommand(client);
     }

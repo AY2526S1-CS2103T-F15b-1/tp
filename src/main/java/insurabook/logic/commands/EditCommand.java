@@ -17,6 +17,7 @@ import insurabook.commons.util.ToStringBuilder;
 import insurabook.logic.Messages;
 import insurabook.logic.commands.exceptions.CommandException;
 import insurabook.model.Model;
+import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Address;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
@@ -90,9 +91,10 @@ public class EditCommand extends Command {
         Name updatedName = editPersonDescriptor.getName().orElse(clientToEdit.getName());
 
         // keep the same client ID
+        InsuraDate birthday = clientToEdit.getBirthday();
         ClientId clientId = clientToEdit.getClientId();
 
-        return new Client(updatedName, clientId);
+        return new Client(updatedName, birthday, clientId);
     }
 
     @Override
