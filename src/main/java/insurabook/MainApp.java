@@ -29,6 +29,7 @@ import insurabook.storage.UserPrefsStorage;
 import insurabook.ui.Ui;
 import insurabook.ui.UiManager;
 import javafx.application.Application;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 
@@ -49,7 +50,7 @@ public class MainApp extends Application {
 
     @Override
     public void init() throws Exception {
-        logger.info("=============================[ Initializing AddressBook ]===========================");
+        logger.info("=============================[ Initializing InsuraBook ]===========================");
         super.init();
 
         AppParameters appParameters = AppParameters.parse(getParameters());
@@ -66,6 +67,8 @@ public class MainApp extends Application {
         logic = new LogicManager(model, storage);
 
         ui = new UiManager(logic);
+
+        Font.loadFont(getClass().getResourceAsStream("/fonts/RobotoMono-Regular.ttf"), 12);
     }
 
     /**
