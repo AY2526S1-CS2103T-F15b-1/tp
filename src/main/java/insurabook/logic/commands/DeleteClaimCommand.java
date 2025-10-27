@@ -34,7 +34,6 @@ public class DeleteClaimCommand extends Command {
             + PREFIX_CLAIM_ID + " CL002 "
             + PREFIX_DESCRIPTION + " Wrong input claim";
     public static final String MESSAGE_SUCCESS = "Deleted claim %1$s";
-    public static final String MESSAGE_MISSING_CLAIM = "The claim to be deleted does not exist.";
 
     private final ClientId toDeleteClientId;
     private final PolicyId toDeletePolicyId;
@@ -57,11 +56,6 @@ public class DeleteClaimCommand extends Command {
         requireNonNull(model);
 
         Claim claim = model.deleteClaim(toDeleteClientId, toDeletePolicyId, toDeleteId);
-
-        if (claim == null) {
-            throw new CommandException(MESSAGE_MISSING_CLAIM);
-        }
-
         model.commitInsuraBook();
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(claim, 1)));
