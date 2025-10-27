@@ -1,6 +1,9 @@
 package insurabook.logic.commands;
 
-import static insurabook.logic.parser.CliSyntax.*;
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLAIM_AMOUNT;
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLAIM_ID;
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
+import static insurabook.logic.parser.CliSyntax.PREFIX_POLICY_ID;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;

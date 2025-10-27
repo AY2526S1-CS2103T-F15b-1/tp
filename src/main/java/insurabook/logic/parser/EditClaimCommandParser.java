@@ -9,16 +9,14 @@ import static insurabook.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static insurabook.logic.parser.CliSyntax.PREFIX_POLICY_ID;
 import static java.util.Objects.requireNonNull;
 
+import java.util.stream.Stream;
+
 import insurabook.logic.commands.EditClaimCommand;
 import insurabook.logic.commands.EditClaimCommand.EditClaimDescriptor;
 import insurabook.logic.parser.exceptions.ParseException;
 import insurabook.model.claims.ClaimId;
 import insurabook.model.client.ClientId;
-import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
-
-import java.util.NoSuchElementException;
-import java.util.stream.Stream;
 
 /**
  * Parses input arguments and creates a new EditClaimCommand object
