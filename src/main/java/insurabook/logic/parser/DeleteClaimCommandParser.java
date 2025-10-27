@@ -8,7 +8,6 @@ import static insurabook.logic.parser.CliSyntax.PREFIX_POLICY_ID;
 
 import java.util.stream.Stream;
 
-import insurabook.logic.commands.AddClaimCommand;
 import insurabook.logic.commands.DeleteClaimCommand;
 import insurabook.logic.parser.exceptions.ParseException;
 import insurabook.model.claims.ClaimId;
@@ -35,7 +34,7 @@ public class DeleteClaimCommandParser implements Parser<DeleteClaimCommand> {
 
         if (!arePrefixesPresent(argMultimap, PREFIX_CLIENT_ID, PREFIX_POLICY_ID, PREFIX_CLAIM_ID)
                 || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddClaimCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteClaimCommand.MESSAGE_USAGE));
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_CLIENT_ID, PREFIX_POLICY_ID, PREFIX_CLAIM_ID);
