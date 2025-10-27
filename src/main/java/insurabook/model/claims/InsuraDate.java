@@ -6,6 +6,9 @@ import static java.util.Objects.requireNonNull;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import java.util.Date;
 
 /**
@@ -14,7 +17,7 @@ import java.util.Date;
  */
 public class InsuraDate extends Date {
     public static final String MESSAGE_CONSTRAINTS = "Date should be in the format YYYY-MM-DD";
-    public static final String VALIDATION_REGEX = "\\d{4}-\\d{2}-\\d{2}";
+    public static final String VALIDATION_PATTERN = "uuuu-MM-dd";
     private final String date;
 
     /**
@@ -32,7 +35,16 @@ public class InsuraDate extends Date {
      * Returns true if a given string is a valid date.
      */
     public static boolean isValidInsuraDate(String test) {
-        return test.matches(VALIDATION_REGEX);
+        DateTimeFormatter formatter = DateTimeFormatter
+                .ofPattern(VALIDATION_PATTERN)
+                .withResolverStyle(ResolverStyle.STRICT);
+
+        try {
+            LocalDate.parse(test, formatter);
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+        }
     }
 
     /**
