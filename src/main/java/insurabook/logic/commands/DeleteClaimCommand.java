@@ -1,7 +1,6 @@
 package insurabook.logic.commands;
 
-import static insurabook.logic.parser.CliSyntax.PREFIX_CLAIM_ID;
-import static insurabook.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static insurabook.logic.parser.CliSyntax.*;
 import static java.util.Objects.requireNonNull;
 
 import insurabook.logic.Messages;
@@ -20,14 +19,19 @@ public class DeleteClaimCommand extends Command {
 
     public static final String COMMAND_WORD = "delete claim";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes a claim from a client's policy. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes a claim of a client's policy. "
             + "Parameters: "
-            + PREFIX_CLAIM_ID + "CLAIM_ID "
-            + "[" + PREFIX_DESCRIPTION + "DESCRIPTION] \n"
+            + PREFIX_CLIENT_ID + " CLIENT_ID "
+            + PREFIX_POLICY_ID + " POLICY_ID "
+            + PREFIX_CLAIM_ID + " CLAIM_ID "
+            + "[" + PREFIX_DESCRIPTION + " DESCRIPTION] \n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_CLAIM_ID + "C002 "
-            + PREFIX_DESCRIPTION + "Wrong input claim";
+            + PREFIX_CLIENT_ID + " C001 "
+            + PREFIX_POLICY_ID + " P001 "
+            + PREFIX_CLAIM_ID + " CL002 "
+            + PREFIX_DESCRIPTION + " Wrong input claim";
     public static final String MESSAGE_SUCCESS = "Deleted claim %1$s";
+    public static final String MESSAGE_MISSING_CLAIM = "The claim to be deleted does not exist.";
 
     private final ClientId toDeleteClientId;
     private final PolicyId toDeletePolicyId;
@@ -50,6 +54,11 @@ public class DeleteClaimCommand extends Command {
         requireNonNull(model);
 
         Claim claim = model.deleteClaim(toDeleteClientId, toDeletePolicyId, toDeleteId);
+
+        if (claim == null) {
+            throw new CommandException(MESSAGE_MISSING_CLAIM);
+        }
+
         model.commitInsuraBook();
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(claim, 1)));
