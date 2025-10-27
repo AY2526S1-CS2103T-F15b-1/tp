@@ -8,7 +8,6 @@ import static insurabook.logic.parser.CliSyntax.PREFIX_POLICY_ID;
 
 import java.util.stream.Stream;
 
-import insurabook.logic.commands.AddClaimCommand;
 import insurabook.logic.commands.DeleteClaimCommand;
 import insurabook.logic.parser.exceptions.ParseException;
 import insurabook.model.claims.ClaimId;
