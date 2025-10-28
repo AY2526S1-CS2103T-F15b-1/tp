@@ -7,6 +7,7 @@ import java.util.List;
 
 import insurabook.model.policies.exceptions.DuplicatePolicyException;
 import insurabook.model.policies.exceptions.PolicyNotFoundException;
+import insurabook.model.policytype.PolicyType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -95,6 +96,24 @@ public class UniquePolicyList implements Iterable<Policy> {
         }
 
         internalList.set(index, editedPolicy);
+    }
+
+    public void setPolicyType(PolicyType targetType, PolicyType editedType) {
+        requireAllNonNull(targetType, editedType);
+
+        for (int i = 0; i < internalList.size(); i++) {
+            Policy policy = internalList.get(i);
+            if (policy.getPolicyType().equals(targetType)) {
+                Policy updatedPolicy = new Policy(
+                        policy.getPolicyId(),
+                        policy.getClient(),
+                        editedType,
+                        policy.getExpiryDate(),
+                        policy.getClaims()
+                );
+                internalList.set(i, updatedPolicy);
+            }
+        }
     }
 
 
