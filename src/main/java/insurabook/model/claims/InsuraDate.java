@@ -74,16 +74,16 @@ public class InsuraDate extends Date {
     /**
      * Returns a formatted date string for UI display.
      */
-public String toUiString() {
-    try {
-        LocalDate localDate = LocalDate.parse(this.date);
-        Date dateObj = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
-        return formatter.format(dateObj);
-    } catch (DateTimeParseException e) {
-        return this.date;
+    public String toUiString() {
+        try {
+            LocalDate localDate = LocalDate.parse(this.date);
+            Date dateObj = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
+            return formatter.format(dateObj);
+        } catch (DateTimeParseException e) {
+            return this.date;
+        }
     }
-}
 
     /**
      * Returns the date string.
