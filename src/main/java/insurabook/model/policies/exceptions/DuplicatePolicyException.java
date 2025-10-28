@@ -6,6 +6,6 @@ package insurabook.model.policies.exceptions;
  */
 public class DuplicatePolicyException extends RuntimeException {
     public DuplicatePolicyException() {
-        super("Duplicate policy found.");
+        super("Duplicate policy found. Policy with same policy id or policytype id cannot be added to a same client");
     }
 }
