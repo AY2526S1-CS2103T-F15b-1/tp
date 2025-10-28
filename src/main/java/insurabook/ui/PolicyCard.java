@@ -50,7 +50,7 @@ public class PolicyCard extends UiPart<Region> {
         this.policy = policy;
         id.setText(displayedIndex + ". ");
         pName.setText(policy.getPolicyType().getPtName().toString());
-        pId.setText("Policy Id: " + policy.getPolicyId().toString());
+        pId.setText("Policy ID: " + policy.getPolicyId().toString());
 
         InsuraDate expiryDate = policy.getExpiryDate();
         pDate.setText(
