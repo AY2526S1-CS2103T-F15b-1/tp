@@ -50,17 +50,17 @@ public class PolicyCard extends UiPart<Region> {
         this.policy = policy;
         id.setText(displayedIndex + ". ");
         pName.setText(policy.getPolicyType().getPtName().toString());
-        pId.setText("Policy Id: " + policy.getPolicyId().toString());
+        pId.setText("Policy ID: " + policy.getPolicyId().toString());
 
         InsuraDate expiryDate = policy.getExpiryDate();
         pDate.setText(
                 expiryDate != null
-                        ? expiryDate.toString()
+                        ? "Expiration Date: " + expiryDate.toUiString()
                         : "");
 
         List<Claim> claimList = policy.getClaims();
         claimList.stream()
                 .sorted(Comparator.comparing(claim -> claim.getClaimId().toString()))
-                .forEach(claim -> claims.getChildren().add(new Label(claim.getClaimId().toString())));
+                .forEach(claim -> claims.getChildren().add(new Label("Claim ID: " + claim.getClaimId().toString())));
     }
 }
