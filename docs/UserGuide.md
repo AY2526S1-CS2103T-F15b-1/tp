@@ -39,7 +39,7 @@ a terminal.
 
 ## Quick start
 
-1. Ensure you have Java `17` or above installed in your Computer.  
+1. Ensure you have Java `17` or above installed in your Computer.
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
 2. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
@@ -48,13 +48,13 @@ a terminal.
 
 4. In the same folder, right-click on an empty space and select `Open in Terminal`.
 
-5. Then type the `java -jar insurabook.jar` command in the terminal to run the application.  
+5. Then type the `java -jar insurabook.jar` command in the terminal to run the application.
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.
 
 <img alt="img.png" height="300" src="images/homepage.png" width="500"/>
 
-6. Try typing the command in the command box and press Enter to execute it.  
-   e.g. typing **`help`** and pressing Enter will open the help window.  
+6. Try typing the command in the command box and press Enter to execute it.
+   e.g. typing **`help`** and pressing Enter will open the help window.
    Some example commands you can try:
 
     * `list` : Lists all clients.
@@ -97,7 +97,7 @@ as space characters surrounding line-breaks may be omitted when copied over to t
 ### Viewing help : `help`
 
 Shows a message explaining how to access the help page.  
-If you ever feel stuck or forget a command, just type `help`. This will open a window with a link to all the commands 
+If you ever feel stuck or forget a command, just type `help`. This will open a window with a link to all the commands
 and instructions you need.
 
 Format: `help`
@@ -165,9 +165,9 @@ Format:
 `add claim -c_id CLIENT_ID -p_id POLICY_ID -amt CLAIM_AMOUNT -date CLAIM_DATE [-desc DESCRIPTION]`
 
 Examples:
-* `add claim -c_id 123 -p_id 101 -amt 1000 -date 2025-10-01` adds a claim with amount `1000` and date `2025-10-01` to 
+* `add claim -c_id 123 -p_id 101 -amt 1000 -date 2025-10-01` adds a claim with amount `1000` and date `2025-10-01` to
 the policy with policy ID `101` for the client with client ID `123`.
-* `add claim -c_id 123 -p_id 101 -amt 1000 -date 2025-10-01 -desc Car accident` adds a claim with amount `1000`, 
+* `add claim -c_id 123 -p_id 101 -amt 1000 -date 2025-10-01 -desc Car accident` adds a claim with amount `1000`,
 date `2025-10-01` and optional description `Car accident` to the policy with policy ID `101` for the client with
 client ID `123`.
 
@@ -187,7 +187,7 @@ Format: `list`
 
 ### Editing a claim: `edit claim`
 
-Edits an existing claim in InsuraBook, in case of any wrong input. If you need to correct the amount, date, or 
+Edits an existing claim in InsuraBook, in case of any wrong input. If you need to correct the amount, date, or
 description of a previously entered claim, use `edit claim`.
 
 Format:  
@@ -225,7 +225,7 @@ Searching for clients by name:
 
 Searching for clients by client ID:
 * CLIENT_IDs are alphanumerical.
-* You may search for more than one client ID per find command. E.g. searching for client id `123` `345` will return 2 
+* You may search for more than one client ID per find command. E.g. searching for client id `123` `345` will return 2
 clients: client A with client ID `123` and client B with client ID `345`
 * If there are no such IDs found, an empty list of clients will be shown.
 
@@ -263,7 +263,7 @@ Examples:
 
 Deletes a policy type from InsuraBook. To remove a policy type (product) from your catalog, use this command.
 
-Format:  
+Format:
 `delete policy type -pt_n POLICY_TYPE_NAME -pt_id POLICY_TYPE_ID`
 
 <span style="color:red">⚠ Action is **irreversible.**</span>
@@ -278,13 +278,13 @@ Example:
 
 Deletes the specified policy previously saved under a client.
 
-Format:  
+Format:
 `delete policy -c_id CLIENT_ID -p_id POLICY_ID`
 
 <span style="color:red">⚠ Action is **irreversible.**</span>
 
 Example:
-* `view -c_id 1` to look for client with client id `1` and all the policies the client owns, followed by 
+* `view -c_id 1` to look for client with client id `1` and all the policies the client owns, followed by
 `delete -c_id 1 -p_id 002` deletes policy with policy id 002 from the client's portfolio.
 
 <img alt="img.png" height="300" src="images/deletePolicyFromClient.png" width="500"/>
@@ -295,14 +295,14 @@ Example:
 Deletes the specified claim from the InsuraBook. To permanently remove a claim from a policy under a client, use this
 command.
 
-Format:  
+Format:
 `delete claim -c_id CLIENT_ID -p_id POLICY_ID -cl_id CLAIM_ID [-desc DESCRIPTION]`
 
 💡 **Tip:** Since you are intending to remove a claim, specifying the description is not necessary.<br>
 <span style="color:red">⚠ Action is **irreversible.**</span>
 
 Example:
-* `view -c_id 1` to look for client with client id `1` and all the policies the client owns, followed by 
+* `view -c_id 1` to look for client with client id `1` and all the policies the client owns, followed by
 `delete claim -c_id 1 -p_id 001 -cl_id C0004` deletes the client's claim with claim id `C0004` under policy id `001`.
 
 <img alt="img.png" height="300" src="images/deleteClaimFromPolicy.png" width="500"/>
@@ -313,7 +313,7 @@ Example:
 Changes the view of the user interface. You may switch between 1 of 3 views. The view command lets you switch the main
 window's display to show either all clients, all policy types, or all policies for a single client
 
-Format:  
+Format:
 `view FLAG [CLIENT_ID]`
 * Shows a list of all existing records inside InsuraBook.
 * FLAG is used to tell the program what view to choose.
@@ -362,12 +362,12 @@ No manual saving is required.
 
 ### Editing the data file
 
-Data are stored as a JSON file at `[JAR file location]/data/insurabook.json`.  
+Data are stored as a JSON file at `[JAR file location]/data/insurabook.json`.
 Advanced users may edit it directly, but:
 
 <div markdown="span" class="alert alert-warning">
 <span style="color:orange">⚠️ **Caution:**</span>
-If your changes make the file invalid, InsuraBook will discard all data and start with an empty file.  
+If your changes make the file invalid, InsuraBook will discard all data and start with an empty file.
 Backup before editing. Certain edits can cause unexpected behavior.
 </div>
 
@@ -381,17 +381,18 @@ _Details coming soon ..._
 
 ## FAQ
 
-**Q**: How do I transfer my data to another Computer?  
+**Q**: How do I transfer my data to another Computer?
 **A**: Install the app on the other computer and overwrite its data file with the one from your InsuraBook home folder.
 
 --------------------------------------------------------------------------------------------------------------------
 
 ## Known issues
 
-1. **Multiple screens:** Moving the app to a secondary screen and later using only one may cause the GUI to open off-screen.  
+1. **Multiple screens:** Moving the app to a secondary screen and later using only one may cause the GUI to open
+off-screen.
    **Fix:** Delete `preferences.json` before running again.
 
-2. **Help window minimized:** If minimized, subsequent `help` commands will not open a new window.  
+2. **Help window minimized:** If minimized, subsequent `help` commands will not open a new window.
    **Fix:** Restore the minimized window manually.
 
 --------------------------------------------------------------------------------------------------------------------
