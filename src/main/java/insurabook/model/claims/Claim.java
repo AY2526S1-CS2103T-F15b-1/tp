@@ -21,7 +21,7 @@ public class Claim {
      * Every field must be present and not null, except description which is optional.
      */
     public Claim(ClientId client, PolicyId policy, ClaimAmount amount, InsuraDate date, ClaimMessage ... description) {
-        this.claimId = new ClaimId("C" + String.format("%04d", claimCounter++));
+        this.claimId = new ClaimId("CL" + String.format("%03d", claimCounter++));
         this.client = client;
         this.policy = policy;
         this.amount = amount;
