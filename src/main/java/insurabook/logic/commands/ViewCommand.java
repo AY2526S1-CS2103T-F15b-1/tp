@@ -66,7 +66,7 @@ public class ViewCommand extends Command {
                 res.setView(View.CLIENT_VIEW);
                 return res;
             }
-            FilteredList<Client> clients = model.getFilteredPersonList().filtered(
+            FilteredList<Client> clients = model.getFilteredClientList().filtered(
                     client -> client.getClientId().equals(clientId));
 
             if (clients.isEmpty()) {

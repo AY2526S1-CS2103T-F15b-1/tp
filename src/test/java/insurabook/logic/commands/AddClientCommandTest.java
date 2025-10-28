@@ -161,7 +161,7 @@ public class AddClientCommandTest {
         }
 
         @Override
-        public ObservableList<Client> getFilteredPersonList() {
+        public ObservableList<Client> getFilteredClientList() {
             throw new AssertionError("This method should not be called.");
         }
 

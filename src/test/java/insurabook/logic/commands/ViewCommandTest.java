@@ -40,7 +40,7 @@ class ViewCommandTest {
         Client mockClient = mock(Client.class);
         when(mockClient.getClientId()).thenReturn(new ClientId("1"));
         ObservableList<Client> personList = FXCollections.observableArrayList(mockClient);
-        when(model.getFilteredPersonList()).thenReturn(personList);
+        when(model.getFilteredClientList()).thenReturn(personList);
 
         ViewCommand command = new ViewCommand("-c_id", new ClientId("1"));
         CommandResult result = command.execute(model);
@@ -66,7 +66,7 @@ class ViewCommandTest {
                 mockClient1,
                 mockClient2
         );
-        when(model.getFilteredPersonList()).thenReturn(mockClientList);
+        when(model.getFilteredClientList()).thenReturn(mockClientList);
 
         ViewCommand command = new ViewCommand("-c_id", new ClientId("nonexistent"));
         CommandResult result = command.execute(model);
