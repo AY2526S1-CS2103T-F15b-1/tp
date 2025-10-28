@@ -210,6 +210,7 @@ public class InsuraBook implements ReadOnlyInsuraBook {
         requireNonNull(editedPolicyType);
 
         policyTypes.setPolicyType(target, editedPolicyType);
+        clientPolicies.setPolicyType(target, editedPolicyType);
     }
 
     /**
