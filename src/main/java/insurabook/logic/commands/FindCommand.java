@@ -19,11 +19,11 @@ public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all clients whose names or ids contain any of "
-            + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all clients by names OR ids which any of "
+            + "the specified keywords (case-insensitive) and displays them as a list.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " -n alice bob charlie"
-            + " or " + COMMAND_WORD + " -c_id 123 456";
+            + "Example: " + COMMAND_WORD + " -n alice bob charlie\n"
+            + "\tor " + COMMAND_WORD + " -c_id 123 456";
 
     private final Predicate<Client> predicate;
 

@@ -102,6 +102,6 @@ public class JsonAdaptedClaim {
 
         final ClaimMessage modelDescription = new ClaimMessage(description != null ? description : "");
 
-        return new Claim(modelClientId, modelPolicyId, modelAmount, modelDate, modelDescription);
+        return new Claim(modelClaimId, modelClientId, modelPolicyId, modelAmount, modelDate, modelDescription);
     }
 }
