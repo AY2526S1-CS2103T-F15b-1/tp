@@ -3,6 +3,7 @@ package insurabook.model.claims;
 import static insurabook.commons.util.AppUtil.checkArgument;
 import static java.util.Objects.requireNonNull;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -68,6 +69,20 @@ public class InsuraDate extends Date {
         LocalDate expiryDate = LocalDate.parse(this.date);
         LocalDate threeDaysLater = today.plusDays(3);
         return (!expiryDate.isBefore(today)) && (expiryDate.isBefore(threeDaysLater));
+    }
+
+    /**
+     * Returns a formatted date string for UI display.
+     */
+    public String toUiString() {
+        try {
+            LocalDate localDate = LocalDate.parse(this.date);
+            Date dateObj = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
+            return formatter.format(dateObj);
+        } catch (DateTimeParseException e) {
+            return this.date;
+        }
     }
 
     /**
