@@ -48,7 +48,19 @@ public class Policy {
         this.policyType = policyType;
         this.expiryDate = expiryDate;
         this.claim = new ArrayList<>(claims);
+    }
 
+    /**
+     * Copy constructor
+     * @param toCopy policy to copy
+     * @param newClient new client owner of copied policy
+     */
+    public Policy(Policy toCopy, Client newClient) {
+        this.policyId = toCopy.getPolicyId();
+        this.client = newClient;
+        this.policyType = toCopy.getPolicyType();
+        this.expiryDate = toCopy.getExpiryDate();
+        this.claim = new ArrayList<>(toCopy.getClaims());
     }
 
     /**
