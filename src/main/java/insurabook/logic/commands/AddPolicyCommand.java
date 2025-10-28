@@ -24,18 +24,16 @@ public class AddPolicyCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a policy to a client. "
             + "Parameters: "
-            + PREFIX_POLICY_ID + "POLICY_ID "
-            + PREFIX_CLIENT_ID + "CLIENT_ID "
-            + PREFIX_POLICY_TYPE_ID + "POLICY_TYPE_ID"
-            + PREFIX_EXPIRY_DATE + "EXPIRY_DATE "
-            + "[" + PREFIX_DESCRIPTION + "DESCRIPTION] \n"
+            + PREFIX_POLICY_ID + " POLICY_ID "
+            + PREFIX_CLIENT_ID + " CLIENT_ID "
+            + PREFIX_POLICY_TYPE_ID + " POLICY_TYPE_ID "
+            + PREFIX_EXPIRY_DATE + " EXPIRY_DATE\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_POLICY_ID + "101 "
-            + PREFIX_CLIENT_ID + "12345 "
-            + PREFIX_POLICY_TYPE_ID + "P11 "
-            + PREFIX_EXPIRY_DATE + "2025-10-01 ";
+            + PREFIX_POLICY_ID + " 101 "
+            + PREFIX_CLIENT_ID + " 12345 "
+            + PREFIX_POLICY_TYPE_ID + " P11 "
+            + PREFIX_EXPIRY_DATE + " 2025-10-01 ";
     public static final String MESSAGE_SUCCESS = "New policy added to client: %1$s";
-    public static final String MESSAGE_CLIENT_NOT_FOUND = "The specified client ID does not exist.";
 
     private final PolicyId policyId;
     private final ClientId clientId;

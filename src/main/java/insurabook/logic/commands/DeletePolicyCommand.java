@@ -20,14 +20,12 @@ public class DeletePolicyCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes a policy from a client. "
             + "Parameters: "
-            + PREFIX_CLIENT_ID + "CLIENT_ID "
-            + PREFIX_POLICY_ID + "POLICY_ID "
-            + "[" + PREFIX_DESCRIPTION + "DESCRIPTION] \n"
+            + PREFIX_CLIENT_ID + " CLIENT_ID "
+            + PREFIX_POLICY_ID + " POLICY_ID\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_CLIENT_ID + "12345 "
-            + PREFIX_POLICY_ID + "101 ";
+            + PREFIX_CLIENT_ID + " 12345 "
+            + PREFIX_POLICY_ID + " 101 ";
     public static final String MESSAGE_SUCCESS = "Deleted policy %1$s";
-    public static final String MESSAGE_CLIENT_NOT_FOUND = "The specified client ID does not exist.";
 
     private final ClientId clientId;
     private final PolicyId policyId;
