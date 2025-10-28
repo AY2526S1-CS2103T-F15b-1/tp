@@ -6,6 +6,7 @@ import java.util.List;
 import insurabook.model.claims.Claim;
 import insurabook.model.claims.ClaimId;
 import insurabook.model.claims.InsuraDate;
+import insurabook.model.claims.exceptions.ClaimNotFoundException;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
 import insurabook.model.policytype.PolicyType;
@@ -113,11 +114,9 @@ public class Policy {
         }
 
         Policy otherPolicy = (Policy) other;
-        return otherPolicy.getPolicyId().equals(this.getPolicyId())
-                && otherPolicy.getClient().equals(this.getClient())
-                && otherPolicy.getPolicyType().equals(this.getPolicyType())
-                && otherPolicy.getExpiryDate().equals(this.getExpiryDate())
-                && otherPolicy.getClaims().equals(this.getClaims());
+        return otherPolicy.getClient().equals(this.getClient())
+                && (otherPolicy.getPolicyId().equals(this.getPolicyId())
+                || otherPolicy.getPolicyTypeId().equals(this.getPolicyTypeId()));
     }
 
     /**
@@ -138,7 +137,7 @@ public class Policy {
         Claim claim = this.claim.stream()
                 .filter(c -> c.getClaimId().equals(claimId))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(ClaimNotFoundException::new);
         this.claim.remove(claim);
         return claim;
     }

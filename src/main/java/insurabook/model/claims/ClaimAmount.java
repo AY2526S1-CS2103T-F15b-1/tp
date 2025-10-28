@@ -9,7 +9,8 @@ import static java.util.Objects.requireNonNull;
  */
 public class ClaimAmount {
 
-    public static final String MESSAGE_CONSTRAINTS = "Claim amount must be a positive number.";
+    public static final String MESSAGE_CONSTRAINTS = "Claim amount must be a positive number. "
+            + "It could be integer or up to 2 decimal points.";
     private final String amount;
 
     /**

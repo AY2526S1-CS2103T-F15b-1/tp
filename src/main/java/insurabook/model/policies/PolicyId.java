@@ -10,13 +10,9 @@ import static java.util.Objects.requireNonNull;
 public class PolicyId {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Id should only contain alphanumeric characters, and it should not be blank";
+            "Policy Id should only contain alphanumeric characters, and it should not be blank";
 
-    /*
-     * The first character of the address must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
-     */
-    public static final String VALIDATION_REGEX = "\\p{Digit}+";
+    public static final String VALIDATION_REGEX = "[A-Za-z0-9]+";
 
     public final String policyId;
 

@@ -1,7 +1,11 @@
 package insurabook.logic.commands;
 
 import static insurabook.logic.parser.CliSyntax.PREFIX_CLAIM_AMOUNT;
-import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLAIM_DATE;
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLAIM_ID;
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
+import static insurabook.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static insurabook.logic.parser.CliSyntax.PREFIX_POLICY_ID;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
@@ -34,9 +38,14 @@ public class EditClaimCommand extends Command {
             + "by the client id, policy id and claim id. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: CLIENT_ID POLICY_ID CLAIM_ID "
-            + "[" + PREFIX_CLAIM_AMOUNT + "CLAIM_AMOUNT] "
-            + "Example: " + COMMAND_WORD + " 123 P101 C001 "
-            + PREFIX_CLIENT_NAME + "Jonn";
+            + "[" + PREFIX_CLAIM_AMOUNT + " CLAIM_AMOUNT] "
+            + "[" + PREFIX_CLAIM_DATE + " CLAIM_DATE] "
+            + "[" + PREFIX_DESCRIPTION + " DESCRIPTION] \n"
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_CLIENT_ID + " C101 "
+            + PREFIX_POLICY_ID + " P101 "
+            + PREFIX_CLAIM_ID + " CL001 "
+            + PREFIX_CLAIM_AMOUNT + " 5000";
 
     public static final String MESSAGE_EDIT_CLAIM_SUCCESS = "Edited Claim: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
