@@ -86,7 +86,10 @@ public class InsuraBook implements ReadOnlyInsuraBook {
     public void resetData(ReadOnlyInsuraBook newData) {
         requireNonNull(newData);
 
-        setClients(newData.getClientList());
+        List<Client> deepCopiedClients = newData.getClientList().stream()
+                        .map(Client::new)
+                        .collect(Collectors.toList());
+        setClients(deepCopiedClients);
         setPolicyTypes(newData.getPolicyTypeList());
         if (this.clients != null) {
             List<Policy> allPolicies = this.clients.asUnmodifiableObservableList().stream()

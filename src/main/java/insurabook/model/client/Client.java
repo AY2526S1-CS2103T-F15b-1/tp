@@ -48,6 +48,17 @@ public class Client {
         this.portfolio = new Portfolio(policies);
     }
 
+    /**
+     * Copy constructor.
+     */
+    public Client(Client toCopy) {
+        requireAllNonNull(toCopy);
+        this.name = toCopy.getName();
+        this.birthday = toCopy.getBirthday();
+        this.clientId = toCopy.getClientId();
+        this.portfolio = new Portfolio(toCopy.getPortfolio(), this);
+    }
+
     public Name getName() {
         return name;
     }
