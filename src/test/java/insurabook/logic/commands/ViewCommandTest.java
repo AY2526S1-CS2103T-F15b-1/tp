@@ -80,7 +80,8 @@ class ViewCommandTest {
         ViewCommand command = new ViewCommand("-x", null);
         CommandResult result = command.execute(model);
 
-        assertEquals("Invalid flag! Use -c for Client View and -p for Policy View", result.getFeedbackToUser());
+        assertEquals("Invalid flag! Use view -client for Client View and view -policy for Policy View. If " +
+                "viewing a specific client's policies, use view -c_id <client_id>.", result.getFeedbackToUser());
         assertEquals(result.getView(), View.CLIENT_VIEW); // defaults to client view
     }
 }
