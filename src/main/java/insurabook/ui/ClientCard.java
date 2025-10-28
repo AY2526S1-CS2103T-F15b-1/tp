@@ -31,6 +31,8 @@ public class ClientCard extends UiPart<Region> {
     private Label id;
     @FXML
     private Label clientId;
+    @FXML
+    private Label birthday;
 
     /**
      * Creates a {@code ClientCode} with the given {@code Client} and index to display.
@@ -40,6 +42,7 @@ public class ClientCard extends UiPart<Region> {
         this.client = client;
         id.setText(displayedIndex + ". ");
         name.setText(client.getName().fullName);
-        clientId.setText(client.getClientId().toString());
+        clientId.setText("Client ID: " + client.getClientId().toString());
+        birthday.setText("Birthday: " + client.getBirthday().toUiString());
     }
 }
