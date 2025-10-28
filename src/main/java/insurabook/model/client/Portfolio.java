@@ -30,6 +30,11 @@ public class Portfolio {
         this.policies = new UniquePolicyList(policies);
     }
 
+    /**
+     * Copy constructor
+     * @param toCopy portfolio to copy
+     * @param newClient new client owner of copied portfolio
+     */
     public Portfolio(Portfolio toCopy, Client newClient) {
         this.policies = new UniquePolicyList();
 
