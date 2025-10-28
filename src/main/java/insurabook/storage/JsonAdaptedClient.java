@@ -32,7 +32,7 @@ class JsonAdaptedClient {
     public JsonAdaptedClient(@JsonProperty("name") String name,
                              @JsonProperty("birthday") String birthday,
                              @JsonProperty("clientId") String clientId,
-                             @JsonProperty("polices") List<JsonAdaptedPolicy> policies) {
+                             @JsonProperty("policies") List<JsonAdaptedPolicy> policies) {
         this.name = name;
         this.birthday = birthday;
         this.clientId = clientId;

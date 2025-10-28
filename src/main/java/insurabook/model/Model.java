@@ -6,7 +6,9 @@ import java.util.function.Predicate;
 
 import insurabook.commons.core.GuiSettings;
 import insurabook.model.claims.Claim;
+import insurabook.model.claims.ClaimAmount;
 import insurabook.model.claims.ClaimId;
+import insurabook.model.claims.ClaimMessage;
 import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
@@ -115,10 +117,11 @@ public interface Model {
     void updateClientPolicyList(Predicate<Policy> predicate);
 
     /**
-     * Adds the given claim.
-     * {@code claim} must not already exist in the address book.
+     * Adds claim with the given information.
+     * {@code claim} must not already exist in the insurabook.
      */
-    void addClaim(Claim toAdd);
+    Claim addClaim(ClientId clientId, PolicyId policyId, ClaimAmount claimAmount,
+                  InsuraDate claimDate, ClaimMessage claimDescription);
 
     /**
      * Deletes the given claim.

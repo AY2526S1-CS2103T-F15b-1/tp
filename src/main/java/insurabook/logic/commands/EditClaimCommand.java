@@ -101,11 +101,11 @@ public class EditClaimCommand extends Command {
         InsuraDate updatedDate = editClaimDescriptor.getDate().orElse(claimToEdit.getDate());
         ClaimMessage updatedDescription = editClaimDescriptor.getDescription().orElse(claimToEdit.getDescription());
 
-        // keep the same client and policy ID
-        ClientId clientId = claimToEdit.getClientId();
-        PolicyId policyId = claimToEdit.getPolicyId();
+        // keep the same client and policy
+        Client client = claimToEdit.getClient();
+        Policy policy = claimToEdit.getPolicy();
 
-        return new Claim(claimToEdit.getClaimId(), clientId, policyId, updatedAmount, updatedDate, updatedDescription);
+        return new Claim(claimToEdit.getClaimId(), client, policy, updatedAmount, updatedDate, updatedDescription);
     }
 
     @Override

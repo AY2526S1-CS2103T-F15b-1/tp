@@ -74,7 +74,7 @@ public class Portfolio {
      * @param claim to add
      */
     public void addClaim(Claim claim) {
-        policies.getPolicy(claim.getPolicyId()).addClaim(claim);
+        claim.getPolicy().addClaim(claim);
     }
 
     /**
@@ -93,6 +93,6 @@ public class Portfolio {
      * Function to set claim
      */
     public void setClaim(Claim target, Claim editedClaim) {
-        policies.getPolicy(target.getPolicyId()).setClaim(target, editedClaim);
+        target.getPolicy().setClaim(target, editedClaim);
     }
 }

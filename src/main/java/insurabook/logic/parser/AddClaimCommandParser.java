@@ -11,7 +11,6 @@ import java.util.stream.Stream;
 
 import insurabook.logic.commands.AddClaimCommand;
 import insurabook.logic.parser.exceptions.ParseException;
-import insurabook.model.claims.Claim;
 import insurabook.model.claims.ClaimAmount;
 import insurabook.model.claims.ClaimMessage;
 import insurabook.model.claims.InsuraDate;
@@ -51,9 +50,7 @@ public class AddClaimCommandParser implements Parser<AddClaimCommand> {
                 ? ""
                 : argMultimap.getValue(PREFIX_DESCRIPTION).get());
 
-        Claim claim = new Claim(clientId, policyId, amount, date, message);
-
-        return new AddClaimCommand(claim);
+        return new AddClaimCommand(clientId, policyId, amount, date, message);
     }
 
     /**
