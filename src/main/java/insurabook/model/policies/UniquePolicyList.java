@@ -83,6 +83,14 @@ public class UniquePolicyList implements Iterable<Policy> {
         }
     }
 
+    /**
+     * Replaces the policy {@code target} in the list with {@code editedPolicy}.
+     * {@code target} must exist in the list.
+     * The policy identity of {@code editedPolicy} must not be the same as another existing policy in the list.
+     *
+     * @param target
+     * @param editedPolicy
+     */
     public void setPolicy(Policy target, Policy editedPolicy) {
         requireAllNonNull(target, editedPolicy);
 
@@ -98,6 +106,12 @@ public class UniquePolicyList implements Iterable<Policy> {
         internalList.set(index, editedPolicy);
     }
 
+    /**
+     * Replaces all policies of a certain PolicyType {@code targetType} in the list with {@code editedType}.
+     *
+     * @param targetType
+     * @param editedType
+     */
     public void setPolicyType(PolicyType targetType, PolicyType editedType) {
         requireAllNonNull(targetType, editedType);
 
@@ -115,7 +129,6 @@ public class UniquePolicyList implements Iterable<Policy> {
             }
         }
     }
-
 
     public ObservableList<Policy> asUnmodifiableObservableList() {
         return internalUnmodifiableList;
