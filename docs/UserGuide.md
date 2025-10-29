@@ -198,7 +198,7 @@ Examples:
 * `edit policy type -pt_id BRH001 -pt_n BRUHealthExtra` edits the policy type
   name to be `BRUHealthExtra` for the policy type `BRH001`.
 
-<img alt="img.png" height="300" src="images/editClaim.png" width="500"/>
+<img alt="img.png" height="300" src="images/editPolicyType.png" width="500"/>
 
 * `edit policy type -pt_id BRH001 -pr 1000` edits the policy type premium
   to be `1000` for the policy type `BRH001`.
