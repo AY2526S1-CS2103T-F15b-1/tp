@@ -105,7 +105,7 @@ public class JsonAdaptedPolicy {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "claims"));
         }
 
-        return new Policy(modelPolicyId, modelClient, modelPolicyType, modelDate);
+        return new Policy(modelPolicyId, modelClientId, modelPolicyType, modelDate);
     }
 
     public List<JsonAdaptedClaim> getClaims() {

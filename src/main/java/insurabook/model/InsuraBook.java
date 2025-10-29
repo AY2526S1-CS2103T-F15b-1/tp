@@ -231,7 +231,7 @@ public class InsuraBook implements ReadOnlyInsuraBook {
     public Policy addPolicy(PolicyId policyId, ClientId clientId, PolicyTypeId policyTypeId, InsuraDate expiryDate) {
         Client client = this.getClient(clientId);
         PolicyType policyType = this.getPolicyType(policyTypeId);
-        Policy policy = new Policy(policyId, client, policyType, expiryDate);
+        Policy policy = new Policy(policyId, clientId, policyType, expiryDate);
         client.addPolicy(policy);
         this.clientPolicies.add(policy);
         return policy;

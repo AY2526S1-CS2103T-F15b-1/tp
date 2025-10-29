@@ -7,7 +7,6 @@ import insurabook.model.claims.Claim;
 import insurabook.model.claims.ClaimId;
 import insurabook.model.claims.InsuraDate;
 import insurabook.model.claims.exceptions.ClaimNotFoundException;
-import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
 import insurabook.model.policytype.PolicyType;
 import insurabook.model.policytype.PolicyTypeId;
@@ -18,7 +17,7 @@ import insurabook.model.policytype.PolicyTypeId;
 public class Policy {
 
     private final PolicyId policyId;
-    private final Client client;
+    private final ClientId clientId;
     private final PolicyType policyType;
     private final InsuraDate expiryDate;
     private final List<Claim> claim;
@@ -28,9 +27,9 @@ public class Policy {
      * @param policyType from parser
      * @param expiryDate datetime from parser
      */
-    public Policy(PolicyId policyId, Client client, PolicyType policyType, InsuraDate expiryDate) {
+    public Policy(PolicyId policyId, ClientId clientId, PolicyType policyType, InsuraDate expiryDate) {
         this.policyId = policyId;
-        this.client = client;
+        this.clientId = clientId;
         this.policyType = policyType;
         this.expiryDate = expiryDate;
         this.claim = new ArrayList<>();
@@ -42,9 +41,10 @@ public class Policy {
      * @param expiryDate datetime from parser
      * @param claims list of claims under this policy
      */
-    public Policy(PolicyId policyId, Client client, PolicyType policyType, InsuraDate expiryDate, List<Claim> claims) {
+    public Policy(PolicyId policyId, ClientId clientId,
+                  PolicyType policyType, InsuraDate expiryDate, List<Claim> claims) {
         this.policyId = policyId;
-        this.client = client;
+        this.clientId = clientId;
         this.policyType = policyType;
         this.expiryDate = expiryDate;
         this.claim = new ArrayList<>(claims);
@@ -53,11 +53,10 @@ public class Policy {
     /**
      * Copy constructor
      * @param toCopy policy to copy
-     * @param newClient new client owner of copied policy
      */
-    public Policy(Policy toCopy, Client newClient) {
+    public Policy(Policy toCopy) {
         this.policyId = toCopy.getPolicyId();
-        this.client = newClient;
+        this.clientId = toCopy.getClientId();
         this.policyType = toCopy.getPolicyType();
         this.expiryDate = toCopy.getExpiryDate();
         this.claim = new ArrayList<>(toCopy.getClaims());
@@ -67,16 +66,8 @@ public class Policy {
      * Getter
      * @return client id of policy owner
      */
-    public Client getClient() {
-        return this.client;
-    }
-
-    /**
-     * Getter
-     * @return client id of policy owner
-     */
     public ClientId getClientId() {
-        return this.client.getClientId();
+        return this.clientId;
     }
 
     /**
@@ -126,7 +117,7 @@ public class Policy {
         }
 
         Policy otherPolicy = (Policy) other;
-        return otherPolicy.getClient().equals(this.getClient())
+        return otherPolicy.getClientId().equals(this.getClientId())
                 && (otherPolicy.getPolicyId().equals(this.getPolicyId())
                 || otherPolicy.getPolicyTypeId().equals(this.getPolicyTypeId()));
     }
@@ -163,10 +154,4 @@ public class Policy {
             this.claim.set(index, editedClaim);
         }
     }
-    /*
-     * Problem:
-     * How do we add/delete if we are using id only.
-     * PolicyType constraints implies multiple policy types may have the same id
-     */
-
 }

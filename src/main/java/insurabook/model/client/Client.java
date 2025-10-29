@@ -56,7 +56,7 @@ public class Client {
         this.name = toCopy.getName();
         this.birthday = toCopy.getBirthday();
         this.clientId = toCopy.getClientId();
-        this.portfolio = new Portfolio(toCopy.getPortfolio(), this);
+        this.portfolio = new Portfolio(toCopy.getPortfolio());
     }
 
     public Name getName() {

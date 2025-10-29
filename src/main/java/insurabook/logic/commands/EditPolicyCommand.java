@@ -83,11 +83,11 @@ public class EditPolicyCommand extends Command {
 
         // Fields that are not edited are taken from the original policy
         PolicyId policyId = policyToEdit.getPolicyId();
-        Client client = policyToEdit.getClient();
+        ClientId clientId = policyToEdit.getClientId();
         PolicyType policyType = policyToEdit.getPolicyType();
         List<Claim> claims = policyToEdit.getClaims();
 
-        return new Policy(policyId, client, policyType, updatedExpiryDate, claims);
+        return new Policy(policyId, clientId, policyType, updatedExpiryDate, claims);
     }
 
     /**

@@ -120,7 +120,7 @@ public class UniquePolicyList implements Iterable<Policy> {
             if (policy.getPolicyType().equals(targetType)) {
                 Policy updatedPolicy = new Policy(
                         policy.getPolicyId(),
-                        policy.getClient(),
+                        policy.getClientId(),
                         editedType,
                         policy.getExpiryDate(),
                         policy.getClaims()
