@@ -7,7 +7,9 @@ import java.util.stream.Collectors;
 
 import insurabook.commons.util.ToStringBuilder;
 import insurabook.model.claims.Claim;
+import insurabook.model.claims.ClaimAmount;
 import insurabook.model.claims.ClaimId;
+import insurabook.model.claims.ClaimMessage;
 import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
@@ -99,6 +101,26 @@ public class InsuraBook implements ReadOnlyInsuraBook {
         } else {
             this.clientPolicies.setPolicies(List.of()); // Handle case where there are no clients
         }
+    }
+
+    /**
+     * Synchronizes the claim ID counter with the highest existing claim ID in the insurabook.
+     * This method should be called after loading data from storage to ensure that new claims
+     * receive unique IDs.
+     */
+    public void syncClaimIdCounter() {
+        int maxId = 0;
+        for (Client client : clients) {
+            for (Policy policy : client.getPortfolio().getPolicies()) {
+                for (Claim claim : policy.getClaims()) {
+                    int currentIdNum = Integer.parseInt(claim.getClaimId().toString().substring(2));
+                    if (currentIdNum > maxId) {
+                        maxId = currentIdNum;
+                    }
+                }
+            }
+        }
+        Claim.syncCounter(maxId + 1);
     }
 
     //// client-level operations
@@ -244,9 +266,13 @@ public class InsuraBook implements ReadOnlyInsuraBook {
      * Adds a claim to the client with the given clientId.
      * If no such client exists, throws an exception.
      */
-    public void addClaim(Claim claim) {
-        Client client = this.getClient(claim.getClientId());
+    public Claim addClaim(ClientId clientId, PolicyId policyId, ClaimAmount claimAmount,
+                         InsuraDate claimDate, ClaimMessage claimDescription) {
+        Client client = this.getClient(clientId);
+        Policy policy = client.getPortfolio().getPolicies().getPolicy(policyId);
+        Claim claim = new Claim(client, policy, claimAmount, claimDate, claimDescription);
         client.addClaim(claim);
+        return claim;
     }
 
     /**
@@ -265,7 +291,7 @@ public class InsuraBook implements ReadOnlyInsuraBook {
      */
     public void setClaim(Claim target, Claim editedClaim) {
         requireNonNull(editedClaim);
-        Client client = this.getClient(target.getClientId());
+        Client client = target.getClient();
         client.setClaim(target, editedClaim);
     }
 

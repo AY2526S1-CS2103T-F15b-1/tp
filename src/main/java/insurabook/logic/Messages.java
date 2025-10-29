@@ -56,9 +56,9 @@ public class Messages {
         if (op == 0) {
             builder.append(claim.getClaimId())
                     .append(" for client ")
-                    .append(claim.getClientId())
+                    .append(claim.getClient().getClientId())
                     .append(", policy ")
-                    .append(claim.getPolicyId())
+                    .append(claim.getPolicy().getPolicyId())
                     .append(" with an amount of $")
                     .append(claim.getAmount())
                     .append(" on date ")
@@ -68,9 +68,9 @@ public class Messages {
         } else {
             builder.append(claim.getClaimId())
                     .append(" on policy ")
-                    .append(claim.getPolicyId())
+                    .append(claim.getPolicy().getPolicyId())
                     .append(" for client ")
-                    .append(claim.getClientId())
+                    .append(claim.getClient().getClientId())
                     .append("; Description: ")
                     .append(claim.getDescription());
         }
