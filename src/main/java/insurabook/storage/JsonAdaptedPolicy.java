@@ -1,5 +1,6 @@
 package insurabook.storage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -105,15 +106,11 @@ public class JsonAdaptedPolicy {
         if (claims == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "claims"));
         }
-        final List<Claim> modelClaims = claims.stream()
-                .map(claim -> {
-                    try {
-                        return claim.toModelType();
-                    } catch (IllegalValueException e) {
-                        throw new RuntimeException(e.getMessage());
-                    }
-                })
-                .toList();
+
+        List<Claim> modelClaims = new ArrayList<>();
+        for (JsonAdaptedClaim jsonClaim : claims) {
+            modelClaims.add(jsonClaim.toModelType());
+        }
 
         return new Policy(modelPolicyId, modelClient, modelPolicyType, modelDate, modelClaims);
     }
