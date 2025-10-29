@@ -129,7 +129,7 @@ Adds a new policy type to InsuraBook. Before you can assign policies to clients,
 “products.” Use this command to add a new "product" (eg. "BRUHealth") to your system's catalog.
 
 Format:  
-`add policy type -pt_n POLICY_TYPE_NAME -pt_id POLICY_TYPE_ID [-d DESCRIPTION] [-pr PREMIUM]`
+`add policy type -pt_n POLICY_TYPE_NAME -pt_id POLICY_TYPE_ID [-ddesc DESCRIPTION] [-pr PREMIUM]`
 
 Examples:
 * `add policy type -pt_n BRUHealth -pt_id BRH001` adds a policy type named `BRUHealth` with policy type ID `BRH001`.
@@ -137,7 +137,7 @@ To view this, use the `view -policy` command.
 
 <img alt="img.png" height="300" src="images/addPolicyType.png" width="500"/>
 
-* `add policy type -pt_n BRUWealth -pt_id BRW001 -d Holistic savings plan -pr 1000` adds a policy type named `BRUWealth`
+* `add policy type -pt_n BRUWealth -pt_id BRW001 -desc Holistic savings plan -pr 1000` adds a policy type named `BRUWealth`
 with policy type ID `BRW001`, optional description `Holistic savings plan`, and optional premium amount `1000`.
 
 ---
