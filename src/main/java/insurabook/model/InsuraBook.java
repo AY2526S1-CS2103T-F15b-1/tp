@@ -288,7 +288,7 @@ public class InsuraBook implements ReadOnlyInsuraBook {
      */
     public void setClaim(Claim target, Claim editedClaim) {
         requireNonNull(editedClaim);
-        Client client = this.getClient(target.getClientId());
+        Client client = target.getClient();
         client.setClaim(target, editedClaim);
     }
 
