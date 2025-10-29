@@ -33,13 +33,12 @@ public class Portfolio {
     /**
      * Copy constructor
      * @param toCopy portfolio to copy
-     * @param newClient new client owner of copied portfolio
      */
-    public Portfolio(Portfolio toCopy, Client newClient) {
+    public Portfolio(Portfolio toCopy) {
         this.policies = new UniquePolicyList();
 
         List<Policy> copiedPolicies = toCopy.getPolicies().asUnmodifiableObservableList().stream()
-                .map(policy -> new Policy(policy, newClient))
+                .map(policy -> new Policy(policy))
                 .collect(Collectors.toList());
 
         this.policies.setPolicies(copiedPolicies);

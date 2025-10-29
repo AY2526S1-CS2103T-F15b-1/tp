@@ -19,6 +19,8 @@ import javafx.collections.ObservableList;
  * as to ensure that the policy with exactly the same fields will be removed.
  *
  * Supports a minimal set of list operations.
+ *
+ * @see Policy#isSamePolicy(Policy)
  */
 public class UniquePolicyList implements Iterable<Policy> {
     private final ObservableList<Policy> internalList = FXCollections.observableArrayList();
@@ -55,7 +57,7 @@ public class UniquePolicyList implements Iterable<Policy> {
      * @return
      */
     public boolean contains(Policy toCheck) {
-        return internalList.stream().anyMatch(toCheck::equals);
+        return internalList.stream().anyMatch(toCheck::isSamePolicy);
     }
 
     /**
@@ -99,7 +101,7 @@ public class UniquePolicyList implements Iterable<Policy> {
             throw new PolicyNotFoundException();
         }
 
-        if (!target.equals(editedPolicy) && contains(editedPolicy)) {
+        if (!target.isSamePolicy(editedPolicy) && contains(editedPolicy)) {
             throw new DuplicatePolicyException();
         }
 
@@ -120,7 +122,7 @@ public class UniquePolicyList implements Iterable<Policy> {
             if (policy.getPolicyType().equals(targetType)) {
                 Policy updatedPolicy = new Policy(
                         policy.getPolicyId(),
-                        policy.getClient(),
+                        policy.getClientId(),
                         editedType,
                         policy.getExpiryDate(),
                         policy.getClaims()
@@ -170,7 +172,7 @@ public class UniquePolicyList implements Iterable<Policy> {
     private boolean policiesAreUnique(List<Policy> policies) {
         for (int i = 0; i < policies.size() - 1; i++) {
             for (int j = i + 1; j < policies.size(); j++) {
-                if (policies.get(i).equals(policies.get(j))) {
+                if (policies.get(i).isSamePolicy(policies.get(j))) {
                     return false;
                 }
             }
