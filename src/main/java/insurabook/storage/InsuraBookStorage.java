@@ -49,4 +49,5 @@ public interface InsuraBookStorage {
      * @throws IOException if there was any problem copying the file.
      */
     void backupInsuraBookFile() throws IOException;
+
 }
