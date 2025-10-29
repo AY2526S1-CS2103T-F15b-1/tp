@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -47,7 +48,7 @@ public class JsonInsuraBookStorage implements InsuraBookStorage {
 
         Optional<JsonSerializableInsuraBook> jsonInsuraBook = JsonUtil.readJsonFile(
                 filePath, JsonSerializableInsuraBook.class);
-        if (!jsonInsuraBook.isPresent()) {
+        if (jsonInsuraBook.isEmpty()) {
             return Optional.empty();
         }
 
@@ -75,6 +76,17 @@ public class JsonInsuraBookStorage implements InsuraBookStorage {
 
         FileUtil.createIfMissing(filePath);
         JsonUtil.saveJsonFile(new JsonSerializableInsuraBook(insuraBook), filePath);
+    }
+
+    /**
+     * Creates a copy of current InsuraBook file.
+     */
+    @Override
+    public void backupInsuraBookFile() throws IOException {
+        requireNonNull(filePath);
+
+        Path backupPath = Paths.get(filePath.getParent() + "/insurabook-backup.json");
+        JsonUtil.copyJsonFile(filePath, backupPath);
     }
 
 }

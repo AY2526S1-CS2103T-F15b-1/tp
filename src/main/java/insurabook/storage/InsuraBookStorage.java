@@ -33,6 +33,7 @@ public interface InsuraBookStorage {
 
     /**
      * Saves the given {@link ReadOnlyInsuraBook} to the storage.
+     *
      * @param insuraBook cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
@@ -43,4 +44,9 @@ public interface InsuraBookStorage {
      */
     void saveInsuraBook(ReadOnlyInsuraBook insuraBook, Path filePath) throws IOException;
 
+    /**
+     * Creates a backup copy of current InsuraBook file.
+     * @throws IOException if there was any problem copying the file.
+     */
+    void backupInsuraBookFile() throws IOException;
 }
