@@ -19,6 +19,7 @@ a terminal.
   - [Adding a policy to client: `add policy`](#adding-a-policy-to-client-add-policy)
   - [Adding a claim: `add claim`](#adding-a-claim-add-claim)
   - [Listing all clients: `list`](#listing-all-clients-list)
+  - [Editing a policy type: `edit policy type`](#editing-a-policy-type-edit-policy-type)
   - [Editing a claim: `edit claim`](#editing-a-claim-edit-claim)
   - [Locating clients by name or ID: `find`](#locating-clients-by-name-or-id-find)
   - [Deleting a client: `delete`](#deleting-a-client-delete)
@@ -182,6 +183,25 @@ a complete list of all clients currently stored in InsuraBook.
 Format: `list`
 
 <img alt="img.png" height="300" src="images/list.png" width="500"/>
+
+---
+
+### Editing a policy type: `edit policy type`
+
+Edits an existing policy type in InsuraBook, in case of any wrong input. If you need to correct the name, premium, or
+description of a previously entered policy type, use `edit policy type`.
+
+Format:
+`edit policy type -pt_id POLICY_TYPE_ID [-pt_n POLICY_TYPE_NAME] [-desc DESCRIPTION] [-pr PREMIUM]`
+
+Examples:
+* `edit policy type -pt_id BRH001 -pt_n BRUHealthExtra` edits the policy type
+  name to be `BRUHealthExtra` for the policy type `BRH001`.
+
+<img alt="img.png" height="300" src="images/editClaim.png" width="500"/>
+
+* `edit policy type -pt_id BRH001 -pr 1000` edits the policy type premium
+  to be `1000` for the policy type `BRH001`.
 
 ---
 
