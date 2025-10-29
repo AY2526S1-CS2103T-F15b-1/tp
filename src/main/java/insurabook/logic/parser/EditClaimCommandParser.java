@@ -42,11 +42,16 @@ public class EditClaimCommandParser implements Parser<EditClaimCommand> {
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_CLIENT_ID, PREFIX_POLICY_ID, PREFIX_CLAIM_ID,
                 PREFIX_CLAIM_AMOUNT, PREFIX_CLAIM_DATE, PREFIX_DESCRIPTION);
 
+        assert argMultimap.getValue(PREFIX_CLIENT_ID).isPresent();
         ClientId clientId = ParserUtil.parseClientId(argMultimap.getValue(PREFIX_CLIENT_ID).get());
-        PolicyId policyId = ParserUtil.parsePolicyId(argMultimap.getValue(PREFIX_POLICY_ID).get());
-        ClaimId claimId = ParserUtil.parseClaimId(argMultimap.getValue(PREFIX_CLAIM_ID).get());
-        EditClaimDescriptor editClaimDescriptor = new EditClaimCommand.EditClaimDescriptor();
 
+        assert argMultimap.getValue(PREFIX_POLICY_ID).isPresent();
+        PolicyId policyId = ParserUtil.parsePolicyId(argMultimap.getValue(PREFIX_POLICY_ID).get());
+
+        assert argMultimap.getValue(PREFIX_CLAIM_ID).isPresent();
+        ClaimId claimId = ParserUtil.parseClaimId(argMultimap.getValue(PREFIX_CLAIM_ID).get());
+
+        EditClaimDescriptor editClaimDescriptor = new EditClaimCommand.EditClaimDescriptor();
         if (argMultimap.getValue(PREFIX_CLAIM_AMOUNT).isPresent()) {
             editClaimDescriptor.setAmount(ParserUtil.parseClaimAmount(argMultimap.getValue(PREFIX_CLAIM_AMOUNT).get()));
         }

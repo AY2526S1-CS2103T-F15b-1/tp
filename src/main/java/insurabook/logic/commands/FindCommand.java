@@ -8,8 +8,6 @@ import insurabook.commons.util.ToStringBuilder;
 import insurabook.logic.Messages;
 import insurabook.model.Model;
 import insurabook.model.client.Client;
-import insurabook.model.client.IdContainsKeywordsPredicate;
-import insurabook.model.client.NameContainsKeywordsPredicate;
 
 /**
  * Finds and lists all persons in address book whose name or id contains any of the argument keywords.
@@ -27,14 +25,14 @@ public class FindCommand extends Command {
 
     private final Predicate<Client> predicate;
 
-    public FindCommand(NameContainsKeywordsPredicate predicate) {
+    /**
+     * Creates a FindCommand to find clients that match the given predicate.
+     *
+     * @param predicate The predicate to test clients against.
+     */
+    public FindCommand(Predicate<Client> predicate) {
         this.predicate = predicate;
     }
-
-    public FindCommand(IdContainsKeywordsPredicate predicate) {
-        this.predicate = predicate;
-    }
-
 
     @Override
     public CommandResult execute(Model model) {
@@ -57,6 +55,11 @@ public class FindCommand extends Command {
 
         FindCommand otherFindCommand = (FindCommand) other;
         return predicate.equals(otherFindCommand.predicate);
+    }
+
+    @Override
+    public int hashCode() {
+        return predicate.hashCode();
     }
 
     @Override

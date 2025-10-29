@@ -6,6 +6,8 @@ import static insurabook.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static insurabook.logic.parser.CliSyntax.PREFIX_POLICY_ID;
 import static java.util.Objects.requireNonNull;
 
+import java.util.Objects;
+
 import insurabook.logic.Messages;
 import insurabook.logic.commands.exceptions.CommandException;
 import insurabook.model.Model;
@@ -16,7 +18,7 @@ import insurabook.model.client.ClientId;
 import insurabook.model.policies.PolicyId;
 
 /**
- * Adds a claim to a client under an existing policy.
+ * Deletes a claim of a client's policy identified using their IDs.
  */
 public class DeleteClaimCommand extends Command {
 
@@ -41,9 +43,11 @@ public class DeleteClaimCommand extends Command {
     private final ClaimMessage toDeleteMsg;
 
     /**
-     * Creates an DeleteClaimCommand to add the specified {@code Claim}
+     * Creates an DeleteClaimCommand to delete the specified {@code Claim}
      */
     public DeleteClaimCommand(ClientId clientId, PolicyId policyId, ClaimId claimId, ClaimMessage claimMessage) {
+        requireNonNull(clientId);
+        requireNonNull(policyId);
         requireNonNull(claimId);
         this.toDeleteClientId = clientId;
         this.toDeletePolicyId = policyId;
@@ -56,8 +60,38 @@ public class DeleteClaimCommand extends Command {
         requireNonNull(model);
 
         Claim claim = model.deleteClaim(toDeleteClientId, toDeletePolicyId, toDeleteId);
+        assert claim != null : "Claim to be deleted should exist in the InsuraBook";
+
         model.commitInsuraBook();
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(claim, 1)));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(claim, 1)
+                + "\nDescription: " + toDeleteMsg));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+
+        if (!(other instanceof DeleteClaimCommand)) {
+            return false;
+        }
+
+        DeleteClaimCommand otherCommand = (DeleteClaimCommand) other;
+        return toDeleteClientId.equals(otherCommand.toDeleteClientId)
+                && toDeletePolicyId.equals(otherCommand.toDeletePolicyId)
+                && toDeleteId.equals(otherCommand.toDeleteId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(toDeleteClientId, toDeletePolicyId, toDeleteId);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("DeleteClaimCommand: ClientId=%s, PolicyId=%s, ClaimId=%s",
+                toDeleteClientId, toDeletePolicyId, toDeleteId);
     }
 }

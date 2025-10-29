@@ -1,6 +1,5 @@
 package insurabook.storage;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
