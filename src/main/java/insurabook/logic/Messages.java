@@ -86,7 +86,7 @@ public class Messages {
             builder.append("Policy Id: ")
                     .append(policy.getPolicyId())
                     .append("; Client Id: ")
-                    .append(policy.getClient().getClientId())
+                    .append(policy.getClientId())
                     .append("; PolicyTypeId: ")
                     .append(policy.getPolicyType().getPtId())
                     .append("; Expiry Date: ")
@@ -94,7 +94,7 @@ public class Messages {
         } else {
             builder.append(policy.getPolicyId())
                     .append(" for client ")
-                    .append(policy.getClient().getClientId());
+                    .append(policy.getClientId());
         }
         return builder.toString();
     }
@@ -146,7 +146,7 @@ public class Messages {
     public static String formatExpiringPolicies(Policy policy) {
         final StringBuilder builder = new StringBuilder();
         builder.append("Client ID: ")
-                .append(policy.getClient().getClientId())
+                .append(policy.getClientId())
                 .append(", Policy ID: ")
                 .append(policy.getPolicyId())
                 .append(", Expiry Date: ")
