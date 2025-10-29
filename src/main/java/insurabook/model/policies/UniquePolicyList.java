@@ -13,15 +13,14 @@ import javafx.collections.ObservableList;
 
 /**
  * A list of policies that enforces uniqueness between its elements and does not allow nulls.
- * A policy is considered unique by comparing using {@code Policy#equals(Policy)}.
- * As such, adding and updating of policies uses Policy#equals(Policy) for equality
- * so as to ensure that the policy being added or updated is unique in terms of identity
- * in the UniquePolicyList. However, the removal of a policy uses Policy#equals(Object) so
+ * A policy is considered unique by comparing using {@code Policy#isSamePolicy(Policy)}. As such, adding and updating of
+ * policies uses Policy#isSamePolicy(Policy) for equality so as to ensure that the policy being added or updated is
+ * unique in terms of identity in the UniquePolicyList. However, the removal of a policy uses Policy#equals(Object) so
  * as to ensure that the policy with exactly the same fields will be removed.
  *
  * Supports a minimal set of list operations.
  *
- * @see Policy#equals(Object)
+ * @see Policy#isSamePolicy(Policy)
  */
 public class UniquePolicyList implements Iterable<Policy> {
     private final ObservableList<Policy> internalList = FXCollections.observableArrayList();
@@ -58,7 +57,7 @@ public class UniquePolicyList implements Iterable<Policy> {
      * @return
      */
     public boolean contains(Policy toCheck) {
-        return internalList.stream().anyMatch(toCheck::equals);
+        return internalList.stream().anyMatch(toCheck::isSamePolicy);
     }
 
     /**
@@ -102,7 +101,7 @@ public class UniquePolicyList implements Iterable<Policy> {
             throw new PolicyNotFoundException();
         }
 
-        if (!target.equals(editedPolicy) && contains(editedPolicy)) {
+        if (!target.isSamePolicy(editedPolicy) && contains(editedPolicy)) {
             throw new DuplicatePolicyException();
         }
 
@@ -173,7 +172,7 @@ public class UniquePolicyList implements Iterable<Policy> {
     private boolean policiesAreUnique(List<Policy> policies) {
         for (int i = 0; i < policies.size() - 1; i++) {
             for (int j = i + 1; j < policies.size(); j++) {
-                if (policies.get(i).equals(policies.get(j))) {
+                if (policies.get(i).isSamePolicy(policies.get(j))) {
                     return false;
                 }
             }

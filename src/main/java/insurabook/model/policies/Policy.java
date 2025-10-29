@@ -117,6 +117,24 @@ public class Policy {
         }
 
         Policy otherPolicy = (Policy) other;
+        return this.policyId.equals(otherPolicy.policyId);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.policyId.hashCode();
+    }
+
+    /**
+     * Returns true if both policies have the same client and either the same policy id
+     * or the same policy type id.
+     * This defines a weaker notion of equality between two policies.
+     */
+    public boolean isSamePolicy(Policy otherPolicy) {
+        if (otherPolicy == this) {
+            return true;
+        }
+
         return otherPolicy.getClientId().equals(this.getClientId())
                 && (otherPolicy.getPolicyId().equals(this.getPolicyId())
                 || otherPolicy.getPolicyTypeId().equals(this.getPolicyTypeId()));
