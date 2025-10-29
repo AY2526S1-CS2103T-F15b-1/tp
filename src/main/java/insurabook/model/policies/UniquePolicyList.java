@@ -13,12 +13,15 @@ import javafx.collections.ObservableList;
 
 /**
  * A list of policies that enforces uniqueness between its elements and does not allow nulls.
- * A policy is considered unique by comparing using {@code Policy#isSamePolicy(Policy)}. As such, adding and updating of
- * policies uses Policy#isSamePolicy(Policy) for equality so as to ensure that the policy being added or updated is
- * unique in terms of identity in the UniquePolicyList. However, the removal of a policy uses Policy#equals(Object) so
+ * A policy is considered unique by comparing using {@code Policy#equals(Policy)}.
+ * As such, adding and updating of policies uses Policy#equals(Policy) for equality
+ * so as to ensure that the policy being added or updated is unique in terms of identity
+ * in the UniquePolicyList. However, the removal of a policy uses Policy#equals(Object) so
  * as to ensure that the policy with exactly the same fields will be removed.
  *
  * Supports a minimal set of list operations.
+ *
+ * @see Policy#equals(Object)
  */
 public class UniquePolicyList implements Iterable<Policy> {
     private final ObservableList<Policy> internalList = FXCollections.observableArrayList();
