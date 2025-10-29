@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -109,6 +110,18 @@ public class JsonUtil {
      */
     public static <T> String toJsonString(T instance) throws JsonProcessingException {
         return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(instance);
+    }
+
+    /**
+     * Copies JSON file from original path to backup path.
+     * @param originalPath path to original file
+     * @param backupPath path to where copied file is to be created
+     */
+    public static void copyJsonFile(Path originalPath, Path backupPath) throws IOException {
+        if (Files.exists(originalPath)) {
+            Files.copy(originalPath, backupPath, StandardCopyOption.REPLACE_EXISTING);
+            assert Files.exists(backupPath);
+        }
     }
 
     /**

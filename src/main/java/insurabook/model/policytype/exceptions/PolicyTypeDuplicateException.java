@@ -14,7 +14,7 @@ public class PolicyTypeDuplicateException extends RuntimeException {
      * @param policyType Policy type that already exists, NOT the one trying to be added
      */
     public PolicyTypeDuplicateException(PolicyType policyType) {
-        super(String.format("Policy type already exists (%s, %d)", policyType.getPtName(), policyType.getPtId()));
+        super(String.format("Policy type already exists (%s, %s)", policyType.getPtName(), policyType.getPtId()));
     }
 
 }

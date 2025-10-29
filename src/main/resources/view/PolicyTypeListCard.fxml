@@ -26,7 +26,7 @@
         </Label>
         <Label fx:id="ptName" text="\$first" styleClass="cell_big_label" />
       </HBox>
-      <Label fx:id="ptId" styleClass="cell_small_label" text="\$policyTypeId" />
+      <Label fx:id="ptId" styleClass="policy_type_id_label" text="\$policyTypeId" />
       <Label fx:id="ptPremium" styleClass="cell_small_label" text="\$premium" />
       <Label fx:id="ptDescription" styleClass="cell_small_label" text="\$description" />
     </VBox>

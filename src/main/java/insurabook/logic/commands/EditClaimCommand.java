@@ -77,7 +77,7 @@ public class EditClaimCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Client> lastShownList = model.getFilteredPersonList();
+        List<Client> lastShownList = model.getFilteredClientList();
 
         Client clientToEdit = lastShownList.stream()
                 .filter(client -> client.getClientId().equals(clientId))
