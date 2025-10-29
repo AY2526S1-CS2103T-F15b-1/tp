@@ -19,6 +19,7 @@ a terminal.
   - [Adding a policy to client: `add policy`](#adding-a-policy-to-client-add-policy)
   - [Adding a claim: `add claim`](#adding-a-claim-add-claim)
   - [Listing all clients: `list`](#listing-all-clients-list)
+  - [Editing a policy type: `edit policy type`](#editing-a-policy-type-edit-policy-type)
   - [Editing a claim: `edit claim`](#editing-a-claim-edit-claim)
   - [Locating clients by name or ID: `find`](#locating-clients-by-name-or-id-find)
   - [Deleting a client: `delete`](#deleting-a-client-delete)
@@ -95,6 +96,7 @@ as space characters surrounding line-breaks may be omitted when copied over to t
 ---
 
 ### Viewing help : `help`
+<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
 
 Shows a message explaining how to access the help page.  
 If you ever feel stuck or forget a command, just type `help`. This will open a window with a link to all the commands
@@ -106,6 +108,7 @@ Format: `help`
 ---
 
 ### Adding a client: `add`
+<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
 
 Adds a client to InsuraBook. Use this command when you sign a new client and need to create their initial record. This
 is the first step to tracking all their contact information and policies in InsuraBook.
@@ -123,12 +126,13 @@ Examples:
 ---
 
 ### Adding a policy type: `add policy type`
+<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
 
 Adds a new policy type to InsuraBook. Before you can assign policies to clients, define the available policy
 “products.” Use this command to add a new "product" (eg. "BRUHealth") to your system's catalog.
 
 Format:  
-`add policy type -pt_n POLICY_TYPE_NAME -pt_id POLICY_TYPE_ID [-d DESCRIPTION] [-pr PREMIUM]`
+`add policy type -pt_n POLICY_TYPE_NAME -pt_id POLICY_TYPE_ID [-desc DESCRIPTION] [-pr PREMIUM]`
 
 Examples:
 * `add policy type -pt_n BRUHealth -pt_id BRH001` adds a policy type named `BRUHealth` with policy type ID `BRH001`.
@@ -136,12 +140,13 @@ To view this, use the `view -policy` command.
 
 <img alt="img.png" height="300" src="images/addPolicyType.png" width="500"/>
 
-* `add policy type -pt_n BRUWealth -pt_id BRW001 -d Holistic savings plan -pr 1000` adds a policy type named `BRUWealth`
+* `add policy type -pt_n BRUWealth -pt_id BRW001 -desc Holistic savings plan -pr 1000` adds a policy type named `BRUWealth`
 with policy type ID `BRW001`, optional description `Holistic savings plan`, and optional premium amount `1000`.
 
 ---
 
 ### Adding a policy to client: `add policy`
+<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
 
 Adds a policy with expiry date to a client. When a client purchases one of your products, use this command to create
 that policy (with its ID and expiry date) and link it directly to their client record.
@@ -157,6 +162,7 @@ Examples:
 ---
 
 ### Adding a claim: `add claim`
+<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
 
 Adds a claim to a policy of a client. When a client purchases one of your products, use this command to create that
 policy (with its ID and expiry date) and link it directly to their client record.
@@ -175,6 +181,7 @@ client ID `123`.
 ---
 
 ### Listing all clients: `list`
+<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
 
 Shows a list of all clients in the InsuraBook. This is your main "view all" command. Use it any time you need to see
 a complete list of all clients currently stored in InsuraBook.
@@ -185,7 +192,28 @@ Format: `list`
 
 ---
 
+### Editing a policy type: `edit policy type`
+<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
+
+Edits an existing policy type in InsuraBook, in case of any wrong input. If you need to correct the name, premium, or
+description of a previously entered policy type, use `edit policy type`.
+
+Format:
+`edit policy type -pt_id POLICY_TYPE_ID [-pt_n POLICY_TYPE_NAME] [-desc DESCRIPTION] [-pr PREMIUM]`
+
+Examples:
+* `edit policy type -pt_id BRH001 -pt_n BRUHealthExtra` edits the policy type
+  name to be `BRUHealthExtra` for the policy type `BRH001`.
+
+<img alt="img.png" height="300" src="images/editPolicyType.png" width="500"/>
+
+* `edit policy type -pt_id BRH001 -pr 1000` edits the policy type premium
+  to be `1000` for the policy type `BRH001`.
+
+---
+
 ### Editing a claim: `edit claim`
+<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
 
 Edits an existing claim in InsuraBook, in case of any wrong input. If you need to correct the amount, date, or
 description of a previously entered claim, use `edit claim`.
@@ -205,6 +233,7 @@ claim `C0001` under policy id `101` with client id `123`.
 ---
 
 ### Locating clients by name or ID: `find`
+<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
 
 Finds clients whose names or IDs match the given keywords.
 
@@ -242,6 +271,7 @@ Examples:
 ---
 
 ### Deleting a client: `delete`
+<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
 
 Deletes the specified client from InsuraBook. To permanently remove a client and all their associated data from
 InsuraBook, use this command.
@@ -260,6 +290,7 @@ Examples:
 ---
 
 ### Deleting a policy type: `delete policy type`
+<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
 
 Deletes a policy type from InsuraBook. To remove a policy type (product) from your catalog, use this command.
 
@@ -275,6 +306,7 @@ Example:
 ---
 
 ### Deleting a policy from a client: `delete policy`
+<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
 
 Deletes the specified policy previously saved under a client.
 
@@ -291,6 +323,7 @@ Example:
 ---
 
 ### Deleting a claim: `delete claim`
+<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
 
 Deletes the specified claim from the InsuraBook. To permanently remove a claim from a policy under a client, use this
 command.
@@ -309,6 +342,7 @@ Example:
 ---
 
 ### Changing UI View: `view`
+<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
 
 Changes the view of the user interface. You may switch between 1 of 3 views. The view command lets you switch the main
 window's display to show either all clients, all policy types, or all policies for a single client
@@ -336,6 +370,7 @@ Examples:
 ---
 
 ### Clearing all entries: `clear`
+<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
 
 Clears **ALL** entries from InsuraBook.
 
@@ -346,6 +381,7 @@ Format: `clear`
 ---
 
 ### Exiting the program: `exit`
+<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
 
 Exits the program.
 
