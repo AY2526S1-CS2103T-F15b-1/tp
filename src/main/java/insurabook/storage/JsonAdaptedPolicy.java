@@ -1,13 +1,11 @@
 package insurabook.storage;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import insurabook.commons.exceptions.IllegalValueException;
 import insurabook.model.InsuraBook;
-import insurabook.model.claims.Claim;
 import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
@@ -107,11 +105,10 @@ public class JsonAdaptedPolicy {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "claims"));
         }
 
-        List<Claim> modelClaims = new ArrayList<>();
-        for (JsonAdaptedClaim jsonClaim : claims) {
-            modelClaims.add(jsonClaim.toModelType());
-        }
+        return new Policy(modelPolicyId, modelClient, modelPolicyType, modelDate);
+    }
 
-        return new Policy(modelPolicyId, modelClient, modelPolicyType, modelDate, modelClaims);
+    public List<JsonAdaptedClaim> getClaims() {
+        return claims;
     }
 }

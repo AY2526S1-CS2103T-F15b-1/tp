@@ -1,7 +1,7 @@
 package insurabook.model.claims;
 
-import insurabook.model.client.ClientId;
-import insurabook.model.policies.PolicyId;
+import insurabook.model.client.Client;
+import insurabook.model.policies.Policy;
 
 /**
  * Represents a Claim in the insurance management system, from a Client with a Policy.
@@ -11,8 +11,8 @@ public class Claim {
     private static int claimCounter = 1;
 
     private final ClaimId claimId;
-    private final ClientId client;
-    private final PolicyId policy;
+    private final Client client;
+    private final Policy policy;
     private final ClaimAmount amount;
     private final InsuraDate date;
     private final ClaimMessage description;
@@ -20,8 +20,8 @@ public class Claim {
     /**
      * Every field must be present and not null, except description which is optional.
      */
-    public Claim(ClientId client, PolicyId policy, ClaimAmount amount, InsuraDate date, ClaimMessage ... description) {
-        this.claimId = new ClaimId("CL" + String.format("%03d", claimCounter++));
+    public Claim(Client client, Policy policy, ClaimAmount amount, InsuraDate date, ClaimMessage ... description) {
+        this.claimId = new ClaimId("C" + String.format("%03d", claimCounter++));
         this.client = client;
         this.policy = policy;
         this.amount = amount;
@@ -32,7 +32,7 @@ public class Claim {
     /**
      * Constructor with explicit ClaimId (used for editing claim)
      */
-    public Claim(ClaimId claimId, ClientId client, PolicyId policy,
+    public Claim(ClaimId claimId, Client client, Policy policy,
                  ClaimAmount amount, InsuraDate date, ClaimMessage description) {
         this.claimId = claimId;
         this.client = client;
@@ -47,11 +47,11 @@ public class Claim {
         return claimId;
     }
 
-    public ClientId getClientId() {
+    public Client getClient() {
         return client;
     }
 
-    public PolicyId getPolicyId() {
+    public Policy getPolicy() {
         return policy;
     }
 
@@ -65,5 +65,9 @@ public class Claim {
 
     public ClaimMessage getDescription() {
         return description;
+    }
+
+    public static void syncCounter(int newCounter) {
+        claimCounter = newCounter;
     }
 }
