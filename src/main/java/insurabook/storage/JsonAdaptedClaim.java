@@ -9,9 +9,7 @@ import insurabook.model.claims.ClaimAmount;
 import insurabook.model.claims.ClaimId;
 import insurabook.model.claims.ClaimMessage;
 import insurabook.model.claims.InsuraDate;
-import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
-import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
 
 /**
@@ -49,8 +47,8 @@ public class JsonAdaptedClaim {
      * Converts a given {@code Claim} into this class for Jackson use.
      */
     public JsonAdaptedClaim(Claim claim) {
-        clientId = claim.getClient().getClientId().toString();
-        policyId = claim.getPolicy().getPolicyId().toString();
+        clientId = claim.getClientId().toString();
+        policyId = claim.getPolicyId().toString();
         claimId = claim.getClaimId().toString();
         amount = claim.getAmount().toString();
         date = claim.getDate().toString();
@@ -70,7 +68,6 @@ public class JsonAdaptedClaim {
             throw new IllegalValueException(ClientId.MESSAGE_CONSTRAINTS);
         }
         final ClientId modelClientId = new ClientId(clientId);
-        final Client modelClient = insuraBook.getClient(modelClientId);
 
         if (policyId == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "policyId"));
@@ -79,7 +76,6 @@ public class JsonAdaptedClaim {
             throw new IllegalValueException(PolicyId.MESSAGE_CONSTRAINTS);
         }
         final PolicyId modelPolicyId = new PolicyId(policyId);
-        final Policy modelPolicy = modelClient.getPortfolio().getPolicies().getPolicy(modelPolicyId);
 
         if (claimId == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "id"));
@@ -107,6 +103,6 @@ public class JsonAdaptedClaim {
 
         final ClaimMessage modelDescription = new ClaimMessage(description != null ? description : "");
 
-        return new Claim(modelClaimId, modelClient, modelPolicy, modelAmount, modelDate, modelDescription);
+        return new Claim(modelClaimId, modelClientId, modelPolicyId, modelAmount, modelDate, modelDescription);
     }
 }

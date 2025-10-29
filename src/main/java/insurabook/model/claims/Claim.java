@@ -1,7 +1,7 @@
 package insurabook.model.claims;
 
-import insurabook.model.client.Client;
-import insurabook.model.policies.Policy;
+import insurabook.model.client.ClientId;
+import insurabook.model.policies.PolicyId;
 
 /**
  * Represents a Claim in the insurance management system, from a Client with a Policy.
@@ -51,9 +51,5 @@ public class Claim {
 
     public ClaimMessage getDescription() {
         return description;
-    }
-
-    public static void syncCounter(int newCounter) {
-        claimCounter = newCounter;
     }
 }
