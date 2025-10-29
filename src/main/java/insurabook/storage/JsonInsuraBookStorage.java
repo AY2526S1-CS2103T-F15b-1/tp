@@ -5,6 +5,8 @@ import static java.util.Objects.requireNonNull;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -85,7 +87,12 @@ public class JsonInsuraBookStorage implements InsuraBookStorage {
     public void backupInsuraBookFile() throws IOException {
         requireNonNull(filePath);
 
-        Path backupPath = Paths.get(filePath.getParent() + "/insurabook-backup.json");
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("YYYYMMdd-kkmmss");
+        String formattedDateTime = now.format(format);
+
+        Path backupPath = Paths.get(filePath.getParent()
+                + "/insurabook-backup-" + formattedDateTime + ".json");
         JsonUtil.copyJsonFile(filePath, backupPath);
     }
 
