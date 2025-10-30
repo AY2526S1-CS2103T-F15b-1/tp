@@ -1,8 +1,8 @@
 package insurabook.model.client;
 
 //import static insurabook.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static insurabook.testutil.TypicalPersons.ALICE;
-//import static insurabook.testutil.TypicalPersons.BOB;
+import static insurabook.testutil.TypicalClients.ALICE;
+//import static insurabook.testutil.TypicalClients.BOB;
 //import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -20,29 +20,29 @@ public class ClientTest {
     //}
 
     @Test
-    public void isSamePerson() {
+    public void isSameClient() {
         // same object -> returns true
-        assertTrue(ALICE.isSamePerson(ALICE));
+        assertTrue(ALICE.isSameClient(ALICE));
 
         // null -> returns false
-        assertFalse(ALICE.isSamePerson(null));
+        assertFalse(ALICE.isSameClient(null));
 
         // same name, all other attributes different -> returns true
         Client editedAlice = new PersonBuilder(ALICE).build();
-        assertTrue(ALICE.isSamePerson(editedAlice));
+        assertTrue(ALICE.isSameClient(editedAlice));
 
         // different name, all other attributes same -> returns false
         //editedAlice = new PersonBuilder(ALICE).withName(VALID_NAME_BOB).build();
-        //assertFalse(ALICE.isSamePerson(editedAlice));
+        //assertFalse(ALICE.isSameClient(editedAlice));
 
         // name differs in case, all other attributes same -> returns false
         //Client editedBob = new PersonBuilder(BOB).withName(VALID_NAME_BOB.toLowerCase()).build();
-        //assertFalse(BOB.isSamePerson(editedBob));
+        //assertFalse(BOB.isSameClient(editedBob));
 
         // name has trailing spaces, all other attributes same -> returns false
         //String nameWithTrailingSpaces = VALID_NAME_BOB + " ";
         //editedBob = new PersonBuilder(BOB).withName(nameWithTrailingSpaces).build();
-        //assertFalse(BOB.isSamePerson(editedBob));
+        //assertFalse(BOB.isSameClient(editedBob));
     }
 
     //@Test

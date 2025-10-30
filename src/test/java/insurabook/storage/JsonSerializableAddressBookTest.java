@@ -11,13 +11,13 @@ import java.nio.file.Paths;
 //import insurabook.commons.exceptions.IllegalValueException;
 //import insurabook.commons.util.JsonUtil;
 //import insurabook.model.AddressBook;
-//import insurabook.testutil.TypicalPersons;
+//import insurabook.testutil.TypicalClients;
 
 public class JsonSerializableAddressBookTest {
 
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "JsonSerializableAddressBookTest");
     private static final Path TYPICAL_PERSONS_FILE = TEST_DATA_FOLDER.resolve("typicalPersonsAddressBook.json");
-    private static final Path INVALID_PERSON_FILE = TEST_DATA_FOLDER.resolve("invalidPersonAddressBook.json");
+    private static final Path INVALID_PERSON_FILE = TEST_DATA_FOLDER.resolve("invalidClientInsuraBook.json");
     private static final Path DUPLICATE_PERSON_FILE = TEST_DATA_FOLDER.resolve("duplicatePersonAddressBook.json");
 
     //@Test
@@ -25,7 +25,7 @@ public class JsonSerializableAddressBookTest {
     //    JsonSerializableAddressBook dataFromFile = JsonUtil.readJsonFile(TYPICAL_PERSONS_FILE,
     //            JsonSerializableAddressBook.class).get();
     //    AddressBook addressBookFromFile = dataFromFile.toModelType();
-    //    AddressBook typicalPersonsAddressBook = TypicalPersons.getTypicalAddressBook();
+    //    AddressBook typicalPersonsAddressBook = TypicalClients.getTypicalInsuraBook();
     //    assertEquals(addressBookFromFile, typicalPersonsAddressBook);
     //}
 
@@ -40,7 +40,7 @@ public class JsonSerializableAddressBookTest {
     //public void toModelType_duplicatePersons_throwsIllegalValueException() throws Exception {
     //    JsonSerializableAddressBook dataFromFile = JsonUtil.readJsonFile(DUPLICATE_PERSON_FILE,
     //            JsonSerializableAddressBook.class).get();
-    //    assertThrows(IllegalValueException.class, JsonSerializableAddressBook.MESSAGE_DUPLICATE_PERSON,
+    //    assertThrows(IllegalValueException.class, JsonSerializableAddressBook.MESSAGE_DUPLICATE_CLIENT,
     //            dataFromFile::toModelType);
     //}
 

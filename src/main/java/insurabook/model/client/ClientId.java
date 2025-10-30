@@ -4,7 +4,7 @@ import static insurabook.commons.util.AppUtil.checkArgument;
 import static java.util.Objects.requireNonNull;
 
 /**
- * Represents a Client's id in the address book.
+ * Represents a Client's id in the insurabook.
  * Guarantees: immutable; is valid as declared in {@link #isValidClientId(String)}
  */
 public class ClientId {

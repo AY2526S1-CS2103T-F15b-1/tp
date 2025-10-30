@@ -2,8 +2,8 @@ package insurabook.model;
 
 import static insurabook.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static insurabook.testutil.Assert.assertThrows;
-import static insurabook.testutil.TypicalPersons.ALICE;
-import static insurabook.testutil.TypicalPersons.BENSON;
+import static insurabook.testutil.TypicalClients.ALICE;
+import static insurabook.testutil.TypicalClients.BENSON;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -37,14 +37,14 @@ public class ModelManagerTest {
     @Test
     public void setUserPrefs_validUserPrefs_copiesUserPrefs() {
         UserPrefs userPrefs = new UserPrefs();
-        userPrefs.setAddressBookFilePath(Paths.get("address/book/file/path"));
+        userPrefs.setInsuraBookFilePath(Paths.get("address/book/file/path"));
         userPrefs.setGuiSettings(new GuiSettings(1, 2, 3, 4));
         modelManager.setUserPrefs(userPrefs);
         assertEquals(userPrefs, modelManager.getUserPrefs());
 
         // Modifying userPrefs should not modify modelManager's userPrefs
         UserPrefs oldUserPrefs = new UserPrefs(userPrefs);
-        userPrefs.setAddressBookFilePath(Paths.get("new/address/book/file/path"));
+        userPrefs.setInsuraBookFilePath(Paths.get("new/address/book/file/path"));
         assertEquals(oldUserPrefs, modelManager.getUserPrefs());
     }
 
@@ -73,19 +73,19 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void hasPerson_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> modelManager.hasPerson(null));
+    public void hasPerson_nullClient_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.hasClient(null));
     }
 
     @Test
-    public void hasPerson_personNotInAddressBook_returnsFalse() {
-        assertFalse(modelManager.hasPerson(ALICE));
+    public void hasPerson_clientNotInAddressBook_returnsFalse() {
+        assertFalse(modelManager.hasClient(ALICE));
     }
 
     @Test
-    public void hasPerson_personInAddressBook_returnsTrue() {
-        modelManager.addPerson(ALICE);
-        assertTrue(modelManager.hasPerson(ALICE));
+    public void hasPerson_clientInAddressBook_returnsTrue() {
+        modelManager.addClient(ALICE);
+        assertTrue(modelManager.hasClient(ALICE));
     }
 
     @Test
@@ -95,7 +95,7 @@ public class ModelManagerTest {
 
     @Test
     public void equals() {
-        InsuraBook insuraBook = new InsuraBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        InsuraBook insuraBook = new InsuraBookBuilder().withClient(ALICE).withClient(BENSON).build();
         InsuraBook differentInsuraBook = new InsuraBook();
         UserPrefs userPrefs = new UserPrefs();
 
@@ -118,15 +118,15 @@ public class ModelManagerTest {
 
         // different filteredList -> returns false
         String[] keywords = ALICE.getName().fullName.split("\\s+");
-        modelManager.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
+        modelManager.updateFilteredClientList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
         assertFalse(modelManager.equals(new ModelManager(insuraBook, userPrefs)));
 
         // resets modelManager to initial state for upcoming tests
-        modelManager.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        modelManager.updateFilteredClientList(PREDICATE_SHOW_ALL_PERSONS);
 
         // different userPrefs -> returns false
         UserPrefs differentUserPrefs = new UserPrefs();
-        differentUserPrefs.setAddressBookFilePath(Paths.get("differentFilePath"));
+        differentUserPrefs.setInsuraBookFilePath(Paths.get("differentFilePath"));
         assertFalse(modelManager.equals(new ModelManager(insuraBook, differentUserPrefs)));
     }
 }

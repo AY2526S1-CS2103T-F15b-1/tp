@@ -32,8 +32,8 @@ import static insurabook.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 //import static insurabook.logic.parser.CliSyntax.PREFIX_PHONE;
 import static insurabook.logic.parser.CommandParserTestUtil.assertParseFailure;
 //import static insurabook.logic.parser.CommandParserTestUtil.assertParseSuccess;
-//import static insurabook.testutil.TypicalPersons.AMY;
-//import static insurabook.testutil.TypicalPersons.BOB;
+//import static insurabook.testutil.TypicalClients.AMY;
+//import static insurabook.testutil.TypicalClients.BOB;
 
 import org.junit.jupiter.api.Test;
 

@@ -4,7 +4,7 @@ import static insurabook.commons.util.AppUtil.checkArgument;
 import static java.util.Objects.requireNonNull;
 
 /**
- * Represents a Person's email in the address book.
+ * Represents a Client's email in the insurabook.
  * Guarantees: immutable; is valid as declared in {@link #isValidEmail(String)}
  */
 public class Email {

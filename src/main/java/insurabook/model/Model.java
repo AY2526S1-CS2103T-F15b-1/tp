@@ -48,17 +48,17 @@ public interface Model {
     void setGuiSettings(GuiSettings guiSettings);
 
     /**
-     * Returns the user prefs' address book file path.
+     * Returns the user prefs' insurabook file path.
      */
     Path getInsuraBookFilePath();
 
     /**
-     * Sets the user prefs' address book file path.
+     * Sets the user prefs' insurabook file path.
      */
     void setInsuraBookFilePath(Path insuraBookFilePath);
 
     /**
-     * Replaces InsuraBook data with the data in {@code insuraBook}.
+     * Replaces insurabook data with the data in {@code InsuraBook}.
      */
     void setInsuraBook(InsuraBook insuraBook);
 
@@ -66,37 +66,37 @@ public interface Model {
     ReadOnlyInsuraBook getInsuraBook();
 
     /**
-     * Returns true if a person with the same identity as {@code person} exists in the address book.
+     * Returns true if a client with the same identity as {@code Client} exists in the insurabook.
      */
-    boolean hasPerson(Client client);
+    boolean hasClient(Client client);
 
     /**
-     * Deletes the given person.
-     * The person must exist in the address book.
+     * Deletes the given client.
+     * The client must exist in the insurabook.
      */
-    void deletePerson(Client target);
+    void deleteClient(Client target);
 
     /**
-     * Adds the given person.
-     * {@code person} must not already exist in the address book.
+     * Adds the given client.
+     * {@code client} must not already exist in the insurabook.
      */
-    void addPerson(Client client);
+    void addClient(Client client);
 
     /**
-     * Replaces the given person {@code target} with {@code editedPerson}.
-     * {@code target} must exist in the address book.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
+     * Replaces the given client {@code target} with {@code editiedClient}.
+     * {@code target} must exist in the insurabook.
+     * The client identity of {@code editedClient} must not be the same as another existing client in the insurabook.
      */
-    void setPerson(Client target, Client editedClient);
+    void setClient(Client target, Client editedClient);
 
-    /** Returns an unmodifiable view of the filtered person list */
+    /** Returns an unmodifiable view of the filtered client list */
     ObservableList<Client> getFilteredClientList();
 
     /**
-     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     * Updates the filter of the filtered client list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredPersonList(Predicate<Client> predicate);
+    void updateFilteredClientList(Predicate<Client> predicate);
 
     /** Returns an unmodifiable view of the filtered policy types list */
     ObservableList<PolicyType> getFilteredPolicyTypeList();
@@ -125,14 +125,14 @@ public interface Model {
 
     /**
      * Deletes the given claim.
-     * The claim must exist in the address book.
+     * The claim must exist in the insurabook.
      */
     Claim deleteClaim(ClientId clientId, PolicyId policyId, ClaimId claimId);
 
     /**
      * Replaces the given claim {@code target} with {@code editedClaim}.
-     * {@code target} must exist in the address book.
-     * The claim identity of {@code editedClaim} must not be the same as another existing claim in the address book.
+     * {@code target} must exist in the insurabook.
+     * The claim identity of {@code editedClaim} must not be the same as another existing claim in the insurabook.
      */
     void setClaim(Claim target, Claim editedClaim);
 
@@ -143,20 +143,20 @@ public interface Model {
 
     /**
      * Adds the given policy.
-     * {@code policy} must not already exist in the address book.
+     * {@code policy} must not already exist in the insurabook.
      */
     Policy addPolicy(PolicyId policyId, ClientId clientId, PolicyTypeId policyTypeId, InsuraDate expiryDate);
 
     /**
      * Deletes the given policy.
-     * The policy must exist in the address book.
+     * The policy must exist in the insurabook.
      */
     Policy deletePolicy(ClientId clientId, PolicyId policyId);
 
     /**
      * Replaces the given policy {@code target} with {@code editedPolicy}.
-     * {@code target} must exist in the address book.
-     * The policy identity of {@code editedPolicy} must not be the same as another existing policy in the address book.
+     * {@code target} must exist in the insurabook.
+     * The policy identity of {@code editedPolicy} must not be the same as another existing policy in the insurabook.
      */
     void setPolicy(Policy target, Policy editedPolicy);
 
@@ -172,9 +172,9 @@ public interface Model {
 
     /**
      * Replaces the given person {@code target} with {@code editedPolicyType}.
-     * {@code target} must exist in the address book.
+     * {@code target} must exist in the insurabook.
      * The person identity of {@code editedPolicyType} must not be the same as
-     * another existing person in the address book.
+     * another existing person in the insurabook.
      */
     void setPolicyType(PolicyType target, PolicyType editedPolicyType);
 
@@ -184,18 +184,18 @@ public interface Model {
     boolean containsPolicyTypeName(PolicyTypeName name);
 
     /**
-     * Returns true if InsuraBook can be undone
-     * @return boolean, if InsuraBook can be undone
+     * Returns true if {@code InsuraBook} can be undone
+     * @return boolean, if {@code InsuraBook} can be undone
      */
     boolean canUndoInsuraBook();
 
     /**
-     * Restores InsuraBook to its previous state
+     * Restores {@code InsuraBook} to its previous state
      */
     void undoInsuraBook();
 
     /**
-     * Save current state of InsuraBook
+     * Save current state of {@code InsuraBook}
      */
     void commitInsuraBook();
 

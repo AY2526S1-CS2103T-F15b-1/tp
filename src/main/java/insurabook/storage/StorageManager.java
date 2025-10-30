@@ -12,7 +12,7 @@ import insurabook.model.ReadOnlyUserPrefs;
 import insurabook.model.UserPrefs;
 
 /**
- * Manages storage of AddressBook data in local storage.
+ * Manages storage of InsuraBook data in local storage.
  */
 public class StorageManager implements Storage {
 
@@ -21,7 +21,7 @@ public class StorageManager implements Storage {
     private UserPrefsStorage userPrefsStorage;
 
     /**
-     * Creates a {@code StorageManager} with the given {@code AddressBookStorage} and {@code UserPrefStorage}.
+     * Creates a {@code StorageManager} with the given {@code InsuraBookStorage} and {@code UserPrefStorage}.
      */
     public StorageManager(InsuraBookStorage insuraBookStorage, UserPrefsStorage userPrefsStorage) {
         this.insuraBookStorage = insuraBookStorage;
