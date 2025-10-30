@@ -18,7 +18,8 @@ import insurabook.model.client.ClientId;
 import insurabook.model.policies.PolicyId;
 
 /**
- * Parses input arguments and creates a new AddClaimCommand object
+ * Parses the given {@code String} of arguments in the context of the AddClaimCommand
+ * and returns an AddClaimCommand object for execution.
  */
 public class AddClaimCommandParser implements Parser<AddClaimCommand> {
 
@@ -41,21 +42,30 @@ public class AddClaimCommandParser implements Parser<AddClaimCommand> {
 
         argMultimap.verifyNoDuplicatePrefixesFor(
                 PREFIX_CLIENT_ID, PREFIX_POLICY_ID, PREFIX_CLAIM_AMOUNT, PREFIX_CLAIM_DATE);
-        ClientId clientId = ParserUtil.parseClientId(argMultimap.getValue(PREFIX_CLIENT_ID).get());
-        PolicyId policyId = ParserUtil.parsePolicyId(argMultimap.getValue(PREFIX_POLICY_ID).get());
-        ClaimAmount amount = ParserUtil.parseClaimAmount(argMultimap.getValue(PREFIX_CLAIM_AMOUNT).get());
-        InsuraDate date = ParserUtil.parseInsuraDate(argMultimap.getValue(PREFIX_CLAIM_DATE).get());
-        ClaimMessage message = ParserUtil.parseClaimMessage(
-                argMultimap.getValue(PREFIX_DESCRIPTION).isEmpty()
-                ? ""
-                : argMultimap.getValue(PREFIX_DESCRIPTION).get());
 
-        return new AddClaimCommand(clientId, policyId, amount, date, message);
+        assert argMultimap.getValue(PREFIX_CLIENT_ID).isPresent();
+        ClientId clientId = ParserUtil.parseClientId(argMultimap.getValue(PREFIX_CLIENT_ID).get());
+
+        assert argMultimap.getValue(PREFIX_POLICY_ID).isPresent();
+        PolicyId policyId = ParserUtil.parsePolicyId(argMultimap.getValue(PREFIX_POLICY_ID).get());
+
+        assert argMultimap.getValue(PREFIX_CLAIM_AMOUNT).isPresent();
+        ClaimAmount amount = ParserUtil.parseClaimAmount(argMultimap.getValue(PREFIX_CLAIM_AMOUNT).get());
+
+        assert argMultimap.getValue(PREFIX_CLAIM_DATE).isPresent();
+        InsuraDate date = ParserUtil.parseInsuraDate(argMultimap.getValue(PREFIX_CLAIM_DATE).get());
+
+        String message = argMultimap.getValue(PREFIX_DESCRIPTION).orElse("");
+        ClaimMessage claimMessage = ParserUtil.parseClaimMessage(message);
+
+        return new AddClaimCommand(clientId, policyId, amount, date, claimMessage);
     }
 
     /**
      * Returns true if none of the prefixes contains empty {@code Optional} values in the given
      * {@code ArgumentMultimap}.
+     *
+     * @return true if all prefixes are present, false otherwise.
      */
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());

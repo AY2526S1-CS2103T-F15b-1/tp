@@ -152,6 +152,11 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public Claim getClaim(ClientId clientId, PolicyId policyId, ClaimId claimId) {
+        return insuraBook.getClaim(clientId, policyId, claimId);
+    }
+
+    @Override
     public Policy addPolicy(PolicyId policyId, ClientId clientId, PolicyTypeId policyTypeId, InsuraDate expiryDate) {
         return insuraBook.addPolicy(policyId, clientId, policyTypeId, expiryDate);
     }

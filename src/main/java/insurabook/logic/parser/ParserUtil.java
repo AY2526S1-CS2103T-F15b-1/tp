@@ -195,15 +195,10 @@ public class ParserUtil {
     /**
      * Parses a {@code String message} into a {@code ClaimMessage}.
      * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code message} is invalid.
      */
-    public static ClaimMessage parseClaimMessage(String message) throws ParseException {
+    public static ClaimMessage parseClaimMessage(String message) {
         requireNonNull(message);
         String trimmedMessage = message.trim();
-        if (!ClaimMessage.isValidClaimMessage(trimmedMessage)) {
-            throw new ParseException(ClaimMessage.MESSAGE_CONSTRAINTS);
-        }
         return new ClaimMessage(trimmedMessage);
     }
 

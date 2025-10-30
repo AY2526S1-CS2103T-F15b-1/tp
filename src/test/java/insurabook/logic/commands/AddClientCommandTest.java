@@ -250,6 +250,11 @@ public class AddClientCommandTest {
         }
 
         @Override
+        public Claim getClaim(ClientId clientId, PolicyId policyId, ClaimId claimId) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public boolean canUndoInsuraBook() {
             throw new AssertionError("This method should not be called.");
         }
