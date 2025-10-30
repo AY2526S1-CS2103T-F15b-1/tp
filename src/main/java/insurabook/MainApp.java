@@ -72,9 +72,9 @@ public class MainApp extends Application {
     }
 
     /**
-     * Returns a {@code ModelManager} with the data from {@code storage}'s address book and {@code userPrefs}. <br>
-     * The data from the sample address book will be used instead if {@code storage}'s address book is not found,
-     * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
+     * Returns a {@code ModelManager} with the data from {@code storage}'s insurabook and {@code userPrefs}. <br>
+     * The data from the sample insurabook will be used instead if {@code storage}'s insurabook is not found,
+     * or an empty insurabook will be used instead if errors occur when reading {@code storage}'s insurabook.
      */
     private Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {
         logger.info("Using data file : " + storage.getInsuraBookFilePath());
@@ -85,12 +85,12 @@ public class MainApp extends Application {
             insuraBookOptional = storage.readInsuraBook();
             if (insuraBookOptional.isEmpty()) {
                 logger.info("Creating a new data file " + storage.getInsuraBookFilePath()
-                        + " populated with a sample AddressBook.");
+                        + " populated with a sample InsuraBook.");
             }
             initialData = insuraBookOptional.orElseGet(SampleDataUtil::getSampleInsuraBook);
         } catch (DataLoadingException e) {
             logger.warning("Data file at " + storage.getInsuraBookFilePath() + " could not be loaded."
-                    + " Will be starting with an empty AddressBook.");
+                    + " Will be starting with an empty InsuraBook.");
             // store old data
             try {
                 storage.backupInsuraBookFile();
@@ -189,7 +189,7 @@ public class MainApp extends Application {
 
     @Override
     public void stop() {
-        logger.info("============================ [ Stopping AddressBook ] =============================");
+        logger.info("============================ [ Stopping InsuraBook ] =============================");
         try {
             storage.saveUserPrefs(model.getUserPrefs());
         } catch (IOException e) {

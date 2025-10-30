@@ -12,7 +12,7 @@ import insurabook.ui.enums.View;
 import javafx.collections.transformation.FilteredList;
 
 /**
- * Lists all persons in the address book to the user.
+ * Lists all clients in the InsuraBook to the user.
  * Usage: view -client (to view all clients in InsuraBook)
  * or view -policy (for all policy types available in InsuraBook)
  * or view -c_id CLIENT_ID (for viewing policies of a specific client)
@@ -57,7 +57,7 @@ public class ViewCommand extends Command {
         // default to client view if no flag is provided
         if (flag.equals(PREFIX_CLIENT_VIEW.getPrefix())) {
             CommandResult res = new CommandResult(MESSAGE_SUCCESS_CLIENT);
-            model.updateFilteredPersonList(c -> true);
+            model.updateFilteredClientList(c -> true);
             res.setView(View.CLIENT_VIEW);
             return res;
         } else if (flag.equals(PREFIX_CLIENT_ID.getPrefix())) {

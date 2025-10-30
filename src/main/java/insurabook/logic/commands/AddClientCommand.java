@@ -14,7 +14,7 @@ import insurabook.model.Model;
 import insurabook.model.client.Client;
 
 /**
- * Adds a person to the address book.
+ * Adds a client to the insurabook.
  */
 public class AddClientCommand extends Command {
 
@@ -37,7 +37,7 @@ public class AddClientCommand extends Command {
     private final Client toAdd;
 
     /**
-     * Creates an AddCommand to add the specified {@code Person}
+     * Creates an AddCommand to add the specified {@code Client}
      */
     public AddClientCommand(Client client) {
         requireNonNull(client);
@@ -48,11 +48,11 @@ public class AddClientCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        if (model.hasPerson(toAdd)) {
+        if (model.hasClient(toAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
-        model.addPerson(toAdd);
+        model.addClient(toAdd);
         model.commitInsuraBook();
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));

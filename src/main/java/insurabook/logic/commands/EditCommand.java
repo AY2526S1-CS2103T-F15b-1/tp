@@ -29,7 +29,7 @@ import insurabook.model.client.Phone;
 import insurabook.model.tag.Tag;
 
 /**
- * Edits the details of an existing person in the address book.
+ * Edits the details of an existing person in the insurabook.
  */
 public class EditCommand extends Command {
 
@@ -46,10 +46,10 @@ public class EditCommand extends Command {
             + PREFIX_CLIENT_NAME + " John "
             + PREFIX_PHONE + " 91234567";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited client: %1$s";
+    public static final String MESSAGE_EDIT_CLIENT_SUCCESS = "Edited client: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_NO_MATCHING_CLIENT = "No client found matching ID %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This client already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_CLIENT = "This client already exists in the address book.";
 
     private final ClientId idToEdit;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -73,14 +73,14 @@ public class EditCommand extends Command {
         Client clientToEdit = findClient(model.getFilteredClientList());
         Client editedClient = createEditedPerson(clientToEdit, editPersonDescriptor);
 
-        if (!clientToEdit.isSamePerson(editedClient) && model.hasPerson(editedClient)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        if (!clientToEdit.isSameClient(editedClient) && model.hasClient(editedClient)) {
+            throw new CommandException(MESSAGE_DUPLICATE_CLIENT);
         }
 
-        model.setPerson(clientToEdit, editedClient);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.setClient(clientToEdit, editedClient);
+        model.updateFilteredClientList(PREDICATE_SHOW_ALL_PERSONS);
         model.commitInsuraBook();
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedClient)));
+        return new CommandResult(String.format(MESSAGE_EDIT_CLIENT_SUCCESS, Messages.format(editedClient)));
     }
 
     /**

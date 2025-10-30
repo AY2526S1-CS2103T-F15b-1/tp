@@ -7,7 +7,7 @@ import static insurabook.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static insurabook.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static insurabook.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static insurabook.testutil.Assert.assertThrows;
-import static insurabook.testutil.TypicalPersons.AMY;
+import static insurabook.testutil.TypicalClients.AMY;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
@@ -169,7 +169,7 @@ public class LogicManagerTest {
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
         Client expectedClient = new PersonBuilder(AMY).build();
         ModelManager expectedModel = new ModelManager();
-        expectedModel.addPerson(expectedClient);
+        expectedModel.addClient(expectedClient);
         assertCommandFailure(addCommand, CommandException.class, expectedMessage, expectedModel);
     }
 }

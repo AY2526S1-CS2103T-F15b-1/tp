@@ -7,7 +7,7 @@ import insurabook.commons.util.StringUtil;
 import insurabook.commons.util.ToStringBuilder;
 
 /**
- * Tests that a {@code Person}'s {@code Name} matches any of the keywords given.
+ * Tests that a {@code Client}'s {@code Name} matches any of the keywords given.
  */
 public class NameContainsKeywordsPredicate implements Predicate<Client> {
     private final List<String> keywords;
