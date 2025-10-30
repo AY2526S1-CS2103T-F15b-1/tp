@@ -71,7 +71,7 @@ public class UniqueClientListTest {
     }
 
     @Test
-    public void setPerson_editedPersonIsSamePerson_success() {
+    public void setPerson_editedPersonIsSameClient_success() {
         uniqueClientList.add(ALICE);
         uniqueClientList.setClient(ALICE, ALICE);
         UniqueClientList expectedUniqueClientList = new UniqueClientList();

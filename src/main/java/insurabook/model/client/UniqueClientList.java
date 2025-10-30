@@ -12,15 +12,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
- * A list of persons that enforces uniqueness between its elements and does not allow nulls.
- * A person is considered unique by comparing using {@code Person#isSamePerson(Person)}. As such, adding and updating of
- * persons uses Person#isSamePerson(Person) for equality so as to ensure that the person being added or updated is
- * unique in terms of identity in the UniquePersonList. However, the removal of a person uses Person#equals(Object) so
- * as to ensure that the person with exactly the same fields will be removed.
+ * A list of clients that enforces uniqueness between its elements and does not allow nulls.
+ * A client is considered unique by comparing using {@code Client#isSameClient(Client)}. As such, adding and updating of
+ * clients uses Client#isSameClient(Client) for equality so as to ensure that the client being added or updated is
+ * unique in terms of identity in the UniqueClientList. However, the removal of a client uses Client#equals(Object) so
+ * as to ensure that the client with exactly the same fields will be removed.
  *
  * Supports a minimal set of list operations.
  *
- * @see Client#isSamePerson(Client)
+ * @see Client#isSameClient(Client)
  */
 public class UniqueClientList implements Iterable<Client> {
 
@@ -33,7 +33,7 @@ public class UniqueClientList implements Iterable<Client> {
      */
     public boolean contains(Client toCheck) {
         requireNonNull(toCheck);
-        return internalList.stream().anyMatch(toCheck::isSamePerson);
+        return internalList.stream().anyMatch(toCheck::isSameClient);
     }
 
     /**
@@ -61,7 +61,7 @@ public class UniqueClientList implements Iterable<Client> {
             throw new ClientMissingException();
         }
 
-        if (!target.isSamePerson(editedClient) && contains(editedClient)) {
+        if (!target.isSameClient(editedClient) && contains(editedClient)) {
             throw new ClientDuplicateException();
         }
 
@@ -140,7 +140,7 @@ public class UniqueClientList implements Iterable<Client> {
     private boolean personsAreUnique(List<Client> clients) {
         for (int i = 0; i < clients.size() - 1; i++) {
             for (int j = i + 1; j < clients.size(); j++) {
-                if (clients.get(i).isSamePerson(clients.get(j))) {
+                if (clients.get(i).isSameClient(clients.get(j))) {
                     return false;
                 }
             }
