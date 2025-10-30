@@ -77,4 +77,5 @@ deactivate StorageManager
 
 [<--LogicManager
 deactivate LogicManager
+
 @enduml
