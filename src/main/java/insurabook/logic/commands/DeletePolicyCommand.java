@@ -44,6 +44,7 @@ public class DeletePolicyCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         Policy policy = model.deletePolicy(clientId, policyId);
+        assert policy != null : "Policy to be deleted should exist in insurabook ";
         model.commitInsuraBook();
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(policy, 1)));
     }
