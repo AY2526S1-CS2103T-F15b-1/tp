@@ -52,7 +52,7 @@ public class InsuraBookParserTest {
     public void parseCommand_delete() throws Exception {
         DeleteClientCommand command = (DeleteClientCommand) parser.parseCommand(
                 DeleteClientCommand.COMMAND_WORD + " " + "-c_id" + ALICE.getClientId());
-        assertEquals(new DeleteClientCommand(ALICE), command);
+        assertEquals(new DeleteClientCommand(ALICE.getClientId()), command);
     }
 
     @Test
