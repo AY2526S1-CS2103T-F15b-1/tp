@@ -98,7 +98,7 @@ as space characters surrounding line-breaks may be omitted when copied over to t
 ---
 
 ### Viewing help : `help`
-<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
+<small>[(back to Contents)](#table-of-contents)</small>
 
 Shows a message explaining how to access the help page.  
 
@@ -114,7 +114,7 @@ Format: `help`
 ---
 
 ### Adding a client: `add`
-<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
+<small>[(back to Contents)](#table-of-contents)</small>
 
 Adds a client to InsuraBook. Use this command when you sign a new client and need to create their initial record. This
 is the first step to tracking all their contact information and policies in InsuraBook.
@@ -134,7 +134,7 @@ Examples:
 ---
 
 ### Adding a policy type: `add policy type`
-<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
+<small>[(back to Contents)](#table-of-contents)</small>
 
 Adds a new policy type to InsuraBook. Before you can assign policies to clients, define the available policy
 “products.” Use this command to add a new "product" (eg. "BRUHealth") to your system's catalog.
@@ -156,7 +156,7 @@ with policy type ID `BRW001`, optional description `Holistic savings plan`, and 
 ---
 
 ### Adding a policy to client: `add policy`
-<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
+<small>[(back to Contents)](#table-of-contents)</small>
 
 Adds a policy with expiry date to a client. When a client purchases one of your products, use this command to create
 that policy (with its ID and expiry date) and link it directly to their client record.
@@ -175,7 +175,7 @@ Examples:
 ---
 
 ### Adding a claim: `add claim`
-<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
+<small>[(back to Contents)](#table-of-contents)</small>
 
 Adds a new claim record to an existing policy for a specific client. Use this command to log claims made by clients against their
 policies, including the amount and date.
@@ -206,7 +206,7 @@ before adding a claim.
 ---
 
 ### Listing all clients: `list`
-<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
+<small>[(back to Contents)](#table-of-contents)</small>
 
 Shows a list of all clients in the InsuraBook. This is your main "view all" command. Use it any time you need to see
 a complete list of all clients currently stored in InsuraBook.
@@ -220,7 +220,7 @@ Format: `list`
 ---
 
 ### Editing a policy type: `edit policy type`
-<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
+<small>[(back to Contents)](#table-of-contents)</small>
 
 Edits an existing policy type in InsuraBook, in case of any wrong input. If you need to correct the name, premium, or
 description of a previously entered policy type, use `edit policy type`.
@@ -242,7 +242,7 @@ Examples:
 ---
 
 ### Editing a claim: `edit claim`
-<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
+<small>[(back to Contents)](#table-of-contents)</small>
 
 Updates the details of an existing claim. Use this command if you need to correct the amount, date, 
 or description of a previously filed claim.
@@ -267,7 +267,7 @@ Examples:
 ---
 
 ### Locating clients: `find`
-<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
+<small>[(back to Contents)](#table-of-contents)</small>
 
 Finds clients in InsuraBook by searching for keywords related to their Name or Client ID.
 
@@ -297,7 +297,7 @@ Examples:
 
 ---
 
-Searching by client's ID `-c_id`:
+**Searching by client's ID** `-c_id`:
 
 Searches for clients whose CLIENT_IDs match the specified IDs.
 
@@ -319,7 +319,7 @@ Examples:
 ---
 
 ### Deleting a client: `delete`
-<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
+<small>[(back to Contents)](#table-of-contents)</small>
 
 Deletes the specified client from InsuraBook. To permanently remove a client and all their associated data from
 InsuraBook, use this command.
@@ -340,7 +340,7 @@ Examples:
 ---
 
 ### Deleting a policy type: `delete policy type`
-<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
+<small>[(back to Contents)](#table-of-contents)</small>
 
 Deletes a policy type from InsuraBook. To remove a policy type (product) from your catalog, use this command.
 
@@ -359,7 +359,7 @@ Example:
 ---
 
 ### Deleting a policy from a client: `delete policy`
-<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
+<small>[(back to Contents)](#table-of-contents)</small>
 
 Deletes the specified policy previously saved under a client.
 
@@ -379,7 +379,7 @@ Example:
 ---
 
 ### Deleting a claim: `delete claim`
-<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
+<small>[(back to Contents)](#table-of-contents)</small>
 
 Deletes the specified claim of a client's policy from the InsuraBook.
 
@@ -405,7 +405,7 @@ Example: Let's say you need to delete claim `CL003` from policy `P101` for clien
 ---
 
 ### Changing UI View: `view`
-<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
+<small>[(back to Contents)](#table-of-contents)</small>
 
 Changes the view of the user interface. You may switch between 1 of 3 views. The view command lets you switch the main
 window's display to show either all clients, all policy types, or all policies for a single client
@@ -439,7 +439,7 @@ Examples:
 ---
 
 ### Clearing all entries: `clear`
-<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
+<small>[(back to Contents)](#table-of-contents)</small>
 
 Clears **ALL** entries from InsuraBook.
 
@@ -450,7 +450,7 @@ Format: `clear`
 ---
 
 ### Exiting the program: `exit`
-<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
+<small>[(back to Contents)](#table-of-contents)</small>
 
 Exits the program.
 
@@ -459,7 +459,7 @@ Format: `exit`
 ---
 
 ### Startup Summary & Alerts
-<a href=#table-of-contents style="font-size: 0.8em; color: #aaaaaa;">(back to Contents)</a>
+<small>[(back to Contents)](#table-of-contents)</small>
 
 To help you stay on top of your client relationships and urgent tasks, InsuraBook automatically displays 
 a summary of key alerts every time you launch the application.
@@ -501,8 +501,8 @@ Advanced users may edit it directly, but:
 
 <div markdown="span" class="alert alert-warning">
 <span style="color:orange">⚠️ **Caution:**</span>
-If your changes make the file invalid, InsuraBook will discard all data and start with an empty file.
-Backup before editing. Certain edits can cause unexpected behavior.
+If your changes make the file invalid, InsuraBook will backup all data separately and start with an empty file.
+You are advised to perform your own backup before editing. Certain edits can cause unexpected behavior.
 </div>
 
 ---
