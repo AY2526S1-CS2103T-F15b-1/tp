@@ -147,6 +147,16 @@ public class Client {
         return portfolio.removePolicy(policyId);
     }
 
+    /**
+     * Sets this Client's Portfolio to contain deep copies of all Policies
+     * from a given Portfolio.
+     *
+     * @param portfolio given Portfolio to import from
+     */
+    public void setPortfolio(Portfolio portfolio) {
+        this.portfolio.importFrom(portfolio);
+    }
+
     public void setPolicy(Policy target, Policy editedPolicy) {
         portfolio.setPolicy(target, editedPolicy);
     }

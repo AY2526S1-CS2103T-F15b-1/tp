@@ -98,11 +98,14 @@ public class EditCommand extends Command {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(clientToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(clientToEdit.getEmail());
 
-        // keep the same client ID
+        // keep the same client ID and portfolio
         InsuraDate birthday = clientToEdit.getBirthday();
         ClientId clientId = clientToEdit.getClientId();
 
-        return new Client(updatedName, updatedPhone, updatedEmail, birthday, clientId);
+        Client editedClient = new Client(updatedName, updatedPhone, updatedEmail, birthday, clientId);
+        editedClient.setPortfolio(clientToEdit.getPortfolio());
+
+        return editedClient;
     }
 
     @Override
