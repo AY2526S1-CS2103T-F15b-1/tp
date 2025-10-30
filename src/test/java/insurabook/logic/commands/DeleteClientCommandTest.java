@@ -16,12 +16,8 @@ import insurabook.logic.Messages;
 import insurabook.model.Model;
 import insurabook.model.ModelManager;
 import insurabook.model.UserPrefs;
-import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
-import insurabook.model.client.Email;
-import insurabook.model.client.Name;
-import insurabook.model.client.Phone;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for
@@ -32,9 +28,10 @@ public class DeleteClientCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_validIndexUnfilteredList_success() {
+    public void execute_validClientIdUnfilteredList_success() {
         Client clientToDelete = model.getFilteredClientList().get(INDEX_FIRST_PERSON.getZeroBased());
-        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(ALICE);
+        ClientId clientId = clientToDelete.getClientId();
+        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(clientId);
 
         String expectedMessage = String.format(DeleteClientCommand.MESSAGE_SUCCESS,
                 Messages.format(clientToDelete));
@@ -46,27 +43,20 @@ public class DeleteClientCommandTest {
     }
 
     @Test
-    public void execute_invalidIndexUnfilteredList_throwsCommandException() {
-        Client testClient = new Client(new Name("Bob"), new Phone("90000000"), new Email("bobtan@example.com"),
-                new InsuraDate("1970-01-01"), new ClientId("12345"));
-        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(testClient);
+    public void execute_invalidClientIdUnfilteredList_throwsCommandException() {
+        ClientId nonExistentClientId = new ClientId("99999");
+        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(nonExistentClientId);
 
-        assertCommandFailure(deleteClientCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(deleteClientCommand, model, DeleteClientCommand.MESSAGE_MISSING_CLIENT);
     }
-    //@Test
-    //public void execute_missingClientId_throwsCommandException() {
-    //    Name name = new Name("Bob");
-    //    ClientId clientId = new ClientId("");
-    //    Client invalidClient = new Client(name, clientId);
-    //    DeleteClientCommand deleteClientCommand = new DeleteClientCommand(invalidClient);
-    //    ModelStub modelStub = new ModelStubWithPerson(invalidClient);
 
     @Test
-    public void execute_validIndexFilteredList_success() {
+    public void execute_validClientIdFilteredList_success() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
         Client clientToDelete = model.getFilteredClientList().get(INDEX_FIRST_PERSON.getZeroBased());
-        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(ALICE);
+        ClientId clientId = clientToDelete.getClientId();
+        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(clientId);
 
         String expectedMessage = String.format(DeleteClientCommand.MESSAGE_SUCCESS,
                 Messages.format(clientToDelete));
@@ -79,31 +69,28 @@ public class DeleteClientCommandTest {
     }
 
     @Test
-    public void execute_invalidIndexFilteredList_throwsCommandException() {
+    public void execute_invalidClientIdFilteredList_throwsCommandException() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
-        Client testClient = new Client(new Name("Bob"), new Phone("90000000"), new Email("bobtan@example.com"),
-                new InsuraDate("1970-01-01"), new ClientId("12345"));
+        ClientId nonExistentClientId = new ClientId("99999");
 
-        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(testClient);
+        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(nonExistentClientId);
 
-        assertCommandFailure(deleteClientCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(deleteClientCommand, model, DeleteClientCommand.MESSAGE_MISSING_CLIENT);
     }
 
     @Test
     public void equals() {
-        Client firstClient = new Client(new Name("Bob"), new Phone("90000000"), new Email("bobtan@example.com"),
-                new InsuraDate("1970-01-01"), new ClientId("12345"));
-        Client secondClient = new Client(new Name("Amy"), new Phone("90000001"), new Email("amytan@example.com"),
-                new InsuraDate("1970-01-01"), new ClientId("54321"));
+        ClientId firstClientId = new ClientId("12345");
+        ClientId secondClientId = new ClientId("54321");
 
-        DeleteClientCommand deleteFirstCommand = new DeleteClientCommand(firstClient);
-        DeleteClientCommand deleteSecondCommand = new DeleteClientCommand(secondClient);
+        DeleteClientCommand deleteFirstCommand = new DeleteClientCommand(firstClientId);
+        DeleteClientCommand deleteSecondCommand = new DeleteClientCommand(secondClientId);
 
         // same object -> returns true
         assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
 
         // same values -> returns true
-        DeleteClientCommand deleteFirstCommandCopy = new DeleteClientCommand(firstClient);
+        DeleteClientCommand deleteFirstCommandCopy = new DeleteClientCommand(firstClientId);
         assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
 
         // different types -> returns false
@@ -112,14 +99,15 @@ public class DeleteClientCommandTest {
         // null -> returns false
         assertFalse(deleteFirstCommand.equals(null));
 
-        // different person -> returns false
+        // different clientId -> returns false
         assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
     }
 
     @Test
     public void toStringMethod() {
-        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(ALICE);
-        String expected = DeleteClientCommand.class.getCanonicalName() + "{toDelete=" + ALICE + "}";
+        ClientId clientId = new ClientId("12345");
+        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(clientId);
+        String expected = DeleteClientCommand.class.getCanonicalName() + "{clientId=" + clientId + "}";
         assertEquals(expected, deleteClientCommand.toString());
     }
 

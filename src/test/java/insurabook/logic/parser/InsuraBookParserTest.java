@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
-//import insurabook.logic.commands.AddClientCommand;
 import insurabook.logic.commands.ClearCommand;
 import insurabook.logic.commands.DeleteClientCommand;
 import insurabook.logic.commands.EditCommand;
@@ -26,6 +25,7 @@ import insurabook.logic.commands.ListCommand;
 import insurabook.logic.commands.ViewCommand;
 import insurabook.logic.parser.exceptions.ParseException;
 import insurabook.model.client.Client;
+import insurabook.model.client.ClientId;
 import insurabook.model.client.NameContainsKeywordsPredicate;
 import insurabook.testutil.EditPersonDescriptorBuilder;
 import insurabook.testutil.PersonBuilder;
@@ -53,7 +53,7 @@ public class InsuraBookParserTest {
     public void parseCommand_delete() throws Exception {
         DeleteClientCommand command = (DeleteClientCommand) parser.parseCommand(
                 DeleteClientCommand.COMMAND_WORD + " " + "-c_id" + ALICE.getClientId());
-        assertEquals(new DeleteClientCommand(ALICE), command);
+        assertEquals(new DeleteClientCommand(ALICE.getClientId()), command);
     }
 
     @Test
@@ -61,11 +61,11 @@ public class InsuraBookParserTest {
         Client client = new PersonBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(client).build();
         String commandString = EditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor);
+                + CliSyntax.PREFIX_CLIENT_ID + " 1 " + PersonUtil.getEditPersonDescriptorDetails(descriptor);
         System.out.println(commandString);
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
-        assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
+                + CliSyntax.PREFIX_CLIENT_ID + " 1 " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
+        assertEquals(new EditCommand(new ClientId("1"), descriptor), command);
     }
 
     @Test

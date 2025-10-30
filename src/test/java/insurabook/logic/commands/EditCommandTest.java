@@ -3,9 +3,7 @@ package insurabook.logic.commands;
 import static insurabook.logic.commands.CommandTestUtil.DESC_AMY;
 import static insurabook.logic.commands.CommandTestUtil.DESC_BOB;
 import static insurabook.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static insurabook.logic.commands.CommandTestUtil.assertCommandFailure;
 import static insurabook.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static insurabook.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static insurabook.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static insurabook.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static insurabook.testutil.TypicalClients.getTypicalAddressBook;
@@ -23,6 +21,7 @@ import insurabook.model.Model;
 import insurabook.model.ModelManager;
 import insurabook.model.UserPrefs;
 import insurabook.model.client.Client;
+import insurabook.model.client.ClientId;
 import insurabook.testutil.EditPersonDescriptorBuilder;
 import insurabook.testutil.PersonBuilder;
 
@@ -57,7 +56,7 @@ public class EditCommandTest {
         Client editedClient = personInList.withName(VALID_NAME_BOB).build();
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build();
-        EditCommand editCommand = new EditCommand(indexLastPerson, descriptor);
+        EditCommand editCommand = new EditCommand(lastClient.getClientId(), descriptor);
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_CLIENT_SUCCESS, Messages.format(editedClient));
 
@@ -69,8 +68,8 @@ public class EditCommandTest {
 
     @Test
     public void execute_noFieldSpecifiedUnfilteredList_success() {
-        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, new EditPersonDescriptor());
         Client editedClient = model.getFilteredClientList().get(INDEX_FIRST_PERSON.getZeroBased());
+        EditCommand editCommand = new EditCommand(editedClient.getClientId(), new EditPersonDescriptor());
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_CLIENT_SUCCESS, Messages.format(editedClient));
 
@@ -118,6 +117,8 @@ public class EditCommandTest {
     //    assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_CLIENT);
     //}
 
+    // note: test no longer needed, edit command no longer using index
+    /*
     @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredClientList().size() + 1);
@@ -125,12 +126,13 @@ public class EditCommandTest {
         EditCommand editCommand = new EditCommand(outOfBoundIndex, descriptor);
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-    }
+    }*/
 
     /**
      * Edit filtered list where index is larger than size of filtered list,
      * but smaller than size of address book
      */
+    /*
     @Test
     public void execute_invalidPersonIndexFilteredList_failure() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
@@ -143,14 +145,15 @@ public class EditCommandTest {
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
+    */
 
     @Test
     public void equals() {
-        final EditCommand standardCommand = new EditCommand(INDEX_FIRST_PERSON, DESC_AMY);
+        final EditCommand standardCommand = new EditCommand(new ClientId("1"), DESC_AMY);
 
         // same values -> returns true
         EditPersonDescriptor copyDescriptor = new EditPersonDescriptor(DESC_AMY);
-        EditCommand commandWithSameValues = new EditCommand(INDEX_FIRST_PERSON, copyDescriptor);
+        EditCommand commandWithSameValues = new EditCommand(new ClientId("1"), copyDescriptor);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -163,18 +166,18 @@ public class EditCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(INDEX_SECOND_PERSON, DESC_AMY)));
+        assertFalse(standardCommand.equals(new EditCommand(new ClientId("2"), DESC_AMY)));
 
         // different descriptor -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_PERSON, DESC_BOB)));
+        assertFalse(standardCommand.equals(new EditCommand(new ClientId("1"), DESC_BOB)));
     }
 
     @Test
     public void toStringMethod() {
-        Index index = Index.fromOneBased(1);
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
-        EditCommand editCommand = new EditCommand(index, editPersonDescriptor);
-        String expected = EditCommand.class.getCanonicalName() + "{index=" + index + ", editPersonDescriptor="
+        ClientId idToEdit = new ClientId("1");
+        EditCommand editCommand = new EditCommand(idToEdit, editPersonDescriptor);
+        String expected = EditCommand.class.getCanonicalName() + "{idToEdit=" + idToEdit + ", editPersonDescriptor="
                 + editPersonDescriptor + "}";
         assertEquals(expected, editCommand.toString());
     }

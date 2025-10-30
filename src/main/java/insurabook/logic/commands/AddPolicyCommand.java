@@ -57,6 +57,7 @@ public class AddPolicyCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         Policy policy = model.addPolicy(policyId, clientId, policyTypeId, expiryDate);
+        assert policy != null : "Added policy should not be null";
         model.commitInsuraBook();
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(policy, 0)));
     }

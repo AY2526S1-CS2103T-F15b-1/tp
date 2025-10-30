@@ -11,7 +11,6 @@ import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
 import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
-import insurabook.model.policytype.PolicyType;
 import insurabook.model.policytype.PolicyTypeId;
 
 /**
@@ -88,10 +87,6 @@ public class JsonAdaptedPolicy {
             throw new IllegalValueException(PolicyTypeId.MESSAGE_CONSTRAINTS);
         }
         final PolicyTypeId modelPolicyTypeId = new PolicyTypeId(policyTypeId);
-        final PolicyType modelPolicyType = insuraBook.getPolicyType(modelPolicyTypeId);
-        if (modelPolicyType == null) {
-            throw new IllegalValueException("PolicyType with ID " + policyTypeId + " not found in InsuraBook");
-        }
 
         if (expiryDate == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "expiry date"));
@@ -105,7 +100,7 @@ public class JsonAdaptedPolicy {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "claims"));
         }
 
-        return new Policy(modelPolicyId, modelClientId, modelPolicyType, modelDate);
+        return new Policy(modelPolicyId, modelClientId, modelPolicyTypeId, modelDate);
     }
 
     public List<JsonAdaptedClaim> getClaims() {

@@ -18,6 +18,7 @@ import insurabook.model.client.Client;
 import insurabook.model.client.exceptions.ClientDuplicateException;
 import insurabook.model.policies.Policy;
 import insurabook.model.policytype.PolicyType;
+import insurabook.model.policytype.PolicyTypeId;
 import insurabook.testutil.PersonBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -115,6 +116,11 @@ public class InsuraBookTest {
         @Override
         public ObservableList<Policy> getClientPolicyList() {
             return policies;
+        }
+
+        @Override
+        public PolicyType getPolicyType(PolicyTypeId id) {
+            return null;
         }
     }
 

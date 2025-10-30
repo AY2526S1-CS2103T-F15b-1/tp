@@ -78,7 +78,7 @@ class JsonAdaptedClient {
 
         if (phone == null) {
             throw new IllegalValueException(
-                    String.format(MISSING_FIELD_MESSAGE_FORMAT, InsuraDate.class.getSimpleName()));
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
         }
         if (!InsuraDate.isValidInsuraDate(phone)) {
             throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
@@ -87,7 +87,7 @@ class JsonAdaptedClient {
 
         if (email == null) {
             throw new IllegalValueException(
-                    String.format(MISSING_FIELD_MESSAGE_FORMAT, InsuraDate.class.getSimpleName()));
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
         }
         if (!InsuraDate.isValidInsuraDate(email)) {
             throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
@@ -139,7 +139,7 @@ class JsonAdaptedClient {
 
         if (phone == null) {
             throw new IllegalValueException(
-                    String.format(MISSING_FIELD_MESSAGE_FORMAT, InsuraDate.class.getSimpleName()));
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
         }
         if (!Phone.isValidPhone(phone)) {
             throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
@@ -148,7 +148,7 @@ class JsonAdaptedClient {
 
         if (email == null) {
             throw new IllegalValueException(
-                    String.format(MISSING_FIELD_MESSAGE_FORMAT, InsuraDate.class.getSimpleName()));
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
         }
         if (!Email.isValidEmail(email)) {
             throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
