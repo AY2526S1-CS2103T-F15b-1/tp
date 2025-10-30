@@ -38,10 +38,11 @@ public class Portfolio {
         this.policies = new UniquePolicyList();
 
         List<Policy> copiedPolicies = toCopy.getPolicies().asUnmodifiableObservableList().stream()
-                .map(policy -> new Policy(policy))
+                .map(Policy::new)
                 .collect(Collectors.toList());
 
         this.policies.setPolicies(copiedPolicies);
+        this.client = toCopy.getClient();
     }
 
     public insurabook.model.client.Client getClient() {
@@ -83,6 +84,22 @@ public class Portfolio {
 
     public void setPolicy(Policy target, Policy editedPolicy) {
         policies.setPolicy(target, editedPolicy);
+    }
+
+    /**
+     * Deep copies all policies in given Portfolio into this Portfolio.
+     * Existing policies in this Portfolio are deleted.
+     *
+     * @param portfolio given Portfolio to copy from
+     */
+    public void importFrom(Portfolio portfolio) {
+        this.policies = new UniquePolicyList();
+
+        List<Policy> copiedPolicies = portfolio.getPolicies().asUnmodifiableObservableList().stream()
+                .map(Policy::new)
+                .collect(Collectors.toList());
+
+        this.policies.setPolicies(copiedPolicies);
     }
 
     /**
