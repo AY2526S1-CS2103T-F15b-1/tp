@@ -19,7 +19,9 @@ import insurabook.model.UserPrefs;
 import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
+import insurabook.model.client.Email;
 import insurabook.model.client.Name;
+import insurabook.model.client.Phone;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for
@@ -45,7 +47,8 @@ public class DeleteClientCommandTest {
 
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() {
-        Client testClient = new Client(new Name("Bob"), new InsuraDate("1970-01-01"), new ClientId("12345"));
+        Client testClient = new Client(new Name("Bob"), new Phone("90000000"), new Email("bobtan@example.com"),
+                new InsuraDate("1970-01-01"), new ClientId("12345"));
         DeleteClientCommand deleteClientCommand = new DeleteClientCommand(testClient);
 
         assertCommandFailure(deleteClientCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -78,7 +81,8 @@ public class DeleteClientCommandTest {
     @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
-        Client testClient = new Client(new Name("Bob"), new InsuraDate("1970-01-01"), new ClientId("12345"));
+        Client testClient = new Client(new Name("Bob"), new Phone("90000000"), new Email("bobtan@example.com"),
+                new InsuraDate("1970-01-01"), new ClientId("12345"));
 
         DeleteClientCommand deleteClientCommand = new DeleteClientCommand(testClient);
 
@@ -87,8 +91,10 @@ public class DeleteClientCommandTest {
 
     @Test
     public void equals() {
-        Client firstClient = new Client(new Name("Bob"), new InsuraDate("1970-01-01"), new ClientId("12345"));
-        Client secondClient = new Client(new Name("Amy"), new InsuraDate("1970-01-01"), new ClientId("54321"));
+        Client firstClient = new Client(new Name("Bob"), new Phone("90000000"), new Email("bobtan@example.com"),
+                new InsuraDate("1970-01-01"), new ClientId("12345"));
+        Client secondClient = new Client(new Name("Amy"), new Phone("90000001"), new Email("amytan@example.com"),
+                new InsuraDate("1970-01-01"), new ClientId("54321"));
 
         DeleteClientCommand deleteFirstCommand = new DeleteClientCommand(firstClient);
         DeleteClientCommand deleteSecondCommand = new DeleteClientCommand(secondClient);

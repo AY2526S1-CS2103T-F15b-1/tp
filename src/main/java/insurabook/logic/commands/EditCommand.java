@@ -2,6 +2,8 @@ package insurabook.logic.commands;
 
 import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
 import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
+import static insurabook.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static insurabook.logic.parser.CliSyntax.PREFIX_PHONE;
 import static insurabook.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static java.util.Objects.requireNonNull;
 
@@ -38,8 +40,11 @@ public class EditCommand extends Command {
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: " + PREFIX_CLIENT_ID + " CLIENT_ID "
             + "[" + PREFIX_CLIENT_NAME + " NAME] "
+            + "[" + PREFIX_PHONE + "PHONE] "
+            + "[" + PREFIX_EMAIL + "EMAIL]\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_CLIENT_ID + " 1"
-            + PREFIX_CLIENT_NAME + " John";
+            + PREFIX_CLIENT_NAME + " John"
+            + PREFIX_PHONE + "91234567";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited client: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -97,12 +102,17 @@ public class EditCommand extends Command {
         assert clientToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(clientToEdit.getName());
+        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(clientToEdit.getPhone());
+        Email updatedEmail = editPersonDescriptor.getEmail().orElse(clientToEdit.getEmail());
 
-        // keep the same client ID
+        // keep the same client ID and portfolio
         InsuraDate birthday = clientToEdit.getBirthday();
         ClientId clientId = clientToEdit.getClientId();
 
-        return new Client(updatedName, birthday, clientId);
+        Client editedClient = new Client(updatedName, updatedPhone, updatedEmail, birthday, clientId);
+        editedClient.setPortfolio(clientToEdit.getPortfolio());
+
+        return editedClient;
     }
 
     @Override
