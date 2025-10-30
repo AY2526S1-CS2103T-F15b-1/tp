@@ -1,0 +1,52 @@
+@startuml
+!include style.puml
+!define MAIN_COLOUR #800040
+!define COMMONS_COLOR #CCCDC6
+skinparam ArrowFontStyle plain
+
+Participant ": MainApp" as MainApp MAIN_COLOUR
+
+box Storage STORAGE_COLOR_T1
+participant ": StorageManager" as StorageManager STORAGE_COLOR
+participant ": JsonInsuraBookStorage" as JsonInsuraBookStorage STORAGE_COLOR
+participant ": JsonSerializableInsuraBook" as JsonSerializableInsuraBook STORAGE_COLOR
+participant ": JsonAdaptedPolicyType" as JsonAdaptedPolicyType STORAGE_COLOR
+participant ": JsonAdaptedClient" as JsonAdaptedClient STORAGE_COLOR
+participant ": JsonAdaptedPolicy" as JsonAdaptedPolicy STORAGE_COLOR
+participant ": JsonAdaptedClaim" as JsonAdaptedClaim STORAGE_COLOR
+end box
+
+Participant ": JsonUtil" as JsonUtil COMMONS_COLOR
+
+create StorageManager
+MainApp -> StorageManager
+
+MainApp -> StorageManager : readInsuraBook()
+activate StorageManager
+
+StorageManager -> JsonInsuraBookStorage : readInsuraBook(filePath)
+activate JsonInsuraBookStorage
+
+JsonInsuraBookStorage -> JsonUtil : readJsonFile()
+activate JsonUtil
+
+JsonUtil -> JsonUtil : deserialize JSON data
+JsonUtil --> JsonInsuraBookStorage : deserializeInsuraBook
+deactivate JsonUtil
+
+JsonInsuraBookStorage -> JsonSerializableInsuraBook : toModelType()
+activate JsonSerializableInsuraBook
+JsonSerializableInsuraBook -> JsonAdaptedPolicyType : toModelType()
+JsonSerializableInsuraBook -> JsonAdaptedClient : toModelType()
+JsonSerializableInsuraBook -> JsonAdaptedPolicy : toModelType()
+JsonSerializableInsuraBook -> JsonAdaptedClaim : toModelType()
+
+JsonSerializableInsuraBook --> JsonInsuraBookStorage : insuraBook
+deactivate JsonSerializableInsuraBook
+
+JsonInsuraBookStorage --> StorageManager : insuraBook
+deactivate JsonInsuraBookStorage
+
+StorageManager --> MainApp : insuraBook
+deactivate StorageManager
+@enduml
