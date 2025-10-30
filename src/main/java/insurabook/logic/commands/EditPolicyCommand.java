@@ -70,6 +70,7 @@ public class EditPolicyCommand extends Command {
                 .findFirst()
                 .orElseThrow(() -> new CommandException("The specified client ID does not exist."));
         Policy policyToEdit = clientToEdit.getPortfolio().getPolicies().getPolicy(policyId);
+        assert policyToEdit != null : "Policy to be edited should exist in the client's portfolio ";
         Policy editedPolicy = createEditedPolicy(policyToEdit, editPolicyDescriptor);
 
         model.setPolicy(policyToEdit, editedPolicy);
