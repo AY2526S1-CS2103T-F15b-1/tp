@@ -22,14 +22,14 @@ public class AddClientCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a client to InsuraBook. "
             + "Parameters: "
-            + PREFIX_CLIENT_NAME + "NAME "
-            + PREFIX_PHONE + "PHONE "
-            + PREFIX_EMAIL + "EMAIL "
-            + PREFIX_BIRTHDAY + "BIRTHDAY "
-            + PREFIX_CLIENT_ID + "CLIENT_ID\n"
+            + PREFIX_CLIENT_NAME + " NAME "
+            + PREFIX_PHONE + " PHONE "
+            + PREFIX_EMAIL + " EMAIL "
+            + PREFIX_BIRTHDAY + " BIRTHDAY "
+            + PREFIX_CLIENT_ID + " CLIENT_ID\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_CLIENT_NAME + "John Doe "
-            + PREFIX_CLIENT_ID + "12345";
+            + PREFIX_CLIENT_NAME + " John Doe "
+            + PREFIX_CLIENT_ID + " 12345";
 
     public static final String MESSAGE_SUCCESS = "New client added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This client already exists.";

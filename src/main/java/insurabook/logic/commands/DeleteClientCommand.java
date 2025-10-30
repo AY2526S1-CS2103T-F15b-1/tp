@@ -19,9 +19,9 @@ public class DeleteClientCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes a client from InsuraBook. "
             + "Parameters: "
-            + PREFIX_CLIENT_ID + "CLIENT_ID\n"
+            + PREFIX_CLIENT_ID + " CLIENT_ID\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_CLIENT_ID + "12345";
+            + PREFIX_CLIENT_ID + " 12345";
 
     public static final String MESSAGE_SUCCESS = "Deleted Client with Client ID: %1$s";
     public static final String MESSAGE_MISSING_CLIENT = "This client does not exist.";
