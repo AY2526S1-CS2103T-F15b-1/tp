@@ -138,7 +138,7 @@ public class MainWindow extends UiPart<Stage> {
 
         clientListPanel = new ClientListPanel(clients);
         policyTypeListPanel = new PolicyTypeListPanel(policyTypes);
-        policyListPanel = new PolicyListPanel(policies);
+        policyListPanel = new PolicyListPanel(policies, logic);
 
         clientsNode = clientListPanel.getRoot();
         policyTypesNode = policyTypeListPanel.getRoot();

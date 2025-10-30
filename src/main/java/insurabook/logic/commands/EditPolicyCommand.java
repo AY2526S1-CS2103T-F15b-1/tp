@@ -20,7 +20,7 @@ import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
 import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
-import insurabook.model.policytype.PolicyType;
+import insurabook.model.policytype.PolicyTypeId;
 
 /**
  * Edits the details of an existing policy for a client.
@@ -70,9 +70,11 @@ public class EditPolicyCommand extends Command {
                 .findFirst()
                 .orElseThrow(() -> new CommandException("The specified client ID does not exist."));
         Policy policyToEdit = clientToEdit.getPortfolio().getPolicies().getPolicy(policyId);
+        assert policyToEdit != null : "Policy to be edited should exist in the client's portfolio ";
         Policy editedPolicy = createEditedPolicy(policyToEdit, editPolicyDescriptor);
 
         model.setPolicy(policyToEdit, editedPolicy);
+        model.commitInsuraBook();
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPolicy, 0)));
     }
 
@@ -84,10 +86,10 @@ public class EditPolicyCommand extends Command {
         // Fields that are not edited are taken from the original policy
         PolicyId policyId = policyToEdit.getPolicyId();
         ClientId clientId = policyToEdit.getClientId();
-        PolicyType policyType = policyToEdit.getPolicyType();
+        PolicyTypeId policyTypeId = policyToEdit.getPolicyTypeId();
         List<Claim> claims = policyToEdit.getClaims();
 
-        return new Policy(policyId, clientId, policyType, updatedExpiryDate, claims);
+        return new Policy(policyId, clientId, policyTypeId, updatedExpiryDate, claims);
     }
 
     /**
