@@ -40,11 +40,11 @@ public class EditCommand extends Command {
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: " + PREFIX_CLIENT_ID + " CLIENT_ID "
             + "[" + PREFIX_CLIENT_NAME + " NAME] "
-            + "[" + PREFIX_PHONE + "PHONE] "
-            + "[" + PREFIX_EMAIL + "EMAIL]\n"
-            + "Example: " + COMMAND_WORD + " " + PREFIX_CLIENT_ID + " 1"
-            + PREFIX_CLIENT_NAME + " John"
-            + PREFIX_PHONE + "91234567";
+            + "[" + PREFIX_PHONE + " PHONE] "
+            + "[" + PREFIX_EMAIL + " EMAIL]\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_CLIENT_ID + " 1 "
+            + PREFIX_CLIENT_NAME + " John "
+            + PREFIX_PHONE + " 91234567";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited client: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";

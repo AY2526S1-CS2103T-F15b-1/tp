@@ -5,10 +5,7 @@ import static insurabook.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
 import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
 import static insurabook.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static insurabook.logic.parser.CliSyntax.PREFIX_INDEX;
 import static insurabook.logic.parser.CliSyntax.PREFIX_PHONE;
-import static insurabook.logic.parser.CliSyntax.PREFIX_POLICY_TYPE;
-import static insurabook.logic.parser.CliSyntax.PREFIX_POLICY_TYPE_ID;
 import static insurabook.logic.parser.CliSyntax.PREFIX_TAG;
 import static java.util.Objects.requireNonNull;
 
@@ -18,13 +15,10 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import insurabook.commons.core.index.Index;
 import insurabook.logic.commands.EditCommand;
 import insurabook.logic.commands.EditCommand.EditPersonDescriptor;
-import insurabook.logic.commands.EditPolicyTypeCommand;
 import insurabook.logic.parser.exceptions.ParseException;
 import insurabook.model.client.ClientId;
-import insurabook.model.policytype.PolicyTypeId;
 import insurabook.model.tag.Tag;
 
 /**
@@ -73,7 +67,7 @@ public class EditCommandParser implements Parser<EditCommand> {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
 
-        return new EditCommand(index, editPersonDescriptor);
+        return new EditCommand(idToEdit, editPersonDescriptor);
     }
 
     /**
