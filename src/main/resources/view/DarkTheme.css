@@ -151,6 +151,7 @@
     -fx-font-size: 10pt;
     -fx-text-fill: white;
     -fx-border-radius: 5px;
+    -fx-wrap-text: true;
 }
 
 .result-display-pane {
