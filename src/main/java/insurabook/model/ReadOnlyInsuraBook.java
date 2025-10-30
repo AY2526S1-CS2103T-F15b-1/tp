@@ -3,6 +3,7 @@ package insurabook.model;
 import insurabook.model.client.Client;
 import insurabook.model.policies.Policy;
 import insurabook.model.policytype.PolicyType;
+import insurabook.model.policytype.PolicyTypeId;
 import javafx.collections.ObservableList;
 
 /**
@@ -24,4 +25,10 @@ public interface ReadOnlyInsuraBook {
      * Returns an unmodifiable view of a client's policy list.
      */
     ObservableList<Policy> getClientPolicyList();
+
+    /**
+     * Finds and returns a PolicyType by its ID.
+     */
+    PolicyType getPolicyType(PolicyTypeId id);
 }
+

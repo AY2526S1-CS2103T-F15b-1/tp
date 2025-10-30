@@ -1,5 +1,6 @@
 package insurabook.ui;
 
+import insurabook.logic.Logic;
 import insurabook.model.policies.Policy;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,20 +14,23 @@ import javafx.scene.layout.Region;
 public class PolicyListPanel extends UiPart<Region> {
     private static final String FXML = "PolicyListPanel.fxml";
 
+    private final Logic logic;
+
     @FXML
     private ListView<Policy> policyListView;
 
     /**
      * Creates a {@code PersonListPanel} with the given {@code ObservableList}.
      */
-    public PolicyListPanel(ObservableList<Policy> policyList) {
+    public PolicyListPanel(ObservableList<Policy> policyList, Logic logic) {
         super(FXML);
+        this.logic = logic;
         policyListView.setItems(policyList);
         policyListView.setCellFactory(listView -> new PolicyListViewCell());
     }
 
     /**
-     * Custom {@code ListCell} that displays the graphics of a {@code Person} using a {@code PersonCard}.
+     * Custom {@code ListCell} that displays the graphics of a {@code Policy} using a {@code PolicyCard}.
      */
     class PolicyListViewCell extends ListCell<Policy> {
         @Override
@@ -37,7 +41,7 @@ public class PolicyListPanel extends UiPart<Region> {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new PolicyCard(policy, getIndex() + 1).getRoot());
+                setGraphic(new PolicyCard(policy, getIndex() + 1, logic).getRoot());
             }
         }
     }
