@@ -4,7 +4,7 @@ import static insurabook.testutil.Assert.assertThrows;
 import static insurabook.testutil.TypicalClients.ALICE;
 import static insurabook.testutil.TypicalClients.HOON;
 import static insurabook.testutil.TypicalClients.IDA;
-import static insurabook.testutil.TypicalClients.getTypicalAddressBook;
+import static insurabook.testutil.TypicalClients.getTypicalInsuraBook;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -63,7 +63,7 @@ public class JsonInsuraBookStorageTest {
     @Test
     public void readAndSaveInsuraBook_allInOrder_success() throws Exception {
         Path filePath = testFolder.resolve("TempInsuraBook.json");
-        InsuraBook original = getTypicalAddressBook();
+        InsuraBook original = getTypicalInsuraBook();
         JsonInsuraBookStorage jsonInsuraBookStorage = new JsonInsuraBookStorage(filePath);
 
         // Save in new file and read back

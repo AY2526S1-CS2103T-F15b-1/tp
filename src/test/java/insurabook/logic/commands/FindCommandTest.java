@@ -5,7 +5,7 @@ import static insurabook.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static insurabook.testutil.TypicalClients.CARL;
 import static insurabook.testutil.TypicalClients.ELLE;
 import static insurabook.testutil.TypicalClients.FIONA;
-import static insurabook.testutil.TypicalClients.getTypicalAddressBook;
+import static insurabook.testutil.TypicalClients.getTypicalInsuraBook;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -24,8 +24,8 @@ import insurabook.model.client.NameContainsKeywordsPredicate;
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
 public class FindCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    private Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalInsuraBook(), new UserPrefs());
+    private Model expectedModel = new ModelManager(getTypicalInsuraBook(), new UserPrefs());
 
     @Test
     public void equals() {

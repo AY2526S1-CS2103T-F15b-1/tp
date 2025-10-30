@@ -62,9 +62,9 @@ public class TypicalClients {
     private TypicalClients() {} // prevents instantiation
 
     /**
-     * Returns an {@code AddressBook} with all the typical persons.
+     * Returns an {@code InsuraBook} with all the typical clients.
      */
-    public static InsuraBook getTypicalAddressBook() {
+    public static InsuraBook getTypicalInsuraBook() {
         InsuraBook ib = new InsuraBook();
         for (Client client : getTypicalClients()) {
             ib.addClient(client);

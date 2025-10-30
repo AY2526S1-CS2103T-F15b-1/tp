@@ -12,7 +12,7 @@ import insurabook.ui.enums.View;
 import javafx.collections.transformation.FilteredList;
 
 /**
- * Lists all persons in the address book to the user.
+ * Lists all clients in the InsuraBook to the user.
  * Usage: view -client (to view all clients in InsuraBook)
  * or view -policy (for all policy types available in InsuraBook)
  * or view -c_id CLIENT_ID (for viewing policies of a specific client)

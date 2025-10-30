@@ -1,6 +1,6 @@
 package insurabook.storage;
 
-import static insurabook.testutil.TypicalClients.getTypicalAddressBook;
+import static insurabook.testutil.TypicalClients.getTypicalInsuraBook;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -54,7 +54,7 @@ public class StorageManagerTest {
          * {@link JsonAddressBookStorage} class.
          * More extensive testing of UserPref saving/reading is done in {@link JsonAddressBookStorageTest} class.
          */
-        InsuraBook original = getTypicalAddressBook();
+        InsuraBook original = getTypicalInsuraBook();
         storageManager.saveInsuraBook(original);
         ReadOnlyInsuraBook retrieved = storageManager.readInsuraBook().get();
         assertEquals(original, new InsuraBook(retrieved));

@@ -3,16 +3,14 @@ package insurabook.logic.commands;
 import static insurabook.logic.commands.CommandTestUtil.assertCommandFailure;
 import static insurabook.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static insurabook.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static insurabook.testutil.TypicalClients.getTypicalInsuraBook;
 import static insurabook.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static insurabook.testutil.TypicalClients.ALICE;
-import static insurabook.testutil.TypicalClients.getTypicalAddressBook;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import insurabook.logic.Messages;
 import insurabook.model.Model;
 import insurabook.model.ModelManager;
 import insurabook.model.UserPrefs;
@@ -25,7 +23,7 @@ import insurabook.model.client.ClientId;
  */
 public class DeleteClientCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalInsuraBook(), new UserPrefs());
 
     @Test
     public void execute_validClientIdUnfilteredList_success() {
@@ -34,7 +32,7 @@ public class DeleteClientCommandTest {
         DeleteClientCommand deleteClientCommand = new DeleteClientCommand(clientId);
 
         String expectedMessage = String.format(DeleteClientCommand.MESSAGE_SUCCESS,
-                Messages.format(clientToDelete));
+                clientId);
         ModelManager expectedModel = new ModelManager(model.getInsuraBook(), new UserPrefs());
 
         expectedModel.deleteClient(clientToDelete);
@@ -59,7 +57,7 @@ public class DeleteClientCommandTest {
         DeleteClientCommand deleteClientCommand = new DeleteClientCommand(clientId);
 
         String expectedMessage = String.format(DeleteClientCommand.MESSAGE_SUCCESS,
-                Messages.format(clientToDelete));
+                clientId);
 
         Model expectedModel = new ModelManager(model.getInsuraBook(), new UserPrefs());
         expectedModel.deleteClient(clientToDelete);

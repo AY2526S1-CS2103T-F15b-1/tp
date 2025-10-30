@@ -4,9 +4,8 @@ import static insurabook.logic.commands.CommandTestUtil.DESC_AMY;
 import static insurabook.logic.commands.CommandTestUtil.DESC_BOB;
 import static insurabook.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static insurabook.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static insurabook.testutil.TypicalClients.getTypicalInsuraBook;
 import static insurabook.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static insurabook.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static insurabook.testutil.TypicalClients.getTypicalAddressBook;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -30,7 +29,7 @@ import insurabook.testutil.PersonBuilder;
  */
 public class EditCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalInsuraBook(), new UserPrefs());
 
     //@Test
     //public void execute_allFieldsSpecifiedUnfilteredList_success() {
