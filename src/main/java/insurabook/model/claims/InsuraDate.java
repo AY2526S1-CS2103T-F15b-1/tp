@@ -66,12 +66,7 @@ public class InsuraDate {
      */
     public boolean isAfterToday() {
         LocalDate today = LocalDate.now();
-        String[] dateParts = this.date.split("-");
-        int year = Integer.parseInt(dateParts[0]);
-        int month = Integer.parseInt(dateParts[1]);
-        int day = Integer.parseInt(dateParts[2]);
-        LocalDate givenDate = LocalDate.of(year, month, day);
-        return givenDate.isAfter(today);
+        return this.date.isAfter(today);
     }
 
     /**
