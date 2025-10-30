@@ -28,7 +28,9 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 ### Architecture
 
-<img src="images/ArchitectureDiagram.png" width="280" />
+<p align="center">
+    <img src="images/ArchitectureDiagram.png" width="280" />
+</p>
 
 The ***Architecture Diagram*** given above explains the high-level design of the App.
 
@@ -36,7 +38,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [`Main`](https://github.com/AY2526S1-CS2103T-F15b-1/tp/blob/master/src/main/java/insurabook/Main.java) and [`MainApp`](https://github.com/AY2526S1-CS2103T-F15b-1/tp/blob/master/src/main/java/insurabook/MainApp.java)) is in charge of the app launch and shut down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -51,9 +53,12 @@ The bulk of the app's work is done by the following four components:
 
 **How the architecture components interact with each other**
 
-The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
+The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues
+the command `delete -c_id C101`.
 
-<img src="images/ArchitectureSequenceDiagram.png" width="574" />
+<p align="center">
+    <img src="images/ArchitectureSequenceDiagram.png" width="574" />
+</p>
 
 Each of the four main components (also shown in the diagram above),
 
@@ -62,92 +67,114 @@ Each of the four main components (also shown in the diagram above),
 
 For example, the `Logic` component defines its API in the `Logic.java` interface and implements its functionality using the `LogicManager.java` class which follows the `Logic` interface. Other components interact with a given component through its interface rather than the concrete class (reason: to prevent outside component's being coupled to the implementation of a component), as illustrated in the (partial) class diagram below.
 
-<img src="images/ComponentManagers.png" width="300" />
+<p align="center">
+    <img src="images/ComponentManagers.png" width="300" />
+</p>
 
 The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2526S1-CS2103T-F15b-1/tp/blob/master/src/main/java/insurabook/ui/Ui.java)
 
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`,
+`StatusBarFooter`, `HelpWindow`, `PolicyListPanel`, `PolicyTypeListPanel` etc. All these, including the `MainWindow`,
+inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the
+visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files
+that are in the `src/main/resources/view` folder. For example, the layout of the
+[`MainWindow`](https://github.com/AY2526S1-CS2103T-F15b-1/tp/blob/master/src/main/java/insurabook/ui/MainWindow.java)
+is specified in [`MainWindow.fxml`](https://github.com/AY2526S1-CS2103T-F15b-1/tp/blob/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
 * executes user commands using the `Logic` component.
 * listens for changes to `Model` data so that the UI can be updated with the modified data.
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
-* depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
+* depends on some classes in the `Model` component, as it displays `Client` object residing in the `Model`.
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/AY2526S1-CS2103T-F15b-1/tp/blob/master/src/main/java/insurabook/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
-<img src="images/LogicClassDiagram.png" width="550"/>
+<p align="center">
+    <img src="images/LogicClassDiagram.png" width="550"/>
+</p>
 
-The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete 1")` API call as an example.
+The sequence diagram below illustrates the interactions within the `Logic` component, taking
+`execute("delete -c_id C101")` API call as an example.
 
 ![Interactions Inside the Logic Component for the `delete 1` Command](images/DeleteSequenceDiagram.png)
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for
+`DeleteClientCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
 </div>
 
 How the `Logic` component works:
 
-1. When `Logic` is called upon to execute a command, it is passed to an `AddressBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
-1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteCommand`) which is executed by the `LogicManager`.
+1. When `Logic` is called upon to execute a command, it is passed to an `InsuraBookParser` object which in turn creates
+2. a parser that matches the command (e.g., `DeleteClientCommandParser`) and uses it to parse the command.
+1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteClientCommand`)
+2. which is executed by the `LogicManager`.
 1. The command can communicate with the `Model` when it is executed (e.g. to delete a client).<br>
    Note that although this is shown as a single step in the diagram above (for simplicity), in the code it can take several interactions (between the command object and the `Model`) to achieve.
 1. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
 
 Here are the other classes in `Logic` (omitted from the class diagram above) that are used for parsing a user command:
 
-<img src="images/ParserClasses.png" width="600"/>
+<p align="center">
+    <img src="images/ParserClasses.png" width="600"/>
+</p>
 
 How the parsing works:
-* When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
-* All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
+* When called upon to parse a user command, the `InsuraBookParser` class creates an `XYZCommandParser` (`XYZ` is a
+placeholder for the specific command name e.g., `AddClientCommandParser`) which uses the other classes shown above to
+parse the user command and create a `XYZCommand` object (e.g., `AddClientCommand`) which the `InsuraBookParser`
+returns back as a `Command` object.
+* All `XYZCommandParser` classes (e.g., `AddClientCommandParser`, `DeleteClientCommandParser`, ...) inherit from
+the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2526S1-CS2103T-F15b-1/tp/blob/master/src/main/java/insurabook/model/Model.java)
 
-<img src="images/ModelClassDiagram.png" width="450" />
-
+<p align="center">
+    <img src="images/ModelClassDiagram.png" width="450" />
+</p>
 
 The `Model` component,
 
-* stores the address book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
-* stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
-* does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
-
-<img src="images/BetterModelClassDiagram.png" width="450" />
-
-</div>
-
+* stores the insurabook data i.e., all `Client` objects (which are contained in a `UniqueClientList` object).
+* stores the currently 'selected' `Client` objects (e.g., results of a search query) as a separate _filtered_ list
+which is exposed to outsiders as an unmodifiable `ObservableList<Client>` that can be 'observed' e.g. the UI can be
+bound to this list so that the UI automatically updates when the data in the list change.
+* stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a
+`ReadOnlyUserPref` objects.
+* does not depend on any of the other three components (as the `Model` represents data entities of the domain, they
+should make sense on their own without depending on other components)
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2526S1-CS2103T-F15b-1/tp/blob/master/src/main/java/insurabook/storage/Storage.java)
 
-<img src="images/StorageClassDiagram.png" width="550" />
+<p align="center">
+    <img src="images/StorageClassDiagram.png" width="550" />
+</p>
 
 The `Storage` component,
-* can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
-* inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
-* depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
+* can save both insurabook data and user preference data in JSON format, and read them back into corresponding objects.
+* inherits from both `InsuraBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only
+the functionality of only one is needed).
+* depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects
+that belong to the `Model`)
 
 ### Common classes
 
-Classes used by multiple components are in the `seedu.address.commons` package.
+Classes used by multiple components are in the `insurabook.commons` package.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -155,94 +182,104 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### \[Proposed\] Undo/redo feature
+### Storage Component
 
-#### Proposed Implementation
+#### Purpose and Overview
+The Storage component is responsible for all read/write operations on the user's hard drive. It handles the storage of
+both the InsuraBook data and user preferences in JSON format. The component ensures that data is correctly serialized 
+and deserialized when saving to or loading from disk between application sessions.
 
-The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
+All data is stored in a single JSON file named, typically located at `data/insurabook.json` within the home directory.
 
-* `VersionedAddressBook#commit()` — Saves the current address book state in its history.
-* `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
-* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
+#### Architecture Design
+Our `Model` classes (like `Client`, `Policy`, etc.) are too complex and designed to be independent of the storage
+format, which are not suitable for direct JSON serialization.
 
-These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
+To solve this, we introduce a parallel set of simple "adapter" classes (e.g., `JsonAdaptedClient`, `JsonAdaptedPolicy`,
+etc.). These classes act as intermediaries between the `Model` classes and the JSON format.
 
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
+**Key Classes:**
+* `Storage`: An interface that defines the high-level methods `readInsurabook()` and `saveInsurabook()`. The rest of
+the application (e.g., `LogicManager`) only depends on this interface.
 
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
+* `StorageManager`: The main concrete implementation of `Storage`. It delegates its tasks to `JsonInsurabookStorage`.
 
-![UndoRedoState0](images/UndoRedoState0.png)
+* `JsonInsurabookStorage`: This class directly handles the serialization/deserialization of data to and from the JSON
+file. It uses the Jackson JSON library.
 
-Step 2. The user executes `delete 5` command to delete the 5th client in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+* `JsonSerializableInsurabook`: A helper class that represents the top-level JSON object (e.g., containing a
+`List<JsonAdaptedClient>`).
 
-![UndoRedoState1](images/UndoRedoState1.png)
+* `JsonAdaptedClient`: `Client`'s adapter class. It has simple `String` and `List` fields (like `name`, `c_id`,
+`policies`). It is responsible for converting a `Client` object to a JSON-friendly format and vice versa.
 
-Step 3. The user executes `add n/David …​` to add a new client. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
+* `JsonAdaptedPolicyType`: `PolicyType`'s adapter class for the `PolicyType` object.
 
-![UndoRedoState2](images/UndoRedoState2.png)
+* `JsonAdaptedPolicy`: `Policy`'s adapter class for the `Policy` object.
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`.
+* `JsonAdaptedClaim`: `Claim`'s adapter class for the `Claim` object.
 
-</div>
+#### Data Flow
+1. **Saving Data:**
+   - This sequence is triggered every time a command that modifies data (like `AddCommand`, `DeleteCommand`, etc.) is
+   successfully executed.
+    <img src="images/StorageSavingDataSequenceDiagram.png" width="600" />
+2. **Loading Data:**
+   - This sequence occurs during application startup when the InsuraBook data is loaded from disk.
+    <img src="images/StorageLoadingDataSequenceDiagram.png" width="600" />
 
-Step 4. The user now decides that adding the client was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
+#### Handling Data Corruption
+It is possible that the JSON file on disk may become corrupted or contain invalid data. If the JSON file is malformed,
+Jackson will throw a `JsonParseException` during deserialization. If the JSON structure is valid but fails our
+internal data validation (e.g., missing required fields, invalid values), we throw an `IllegalValueException`.
 
-![UndoRedoState3](images/UndoRedoState3.png)
+To handle this, the `StorageManager` catches these exceptions and wraps them in a `DataLoadingException`, which is then
+1. Log the error details for debugging purposes.
+2. Move the corrupted file to a backup location (e.g., `data/insurabook_backup_TIMESTAMP.json`) to prevent further issues.
+3. Initialize a new empty InsuraBook data file to allow the application to continue functioning.
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
-than attempting to perform the undo.
+**Result:** The user sees a warning, and the application starts with a clean slate, as if it's the first launch.
+Their corrupted data is not lost, but saved in the backup file for manual inspection.
 
-</div>
+#### Design Considerations
+**Aspect: How to map in-memory Model objects into JSON file?**
+Converting complex Model objects directly to JSON can be challenging due to their intricate relationships and data
+types, which may not be directly serializable.
 
-The following sequence diagram shows how an undo operation goes through the `Logic` component:
+**Alternative 1 (current choice): Use adapter classes**
+* **Description:** This approach involves creating a set of "adapter" classes (e.g., `JsonAdaptedClient`,
+`JsonAdaptedPolicy`) that are simple POJOs (Plain Old Java Objects). The `StorageManager` is responsible for converting
+the complex `Model` objects, which contain JavaFX properties, into these simple adapter objects before serialization.
+Conversely, it converts the adapter objects back into `Model` objects (running validation) after deserialization.
+* **Pros:**
+  * **Strong Decoupling:** Decouples the storage format from the Model classes (e.g. `Client`, `Policy`), so they can
+  freely use complex JavaFX properties without breaking serialization, allowing both to evolve independently.
+  * **Centralized Validation:** Provides a clear and robust location for data validation. The `toModelType()` method in
+  each adapter class is the perfect place to check for invalid data (e.g., missing IDs, invalid date formats) before
+  the real model objects are created.
+  * **Resilience to Changes:** If the Model classes change (e.g., adding new fields), we only need to update the adapter
+  classes and the conversion logic in `StorageManager`, rather than modifying the Model classes themselves.
+* **Cons:**
+  * **Increased Complexity:** Introduces additional classes and conversion logic, which adds some complexity  to the
+  codebase and adds one more layer of abstraction.
 
-![UndoSequenceDiagram](images/UndoSequenceDiagram-Logic.png)
+**Alternative 2: Direct Serialization**
+* **Description:** This approach would involve making the `Model` classes (e.g., `Client`, `Policy`) directly
+serializable to JSON by adding Jackson annotations or implementing custom serializers/deserializers.
+* **Pros:**
+  * **Simplicity:** Fewer classes to manage, as there are no adapter classes. The serialization logic is contained
+  within the Model classes themselves.
+* **Cons:**
+* **Tight Coupling:** Couples the `Model` classes to the storage format. The `Model` classes would need to be aware of
+serialization concerns, which can clutter their design, making it harder to change one without affecting the other.
+* **Limited Flexibility:** Complex `Model` classes with JavaFX properties may not serialize cleanly, leading to
+potential data loss or corruption.
+* **Scattered Validation:** Data validation logic would be scattered across multiple Model classes, making it harder
+to maintain and ensure consistency.
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-
-</div>
-
-Similarly, how an undo operation goes through the `Model` component is shown below:
-
-![UndoSequenceDiagram](images/UndoSequenceDiagram-Model.png)
-
-The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
-
-</div>
-
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
-
-![UndoRedoState4](images/UndoRedoState4.png)
-
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
-
-![UndoRedoState5](images/UndoRedoState5.png)
-
-The following activity diagram summarizes what happens when a user executes a new command:
-
-<img src="images/CommitActivityDiagram.png" width="250" />
-
-#### Design considerations:
-
-**Aspect: How undo & redo executes:**
-
-* **Alternative 1 (current choice):** Saves the entire address book.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
-
-* **Alternative 2:** Individual command knows how to undo/redo by
-  itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the client being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
-
-_{more aspects and alternatives to be added}_
-
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
+We chose **Alternative 1** because the benefits of decoupling and robust validation are critical for this application.
+The `Model` must remain independent of storage to allow flexibility. While Alternative 1 requires more setup, it makes
+the entire application safer, more maintainable, and less prone to errors from corrupted data or future refactoring.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -266,7 +303,7 @@ _{Explain here how the data archiving feature will be implemented}_
 * can type fast
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: 
+**Value proposition**:
 
 * Allows easier tracking of clients, policies, and claims
 * Performs operations on clients data quickly through CLI
@@ -304,7 +341,26 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `InsuraBook` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case 1: Add a new policy for a client**
+#### Use case 1: Add a new client
+
+**MSS**
+
+1. User requests to view all clients
+2. InsuraBook shows the list of clients
+3. User ensures the client does not already exist
+4. User requests to add a new client with the required details
+5. InsuraBook shows the updated list of clients with the new client added
+
+    Use case ends.
+
+**Extensions**
+* 3a. Client already exists.
+
+  * 3a1. InsuraBook shows an error message.
+
+    Use case ends.
+
+#### Use case 2: Add a new policy for a client
 
 **MSS**
 
@@ -323,16 +379,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
   * 4a1. InsuraBook shows an error message.
 
-    Use case: Add a new client
-    Resume at step 3.
+    Use case: Add a new client and resume at step 3.
 
 * 5a. Policy type does not exist.
 
-  * 5a1. InsuraBook shows an error message.
+  * 5a1. InsuraBook shows an error message and resumes at step 2.
 
-    Resume at step 2.
-
-**Use case 2: Add a claim on a policy**
+#### Use case 3: Add a claim on a policy
 
 **MSS**
 
@@ -391,40 +444,107 @@ testers are expected to do more *exploratory* testing.
 
 1. Initial launch
 
-   1. Download the jar file and copy into an empty folder
+   * Download the jar file and copy into an empty folder. Double-click the jar file.
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   * **Expected:** Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
-1. Saving window preferences
+2. Saving window preferences
 
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
+   * Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-   1. Re-launch the app by double-clicking the jar file.<br>
-       Expected: The most recent window size and location is retained.
+   * Re-launch the app by double-clicking the jar file.<br>
 
-1. _{ more test cases …​ }_
+   * **Expected:** The most recent window size and location is retained.
+
+### Adding a client
+1. Adding a client with all fields specified
+    * Test cases: `add -n John Doe -phone 98765432 -email johndoe@gmail.com -b 1970-01-01 -c_id C101`
+    * **Expected:** Client "John Doe" is added to the client list with his information. Success message is shown in the
+   result display.
+
+2. Adding a client with missing required fields
+    * Test cases: `add -n John Doe -phone 98765432 -b 1970-01-01 -c_id C101` (missing email field)
+    * **Expected:** Error message indicating invalid command format is shown in the result display, together with its
+   correct command usage.
+
+3. Adding a client with invalid field values
+    * Test cases: `add -n John Doe -phone 98765432 -email johndoe123 -b 1970-01-01 -c_id C101` (invalid email field)
+    * **Expected:** Error message indicating the email format is invalid is shown in the result display.
+
+4. Adding a duplicate client
+    * Test cases: Add a client "John Doe" as in test case 1. Then, repeat the same command to add "John Doe" again.
+    * **Expected:** Error message indicating that a client already exists is shown in the result display.
 
 ### Deleting a client
+> **Pre-requisite:** At least one client exists in the client list. In this example, we assume client C101 exists while
+> client C999 does not exist.
+1. Deleting an existing client
+    * Test cases: `delete -c_id C101` (assuming client with c_id C101 exists)
+    * **Expected:** Client with c_id C101 is removed from the client list. Success message is shown in the result display.
 
-1. Deleting a client while all clients are being shown
+2. Deleting a non-existing client
+    * Test cases: `delete -c_id C999` (assuming client with c_id C999 does not exist)
+    * **Expected:** Error message indicating that no such client exists is shown in the result display.
 
-   1. Prerequisites: List all clients using the `list` command. Multiple clients in the list.
+### Editing a client
+> **Pre-requisite:** At least one client exists in the client list. In this example, we assume client C101 exists.
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+> **Warnings:** Birthdate and c_id fields cannot be edited.
 
-   1. Test case: `delete 0`<br>
-      Expected: No client is deleted. Error details shown in the status message. Status bar remains the same.
+1. Editing an existing client with one field changed
+    * Test cases: `edit -c_id C101 -n Jane Doe`
+    * **Expected:** Client with c_id C101 has her name changed to "Jane Doe". Success message is shown in the result
+   display.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+2. Editing an existing client with multiple fields changed
+    * Test cases: `edit -c_id C101 -phone 91234567 -email janedoe@gmail.com`
+    * **Expected:** Client with c_id C101 has her phone and email changed accordingly. Success message is shown in the
+   result display.
 
-1. _{ more test cases …​ }_
+3. Editing without specifying any fields to change
+    * Test cases: `edit -c_id C101`
+    * **Expected:** Error message indicating that no fields to edit were specified is shown in the result display.
+
+### Finding a client
+> **Warnings:** Keywords must be complete words. Partial words will not match. For detailed matching rules, refer to the user guide.
+1. Finding clients by name keyword
+    * Test cases: `find -n John`
+    * **Expected:** All clients whose names contain the keyword "John" (case-insensitive) are shown in the client list.
+
+2. Finding clients by client ID
+    * Test cases: `find -c_id C101`
+    * **Expected:** Client with c_id C101 is shown in the client list.
+> **Note:** Multiple parameters are not allowed in a single find command. For example, `find -n John -c_id C101` is invalid.
+
+### Viewing clients or policy's types
+1. Viewing all clients
+    * Test cases: `view -client`
+    * **Expected:** All clients are shown in the client list.
+
+2. Viewing all policy types
+   * Test cases: `view -policy`
+   * **Expected:** All policy types are shown in the policy type list panel.
+
+### Viewing policies of a client
+> **Pre-requisite:** At least one client exists in the client list. In this example, we assume client C101 exists while
+> client C999 does not exist.
+1. Viewing policies of an existing client
+    * Test cases: `view -c_id C101` (add some policies and claims to client C101 beforehand, details in user guide)
+    * **Expected:** Policies of client with c_id C101 are shown in the policy list panel.
+
+2. Viewing policies of a non-existing client
+    * Test cases: `view -c_id C999` (assuming client with c_id C999 does not exist)
+    * **Expected:** Error message indicating that no such client exists is shown in the result display.
 
 ### Saving data
 
-1. Dealing with missing/corrupted data files
-
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
-
-1. _{ more test cases …​ }_
+1. Dealing with missing data files
+    * Locate the data folder (default location: `<user home>/insurabook/data/`).
+    * Delete or rename the `insurabook.json` file.
+    * Launch the app by double-clicking the jar file.
+    * **Expected:** App launches successfully with an empty client list. No error messages are shown.
+2. Dealing with corrupted data files
+    * Locate the data folder (default location: `<user home>/insurabook/data/`).
+    * Open the `insurabook.json` file using a text editor. Corrupt the file by deleting some random parts of the file.
+    * Launch the app by double-clicking the jar file.
+    * **Expected:** App launches successfully with an empty client list.
