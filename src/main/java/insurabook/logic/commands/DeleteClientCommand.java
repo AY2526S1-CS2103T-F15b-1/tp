@@ -8,6 +8,8 @@ import insurabook.logic.Messages;
 import insurabook.logic.commands.exceptions.CommandException;
 import insurabook.model.Model;
 import insurabook.model.client.Client;
+import insurabook.model.client.ClientId;
+import javafx.collections.transformation.FilteredList;
 
 /**
  * Deletes a person identified using it's displayed index from the address book.
@@ -25,24 +27,28 @@ public class DeleteClientCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Deleted Person: %1$s";
     public static final String MESSAGE_MISSING_CLIENT = "This client does not exist.";
 
-    private final Client toDelete;
+    private final ClientId clientId;
 
     /**
      * Creates a DeleteCommand to delete the specified {@code Person}
      */
-    public DeleteClientCommand(Client client) {
-        requireNonNull(client);
-        toDelete = client;
+    public DeleteClientCommand(ClientId clientId) {
+        requireNonNull(clientId);
+        this.clientId = clientId;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        if (!model.hasPerson(toDelete)) {
+        FilteredList<Client> clients = model.getFilteredClientList()
+                .filtered(client -> client.getClientId().equals(clientId));
+
+        if (clients.isEmpty()) {
             throw new CommandException(MESSAGE_MISSING_CLIENT);
         }
 
+        Client toDelete = clients.get(0);
         model.deletePerson(toDelete);
         model.commitInsuraBook();
 
@@ -61,13 +67,13 @@ public class DeleteClientCommand extends Command {
         }
 
         DeleteClientCommand otherDeleteClientCommand = (DeleteClientCommand) other;
-        return toDelete.equals(otherDeleteClientCommand.toDelete);
+        return clientId.equals(otherDeleteClientCommand.clientId);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("toDelete", toDelete)
+                .add("clientId", clientId)
                 .toString();
     }
 }
