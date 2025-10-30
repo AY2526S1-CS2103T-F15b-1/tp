@@ -49,4 +49,5 @@ deactivate JsonInsuraBookStorage
 
 StorageManager --> MainApp : insuraBook
 deactivate StorageManager
+
 @enduml
