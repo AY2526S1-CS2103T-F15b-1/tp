@@ -19,6 +19,7 @@ a terminal.
   - [Adding a policy to client: `add policy`](#adding-a-policy-to-client-add-policy)
   - [Adding a claim: `add claim`](#adding-a-claim-add-claim)
   - [Listing all clients: `list`](#listing-all-clients-list)
+  - [Editing a client's details: `edit`](#editing-a-client-edit)
   - [Editing a policy type: `edit policy type`](#editing-a-policy-type-edit-policy-type)
   - [Editing a policy: `edit policy`](#editing-a-policy-edit-policy)
   - [Editing a claim: `edit claim`](#editing-a-claim-edit-claim)
@@ -121,17 +122,18 @@ Format: `help`
 Adds a client to InsuraBook. Use this command when you sign a new client and need to create their initial record. This
 is the first step to tracking all their contact information and policies in InsuraBook.
 
-Format: `add -n NAME -b BIRTHDATE -c_id CLIENT_ID`
+Format: `add -n NAME -phone PHONE_NUMBER -email EMAIL -b BIRTHDATE -c_id CLIENT_ID`
 
 Examples:
-* `add -n John Doe -b 2002-01-01 -c_id 123` adds a client name `John Doe` with birthdate `2002-01-01` and client ID
-`123`.
+* `add -n John Doe -phone 90000001 -email johndoe@example.com -b 2002-01-01 -c_id 123` adds a client name `John Doe` 
+with phone number `90000001`, email `johndoe@example.com`, birthdate `2002-01-01` and client ID `123`.
 
 <p align="center">
     <img alt="img.png" height="300" src="images/addClient.png" width="500"/>
 </p>
 
-* `add -n Betty Cheng -b 2000-01-01 -c_id C1` adds a client name `Betty Cheng` with client ID `C1`.
+* `add -n Betty Cheng -phone 99900001 -email bettycheng@example.com -b 2000-01-01 -c_id C1` 
+adds a client name `Betty Cheng` with client ID `C1`.
 
 ---
 
@@ -221,6 +223,21 @@ Format: `list`
 <p align="center">
     <img alt="img.png" height="300" src="images/list.png" width="500"/>
 </p>
+
+---
+
+### Editing a client: `edit`
+<small>[(back to Contents)](#table-of-contents)</small>
+
+Allows you to edit a client's
+- name
+- phone number
+- email
+
+Format:
+- `edit -c_id CLIENT_ID -n NEW_NAME`
+- `edit -c_id CLIENT_ID -phone NEW_PHONE_NUMBER`
+- `edit -c_id CLIENT_ID -email EMAIL`
 
 ---
 
@@ -584,7 +601,7 @@ off-screen.
 
 Action | Format                                                                                                                  | Examples
 ---|-------------------------------------------------------------------------------------------------------------------------|---
-**Add Client** | `add -n NAME -c_id CLIENT_ID`                                                                                           | `add -n John Doe -c_id 123`
+**Add Client** | `add -n NAME -phone PHONE_NUMBER -email EMAIL -b BIRTHDAY -c_id CLIENT_ID`                                              | `add -n John Doe -phone 90000001 -email johndoe@example.com -b 2001-01-01 -c_id 123`
 **Add Policy Type** | `add policy type -pt_n POLICY_TYPE_NAME -pt_id POLICY_TYPE_ID [-d DESCRIPTION] [-pr PREMIUM]`                           | `add policy type -pt BRUWealth -pt_id BRW001 -d Holistic savings plan -pr 1000`
 **Add Policy** | `add policy -p_id POLICY_ID -c_id CLIENT_ID -pt_id POLICY_TYPE_ID -exp EXPIRY_DATE`                                     | `add policy -p_id 101 -c_id 123 -pt_id P02 -exp 2025-10-01`
 **Add Claim** | `add claim -c_id CLIENT_ID -p_id POLICY_ID -amt CLAIM_AMOUNT -date CLAIM_DATE [-desc DESCRIPTION]`                      | `add claim -c_id 123 -p_id 101 -amt 1000 -date 2025-10-01 -desc Car accident`
@@ -593,11 +610,15 @@ Action | Format                                                                 
 **Delete Policy Type** | `delete policy type -pt_n POLICY_TYPE_NAME -pt_id POLICY_TYPE_ID`                                                       | `delete policy type -pt BRUWealth -pt_id BRW001`
 **Delete Policy** | `delete policy -c_id CLIENT_ID -p_id POLICY_ID`                                                                         | `delete -c_id 123 -p_id 101`
 **Delete Claim** | `delete claim -c_id CLIENT_ID -p_id POLICY_ID -cl_id CLAIM_ID`                                                          | `delete -c_id 123 -p_id 101 -cl_id C001`
+**Edit Client Name** | `edit -c_id CLIENT_ID -n NEW_NAME`                                                                                      | `edit policy -c_id 123 -n John Doe 2`
+**Edit Client Phone** | `edit -c_id CLIENT_ID -phone NEW_PHONE_NUMBER`                                                                          | `edit policy -c_id 123 -phone 99900001`
+**Edit Client Email** | `edit -c_id CLIENT_ID -email NEW_EMAIL`                                                                                 | `edit policy -c_id 123 -email johndoe2@example.com`
 **Edit Policy Type** | `edit policy type -pt_id POLICY_TYPE_ID [-pt_n POLICY_TYPE_NAME] [-desc DESCRIPTION] [-pr PREMIUM]`                     | `edit policy type -pt_id BRH001 -pt_n BRUHealthExtra -pr 1000`
-**Edit Policy** | `edit policy -c_id CLIENT_ID -p_id POLICY_ID [-exp EXPIRY_DATE]`                                                             | `edit policy -c_id 123 -p_id 101 -exp 2026-12-31`
+**Edit Policy** | `edit policy -c_id CLIENT_ID -p_id POLICY_ID [-exp EXPIRY_DATE]`                                                        | `edit policy -c_id 123 -p_id 101 -exp 2026-12-31`
 **Edit Claim** | `edit claim -c_id CLIENT_ID -p_id POLICY_ID -cl_id CLAIM_ID [-amt CLAIM_AMOUNT] [-date CLAIM_DATE] [-desc DESCRIPTION]` | `edit claim -c_id 123 -p_id 101 -cl_id C0001 -amt 1500 -desc Heart surgery`
 **Find** | `find FLAG [KEYWORDS_RELATING_TO_FLAG]`                                                                                 | `find -n John` , `find -c_id 123 345`
 **View** | `view FLAG [CLIENT_ID]`                                                                                                 | `view -policy`, `view -client`, `view -c_id 123`
 **List** | `list`                                                                                                                  | `list`
+**Undo** | `undo`                                                                                                                  | `undo`
 **Help** | `help`                                                                                                                  | `help`
 **Exit** | `exit`                                                                                                                  | `exit`
