@@ -1,5 +1,6 @@
 package insurabook.logic.commands;
 
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
 import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
 import static insurabook.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static java.util.Objects.requireNonNull;
@@ -11,7 +12,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-import insurabook.commons.core.index.Index;
 import insurabook.commons.util.CollectionUtil;
 import insurabook.commons.util.ToStringBuilder;
 import insurabook.logic.Messages;
@@ -36,40 +36,36 @@ public class EditCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
             + "by the index number used in the displayed person list. "
             + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: CLIENT_ID "
-            + "[" + PREFIX_CLIENT_NAME + "NAME] "
-            + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_CLIENT_NAME + "John";
+            + "Parameters: " + PREFIX_CLIENT_ID + " CLIENT_ID "
+            + "[" + PREFIX_CLIENT_NAME + " NAME] "
+            + "Example: " + COMMAND_WORD + " " + PREFIX_CLIENT_ID + " 1"
+            + PREFIX_CLIENT_NAME + " John";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
+    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited client: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_NO_MATCHING_CLIENT = "No client found matching ID %1$s";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This client already exists in the address book.";
 
-    private final Index index;
+    private final ClientId idToEdit;
     private final EditPersonDescriptor editPersonDescriptor;
 
     /**
-     * @param index of the person in the filtered person list to edit
+     * @param idToEdit of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
-    public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
-        requireNonNull(index);
+    public EditCommand(ClientId idToEdit, EditPersonDescriptor editPersonDescriptor) {
+        requireNonNull(idToEdit);
         requireNonNull(editPersonDescriptor);
 
-        this.index = index;
+        this.idToEdit = idToEdit;
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Client> lastShownList = model.getFilteredClientList();
 
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        Client clientToEdit = lastShownList.get(index.getZeroBased());
+        Client clientToEdit = findClient(model.getFilteredClientList());
         Client editedClient = createEditedPerson(clientToEdit, editPersonDescriptor);
 
         if (!clientToEdit.isSamePerson(editedClient) && model.hasPerson(editedClient)) {
@@ -80,6 +76,17 @@ public class EditCommand extends Command {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         model.commitInsuraBook();
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedClient)));
+    }
+
+    /**
+     * Finds Client to edit by idToEdit.
+     */
+    private Client findClient(List<Client> clients) throws CommandException {
+        Optional<Client> clientToEdit = clients.stream()
+                .filter(x -> x.getClientId().equals(idToEdit))
+                .findFirst();
+        return clientToEdit.orElseThrow(() ->
+                new CommandException(String.format(MESSAGE_NO_MATCHING_CLIENT, idToEdit)));
     }
 
     /**
@@ -110,14 +117,14 @@ public class EditCommand extends Command {
         }
 
         EditCommand otherEditCommand = (EditCommand) other;
-        return index.equals(otherEditCommand.index)
+        return idToEdit.equals(otherEditCommand.idToEdit)
                 && editPersonDescriptor.equals(otherEditCommand.editPersonDescriptor);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("index", index)
+                .add("idToEdit", idToEdit)
                 .add("editPersonDescriptor", editPersonDescriptor)
                 .toString();
     }
