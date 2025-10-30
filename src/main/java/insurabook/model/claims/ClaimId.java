@@ -13,7 +13,7 @@ public class ClaimId {
             "Id should be in the format of CLxxx where x is a digit (0-9).";
 
     // The format of the claim ID must start with 'CL' followed by one or more digits.
-    public static final String VALIDATION_REGEX = "CL[0-9]+";
+    public static final String VALIDATION_REGEX = "CL[0-9]{3}";
 
     private final String claimId;
 

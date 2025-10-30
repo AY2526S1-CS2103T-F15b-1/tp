@@ -137,6 +137,11 @@ public interface Model {
     void setClaim(Claim target, Claim editedClaim);
 
     /**
+     * Returns the claim based on clientId, policyId and claimId.
+     */
+    Claim getClaim(ClientId clientId, PolicyId policyId, ClaimId claimId);
+
+    /**
      * Adds the given policy.
      * {@code policy} must not already exist in the address book.
      */

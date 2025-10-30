@@ -154,7 +154,7 @@ public class Policy {
      * @param claimId to remove
      * @return removed claim
      */
-    public Claim removeClaim(ClaimId claimId) {
+    public Claim removeClaim(ClaimId claimId) throws ClaimNotFoundException {
         Claim claim = this.claim.stream()
                 .filter(c -> c.getClaimId().equals(claimId))
                 .findFirst()
@@ -172,4 +172,21 @@ public class Policy {
             this.claim.set(index, editedClaim);
         }
     }
+
+    /**
+     * Gets claim in policy
+     */
+    public Claim getClaim(ClaimId claimId) throws ClaimNotFoundException {
+        return this.claim.stream()
+                .filter(c -> c.getClaimId().equals(claimId))
+                .findFirst()
+                .orElseThrow(ClaimNotFoundException::new);
+    }
+
+    /*
+     * Problem:
+     * How do we add/delete if we are using id only.
+     * PolicyType constraints implies multiple policy types may have the same id
+     */
+
 }
