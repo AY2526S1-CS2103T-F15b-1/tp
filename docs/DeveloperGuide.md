@@ -270,6 +270,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 * Allows easier tracking of clients, policies, and claims
 * Performs operations on clients data quickly through CLI
+* Helps agents stay on top of tasks with automated reminders for client birthdays and expiring policies.
 
 
 ### User stories
@@ -279,15 +280,25 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | Priority | As a …​                         | I want to …​                                                | So that I can…​                                                          |
 |----------|---------------------------------|-------------------------------------------------------------|--------------------------------------------------------------------------|
 | `* * *`  | insurance agent                 | add clients to the app                                      | start tracking their policies and claims                                 |
+| `* * *`  | insurance agent                 | edit client's information                                   | update client details as needed                                          |
 | `* * *`  | insurance agent                 | delete clients from the app                                 | remove records for clients I no longer manage                            |
+| `* * *`  | insurance agent                 | add a new policy type (product) to the system               | define the insurance products I offer before selling them.               |
+| `* * *`  | insurance agent                 | edit an existing policy type's details                      | correct or update my product catalog                                     |
+| `* * *`  | insurance agent                 | delete a policy type                                        | remove products I no longer offer                                        |
 | `* * *`  | insurance agent                 | see the expiry date and details (type) of a client’s policy | address client concerns quickly when asked                               |
 | `* * *`  | insurance agent                 | add policies to a client’s profile                          | keep track of the latest policies my clients are covered under           |
+| `* * *`  | insurance agent                 | edit an existing policy's expiry date                       | update a policy that has been renewed or corrected                       |
 | `* * *`  | insurance agent                 | delete policies from a client’s profile                     | ensure only the latest policies my clients are covered under are tracked |
 | `* * *`  | insurance agent                 | add claims to a client’s profile                            | keep track of new claims as they come in                                 |
+| `* * *`  | insurance agent                 | edit an existing claim's details                            | update claim details as needed                                           |
 | `* * *`  | insurance agent                 | delete claims from a client’s profile                       | remove resolved or incorrect claims so the records stay accurate         |
+| `* * *`  | insurance agent                 | search for a client by name or policy number                | locate a client easily and find the information I needed                 |
+| `* * *`  | insurance agent                 | view the app through a client view or a policy view         | directly look at policies or clients                                     |
+| `* *`    | insurance agent                 | receive reminders for upcoming policy expirations           | proactively reach out to clients to renew their policies                 |
+| `* *`    | insurance agent                 | receive reminders for client birthdays                      | maintain good client relationships by acknowledging their birthdays      |
+| `* *`    | insurance agent                 | undo my last action that changed data                       | quickly revert a mistake                                                 |
 | `* * *`  | first-time insurance agent user | easily launch the app                                       | start saving client details without much unnecessary procedures          |
-| `* * *`  | new user                        | search for a client by name or policy number                | locate a client easily and find the information I needed                 |
-| `* * *`  | new user                        | view the app through a client view or a policy view         | directly look at policies or clients                                     |
+
 
 ### Use cases
 
