@@ -28,7 +28,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 
 /**
- * Represents the in-memory model of the address book data.
+ * Represents the in-memory model of the insura book data.
  */
 public class ModelManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
@@ -103,8 +103,8 @@ public class ModelManager implements Model {
     //=========== Filtered Person List Accessors =============================================================
 
     /**
-     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
-     * {@code versionedAddressBook}
+     * Returns an unmodifiable view of the list of {@code Client} backed by the internal list of
+     * {@code versionedInsuraBook}
      */
     @Override
     public ObservableList<Client> getFilteredClientList() {
@@ -112,7 +112,7 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void updateFilteredPersonList(Predicate<Client> predicate) {
+    public void updateFilteredClientList(Predicate<Client> predicate) {
         requireNonNull(predicate);
         filteredClients.setPredicate(predicate);
     }
@@ -178,22 +178,22 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public boolean hasPerson(Client client) {
+    public boolean hasClient(Client client) {
         return insuraBook.hasClient(client);
     }
 
     @Override
-    public void deletePerson(Client target) {
+    public void deleteClient(Client target) {
         insuraBook.removeClient(target);
     }
 
     @Override
-    public void addPerson(Client client) {
+    public void addClient(Client client) {
         insuraBook.addClient(client);
     }
 
     @Override
-    public void setPerson(Client target, Client editedClient) {
+    public void setClient(Client target, Client editedClient) {
         requireAllNonNull(target, editedClient);
 
         insuraBook.setClient(target, editedClient);

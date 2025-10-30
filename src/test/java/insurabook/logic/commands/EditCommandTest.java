@@ -8,7 +8,7 @@ import static insurabook.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static insurabook.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static insurabook.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static insurabook.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static insurabook.testutil.TypicalPersons.getTypicalAddressBook;
+import static insurabook.testutil.TypicalClients.getTypicalAddressBook;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -43,7 +43,7 @@ public class EditCommandTest {
     //            Messages.format(editedClient));
 
     //    Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-    //    expectedModel.setPerson(model.getFilteredClientList().get(0), editedClient);
+    //    expectedModel.setClient(model.getFilteredClientList().get(0), editedClient);
 
     //    assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     //}
@@ -59,10 +59,10 @@ public class EditCommandTest {
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build();
         EditCommand editCommand = new EditCommand(indexLastPerson, descriptor);
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedClient));
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_CLIENT_SUCCESS, Messages.format(editedClient));
 
         Model expectedModel = new ModelManager(new InsuraBook(model.getInsuraBook()), new UserPrefs());
-        expectedModel.setPerson(lastClient, editedClient);
+        expectedModel.setClient(lastClient, editedClient);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
@@ -72,7 +72,7 @@ public class EditCommandTest {
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, new EditPersonDescriptor());
         Client editedClient = model.getFilteredClientList().get(INDEX_FIRST_PERSON.getZeroBased());
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedClient));
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_CLIENT_SUCCESS, Messages.format(editedClient));
 
         Model expectedModel = new ModelManager(new InsuraBook(model.getInsuraBook()), new UserPrefs());
 
@@ -92,7 +92,7 @@ public class EditCommandTest {
     //            Messages.format(editedClient));
 
     //    Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-    //    expectedModel.setPerson(model.getFilteredClientList().get(0), editedClient);
+    //    expectedModel.setClient(model.getFilteredClientList().get(0), editedClient);
 
     //    assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     //}
@@ -103,7 +103,7 @@ public class EditCommandTest {
     //    EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(firstClient).build();
     //    EditCommand editCommand = new EditCommand(INDEX_SECOND_PERSON, descriptor);
 
-    //    assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PERSON);
+    //    assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_CLIENT);
     //}
 
     //@Test
@@ -115,7 +115,7 @@ public class EditCommandTest {
     //    EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON,
     //            new EditPersonDescriptorBuilder(clientInList).build());
 
-    //    assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PERSON);
+    //    assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_CLIENT);
     //}
 
     @Test

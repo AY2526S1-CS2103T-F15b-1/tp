@@ -1,10 +1,10 @@
 package insurabook.storage;
 
 import static insurabook.testutil.Assert.assertThrows;
-import static insurabook.testutil.TypicalPersons.ALICE;
-import static insurabook.testutil.TypicalPersons.HOON;
-import static insurabook.testutil.TypicalPersons.IDA;
-import static insurabook.testutil.TypicalPersons.getTypicalAddressBook;
+import static insurabook.testutil.TypicalClients.ALICE;
+import static insurabook.testutil.TypicalClients.HOON;
+import static insurabook.testutil.TypicalClients.IDA;
+import static insurabook.testutil.TypicalClients.getTypicalAddressBook;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -19,8 +19,8 @@ import insurabook.commons.exceptions.DataLoadingException;
 import insurabook.model.InsuraBook;
 import insurabook.model.ReadOnlyInsuraBook;
 
-public class JsonAddressBookStorageTest {
-    private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "JsonAddressBookStorageTest");
+public class JsonInsuraBookStorageTest {
+    private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "JsonInsuraBookStorageTest");
 
     @TempDir
     public Path testFolder;
@@ -47,22 +47,22 @@ public class JsonAddressBookStorageTest {
 
     @Test
     public void read_notJsonFormat_exceptionThrown() {
-        assertThrows(DataLoadingException.class, () -> readInsuraBook("notJsonFormatAddressBook.json"));
+        assertThrows(DataLoadingException.class, () -> readInsuraBook("notJsonFormatInsuraBook.json"));
     }
 
     @Test
     public void readInsuraBook_invalidPersonAddressBook_throwDataLoadingException() {
-        assertThrows(DataLoadingException.class, () -> readInsuraBook("invalidPersonAddressBook.json"));
+        assertThrows(DataLoadingException.class, () -> readInsuraBook("invalidClientInsuraBook.json"));
     }
 
     @Test
     public void readInsuraBook_invalidAndValidPersonAddressBook_throwDataLoadingException() {
-        assertThrows(DataLoadingException.class, () -> readInsuraBook("invalidAndValidPersonAddressBook.json"));
+        assertThrows(DataLoadingException.class, () -> readInsuraBook("invalidAndValidClientInsuraBook.json"));
     }
 
     @Test
     public void readAndSaveInsuraBook_allInOrder_success() throws Exception {
-        Path filePath = testFolder.resolve("TempAddressBook.json");
+        Path filePath = testFolder.resolve("TempInsuraBook.json");
         InsuraBook original = getTypicalAddressBook();
         JsonInsuraBookStorage jsonInsuraBookStorage = new JsonInsuraBookStorage(filePath);
 
@@ -92,7 +92,7 @@ public class JsonAddressBookStorageTest {
     }
 
     /**
-     * Saves {@code addressBook} at the specified {@code filePath}.
+     * Saves {@code insuraBook} at the specified {@code filePath}.
      */
     private void saveInsuraBook(ReadOnlyInsuraBook insuraBook, String filePath) {
         try {

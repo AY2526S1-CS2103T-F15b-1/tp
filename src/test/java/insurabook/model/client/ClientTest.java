@@ -1,9 +1,9 @@
 package insurabook.model.client;
 
 //import static insurabook.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static insurabook.testutil.TypicalPersons.ALICE;
-//import static insurabook.testutil.TypicalPersons.BOB;
-//import static org.junit.jupiter.api.Assertions.assertEquals;
+import static insurabook.testutil.TypicalClients.ALICE;
+//import static insurabook.testutil.TypicalClients.BOB;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

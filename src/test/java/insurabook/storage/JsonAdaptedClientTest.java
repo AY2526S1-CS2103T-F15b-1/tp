@@ -2,7 +2,7 @@ package insurabook.storage;
 
 import static insurabook.storage.JsonAdaptedClient.MISSING_FIELD_MESSAGE_FORMAT;
 import static insurabook.testutil.Assert.assertThrows;
-import static insurabook.testutil.TypicalPersons.BENSON;
+import static insurabook.testutil.TypicalClients.BENSON;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;

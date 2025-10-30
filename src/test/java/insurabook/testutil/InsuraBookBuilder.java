@@ -4,9 +4,9 @@ import insurabook.model.InsuraBook;
 import insurabook.model.client.Client;
 
 /**
- * A utility class to help with building Addressbook objects.
+ * A utility class to help with building book objects.
  * Example usage: <br>
- *     {@code AddressBook ab = new AddressBookBuilder().withPerson("John", "Doe").build();}
+ *     {@code InsuraBook ab = new InsuraBookBuilder().withClient("John", "Doe").build();}
  */
 public class InsuraBookBuilder {
 
@@ -21,9 +21,9 @@ public class InsuraBookBuilder {
     }
 
     /**
-     * Adds a new {@code Person} to the {@code AddressBook} that we are building.
+     * Adds a new {@code Client} to the {@code InsuraBook} that we are building.
      */
-    public InsuraBookBuilder withPerson(Client client) {
+    public InsuraBookBuilder withClient(Client client) {
         insuraBook.addClient(client);
         return this;
     }

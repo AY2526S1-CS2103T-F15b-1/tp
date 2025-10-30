@@ -2,9 +2,9 @@ package insurabook.logic.commands;
 
 import static insurabook.logic.commands.CommandTestUtil.assertCommandFailure;
 import static insurabook.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static insurabook.testutil.TypicalPersons.ALICE;
-import static insurabook.testutil.TypicalPersons.BENSON;
-import static insurabook.testutil.TypicalPersons.CARL;
+import static insurabook.testutil.TypicalClients.ALICE;
+import static insurabook.testutil.TypicalClients.BENSON;
+import static insurabook.testutil.TypicalClients.CARL;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -39,7 +39,7 @@ public class UndoCommandTest {
     public void execute_afterAddCommand_success() {
         Model expectedModel = new ModelManager(model.getInsuraBook(), new UserPrefs());
 
-        model.addPerson(ALICE);
+        model.addClient(ALICE);
         model.commitInsuraBook();
 
         UndoCommand undoCommand = new UndoCommand();
@@ -50,13 +50,13 @@ public class UndoCommandTest {
 
     @Test
     public void execute_afterDeleteCommand_success() {
-        model.addPerson(ALICE);
+        model.addClient(ALICE);
         model.commitInsuraBook();
 
         Model expectedModel = new ModelManager(model.getInsuraBook(), new UserPrefs());
 
         Client clientToDelete = model.getFilteredClientList().get(0);
-        model.deletePerson(clientToDelete);
+        model.deleteClient(clientToDelete);
         model.commitInsuraBook();
 
         UndoCommand undoCommand = new UndoCommand();
@@ -67,12 +67,12 @@ public class UndoCommandTest {
 
     @Test
     public void execute_multipleCommands_success() {
-        model.addPerson(ALICE);
+        model.addClient(ALICE);
         model.commitInsuraBook();
 
         Model expectedModel = new ModelManager(model.getInsuraBook(), new UserPrefs());
 
-        model.addPerson(BENSON);
+        model.addClient(BENSON);
         model.commitInsuraBook();
 
         UndoCommand undoCommand = new UndoCommand();
@@ -85,10 +85,10 @@ public class UndoCommandTest {
     public void execute_undoTwice_success() {
         Model expectedModel = new ModelManager(new InsuraBook(), new UserPrefs());
 
-        model.addPerson(ALICE);
+        model.addClient(ALICE);
         model.commitInsuraBook();
 
-        model.addPerson(BENSON);
+        model.addClient(BENSON);
         model.commitInsuraBook();
 
         UndoCommand firstUndo = new UndoCommand();
@@ -108,7 +108,7 @@ public class UndoCommandTest {
     public void execute_stateRestoredCorrectly() throws Exception {
         int initialClientCount = model.getFilteredClientList().size();
 
-        model.addPerson(CARL);
+        model.addClient(CARL);
         model.commitInsuraBook();
 
         assertEquals(initialClientCount + 1, model.getFilteredClientList().size());

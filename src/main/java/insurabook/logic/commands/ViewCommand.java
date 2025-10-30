@@ -57,7 +57,7 @@ public class ViewCommand extends Command {
         // default to client view if no flag is provided
         if (flag.equals(PREFIX_CLIENT_VIEW.getPrefix())) {
             CommandResult res = new CommandResult(MESSAGE_SUCCESS_CLIENT);
-            model.updateFilteredPersonList(c -> true);
+            model.updateFilteredClientList(c -> true);
             res.setView(View.CLIENT_VIEW);
             return res;
         } else if (flag.equals(PREFIX_CLIENT_ID.getPrefix())) {

@@ -4,7 +4,7 @@ import static insurabook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static insurabook.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static insurabook.testutil.Assert.assertThrows;
 import static insurabook.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static insurabook.testutil.TypicalPersons.ALICE;
+import static insurabook.testutil.TypicalClients.ALICE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

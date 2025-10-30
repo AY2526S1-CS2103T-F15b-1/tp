@@ -1,8 +1,8 @@
 package insurabook.model;
 
 import static insurabook.testutil.Assert.assertThrows;
-import static insurabook.testutil.TypicalPersons.ALICE;
-import static insurabook.testutil.TypicalPersons.getTypicalAddressBook;
+import static insurabook.testutil.TypicalClients.ALICE;
+import static insurabook.testutil.TypicalClients.getTypicalAddressBook;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;

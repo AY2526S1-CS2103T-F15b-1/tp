@@ -4,8 +4,8 @@ import static insurabook.logic.commands.CommandTestUtil.assertCommandFailure;
 import static insurabook.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static insurabook.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static insurabook.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static insurabook.testutil.TypicalPersons.ALICE;
-import static insurabook.testutil.TypicalPersons.getTypicalAddressBook;
+import static insurabook.testutil.TypicalClients.ALICE;
+import static insurabook.testutil.TypicalClients.getTypicalAddressBook;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -40,7 +40,7 @@ public class DeleteClientCommandTest {
                 Messages.format(clientToDelete));
         ModelManager expectedModel = new ModelManager(model.getInsuraBook(), new UserPrefs());
 
-        expectedModel.deletePerson(clientToDelete);
+        expectedModel.deleteClient(clientToDelete);
 
         assertCommandSuccess(deleteClientCommand, model, expectedMessage, expectedModel);
     }
@@ -72,7 +72,7 @@ public class DeleteClientCommandTest {
                 Messages.format(clientToDelete));
 
         Model expectedModel = new ModelManager(model.getInsuraBook(), new UserPrefs());
-        expectedModel.deletePerson(clientToDelete);
+        expectedModel.deleteClient(clientToDelete);
         showNoPerson(expectedModel);
 
         assertCommandSuccess(deleteClientCommand, model, expectedMessage, expectedModel);
@@ -127,7 +127,7 @@ public class DeleteClientCommandTest {
      * Updates {@code model}'s filtered list to show no one.
      */
     private void showNoPerson(Model model) {
-        model.updateFilteredPersonList(p -> false);
+        model.updateFilteredClientList(p -> false);
 
         assertTrue(model.getFilteredClientList().isEmpty());
     }

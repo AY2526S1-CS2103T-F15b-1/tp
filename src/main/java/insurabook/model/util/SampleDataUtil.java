@@ -20,7 +20,7 @@ import insurabook.model.policytype.PolicyTypePremium;
 import insurabook.model.tag.Tag;
 
 /**
- * Contains utility methods for populating {@code AddressBook} with sample data.
+ * Contains utility methods for populating {@code InsuraBook} with sample data.
  */
 public class SampleDataUtil {
     public static Client[] getSamplePersons() {

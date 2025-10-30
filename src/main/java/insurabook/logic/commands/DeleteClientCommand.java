@@ -4,7 +4,6 @@ import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
 import static java.util.Objects.requireNonNull;
 
 import insurabook.commons.util.ToStringBuilder;
-import insurabook.logic.Messages;
 import insurabook.logic.commands.exceptions.CommandException;
 import insurabook.model.Model;
 import insurabook.model.client.Client;
@@ -22,13 +21,13 @@ public class DeleteClientCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_CLIENT_ID + "12345";
 
-    public static final String MESSAGE_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_SUCCESS = "Deleted Client with Client ID: %1$s";
     public static final String MESSAGE_MISSING_CLIENT = "This client does not exist.";
 
     private final Client toDelete;
 
     /**
-     * Creates a DeleteCommand to delete the specified {@code Person}
+     * Creates a DeleteCommand to delete the specified {@code Client}
      */
     public DeleteClientCommand(Client client) {
         requireNonNull(client);
@@ -39,14 +38,14 @@ public class DeleteClientCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        if (!model.hasPerson(toDelete)) {
+        if (!model.hasClient(toDelete)) {
             throw new CommandException(MESSAGE_MISSING_CLIENT);
         }
 
-        model.deletePerson(toDelete);
+        model.deleteClient(toDelete);
         model.commitInsuraBook();
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toDelete)));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toDelete.getClientId()));
     }
 
     @Override

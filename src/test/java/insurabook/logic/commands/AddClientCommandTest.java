@@ -1,7 +1,7 @@
 package insurabook.logic.commands;
 
 import static insurabook.testutil.Assert.assertThrows;
-import static insurabook.testutil.TypicalPersons.ALICE;
+import static insurabook.testutil.TypicalClients.ALICE;
 import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -143,22 +143,22 @@ public class AddClientCommandTest {
         }
 
         @Override
-        public void addPerson(Client client) {
+        public void addClient(Client client) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public boolean hasPerson(Client client) {
+        public boolean hasClient(Client client) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void deletePerson(Client target) {
+        public void deleteClient(Client target) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void setPerson(Client target, Client editedClient) {
+        public void setClient(Client target, Client editedClient) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -168,7 +168,7 @@ public class AddClientCommandTest {
         }
 
         @Override
-        public void updateFilteredPersonList(Predicate<Client> predicate) {
+        public void updateFilteredClientList(Predicate<Client> predicate) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -290,7 +290,7 @@ public class AddClientCommandTest {
         }
 
         @Override
-        public boolean hasPerson(Client client) {
+        public boolean hasClient(Client client) {
             requireNonNull(client);
             return this.client.isSamePerson(client);
         }
@@ -303,13 +303,13 @@ public class AddClientCommandTest {
         final ArrayList<Client> personsAdded = new ArrayList<>();
 
         @Override
-        public boolean hasPerson(Client client) {
+        public boolean hasClient(Client client) {
             requireNonNull(client);
             return personsAdded.stream().anyMatch(client::isSamePerson);
         }
 
         @Override
-        public void addPerson(Client client) {
+        public void addClient(Client client) {
             requireNonNull(client);
             personsAdded.add(client);
         }
