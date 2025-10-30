@@ -3,17 +3,22 @@ package insurabook.model.claims;
 import static insurabook.commons.util.AppUtil.checkArgument;
 import static java.util.Objects.requireNonNull;
 
+import java.math.BigDecimal;
+import java.util.Objects;
+
 /**
  * Represents the amount claimed in a Claim.
  * Guarantees: amount is positive and valid.
  */
 public class ClaimAmount {
 
-    public static final String MESSAGE_CONSTRAINTS = "Claim amount must be a positive number.";
+    public static final String MESSAGE_CONSTRAINTS = "Claim amount must be a positive number. "
+            + "It could be integer or up to 2 decimal points.";
     private final String amount;
 
     /**
      * Constructs a ClaimAmount with the specified amount.
+     *
      * @param amount The amount claimed, must be positive.
      * @throws IllegalArgumentException if the amount is not positive.
      */
@@ -27,12 +32,12 @@ public class ClaimAmount {
      * Returns whether the claim amount is valid.
      */
     public static boolean isValidClaimAmount(String test) {
-        return test.matches("\\d+(\\.\\d{1,2})?") && Double.parseDouble(test) > 0;
+        return test.matches("\\d+(\\.\\d{1,2})?") && new BigDecimal(test).signum() > 0;
     }
 
     @Override
     public String toString() {
-        return String.valueOf(amount);
+        return amount;
     }
 
     @Override
@@ -44,7 +49,7 @@ public class ClaimAmount {
             return false;
         }
         ClaimAmount otherAmount = (ClaimAmount) other;
-        return this.amount == otherAmount.amount;
+        return Objects.equals(this.amount, otherAmount.amount);
     }
 
     @Override

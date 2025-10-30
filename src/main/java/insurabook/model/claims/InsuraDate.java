@@ -3,20 +3,25 @@ package insurabook.model.claims;
 import static insurabook.commons.util.AppUtil.checkArgument;
 import static java.util.Objects.requireNonNull;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import java.util.Date;
 
 /**
  * Represents a Claim Date in the insurance management system.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class InsuraDate extends Date {
+public class InsuraDate {
     public static final String MESSAGE_CONSTRAINTS = "Date should be in the format YYYY-MM-DD";
-    public static final String VALIDATION_REGEX = "\\d{4}-\\d{2}-\\d{2}";
-    private final String date;
+    public static final String VALIDATION_PATTERN = "uuuu-MM-dd";
+    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private final LocalDate date;
 
     /**
      * Constructs a {@code InsuraDate}.
@@ -26,14 +31,23 @@ public class InsuraDate extends Date {
     public InsuraDate(String date) {
         requireNonNull(date);
         checkArgument(isValidInsuraDate(date), MESSAGE_CONSTRAINTS);
-        this.date = date;
+        this.date = LocalDate.parse(date);
     }
 
     /**
      * Returns true if a given string is a valid date.
      */
     public static boolean isValidInsuraDate(String test) {
-        return test.matches(VALIDATION_REGEX);
+        DateTimeFormatter formatter = DateTimeFormatter
+                .ofPattern(VALIDATION_PATTERN)
+                .withResolverStyle(ResolverStyle.STRICT);
+
+        try {
+            LocalDate.parse(test, formatter);
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+        }
     }
 
     /**
@@ -42,9 +56,8 @@ public class InsuraDate extends Date {
     public boolean isToday() {
         ZoneId sgZone = ZoneId.of("Asia/Singapore");
         LocalDate now = ZonedDateTime.now(sgZone).toLocalDate();
-        String[] dateParts = this.date.split("-");
-        int month = Integer.parseInt(dateParts[1]);
-        int day = Integer.parseInt(dateParts[2]);
+        int month = this.date.getMonthValue();
+        int day = this.date.getDayOfMonth();
         return (now.getMonthValue() == month) && (now.getDayOfMonth() == day);
     }
 
@@ -64,9 +77,23 @@ public class InsuraDate extends Date {
     public boolean isExpiringInThreeDays() {
         ZoneId sgZone = ZoneId.of("Asia/Singapore");
         LocalDate today = ZonedDateTime.now(sgZone).toLocalDate();
-        LocalDate expiryDate = LocalDate.parse(this.date);
+        LocalDate expiryDate = this.date;
         LocalDate threeDaysLater = today.plusDays(3);
         return (!expiryDate.isBefore(today)) && (expiryDate.isBefore(threeDaysLater));
+    }
+
+    /**
+     * Returns a formatted date string for UI display.
+     */
+    public String toUiString() {
+        try {
+            LocalDate localDate = this.date;
+            Date dateObj = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
+            return formatter.format(dateObj);
+        } catch (DateTimeParseException e) {
+            return this.toString();
+        }
     }
 
     /**
@@ -74,7 +101,7 @@ public class InsuraDate extends Date {
      */
     @Override
     public String toString() {
-        return date;
+        return date.format(FORMATTER);
     }
 
     /**
@@ -92,5 +119,10 @@ public class InsuraDate extends Date {
 
         InsuraDate otherDate = (InsuraDate) other;
         return otherDate.date.equals(this.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return date.hashCode();
     }
 }

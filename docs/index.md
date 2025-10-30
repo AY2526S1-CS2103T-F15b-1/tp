@@ -3,10 +3,10 @@ layout: page
 title: InsuraBook
 ---
 
-[![CI Status](https://github.com/se-edu/addressbook-level3/workflows/Java%20CI/badge.svg)](https://github.com/AY2526S1-CS2103T-F15b-1/tp/actions)
-[![codecov](https://codecov.io/gh/se-edu/addressbook-level3/branch/master/graph/badge.svg)](https://app.codecov.io/gh/AY2526S1-CS2103T-F15b-1/tp/)
+[![CI Status](https://github.com/AY2526S1-CS2103T-F15b-1/tp/workflows/Java%20CI/badge.svg)](https://github.com/AY2526S1-CS2103T-F15b-1/tp/actions)
+[![codecov](https://codecov.io/gh/AY2526S1-CS2103T-F15b-1/tp/branch/master/graph/badge.svg)](https://app.codecov.io/gh/AY2526S1-CS2103T-F15b-1/tp/)
 
-![Ui](images/Ui.png)
+<img alt="img.png" height="300" src="images/homepage.png" width="500"/>
 
 **InsuraBook is a desktop application for managing your clients and policies details.
 ** While it has a GUI, most of the user interactions happen using a CLI (Command Line Interface).

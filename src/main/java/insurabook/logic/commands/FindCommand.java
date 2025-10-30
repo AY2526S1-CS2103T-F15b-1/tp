@@ -8,8 +8,6 @@ import insurabook.commons.util.ToStringBuilder;
 import insurabook.logic.Messages;
 import insurabook.model.Model;
 import insurabook.model.client.Client;
-import insurabook.model.client.IdContainsKeywordsPredicate;
-import insurabook.model.client.NameContainsKeywordsPredicate;
 
 /**
  * Finds and lists all persons in address book whose name or id contains any of the argument keywords.
@@ -19,29 +17,29 @@ public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all clients whose names or ids contain any of "
-            + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all clients by names OR ids which any of "
+            + "the specified keywords (case-insensitive) and displays them as a list.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " -n alice bob charlie"
-            + " or " + COMMAND_WORD + " -c_id 123 456";
+            + "Example: " + COMMAND_WORD + " -n alice bob charlie\n"
+            + "\tor " + COMMAND_WORD + " -c_id 123 456";
 
     private final Predicate<Client> predicate;
 
-    public FindCommand(NameContainsKeywordsPredicate predicate) {
+    /**
+     * Creates a FindCommand to find clients that match the given predicate.
+     *
+     * @param predicate The predicate to test clients against.
+     */
+    public FindCommand(Predicate<Client> predicate) {
         this.predicate = predicate;
     }
-
-    public FindCommand(IdContainsKeywordsPredicate predicate) {
-        this.predicate = predicate;
-    }
-
 
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
         model.updateFilteredPersonList(predicate);
         return new CommandResult(
-                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
+                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredClientList().size()));
     }
 
     @Override
@@ -57,6 +55,11 @@ public class FindCommand extends Command {
 
         FindCommand otherFindCommand = (FindCommand) other;
         return predicate.equals(otherFindCommand.predicate);
+    }
+
+    @Override
+    public int hashCode() {
+        return predicate.hashCode();
     }
 
     @Override

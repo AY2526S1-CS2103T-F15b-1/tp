@@ -12,7 +12,9 @@ import java.util.logging.Logger;
 import insurabook.commons.core.GuiSettings;
 import insurabook.commons.core.LogsCenter;
 import insurabook.model.claims.Claim;
+import insurabook.model.claims.ClaimAmount;
 import insurabook.model.claims.ClaimId;
+import insurabook.model.claims.ClaimMessage;
 import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
@@ -105,7 +107,7 @@ public class ModelManager implements Model {
      * {@code versionedAddressBook}
      */
     @Override
-    public ObservableList<Client> getFilteredPersonList() {
+    public ObservableList<Client> getFilteredClientList() {
         return filteredClients;
     }
 
@@ -133,8 +135,9 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void addClaim(Claim claim) {
-        insuraBook.addClaim(claim);
+    public Claim addClaim(ClientId clientId, PolicyId policyId, ClaimAmount claimAmount,
+                         InsuraDate claimDate, ClaimMessage claimDescription) {
+        return insuraBook.addClaim(clientId, policyId, claimAmount, claimDate, claimDescription);
     }
 
     @Override
@@ -146,6 +149,11 @@ public class ModelManager implements Model {
     public void setClaim(Claim target, Claim editedClaim) {
         requireAllNonNull(target, editedClaim);
         insuraBook.setClaim(target, editedClaim);
+    }
+
+    @Override
+    public Claim getClaim(ClientId clientId, PolicyId policyId, ClaimId claimId) {
+        return insuraBook.getClaim(clientId, policyId, claimId);
     }
 
     @Override

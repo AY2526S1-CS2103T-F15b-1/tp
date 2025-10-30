@@ -1,10 +1,13 @@
 package insurabook.logic.commands;
 
 import static insurabook.logic.parser.CliSyntax.PREFIX_CLAIM_AMOUNT;
-import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLAIM_DATE;
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLAIM_ID;
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
+import static insurabook.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static insurabook.logic.parser.CliSyntax.PREFIX_POLICY_ID;
 import static java.util.Objects.requireNonNull;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -18,13 +21,11 @@ import insurabook.model.claims.ClaimAmount;
 import insurabook.model.claims.ClaimId;
 import insurabook.model.claims.ClaimMessage;
 import insurabook.model.claims.InsuraDate;
-import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
-import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
 
 /**
- * Edits the details of an existing person in the address book.
+ * Edits the details of an existing claim of a client's policy in the InsuraBook.
  */
 public class EditClaimCommand extends Command {
 
@@ -34,9 +35,14 @@ public class EditClaimCommand extends Command {
             + "by the client id, policy id and claim id. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: CLIENT_ID POLICY_ID CLAIM_ID "
-            + "[" + PREFIX_CLAIM_AMOUNT + "CLAIM_AMOUNT] "
-            + "Example: " + COMMAND_WORD + " 123 P101 C001 "
-            + PREFIX_CLIENT_NAME + "Jonn";
+            + "[" + PREFIX_CLAIM_AMOUNT + " CLAIM_AMOUNT] "
+            + "[" + PREFIX_CLAIM_DATE + " CLAIM_DATE] "
+            + "[" + PREFIX_DESCRIPTION + " DESCRIPTION] \n"
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_CLIENT_ID + " C101 "
+            + PREFIX_POLICY_ID + " P101 "
+            + PREFIX_CLAIM_ID + " CL001 "
+            + PREFIX_CLAIM_AMOUNT + " 5000";
 
     public static final String MESSAGE_EDIT_CLAIM_SUCCESS = "Edited Claim: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -68,20 +74,12 @@ public class EditClaimCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Client> lastShownList = model.getFilteredPersonList();
-
-        Client clientToEdit = lastShownList.stream()
-                .filter(client -> client.getClientId().equals(clientId))
-                .findFirst()
-                .orElseThrow(() -> new CommandException(Messages.MESSAGE_INVALID_CLAIM));
-        Policy policyToEdit = clientToEdit.getPortfolio().getPolicies().getPolicy(policyId);
-        Claim claimToEdit = policyToEdit.getClaims().stream()
-                .filter(claim -> claim.getClaimId().equals(claimId))
-                .findFirst()
-                .orElseThrow(() -> new CommandException(Messages.MESSAGE_INVALID_CLAIM));
+        Claim claimToEdit = model.getClaim(clientId, policyId, claimId);
+        assert claimToEdit != null : "The claim to edit should exist in the model.";
         Claim editedClaim = createEditedClaim(claimToEdit, editClaimDescriptor);
 
         model.setClaim(claimToEdit, editedClaim);
+        model.commitInsuraBook();
         return new CommandResult(String.format(MESSAGE_EDIT_CLAIM_SUCCESS, Messages.format(editedClaim, 0)));
     }
 
@@ -96,7 +94,7 @@ public class EditClaimCommand extends Command {
         InsuraDate updatedDate = editClaimDescriptor.getDate().orElse(claimToEdit.getDate());
         ClaimMessage updatedDescription = editClaimDescriptor.getDescription().orElse(claimToEdit.getDescription());
 
-        // keep the same client and policy ID
+        // keep the same client and policy
         ClientId clientId = claimToEdit.getClientId();
         PolicyId policyId = claimToEdit.getPolicyId();
 
@@ -119,6 +117,11 @@ public class EditClaimCommand extends Command {
                 && policyId.equals(otherEditClaimCommand.policyId)
                 && claimId.equals(otherEditClaimCommand.claimId)
                 && editClaimDescriptor.equals(otherEditClaimCommand.editClaimDescriptor);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(clientId, policyId, claimId, editClaimDescriptor);
     }
 
     @Override
@@ -198,6 +201,11 @@ public class EditClaimCommand extends Command {
             return Objects.equals(amount, otherEditClaimDescriptor.amount)
                     && Objects.equals(date, otherEditClaimDescriptor.date)
                     && Objects.equals(description, otherEditClaimDescriptor.description);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(amount, date, description);
         }
 
         @Override

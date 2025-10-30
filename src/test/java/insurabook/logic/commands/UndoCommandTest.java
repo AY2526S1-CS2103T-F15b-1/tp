@@ -55,7 +55,7 @@ public class UndoCommandTest {
 
         Model expectedModel = new ModelManager(model.getInsuraBook(), new UserPrefs());
 
-        Client clientToDelete = model.getFilteredPersonList().get(0);
+        Client clientToDelete = model.getFilteredClientList().get(0);
         model.deletePerson(clientToDelete);
         model.commitInsuraBook();
 
@@ -106,16 +106,16 @@ public class UndoCommandTest {
 
     @Test
     public void execute_stateRestoredCorrectly() throws Exception {
-        int initialClientCount = model.getFilteredPersonList().size();
+        int initialClientCount = model.getFilteredClientList().size();
 
         model.addPerson(CARL);
         model.commitInsuraBook();
 
-        assertEquals(initialClientCount + 1, model.getFilteredPersonList().size());
+        assertEquals(initialClientCount + 1, model.getFilteredClientList().size());
 
         UndoCommand undoCommand = new UndoCommand();
         undoCommand.execute(model);
 
-        assertEquals(initialClientCount, model.getFilteredPersonList().size());
+        assertEquals(initialClientCount, model.getFilteredClientList().size());
     }
 }

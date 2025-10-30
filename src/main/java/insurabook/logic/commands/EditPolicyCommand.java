@@ -28,15 +28,15 @@ import insurabook.model.policytype.PolicyType;
 public class EditPolicyCommand extends Command {
     public static final String COMMAND_WORD = "edit policy";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of an existing policy for a client."
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of an existing policy for a client. "
             + "Parameters: "
-            + PREFIX_CLIENT_ID + "CLIENT_ID "
-            + PREFIX_POLICY_ID + "POLICY_ID "
-            + PREFIX_EXPIRY_DATE + "EXPIRY_DATE\n"
+            + PREFIX_CLIENT_ID + " CLIENT_ID "
+            + PREFIX_POLICY_ID + " POLICY_ID "
+            + "[" + PREFIX_EXPIRY_DATE + " EXPIRY_DATE]\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_CLIENT_ID + "123 "
-            + PREFIX_POLICY_ID + "101 "
-            + PREFIX_EXPIRY_DATE + "2025-10-30";
+            + PREFIX_CLIENT_ID + " 123 "
+            + PREFIX_POLICY_ID + " 101 "
+            + PREFIX_EXPIRY_DATE + " 2025-10-30";
 
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Policy: %1$s";
@@ -63,7 +63,7 @@ public class EditPolicyCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Client> lastShownList = model.getFilteredPersonList();
+        List<Client> lastShownList = model.getFilteredClientList();
 
         Client clientToEdit = lastShownList.stream()
                 .filter(client -> client.getClientId().equals(clientId))
@@ -83,11 +83,11 @@ public class EditPolicyCommand extends Command {
 
         // Fields that are not edited are taken from the original policy
         PolicyId policyId = policyToEdit.getPolicyId();
-        Client client = policyToEdit.getClient();
+        ClientId clientId = policyToEdit.getClientId();
         PolicyType policyType = policyToEdit.getPolicyType();
         List<Claim> claims = policyToEdit.getClaims();
 
-        return new Policy(policyId, client, policyType, updatedExpiryDate, claims);
+        return new Policy(policyId, clientId, policyType, updatedExpiryDate, claims);
     }
 
     /**

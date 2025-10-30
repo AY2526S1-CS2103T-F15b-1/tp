@@ -31,7 +31,7 @@ public class DeleteClientCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
-        Client clientToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Client clientToDelete = model.getFilteredClientList().get(INDEX_FIRST_PERSON.getZeroBased());
         DeleteClientCommand deleteClientCommand = new DeleteClientCommand(ALICE);
 
         String expectedMessage = String.format(DeleteClientCommand.MESSAGE_SUCCESS,
@@ -62,7 +62,7 @@ public class DeleteClientCommandTest {
     public void execute_validIndexFilteredList_success() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
-        Client clientToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Client clientToDelete = model.getFilteredClientList().get(INDEX_FIRST_PERSON.getZeroBased());
         DeleteClientCommand deleteClientCommand = new DeleteClientCommand(ALICE);
 
         String expectedMessage = String.format(DeleteClientCommand.MESSAGE_SUCCESS,
@@ -123,6 +123,6 @@ public class DeleteClientCommandTest {
     private void showNoPerson(Model model) {
         model.updateFilteredPersonList(p -> false);
 
-        assertTrue(model.getFilteredPersonList().isEmpty());
+        assertTrue(model.getFilteredClientList().isEmpty());
     }
 }

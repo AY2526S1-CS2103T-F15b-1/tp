@@ -6,7 +6,9 @@ import java.util.function.Predicate;
 
 import insurabook.commons.core.GuiSettings;
 import insurabook.model.claims.Claim;
+import insurabook.model.claims.ClaimAmount;
 import insurabook.model.claims.ClaimId;
+import insurabook.model.claims.ClaimMessage;
 import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
@@ -88,7 +90,7 @@ public interface Model {
     void setPerson(Client target, Client editedClient);
 
     /** Returns an unmodifiable view of the filtered person list */
-    ObservableList<Client> getFilteredPersonList();
+    ObservableList<Client> getFilteredClientList();
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
@@ -115,10 +117,11 @@ public interface Model {
     void updateClientPolicyList(Predicate<Policy> predicate);
 
     /**
-     * Adds the given claim.
-     * {@code claim} must not already exist in the address book.
+     * Adds claim with the given information.
+     * {@code claim} must not already exist in the insurabook.
      */
-    void addClaim(Claim toAdd);
+    Claim addClaim(ClientId clientId, PolicyId policyId, ClaimAmount claimAmount,
+                  InsuraDate claimDate, ClaimMessage claimDescription);
 
     /**
      * Deletes the given claim.
@@ -132,6 +135,11 @@ public interface Model {
      * The claim identity of {@code editedClaim} must not be the same as another existing claim in the address book.
      */
     void setClaim(Claim target, Claim editedClaim);
+
+    /**
+     * Returns the claim based on clientId, policyId and claimId.
+     */
+    Claim getClaim(ClientId clientId, PolicyId policyId, ClaimId claimId);
 
     /**
      * Adds the given policy.

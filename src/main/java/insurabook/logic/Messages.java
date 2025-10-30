@@ -58,7 +58,7 @@ public class Messages {
             builder.append(claim.getClaimId())
                     .append(" for client ")
                     .append(claim.getClientId())
-                    .append(", policy ")
+                    .append(", policy ID ")
                     .append(claim.getPolicyId())
                     .append(" with an amount of $")
                     .append(claim.getAmount())
@@ -68,7 +68,7 @@ public class Messages {
                     .append(claim.getDescription());
         } else {
             builder.append(claim.getClaimId())
-                    .append(" on policy ")
+                    .append(" on policy ID ")
                     .append(claim.getPolicyId())
                     .append(" for client ")
                     .append(claim.getClientId())
@@ -87,7 +87,7 @@ public class Messages {
             builder.append("Policy Id: ")
                     .append(policy.getPolicyId())
                     .append("; Client Id: ")
-                    .append(policy.getClient().getClientId())
+                    .append(policy.getClientId())
                     .append("; PolicyTypeId: ")
                     .append(policy.getPolicyType().getPtId())
                     .append("; Expiry Date: ")
@@ -95,7 +95,7 @@ public class Messages {
         } else {
             builder.append(policy.getPolicyId())
                     .append(" for client ")
-                    .append(policy.getClient().getClientId());
+                    .append(policy.getClientId());
         }
         return builder.toString();
     }
@@ -147,7 +147,7 @@ public class Messages {
     public static String formatExpiringPolicies(Policy policy) {
         final StringBuilder builder = new StringBuilder();
         builder.append("Client ID: ")
-                .append(policy.getClient().getClientId())
+                .append(policy.getClientId())
                 .append(", Policy ID: ")
                 .append(policy.getPolicyId())
                 .append(", Expiry Date: ")

@@ -23,7 +23,9 @@ import insurabook.model.Model;
 import insurabook.model.ReadOnlyInsuraBook;
 import insurabook.model.ReadOnlyUserPrefs;
 import insurabook.model.claims.Claim;
+import insurabook.model.claims.ClaimAmount;
 import insurabook.model.claims.ClaimId;
+import insurabook.model.claims.ClaimMessage;
 import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
@@ -161,7 +163,7 @@ public class AddClientCommandTest {
         }
 
         @Override
-        public ObservableList<Client> getFilteredPersonList() {
+        public ObservableList<Client> getFilteredClientList() {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -191,7 +193,8 @@ public class AddClientCommandTest {
         }
 
         @Override
-        public void addClaim(Claim claim) {
+        public Claim addClaim(ClientId clientId, PolicyId policyId, ClaimAmount claimAmount,
+                             InsuraDate claimDate, ClaimMessage claimDescription) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -243,6 +246,11 @@ public class AddClientCommandTest {
 
         @Override
         public void setClaim(Claim target, Claim editedClaim) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Claim getClaim(ClientId clientId, PolicyId policyId, ClaimId claimId) {
             throw new AssertionError("This method should not be called.");
         }
 

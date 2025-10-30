@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import insurabook.commons.exceptions.IllegalValueException;
 import insurabook.model.InsuraBook;
-import insurabook.model.claims.Claim;
 import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
@@ -105,16 +104,11 @@ public class JsonAdaptedPolicy {
         if (claims == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "claims"));
         }
-        final List<Claim> modelClaims = claims.stream()
-                .map(claim -> {
-                    try {
-                        return claim.toModelType();
-                    } catch (IllegalValueException e) {
-                        throw new RuntimeException(e.getMessage());
-                    }
-                })
-                .toList();
 
-        return new Policy(modelPolicyId, modelClient, modelPolicyType, modelDate, modelClaims);
+        return new Policy(modelPolicyId, modelClientId, modelPolicyType, modelDate);
+    }
+
+    public List<JsonAdaptedClaim> getClaims() {
+        return claims;
     }
 }

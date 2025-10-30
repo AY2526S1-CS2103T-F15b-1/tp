@@ -60,9 +60,12 @@ public class LogicManager implements Logic {
 
         try {
             storage.saveInsuraBook(model.getInsuraBook());
+            logger.info("Command executed successfully, data saved.");
         } catch (AccessDeniedException e) {
+            logger.warning("Permission denied when attempting to save data: " + e.getMessage());
             throw new CommandException(String.format(FILE_OPS_PERMISSION_ERROR_FORMAT, e.getMessage()), e);
         } catch (IOException ioe) {
+            logger.warning("Unable to save data (IOException occurred): " + ioe.getMessage());
             throw new CommandException(String.format(FILE_OPS_ERROR_FORMAT, ioe.getMessage()), ioe);
         }
 
@@ -76,7 +79,7 @@ public class LogicManager implements Logic {
 
     @Override
     public ObservableList<Client> getFilteredClientList() {
-        return model.getFilteredPersonList();
+        return model.getFilteredClientList();
     }
 
     @Override

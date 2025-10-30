@@ -1,6 +1,5 @@
 package insurabook.model.claims;
 
-import static insurabook.commons.util.AppUtil.checkArgument;
 import static java.util.Objects.requireNonNull;
 
 /**
@@ -9,7 +8,7 @@ import static java.util.Objects.requireNonNull;
 public class ClaimMessage {
     public static final String MESSAGE_CONSTRAINTS =
             "Claim messages can take any values";
-    public final String message;
+    private final String message;
 
     /**
      * Constructs a {@code ClaimMessage}.
@@ -18,15 +17,7 @@ public class ClaimMessage {
      */
     public ClaimMessage(String message) {
         requireNonNull(message);
-        checkArgument(isValidClaimMessage(message), MESSAGE_CONSTRAINTS);
         this.message = message;
-    }
-
-    /**
-     * Returns true if a given string is a valid claim message.
-     */
-    public static boolean isValidClaimMessage(String test) {
-        return true;
     }
 
     /**
@@ -52,5 +43,10 @@ public class ClaimMessage {
 
         ClaimMessage otherMessage = (ClaimMessage) other;
         return message.equals(otherMessage.message);
+    }
+
+    @Override
+    public int hashCode() {
+        return message.hashCode();
     }
 }
