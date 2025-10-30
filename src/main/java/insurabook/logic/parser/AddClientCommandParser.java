@@ -44,11 +44,9 @@ public class AddClientCommandParser implements Parser<AddClientCommand> {
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         InsuraDate birthday = ParserUtil.parseInsuraDate(argMultimap.getValue(PREFIX_BIRTHDAY).get());
         ClientId clientId = ParserUtil.parseClientId(argMultimap.getValue(PREFIX_CLIENT_ID).get());
-        
         if (birthday.isAfterToday()) {
             throw new ParseException(MESSAGE_INVALID_BIRTHDAY);
         }
-        
         Client client = new Client(name, phone, email, birthday, clientId);
 
         return new AddClientCommand(client);
