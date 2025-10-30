@@ -91,11 +91,14 @@ public class EditCommand extends Command {
 
         Name updatedName = editPersonDescriptor.getName().orElse(clientToEdit.getName());
 
-        // keep the same client ID
+        // keep the same client ID and portfolio
         InsuraDate birthday = clientToEdit.getBirthday();
         ClientId clientId = clientToEdit.getClientId();
 
-        return new Client(updatedName, birthday, clientId);
+        Client editedClient = new Client(updatedName, birthday, clientId);
+        editedClient.setPortfolio(clientToEdit.getPortfolio());
+
+        return editedClient;
     }
 
     @Override
