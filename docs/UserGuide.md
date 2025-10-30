@@ -28,6 +28,7 @@ a terminal.
   - [Deleting a policy from a client: `delete policy`](#deleting-a-policy-from-a-client-delete-policy)
   - [Deleting a claim: `delete claim`](#deleting-a-claim-delete-claim)
   - [Changing UI view: `view`](#changing-ui-view-view)
+  - [Undo a previous change: `undo`](#undo-a-previous-change-undo)
   - [Clearing all entries: `clear`](#clearing-all-entries-clear)
   - [Exiting the program: `exit`](#exiting-the-program-exit)
   - [Startup Reminders & Alerts](#startup-reminders--alerts)
@@ -460,6 +461,22 @@ Examples:
 <p align="center">
     <img alt="img.png" height="300" src="images/clientsPolicyView.png" width="500"/>
 </p>
+
+---
+
+### Undo a previous change: `undo`
+<small>[(back to Contents)](#table-of-contents)</small>
+
+Undo your previous change to InsuraBook
+
+Format `undo`
+
+Changes are:
+- adding client, policies, policy types and claims
+- deleting client, policies, policy types and claims
+- edits to any information, e.g. phone, email
+
+<span style="color:red">⚠ InsuraBook cannot undo changes from **previous saves**.</span>
 
 ---
 
