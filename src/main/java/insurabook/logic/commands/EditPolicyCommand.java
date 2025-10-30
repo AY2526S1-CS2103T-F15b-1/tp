@@ -73,6 +73,7 @@ public class EditPolicyCommand extends Command {
         Policy editedPolicy = createEditedPolicy(policyToEdit, editPolicyDescriptor);
 
         model.setPolicy(policyToEdit, editedPolicy);
+        model.commitInsuraBook();
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPolicy, 0)));
     }
 
