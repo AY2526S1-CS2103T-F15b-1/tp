@@ -1,8 +1,8 @@
 package insurabook.model;
 
 import static insurabook.testutil.Assert.assertThrows;
-import static insurabook.testutil.TypicalPersons.ALICE;
-import static insurabook.testutil.TypicalPersons.getTypicalAddressBook;
+import static insurabook.testutil.TypicalClients.ALICE;
+import static insurabook.testutil.TypicalClients.getTypicalInsuraBook;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -39,7 +39,7 @@ public class InsuraBookTest {
 
     @Test
     public void resetData_withValidReadOnlyAddressBook_replacesData() {
-        InsuraBook newData = getTypicalAddressBook();
+        InsuraBook newData = getTypicalInsuraBook();
         insuraBook.resetData(newData);
         assertEquals(newData, insuraBook);
     }

@@ -2,7 +2,7 @@ package insurabook.logic.commands;
 
 import static insurabook.logic.commands.CommandTestUtil.assertCommandFailure;
 import static insurabook.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static insurabook.testutil.TypicalPersons.getTypicalAddressBook;
+import static insurabook.testutil.TypicalClients.getTypicalInsuraBook;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +23,7 @@ public class AddClientCommandIntegrationTest {
 
     @BeforeEach
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        model = new ModelManager(getTypicalInsuraBook(), new UserPrefs());
     }
 
     @Test
@@ -31,7 +31,7 @@ public class AddClientCommandIntegrationTest {
         Client validClient = new PersonBuilder().withClientId("9999").withName("test").build();
 
         Model expectedModel = new ModelManager(model.getInsuraBook(), new UserPrefs());
-        expectedModel.addPerson(validClient);
+        expectedModel.addClient(validClient);
 
         assertCommandSuccess(new AddClientCommand(validClient), model,
                 String.format(AddClientCommand.MESSAGE_SUCCESS, Messages.format(validClient)),
