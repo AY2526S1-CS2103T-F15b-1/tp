@@ -11,7 +11,9 @@ import insurabook.model.InsuraBook;
 import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
+import insurabook.model.client.Email;
 import insurabook.model.client.Name;
+import insurabook.model.client.Phone;
 import insurabook.model.policies.Policy;
 
 /**
@@ -22,6 +24,8 @@ class JsonAdaptedClient {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Client's %s field is missing!";
 
     private final String name;
+    private final String phone;
+    private final String email;
     private final String birthday;
     private final String clientId;
     private final List<JsonAdaptedPolicy> policies;
@@ -31,10 +35,14 @@ class JsonAdaptedClient {
      */
     @JsonCreator
     public JsonAdaptedClient(@JsonProperty("name") String name,
+                             @JsonProperty("phone") String phone,
+                             @JsonProperty("email") String email,
                              @JsonProperty("birthday") String birthday,
                              @JsonProperty("clientId") String clientId,
                              @JsonProperty("policies") List<JsonAdaptedPolicy> policies) {
         this.name = name;
+        this.phone = phone;
+        this.email = email;
         this.birthday = birthday;
         this.clientId = clientId;
         this.policies = policies;
@@ -45,6 +53,8 @@ class JsonAdaptedClient {
      */
     public JsonAdaptedClient(Client source) {
         name = source.getName().toString();
+        phone = source.getPhone().toString();
+        email = source.getEmail().toString();
         birthday = source.getBirthday().toString();
         clientId = source.getClientId().toString();
         policies = source.getPortfolio().getPolicies().asUnmodifiableObservableList().stream()
@@ -65,6 +75,24 @@ class JsonAdaptedClient {
             throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
         }
         final Name modelName = new Name(name);
+
+        if (phone == null) {
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, InsuraDate.class.getSimpleName()));
+        }
+        if (!InsuraDate.isValidInsuraDate(phone)) {
+            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
+        }
+        final Phone modelPhone = new Phone(phone);
+
+        if (email == null) {
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, InsuraDate.class.getSimpleName()));
+        }
+        if (!InsuraDate.isValidInsuraDate(email)) {
+            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
+        }
+        final Email modelEmail = new Email(phone);
 
         if (birthday == null) {
             throw new IllegalValueException(
@@ -92,7 +120,7 @@ class JsonAdaptedClient {
             modelPolicies.add(convertToPolicy(jsonAdaptedPolicy, insuraBook));
         }
 
-        return new Client(modelName, modelBirthday, modelClientId, modelPolicies);
+        return new Client(modelName, modelPhone, modelEmail, modelBirthday, modelClientId, modelPolicies);
     }
 
     private Policy convertToPolicy(JsonAdaptedPolicy jsonAdaptedPolicy, InsuraBook insuraBook)
@@ -108,6 +136,24 @@ class JsonAdaptedClient {
             throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
         }
         final Name modelName = new Name(name);
+
+        if (phone == null) {
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, InsuraDate.class.getSimpleName()));
+        }
+        if (!Phone.isValidPhone(phone)) {
+            throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
+        }
+        final Phone modelPhone = new Phone(phone);
+
+        if (email == null) {
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, InsuraDate.class.getSimpleName()));
+        }
+        if (!Email.isValidEmail(email)) {
+            throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
+        }
+        final Email modelEmail = new Email(email);
 
         if (birthday == null) {
             throw new IllegalValueException(
@@ -127,7 +173,7 @@ class JsonAdaptedClient {
         }
         final ClientId modelClientId = new ClientId(clientId);
 
-        return new Client(modelName, modelBirthday, modelClientId);
+        return new Client(modelName, modelPhone, modelEmail, modelBirthday, modelClientId);
     }
 
     public ClientId getClientId() {
