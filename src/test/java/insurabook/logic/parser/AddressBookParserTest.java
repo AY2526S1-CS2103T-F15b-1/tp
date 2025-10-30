@@ -3,7 +3,6 @@ package insurabook.logic.parser;
 import static insurabook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static insurabook.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static insurabook.testutil.Assert.assertThrows;
-import static insurabook.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -24,6 +23,7 @@ import insurabook.logic.commands.ListCommand;
 import insurabook.logic.commands.ViewCommand;
 import insurabook.logic.parser.exceptions.ParseException;
 import insurabook.model.client.Client;
+import insurabook.model.client.ClientId;
 import insurabook.model.client.NameContainsKeywordsPredicate;
 import insurabook.testutil.EditPersonDescriptorBuilder;
 import insurabook.testutil.PersonBuilder;
@@ -51,11 +51,11 @@ public class AddressBookParserTest {
         Client client = new PersonBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(client).build();
         String commandString = EditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor);
+                + CliSyntax.PREFIX_CLIENT_ID + " 1 " + PersonUtil.getEditPersonDescriptorDetails(descriptor);
         System.out.println(commandString);
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
-        assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
+                + CliSyntax.PREFIX_CLIENT_ID + " 1 " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
+        assertEquals(new EditCommand(new ClientId("1"), descriptor), command);
     }
 
     @Test
