@@ -6,7 +6,7 @@ import java.util.List;
 import insurabook.model.claims.Claim;
 import insurabook.model.claims.ClaimId;
 import insurabook.model.claims.InsuraDate;
-import insurabook.model.client.Client;
+import insurabook.model.claims.exceptions.ClaimNotFoundException;
 import insurabook.model.client.ClientId;
 import insurabook.model.policytype.PolicyType;
 import insurabook.model.policytype.PolicyTypeId;
@@ -17,7 +17,7 @@ import insurabook.model.policytype.PolicyTypeId;
 public class Policy {
 
     private final PolicyId policyId;
-    private final Client client;
+    private final ClientId clientId;
     private final PolicyType policyType;
     private final InsuraDate expiryDate;
     private final List<Claim> claim;
@@ -27,9 +27,9 @@ public class Policy {
      * @param policyType from parser
      * @param expiryDate datetime from parser
      */
-    public Policy(PolicyId policyId, Client client, PolicyType policyType, InsuraDate expiryDate) {
+    public Policy(PolicyId policyId, ClientId clientId, PolicyType policyType, InsuraDate expiryDate) {
         this.policyId = policyId;
-        this.client = client;
+        this.clientId = clientId;
         this.policyType = policyType;
         this.expiryDate = expiryDate;
         this.claim = new ArrayList<>();
@@ -41,21 +41,25 @@ public class Policy {
      * @param expiryDate datetime from parser
      * @param claims list of claims under this policy
      */
-    public Policy(PolicyId policyId, Client client, PolicyType policyType, InsuraDate expiryDate, List<Claim> claims) {
+    public Policy(PolicyId policyId, ClientId clientId,
+                  PolicyType policyType, InsuraDate expiryDate, List<Claim> claims) {
         this.policyId = policyId;
-        this.client = client;
+        this.clientId = clientId;
         this.policyType = policyType;
         this.expiryDate = expiryDate;
         this.claim = new ArrayList<>(claims);
-
     }
 
     /**
-     * Getter
-     * @return client id of policy owner
+     * Copy constructor
+     * @param toCopy policy to copy
      */
-    public Client getClient() {
-        return this.client;
+    public Policy(Policy toCopy) {
+        this.policyId = toCopy.getPolicyId();
+        this.clientId = toCopy.getClientId();
+        this.policyType = toCopy.getPolicyType();
+        this.expiryDate = toCopy.getExpiryDate();
+        this.claim = new ArrayList<>(toCopy.getClaims());
     }
 
     /**
@@ -63,7 +67,7 @@ public class Policy {
      * @return client id of policy owner
      */
     public ClientId getClientId() {
-        return this.client.getClientId();
+        return this.clientId;
     }
 
     /**
@@ -113,11 +117,27 @@ public class Policy {
         }
 
         Policy otherPolicy = (Policy) other;
-        return otherPolicy.getPolicyId().equals(this.getPolicyId())
-                && otherPolicy.getClient().equals(this.getClient())
-                && otherPolicy.getPolicyType().equals(this.getPolicyType())
-                && otherPolicy.getExpiryDate().equals(this.getExpiryDate())
-                && otherPolicy.getClaims().equals(this.getClaims());
+        return this.policyId.equals(otherPolicy.policyId);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.policyId.hashCode();
+    }
+
+    /**
+     * Returns true if both policies have the same client and either the same policy id
+     * or the same policy type id.
+     * This defines a weaker notion of equality between two policies.
+     */
+    public boolean isSamePolicy(Policy otherPolicy) {
+        if (otherPolicy == this) {
+            return true;
+        }
+
+        return otherPolicy.getClientId().equals(this.getClientId())
+                && (otherPolicy.getPolicyId().equals(this.getPolicyId())
+                || otherPolicy.getPolicyTypeId().equals(this.getPolicyTypeId()));
     }
 
     /**
@@ -134,11 +154,11 @@ public class Policy {
      * @param claimId to remove
      * @return removed claim
      */
-    public Claim removeClaim(ClaimId claimId) {
+    public Claim removeClaim(ClaimId claimId) throws ClaimNotFoundException {
         Claim claim = this.claim.stream()
                 .filter(c -> c.getClaimId().equals(claimId))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(ClaimNotFoundException::new);
         this.claim.remove(claim);
         return claim;
     }
@@ -152,6 +172,17 @@ public class Policy {
             this.claim.set(index, editedClaim);
         }
     }
+
+    /**
+     * Gets claim in policy
+     */
+    public Claim getClaim(ClaimId claimId) throws ClaimNotFoundException {
+        return this.claim.stream()
+                .filter(c -> c.getClaimId().equals(claimId))
+                .findFirst()
+                .orElseThrow(ClaimNotFoundException::new);
+    }
+
     /*
      * Problem:
      * How do we add/delete if we are using id only.

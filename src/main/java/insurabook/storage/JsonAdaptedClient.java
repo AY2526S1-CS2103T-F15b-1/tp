@@ -1,5 +1,6 @@
 package insurabook.storage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -18,7 +19,7 @@ import insurabook.model.policies.Policy;
  */
 class JsonAdaptedClient {
 
-    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
+    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Client's %s field is missing!";
 
     private final String name;
     private final String birthday;
@@ -26,13 +27,13 @@ class JsonAdaptedClient {
     private final List<JsonAdaptedPolicy> policies;
 
     /**
-     * Constructs a {@code JsonAdaptedPerson} with the given person details.
+     * Constructs a {@code JsonAdaptedClient} with the given client details.
      */
     @JsonCreator
     public JsonAdaptedClient(@JsonProperty("name") String name,
                              @JsonProperty("birthday") String birthday,
                              @JsonProperty("clientId") String clientId,
-                             @JsonProperty("polices") List<JsonAdaptedPolicy> policies) {
+                             @JsonProperty("policies") List<JsonAdaptedPolicy> policies) {
         this.name = name;
         this.birthday = birthday;
         this.clientId = clientId;
@@ -40,12 +41,12 @@ class JsonAdaptedClient {
     }
 
     /**
-     * Converts a given {@code Person} into this class for Jackson use.
+     * Converts a given {@code Client} into this class for Jackson use.
      */
     public JsonAdaptedClient(Client source) {
-        name = source.getName().fullName;
+        name = source.getName().toString();
         birthday = source.getBirthday().toString();
-        clientId = source.getClientId().clientId;
+        clientId = source.getClientId().toString();
         policies = source.getPortfolio().getPolicies().asUnmodifiableObservableList().stream()
                 .map(JsonAdaptedPolicy::new)
                 .toList();
@@ -86,17 +87,17 @@ class JsonAdaptedClient {
         if (policies == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "polices"));
         }
-        final List<Policy> modelPolicies = policies.stream()
-                .map(jsonAdaptedPolicy -> {
-                    try {
-                        return jsonAdaptedPolicy.toModelType(insuraBook);
-                    } catch (IllegalValueException e) {
-                        throw new RuntimeException(e);
-                    }
-                })
-                .toList();
+        final List<Policy> modelPolicies = new ArrayList<>();
+        for (JsonAdaptedPolicy jsonAdaptedPolicy : policies) {
+            modelPolicies.add(convertToPolicy(jsonAdaptedPolicy, insuraBook));
+        }
 
         return new Client(modelName, modelBirthday, modelClientId, modelPolicies);
+    }
+
+    private Policy convertToPolicy(JsonAdaptedPolicy jsonAdaptedPolicy, InsuraBook insuraBook)
+            throws IllegalValueException {
+        return jsonAdaptedPolicy.toModelType(insuraBook);
     }
 
     public Client toModelTypeWithoutPolicies() throws IllegalValueException {
@@ -113,7 +114,7 @@ class JsonAdaptedClient {
                     String.format(MISSING_FIELD_MESSAGE_FORMAT, InsuraDate.class.getSimpleName()));
         }
         if (!InsuraDate.isValidInsuraDate(birthday)) {
-            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
+            throw new IllegalValueException(InsuraDate.MESSAGE_CONSTRAINTS);
         }
         final InsuraDate modelBirthday = new InsuraDate(birthday);
 

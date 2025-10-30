@@ -11,7 +11,11 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import insurabook.commons.exceptions.IllegalValueException;
 import insurabook.model.InsuraBook;
 import insurabook.model.ReadOnlyInsuraBook;
+import insurabook.model.claims.Claim;
 import insurabook.model.client.Client;
+import insurabook.model.policies.Policy;
+import insurabook.model.policytype.PolicyType;
+import insurabook.model.policytype.exceptions.PolicyTypeDuplicateException;
 
 /**
  * An Immutable AddressBook that is serializable to JSON format.
@@ -20,6 +24,7 @@ import insurabook.model.client.Client;
 class JsonSerializableInsuraBook {
 
     public static final String MESSAGE_DUPLICATE_PERSON = "Persons list contains duplicate person(s).";
+    public static final String MESSAGE_DUPLICATE_POLICY_TYPE = "Policy type list contains duplicate policy type(s).";
 
     private final List<JsonAdaptedClient> clients = new ArrayList<>();
     private final List<JsonAdaptedPolicyType> policyTypes = new ArrayList<>();
@@ -52,24 +57,42 @@ class JsonSerializableInsuraBook {
      */
     public InsuraBook toModelType() throws IllegalValueException {
         InsuraBook insuraBook = new InsuraBook();
-        for (JsonAdaptedPolicyType jsonAdaptedPolicyTypes : policyTypes) {
-            insuraBook.addPolicyType(jsonAdaptedPolicyTypes.toModelType());
+        for (JsonAdaptedPolicyType jsonAdaptedPolicyType : policyTypes) {
+            PolicyType policyType = jsonAdaptedPolicyType.toModelType();
+            try {
+                insuraBook.addPolicyType(policyType);
+            } catch (PolicyTypeDuplicateException e) {
+                throw new IllegalValueException(MESSAGE_DUPLICATE_POLICY_TYPE);
+            }
         }
 
-        for (JsonAdaptedClient jsonAdaptedClient : clients) {
-            Client client = jsonAdaptedClient.toModelTypeWithoutPolicies();
+        for (JsonAdaptedClient jsonClient : clients) {
+            Client client = jsonClient.toModelTypeWithoutPolicies();
             if (insuraBook.hasClient(client)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
             }
             insuraBook.addClient(client);
-        }
-
-        for (JsonAdaptedClient jsonClient : clients) {
-            Client client = insuraBook.getClient(jsonClient.getClientId());
             for (JsonAdaptedPolicy jsonPolicy : jsonClient.getPolicies()) {
-                client.addPolicy(jsonPolicy.toModelType(insuraBook));
+                Policy modelPolicy = jsonPolicy.toModelType(insuraBook);
+                client.addPolicy(modelPolicy);
+                for (JsonAdaptedClaim jsonClaim : jsonPolicy.getClaims()) {
+                    Claim modelClaim = jsonClaim.toModelType(insuraBook);
+                    client.addClaim(modelClaim);
+                }
             }
         }
+
+        // Set client policies list in InsuraBook
+        List<Policy> clientPolices = insuraBook.getClientList().stream()
+                        .flatMap(client -> client.getPortfolio().getPolicies()
+                                .asUnmodifiableObservableList()
+                                .stream())
+                        .toList();
+        insuraBook.setClientPolicies(clientPolices);
+
+        // Sync ID counters
+        insuraBook.syncClaimIdCounter();
+
         return insuraBook;
     }
 

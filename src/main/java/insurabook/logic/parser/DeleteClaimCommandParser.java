@@ -8,7 +8,6 @@ import static insurabook.logic.parser.CliSyntax.PREFIX_POLICY_ID;
 
 import java.util.stream.Stream;
 
-import insurabook.logic.commands.AddClaimCommand;
 import insurabook.logic.commands.DeleteClaimCommand;
 import insurabook.logic.parser.exceptions.ParseException;
 import insurabook.model.claims.ClaimId;
@@ -35,19 +34,25 @@ public class DeleteClaimCommandParser implements Parser<DeleteClaimCommand> {
 
         if (!arePrefixesPresent(argMultimap, PREFIX_CLIENT_ID, PREFIX_POLICY_ID, PREFIX_CLAIM_ID)
                 || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddClaimCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteClaimCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_CLIENT_ID, PREFIX_POLICY_ID, PREFIX_CLAIM_ID);
-        ClientId clientId = ParserUtil.parseClientId(argMultimap.getValue(PREFIX_CLIENT_ID).get());
-        PolicyId policyId = ParserUtil.parsePolicyId(argMultimap.getValue(PREFIX_POLICY_ID).get());
-        ClaimId claimId = ParserUtil.parseClaimId(argMultimap.getValue(PREFIX_CLAIM_ID).get());
-        ClaimMessage message = ParserUtil.parseClaimMessage(
-                argMultimap.getValue(PREFIX_DESCRIPTION).isEmpty()
-                        ? ""
-                        : argMultimap.getValue(PREFIX_DESCRIPTION).get());
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_CLIENT_ID, PREFIX_POLICY_ID, PREFIX_CLAIM_ID,
+                PREFIX_DESCRIPTION);
 
-        return new DeleteClaimCommand(clientId, policyId, claimId, message);
+        assert argMultimap.getValue(PREFIX_CLIENT_ID).isPresent();
+        ClientId clientId = ParserUtil.parseClientId(argMultimap.getValue(PREFIX_CLIENT_ID).get());
+
+        assert argMultimap.getValue(PREFIX_POLICY_ID).isPresent();
+        PolicyId policyId = ParserUtil.parsePolicyId(argMultimap.getValue(PREFIX_POLICY_ID).get());
+
+        assert argMultimap.getValue(PREFIX_CLAIM_ID).isPresent();
+        ClaimId claimId = ParserUtil.parseClaimId(argMultimap.getValue(PREFIX_CLAIM_ID).get());
+
+        String message = argMultimap.getValue(PREFIX_DESCRIPTION).orElse("");
+        ClaimMessage claimMessage = ParserUtil.parseClaimMessage(message);
+
+        return new DeleteClaimCommand(clientId, policyId, claimId, claimMessage);
     }
 
     /**

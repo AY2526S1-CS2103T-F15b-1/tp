@@ -26,6 +26,7 @@ import insurabook.logic.commands.ExitCommand;
 import insurabook.logic.commands.FindCommand;
 import insurabook.logic.commands.HelpCommand;
 import insurabook.logic.commands.ListCommand;
+import insurabook.logic.commands.UndoCommand;
 import insurabook.logic.commands.ViewCommand;
 import insurabook.logic.parser.exceptions.ParseException;
 
@@ -117,6 +118,9 @@ public class InsuraBookParser {
 
         case EditPolicyCommand.COMMAND_WORD:
             return new EditPolicyCommandParser().parse(arguments);
+
+        case UndoCommand.COMMAND_WORD:
+            return new UndoCommandParser().parse("");
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);

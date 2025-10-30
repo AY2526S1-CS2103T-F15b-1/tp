@@ -7,6 +7,7 @@ import java.util.List;
 
 import insurabook.model.policies.exceptions.DuplicatePolicyException;
 import insurabook.model.policies.exceptions.PolicyNotFoundException;
+import insurabook.model.policytype.PolicyType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -18,6 +19,8 @@ import javafx.collections.ObservableList;
  * as to ensure that the policy with exactly the same fields will be removed.
  *
  * Supports a minimal set of list operations.
+ *
+ * @see Policy#isSamePolicy(Policy)
  */
 public class UniquePolicyList implements Iterable<Policy> {
     private final ObservableList<Policy> internalList = FXCollections.observableArrayList();
@@ -54,7 +57,7 @@ public class UniquePolicyList implements Iterable<Policy> {
      * @return
      */
     public boolean contains(Policy toCheck) {
-        return internalList.stream().anyMatch(toCheck::equals);
+        return internalList.stream().anyMatch(toCheck::isSamePolicy);
     }
 
     /**
@@ -82,6 +85,14 @@ public class UniquePolicyList implements Iterable<Policy> {
         }
     }
 
+    /**
+     * Replaces the policy {@code target} in the list with {@code editedPolicy}.
+     * {@code target} must exist in the list.
+     * The policy identity of {@code editedPolicy} must not be the same as another existing policy in the list.
+     *
+     * @param target
+     * @param editedPolicy
+     */
     public void setPolicy(Policy target, Policy editedPolicy) {
         requireAllNonNull(target, editedPolicy);
 
@@ -90,13 +101,36 @@ public class UniquePolicyList implements Iterable<Policy> {
             throw new PolicyNotFoundException();
         }
 
-        if (!target.equals(editedPolicy) && contains(editedPolicy)) {
+        if (!target.isSamePolicy(editedPolicy) && contains(editedPolicy)) {
             throw new DuplicatePolicyException();
         }
 
         internalList.set(index, editedPolicy);
     }
 
+    /**
+     * Replaces all policies of a certain PolicyType {@code targetType} in the list with {@code editedType}.
+     *
+     * @param targetType
+     * @param editedType
+     */
+    public void setPolicyType(PolicyType targetType, PolicyType editedType) {
+        requireAllNonNull(targetType, editedType);
+
+        for (int i = 0; i < internalList.size(); i++) {
+            Policy policy = internalList.get(i);
+            if (policy.getPolicyType().equals(targetType)) {
+                Policy updatedPolicy = new Policy(
+                        policy.getPolicyId(),
+                        policy.getClientId(),
+                        editedType,
+                        policy.getExpiryDate(),
+                        policy.getClaims()
+                );
+                internalList.set(i, updatedPolicy);
+            }
+        }
+    }
 
     public ObservableList<Policy> asUnmodifiableObservableList() {
         return internalUnmodifiableList;
@@ -138,7 +172,7 @@ public class UniquePolicyList implements Iterable<Policy> {
     private boolean policiesAreUnique(List<Policy> policies) {
         for (int i = 0; i < policies.size() - 1; i++) {
             for (int j = i + 1; j < policies.size(); j++) {
-                if (policies.get(i).equals(policies.get(j))) {
+                if (policies.get(i).isSamePolicy(policies.get(j))) {
                     return false;
                 }
             }

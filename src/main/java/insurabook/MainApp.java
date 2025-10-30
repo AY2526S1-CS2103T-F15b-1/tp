@@ -29,6 +29,7 @@ import insurabook.storage.UserPrefsStorage;
 import insurabook.ui.Ui;
 import insurabook.ui.UiManager;
 import javafx.application.Application;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 
@@ -37,7 +38,7 @@ import javafx.stage.Stage;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 2, 2, true);
+    public static final Version VERSION = new Version(1, 5, 0, false);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -49,7 +50,7 @@ public class MainApp extends Application {
 
     @Override
     public void init() throws Exception {
-        logger.info("=============================[ Initializing AddressBook ]===========================");
+        logger.info("=============================[ Initializing InsuraBook ]===========================");
         super.init();
 
         AppParameters appParameters = AppParameters.parse(getParameters());
@@ -66,6 +67,8 @@ public class MainApp extends Application {
         logic = new LogicManager(model, storage);
 
         ui = new UiManager(logic);
+
+        Font.loadFont(getClass().getResourceAsStream("/fonts/RobotoMono-Regular.ttf"), 12);
     }
 
     /**
@@ -80,7 +83,7 @@ public class MainApp extends Application {
         ReadOnlyInsuraBook initialData;
         try {
             insuraBookOptional = storage.readInsuraBook();
-            if (!insuraBookOptional.isPresent()) {
+            if (insuraBookOptional.isEmpty()) {
                 logger.info("Creating a new data file " + storage.getInsuraBookFilePath()
                         + " populated with a sample AddressBook.");
             }
@@ -88,6 +91,15 @@ public class MainApp extends Application {
         } catch (DataLoadingException e) {
             logger.warning("Data file at " + storage.getInsuraBookFilePath() + " could not be loaded."
                     + " Will be starting with an empty AddressBook.");
+            // store old data
+            try {
+                storage.backupInsuraBookFile();
+            } catch (IOException ioe) {
+                // System.out.println(ioe);
+                logger.severe("Failed to save backup of InsuraBook file.");
+                logger.severe(ioe.toString());
+            }
+
             initialData = new InsuraBook();
         }
 

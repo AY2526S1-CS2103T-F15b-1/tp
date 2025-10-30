@@ -57,6 +57,7 @@ public class ViewCommand extends Command {
         // default to client view if no flag is provided
         if (flag.equals(PREFIX_CLIENT_VIEW.getPrefix())) {
             CommandResult res = new CommandResult(MESSAGE_SUCCESS_CLIENT);
+            model.updateFilteredPersonList(c -> true);
             res.setView(View.CLIENT_VIEW);
             return res;
         } else if (flag.equals(PREFIX_CLIENT_ID.getPrefix())) {
@@ -65,7 +66,7 @@ public class ViewCommand extends Command {
                 res.setView(View.CLIENT_VIEW);
                 return res;
             }
-            FilteredList<Client> clients = model.getFilteredPersonList().filtered(
+            FilteredList<Client> clients = model.getFilteredClientList().filtered(
                     client -> client.getClientId().equals(clientId));
 
             if (clients.isEmpty()) {
@@ -86,7 +87,8 @@ public class ViewCommand extends Command {
 
         // default to client view if flag is invalid
         CommandResult res = new CommandResult(
-                "Invalid flag! Use -c for Client View and -p for Policy View");
+                "Invalid flag! Use view -client for Client View and view -policy for Policy View. "
+                + "If viewing a specific client's policies, use view -c_id <client_id>.");
         res.setView(View.CLIENT_VIEW);
         return res;
     }

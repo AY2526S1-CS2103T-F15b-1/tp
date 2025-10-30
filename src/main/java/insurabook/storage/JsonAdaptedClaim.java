@@ -3,6 +3,7 @@ package insurabook.storage;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import insurabook.commons.exceptions.IllegalValueException;
+import insurabook.model.InsuraBook;
 import insurabook.model.claims.Claim;
 import insurabook.model.claims.ClaimAmount;
 import insurabook.model.claims.ClaimId;
@@ -59,7 +60,7 @@ public class JsonAdaptedClaim {
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted claim.
      */
-    public Claim toModelType() throws IllegalValueException {
+    public Claim toModelType(InsuraBook insuraBook) throws IllegalValueException {
         if (clientId == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "clientId"));
         }
@@ -102,6 +103,6 @@ public class JsonAdaptedClaim {
 
         final ClaimMessage modelDescription = new ClaimMessage(description != null ? description : "");
 
-        return new Claim(modelClientId, modelPolicyId, modelAmount, modelDate, modelDescription);
+        return new Claim(modelClaimId, modelClientId, modelPolicyId, modelAmount, modelDate, modelDescription);
     }
 }

@@ -75,4 +75,14 @@ public class StorageManager implements Storage {
         insuraBookStorage.saveInsuraBook(insuraBook, filePath);
     }
 
+    /**
+     * Creates a backup copy of InsuraBook file.
+     * @throws IOException if there was any problem copying the file
+     */
+    @Override
+    public void backupInsuraBookFile() throws IOException {
+        logger.fine("Attempting to create backup of data file");
+        insuraBookStorage.backupInsuraBookFile();
+    }
+
 }

@@ -10,10 +10,10 @@ import static java.util.Objects.requireNonNull;
 public class ClaimId {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Id should be in the format of Cxxxx where x is a digit (0-9).";
+            "Id should be in the format of CLxxx where x is a digit (0-9).";
 
-    // The format of the claim ID must start with 'C' followed by one or more digits.
-    public static final String VALIDATION_REGEX = "C[0-9]+";
+    // The format of the claim ID must start with 'CL' followed by one or more digits.
+    public static final String VALIDATION_REGEX = "CL[0-9]{3}";
 
     private final String claimId;
 

@@ -1,6 +1,7 @@
 package insurabook.model.client;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import insurabook.model.claims.Claim;
 import insurabook.model.claims.ClaimId;
@@ -8,13 +9,14 @@ import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
 import insurabook.model.policies.UniquePolicyList;
 
+
 /**
  * Represents a Client's record of policies and claims in InsuraBook.
  * Guarantees: Only valid Policy(s) are stored
  */
 public class Portfolio {
 
-    private insurabook.model.client.Client client;
+    private Client client;
     private UniquePolicyList policies;
 
     /**
@@ -26,6 +28,20 @@ public class Portfolio {
 
     public Portfolio(List<Policy> policies) {
         this.policies = new UniquePolicyList(policies);
+    }
+
+    /**
+     * Copy constructor
+     * @param toCopy portfolio to copy
+     */
+    public Portfolio(Portfolio toCopy) {
+        this.policies = new UniquePolicyList();
+
+        List<Policy> copiedPolicies = toCopy.getPolicies().asUnmodifiableObservableList().stream()
+                .map(policy -> new Policy(policy))
+                .collect(Collectors.toList());
+
+        this.policies.setPolicies(copiedPolicies);
     }
 
     public insurabook.model.client.Client getClient() {
@@ -74,7 +90,8 @@ public class Portfolio {
      * @param claim to add
      */
     public void addClaim(Claim claim) {
-        policies.getPolicy(claim.getPolicyId()).addClaim(claim);
+        Policy policy = policies.getPolicy(claim.getPolicyId());
+        policy.addClaim(claim);
     }
 
     /**
@@ -93,6 +110,7 @@ public class Portfolio {
      * Function to set claim
      */
     public void setClaim(Claim target, Claim editedClaim) {
-        policies.getPolicy(target.getPolicyId()).setClaim(target, editedClaim);
+        Policy policy = policies.getPolicy(target.getPolicyId());
+        policy.setClaim(target, editedClaim);
     }
 }
