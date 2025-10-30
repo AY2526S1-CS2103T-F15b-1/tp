@@ -89,7 +89,7 @@ public class Messages {
                     .append("; Client Id: ")
                     .append(policy.getClientId())
                     .append("; PolicyTypeId: ")
-                    .append(policy.getPolicyType().getPtId())
+                    .append(policy.getPolicyTypeId())
                     .append("; Expiry Date: ")
                     .append(policy.getExpiryDate());
         } else {

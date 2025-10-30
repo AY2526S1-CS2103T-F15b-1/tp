@@ -8,7 +8,6 @@ import insurabook.model.claims.ClaimId;
 import insurabook.model.claims.InsuraDate;
 import insurabook.model.claims.exceptions.ClaimNotFoundException;
 import insurabook.model.client.ClientId;
-import insurabook.model.policytype.PolicyType;
 import insurabook.model.policytype.PolicyTypeId;
 
 /**
@@ -18,34 +17,34 @@ public class Policy {
 
     private final PolicyId policyId;
     private final ClientId clientId;
-    private final PolicyType policyType;
+    private final PolicyTypeId policyTypeId;
     private final InsuraDate expiryDate;
     private final List<Claim> claim;
 
     /**
      * Constructor
-     * @param policyType from parser
+     * @param policyTypeId from parser
      * @param expiryDate datetime from parser
      */
-    public Policy(PolicyId policyId, ClientId clientId, PolicyType policyType, InsuraDate expiryDate) {
+    public Policy(PolicyId policyId, ClientId clientId, PolicyTypeId policyTypeId, InsuraDate expiryDate) {
         this.policyId = policyId;
         this.clientId = clientId;
-        this.policyType = policyType;
+        this.policyTypeId = policyTypeId;
         this.expiryDate = expiryDate;
         this.claim = new ArrayList<>();
     }
 
     /**
      * Constructor
-     * @param policyType from parser
+     * @param policyTypeId from parser
      * @param expiryDate datetime from parser
      * @param claims list of claims under this policy
      */
     public Policy(PolicyId policyId, ClientId clientId,
-                  PolicyType policyType, InsuraDate expiryDate, List<Claim> claims) {
+                  PolicyTypeId policyTypeId, InsuraDate expiryDate, List<Claim> claims) {
         this.policyId = policyId;
         this.clientId = clientId;
-        this.policyType = policyType;
+        this.policyTypeId = policyTypeId;
         this.expiryDate = expiryDate;
         this.claim = new ArrayList<>(claims);
     }
@@ -57,7 +56,7 @@ public class Policy {
     public Policy(Policy toCopy) {
         this.policyId = toCopy.getPolicyId();
         this.clientId = toCopy.getClientId();
-        this.policyType = toCopy.getPolicyType();
+        this.policyTypeId = toCopy.getPolicyTypeId();
         this.expiryDate = toCopy.getExpiryDate();
         this.claim = new ArrayList<>(toCopy.getClaims());
     }
@@ -72,18 +71,10 @@ public class Policy {
 
     /**
      * Getter
-     * @return policy type of policy
-     */
-    public PolicyType getPolicyType() {
-        return this.policyType;
-    }
-
-    /**
-     * Getter
      * @return policy type id of policy
      */
     public PolicyTypeId getPolicyTypeId() {
-        return this.policyType.getPtId();
+        return this.policyTypeId;
     }
 
     /**
