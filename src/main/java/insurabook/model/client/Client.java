@@ -22,6 +22,8 @@ public class Client {
     private final ClientId clientId;
     private final Name name;
     private final InsuraDate birthday;
+    private final Phone phone;
+    private final Email email;
 
     // Data fields
     private final Portfolio portfolio;
@@ -29,9 +31,11 @@ public class Client {
     /**
      * Every field must be present and not null.
      */
-    public Client(Name name, InsuraDate birthday, ClientId clientId) {
+    public Client(Name name, Phone phone, Email email, InsuraDate birthday, ClientId clientId) {
         requireAllNonNull(name, birthday, clientId);
         this.name = name;
+        this.phone = phone;
+        this.email = email;
         this.birthday = birthday;
         this.clientId = clientId;
         this.portfolio = new Portfolio();
@@ -40,9 +44,11 @@ public class Client {
     /**
      * Every field must be present and not null.
      */
-    public Client(Name name, InsuraDate birthday, ClientId clientId, List<Policy> policies) {
+    public Client(Name name, Phone phone, Email email, InsuraDate birthday, ClientId clientId, List<Policy> policies) {
         requireAllNonNull(name, birthday, clientId, policies);
         this.name = name;
+        this.phone = phone;
+        this.email = email;
         this.birthday = birthday;
         this.clientId = clientId;
         this.portfolio = new Portfolio(policies);
@@ -54,6 +60,8 @@ public class Client {
     public Client(Client toCopy) {
         requireAllNonNull(toCopy);
         this.name = toCopy.getName();
+        this.phone = toCopy.getPhone();
+        this.email = toCopy.getEmail();
         this.birthday = toCopy.getBirthday();
         this.clientId = toCopy.getClientId();
         this.portfolio = new Portfolio(toCopy.getPortfolio());
@@ -61,6 +69,14 @@ public class Client {
 
     public Name getName() {
         return name;
+    }
+
+    public Phone getPhone() {
+        return phone;
+    }
+
+    public Email getEmail() {
+        return email;
     }
 
     public InsuraDate getBirthday() {
@@ -118,6 +134,8 @@ public class Client {
         return new ToStringBuilder(this)
                 .add("name", name)
                 .add("clientId", clientId)
+                .add("phone", phone)
+                .add("email", email)
                 .toString();
     }
 
