@@ -20,6 +20,7 @@ a terminal.
   - [Adding a claim: `add claim`](#adding-a-claim-add-claim)
   - [Listing all clients: `list`](#listing-all-clients-list)
   - [Editing a policy type: `edit policy type`](#editing-a-policy-type-edit-policy-type)
+  - [Editing a policy: `edit policy`](#editing-a-policy-edit-policy)
   - [Editing a claim: `edit claim`](#editing-a-claim-edit-claim)
   - [Locating clients by name or ID: `find`](#locating-clients-by-name-or-id-find)
   - [Deleting a client: `delete`](#deleting-a-client-delete)
@@ -172,6 +173,9 @@ Examples:
     <img alt="img.png" height="300" src="images/addPolicyToClient.png" width="500"/>
 </p>
 
+> 💡 **Quick Tip:** Not sure of the policy type ID or client ID? Use the `view -client` or `view -policy` commands to find them
+before adding a policy.
+
 ---
 
 ### Adding a claim: `add claim`
@@ -238,6 +242,27 @@ Examples:
 
 * `edit policy type -pt_id BRH001 -pr 1000` edits the policy type premium
   to be `1000` for the policy type `BRH001`.
+
+---
+
+### Editing a policy: `edit policy`
+<small>[(back to Contents)](#table-of-contents)</small>
+
+Updates the details of an existing policy attached to a client. Use this command if you need to correct the expiry date of 
+a previously filed policy.
+
+> 💡 **Tip:** All ID fields (CLIENT_ID, POLICY_ID) are mandatory to identify the specific policy to edit,
+> so they are not subject to change. You must provide at least one of the optional fields (-exp) to make an edit.
+
+Format:  
+`edit policy -c_id CLIENT_ID -p_id POLICY_ID [-exp EXPIRY_DATE]`
+
+Examples:
+* To edit the expiry date of a policy:
+    ```
+    edit policy -c_id C101 -p_id P101 -exp 2026-12-31
+    ```
+  This updates the expiry date to Dec 31, 2026 for policy P101 under client C101.
 
 ---
 
@@ -326,7 +351,7 @@ InsuraBook, use this command.
 
 Format: `delete -c_id CLIENT_ID`
 
-<span style="color:red">⚠ Action is **irreversible.**</span>
+<span style="color:orange">⚠ Action removes data, but can be reversed with 'undo'.</span>
 
 Examples:
 * `delete -c_id 123` deletes the client from InsuraBook with client ID `123`.
@@ -347,7 +372,7 @@ Deletes a policy type from InsuraBook. To remove a policy type (product) from yo
 Format:
 `delete policy type -pt_n POLICY_TYPE_NAME -pt_id POLICY_TYPE_ID`
 
-<span style="color:red">⚠ Action is **irreversible.**</span>
+<span style="color:orange">⚠ Action removes data, but can be reversed with 'undo'.</span>
 
 Example:
 * `delete policy type -pt_n BRUHealth -pt_id BRH001`
@@ -366,7 +391,7 @@ Deletes the specified policy previously saved under a client.
 Format:
 `delete policy -c_id CLIENT_ID -p_id POLICY_ID`
 
-<span style="color:red">⚠ Action is **irreversible.**</span>
+<span style="color:orange">⚠ Action removes data, but can be reversed with 'undo'.</span>
 
 Example:
 * `view -c_id 1` to look for client with client id `1` and all the policies the client owns, followed by
@@ -445,7 +470,7 @@ Clears **ALL** entries from InsuraBook.
 
 Format: `clear`
 
-<span style="color:red">⚠ Action is **irreversible.**</span>
+<span style="color:orange">⚠ Clears all data. You can use 'undo' to recover it if needed.</span>
 
 ---
 
@@ -524,10 +549,17 @@ _Details coming soon ..._
 
 1. **Multiple screens:** Moving the app to a secondary screen and later using only one may cause the GUI to open
 off-screen.
+   
    **Fix:** Delete `preferences.json` before running again.
 
 2. **Help window minimized:** If minimized, subsequent `help` commands will not open a new window.
+
    **Fix:** Restore the minimized window manually.
+
+3. **Claim's commands not reflected immediately:** After adding/editing/deleting a claim, the claim list may not
+   update until another command is run.
+   
+   **Fix:** Run any command (e.g., view -c_id CLIENT_ID) to refresh the display.
 
 --------------------------------------------------------------------------------------------------------------------
 
