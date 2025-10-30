@@ -61,6 +61,15 @@ public class InsuraDate {
     }
 
     /**
+     * Returns true if the date is after today
+     * @return boolean true/false
+     */
+    public boolean isAfterToday() {
+        LocalDate today = LocalDate.now();
+        return this.date.isAfter(today);
+    }
+
+    /**
      * Returns true if the date is in three days' time in Singapore timezone.
      */
     public boolean isExpiringInThreeDays() {
