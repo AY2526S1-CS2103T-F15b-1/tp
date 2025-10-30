@@ -3,9 +3,12 @@ package insurabook.ui;
 import java.util.Comparator;
 import java.util.List;
 
+import insurabook.logic.Logic;
 import insurabook.model.claims.Claim;
 import insurabook.model.claims.InsuraDate;
 import insurabook.model.policies.Policy;
+import insurabook.model.policytype.PolicyType;
+import insurabook.model.policytype.PolicyTypeId;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
@@ -45,11 +48,13 @@ public class PolicyCard extends UiPart<Region> {
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
      */
-    public PolicyCard(Policy policy, int displayedIndex) {
+    public PolicyCard(Policy policy, int displayedIndex, Logic logic) {
         super(FXML);
         this.policy = policy;
         id.setText(displayedIndex + ". ");
-        pName.setText(policy.getPolicyType().getPtName().toString());
+        PolicyTypeId id = policy.getPolicyTypeId();
+        PolicyType pt = logic.getInsuraBook().getPolicyType(id);
+        pName.setText(pt.getPtName().toString());
         pId.setText("Policy ID: " + policy.getPolicyId().toString());
 
         InsuraDate expiryDate = policy.getExpiryDate();
