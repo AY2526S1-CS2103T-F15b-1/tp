@@ -7,6 +7,8 @@ import static insurabook.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static insurabook.logic.parser.CliSyntax.PREFIX_POLICY_ID;
 import static java.util.Objects.requireNonNull;
 
+import java.util.Objects;
+
 import insurabook.logic.Messages;
 import insurabook.logic.commands.exceptions.CommandException;
 import insurabook.model.Model;
@@ -46,7 +48,13 @@ public class AddClaimCommand extends Command {
     private final ClaimMessage claimMessage;
 
     /**
-     * Creates an AddClaimCommand to add the specified {@code Claim}
+     * Creates an AddClaimCommand to add a new claim based on its components.
+     *
+     * @param clientId The ID of the client who owns the policy.
+     * @param policyId The ID of the policy to file the claim against.
+     * @param claimAmount The monetary amount of the claim.
+     * @param claimDate The date the claim was filed.
+     * @param claimMessage An optional description for the claim.
      */
     public AddClaimCommand(ClientId clientId, PolicyId policyId,
                            ClaimAmount claimAmount, InsuraDate claimDate, ClaimMessage claimMessage) {
@@ -67,8 +75,40 @@ public class AddClaimCommand extends Command {
         requireNonNull(model);
 
         Claim claim = model.addClaim(clientId, policyId, claimAmount, claimDate, claimMessage);
+        assert claim != null : "Added claim should not be null";
+
         model.commitInsuraBook();
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(claim, 0)));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+
+        if (!(other instanceof AddClaimCommand)) {
+            return false;
+        }
+
+        AddClaimCommand otherCommand = (AddClaimCommand) other;
+        return clientId.equals(otherCommand.clientId)
+                && policyId.equals(otherCommand.policyId)
+                && claimAmount.equals(otherCommand.claimAmount)
+                && claimDate.equals(otherCommand.claimDate)
+                && claimMessage.equals(otherCommand.claimMessage);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(clientId, policyId, claimAmount, claimDate, claimMessage);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("AddClaimCommand: clientId=%s, policyId=%s, claimAmount=%s, "
+                        + "claimDate=%s, claimMessage=%s",
+                clientId, policyId, claimAmount, claimDate, claimMessage);
     }
 }

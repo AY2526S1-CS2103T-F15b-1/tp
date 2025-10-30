@@ -6,6 +6,7 @@ import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Arrays;
+import java.util.stream.Stream;
 
 import insurabook.logic.commands.FindCommand;
 import insurabook.logic.parser.exceptions.ParseException;
@@ -26,12 +27,16 @@ public class FindCommandParser implements Parser<FindCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_CLIENT_NAME, PREFIX_CLIENT_ID);
-        String trimmedNames = argMultimap.getValue(PREFIX_CLIENT_NAME).orElse("").trim();
-        String trimmedIds = argMultimap.getValue(PREFIX_CLIENT_ID).orElse("").trim();
-        if (!trimmedNames.isEmpty() && !trimmedIds.isEmpty()) {
+
+        if (!isAnyPrefixPresent(argMultimap, PREFIX_CLIENT_NAME, PREFIX_CLIENT_ID)
+                || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_CLIENT_NAME, PREFIX_CLIENT_ID);
+
+        String trimmedNames = argMultimap.getValue(PREFIX_CLIENT_NAME).orElse("").trim();
+        String trimmedIds = argMultimap.getValue(PREFIX_CLIENT_ID).orElse("").trim();
 
         if (!trimmedNames.isEmpty()) {
             String[] nameKeywords = trimmedNames.split("\\s+");
@@ -45,4 +50,11 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
     }
 
+    /**
+     * Returns true if at least one of the prefixes contains {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean isAnyPrefixPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).anyMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
 }

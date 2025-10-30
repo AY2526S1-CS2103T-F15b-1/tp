@@ -21,7 +21,6 @@ public class Messages {
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
     public static final String MESSAGE_DUPLICATE_FIELDS =
                 "Multiple values specified for the following single-valued field(s): ";
-    public static final String MESSAGE_INVALID_CLAIM = "This claim does not exist.";
 
     /**
      * Returns an error message indicating the duplicate prefixes.
@@ -56,9 +55,9 @@ public class Messages {
         if (op == 0) {
             builder.append(claim.getClaimId())
                     .append(" for client ")
-                    .append(claim.getClient().getClientId())
-                    .append(", policy ")
-                    .append(claim.getPolicy().getPolicyId())
+                    .append(claim.getClientId())
+                    .append(", policy ID ")
+                    .append(claim.getPolicyId())
                     .append(" with an amount of $")
                     .append(claim.getAmount())
                     .append(" on date ")
@@ -67,10 +66,10 @@ public class Messages {
                     .append(claim.getDescription());
         } else {
             builder.append(claim.getClaimId())
-                    .append(" on policy ")
-                    .append(claim.getPolicy().getPolicyId())
+                    .append(" on policy ID ")
+                    .append(claim.getPolicyId())
                     .append(" for client ")
-                    .append(claim.getClient().getClientId())
+                    .append(claim.getClientId())
                     .append("; Description: ")
                     .append(claim.getDescription());
         }

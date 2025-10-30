@@ -11,6 +11,7 @@ import insurabook.model.claims.ClaimAmount;
 import insurabook.model.claims.ClaimId;
 import insurabook.model.claims.ClaimMessage;
 import insurabook.model.claims.InsuraDate;
+import insurabook.model.claims.UniqueClaimIdCounter;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
 import insurabook.model.client.UniqueClientList;
@@ -33,6 +34,7 @@ public class InsuraBook implements ReadOnlyInsuraBook {
     private final UniqueClientList clients;
     private final UniquePolicyTypeList policyTypes;
     private final UniquePolicyList clientPolicies;
+    private final UniqueClaimIdCounter claimIdCounter = new UniqueClaimIdCounter(1);
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -109,18 +111,13 @@ public class InsuraBook implements ReadOnlyInsuraBook {
      * receive unique IDs.
      */
     public void syncClaimIdCounter() {
-        int maxId = 0;
-        for (Client client : clients) {
-            for (Policy policy : client.getPortfolio().getPolicies()) {
-                for (Claim claim : policy.getClaims()) {
-                    int currentIdNum = Integer.parseInt(claim.getClaimId().toString().substring(2));
-                    if (currentIdNum > maxId) {
-                        maxId = currentIdNum;
-                    }
-                }
-            }
-        }
-        Claim.syncCounter(maxId + 1);
+        int maxId = clients.asUnmodifiableObservableList().stream()
+                .flatMap(client -> client.getPortfolio().getPolicies().asUnmodifiableObservableList().stream())
+                .flatMap(policy -> policy.getClaims().stream())
+                .mapToInt(claim -> Integer.parseInt(claim.getClaimId().toString().substring(2)))
+                .max()
+                .orElse(0);
+        this.claimIdCounter.setCounter(maxId + 1);
     }
 
     //// client-level operations
@@ -269,8 +266,8 @@ public class InsuraBook implements ReadOnlyInsuraBook {
     public Claim addClaim(ClientId clientId, PolicyId policyId, ClaimAmount claimAmount,
                          InsuraDate claimDate, ClaimMessage claimDescription) {
         Client client = this.getClient(clientId);
-        Policy policy = client.getPortfolio().getPolicies().getPolicy(policyId);
-        Claim claim = new Claim(client, policy, claimAmount, claimDate, claimDescription);
+        ClaimId claimId = new ClaimId(claimIdCounter.getNextClaimId());
+        Claim claim = new Claim(claimId, clientId, policyId, claimAmount, claimDate, claimDescription);
         client.addClaim(claim);
         return claim;
     }
@@ -291,8 +288,17 @@ public class InsuraBook implements ReadOnlyInsuraBook {
      */
     public void setClaim(Claim target, Claim editedClaim) {
         requireNonNull(editedClaim);
-        Client client = target.getClient();
+        Client client = this.getClient(target.getClientId());
         client.setClaim(target, editedClaim);
+    }
+
+    /**
+     * Returns the claim based on clientId, policyId and claimId.
+     */
+    public Claim getClaim(ClientId clientId, PolicyId policyId, ClaimId claimId) {
+        Client client = this.getClient(clientId);
+        Policy policy = client.getPortfolio().getPolicies().getPolicy(policyId);
+        return policy.getClaim(claimId);
     }
 
     //// util methods
