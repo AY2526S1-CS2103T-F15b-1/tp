@@ -30,14 +30,17 @@ public class AddClientCommandParser implements Parser<AddClientCommand> {
      */
     public AddClientCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_CLIENT_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_BIRTHDAY, PREFIX_CLIENT_ID);
+                ArgumentTokenizer.tokenize(args, PREFIX_CLIENT_NAME, PREFIX_PHONE, PREFIX_EMAIL,
+                        PREFIX_BIRTHDAY, PREFIX_CLIENT_ID);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_CLIENT_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_BIRTHDAY, PREFIX_CLIENT_ID)
+        if (!arePrefixesPresent(argMultimap, PREFIX_CLIENT_NAME, PREFIX_PHONE, PREFIX_EMAIL,
+                PREFIX_BIRTHDAY, PREFIX_CLIENT_ID)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddClientCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_CLIENT_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_BIRTHDAY, PREFIX_CLIENT_ID);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_CLIENT_NAME, PREFIX_PHONE, PREFIX_EMAIL,
+                PREFIX_BIRTHDAY, PREFIX_CLIENT_ID);
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_CLIENT_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
