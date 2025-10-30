@@ -53,7 +53,7 @@ The bulk of the app's work is done by the following four components:
 
 **How the architecture components interact with each other**
 
-The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues 
+The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues
 the command `delete -c_id C101`.
 
 <p align="center">
@@ -79,14 +79,14 @@ The **API** of this component is specified in [`Ui.java`](https://github.com/AY2
 
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, 
-`StatusBarFooter`, `HelpWindow`, `PolicyListPanel`, `PolicyTypeListPanel` etc. All these, including the `MainWindow`, 
-inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the 
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`,
+`StatusBarFooter`, `HelpWindow`, `PolicyListPanel`, `PolicyTypeListPanel` etc. All these, including the `MainWindow`,
+inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the
 visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files 
-that are in the `src/main/resources/view` folder. For example, the layout of the 
-[`MainWindow`](https://github.com/AY2526S1-CS2103T-F15b-1/tp/blob/master/src/main/java/insurabook/ui/MainWindow.java) 
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files
+that are in the `src/main/resources/view` folder. For example, the layout of the
+[`MainWindow`](https://github.com/AY2526S1-CS2103T-F15b-1/tp/blob/master/src/main/java/insurabook/ui/MainWindow.java)
 is specified in [`MainWindow.fxml`](https://github.com/AY2526S1-CS2103T-F15b-1/tp/blob/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
@@ -106,20 +106,20 @@ Here's a (partial) class diagram of the `Logic` component:
     <img src="images/LogicClassDiagram.png" width="550"/>
 </p>
 
-The sequence diagram below illustrates the interactions within the `Logic` component, taking 
+The sequence diagram below illustrates the interactions within the `Logic` component, taking
 `execute("delete -c_id C101")` API call as an example.
 
 ![Interactions Inside the Logic Component for the `delete 1` Command](images/DeleteSequenceDiagram.png)
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for 
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for
 `DeleteClientCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
 </div>
 
 How the `Logic` component works:
 
-1. When `Logic` is called upon to execute a command, it is passed to an `InsuraBookParser` object which in turn creates 
+1. When `Logic` is called upon to execute a command, it is passed to an `InsuraBookParser` object which in turn creates
 2. a parser that matches the command (e.g., `DeleteClientCommandParser`) and uses it to parse the command.
-1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteClientCommand`) 
+1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteClientCommand`)
 2. which is executed by the `LogicManager`.
 1. The command can communicate with the `Model` when it is executed (e.g. to delete a client).<br>
    Note that although this is shown as a single step in the diagram above (for simplicity), in the code it can take several interactions (between the command object and the `Model`) to achieve.
@@ -132,11 +132,11 @@ Here are the other classes in `Logic` (omitted from the class diagram above) tha
 </p>
 
 How the parsing works:
-* When called upon to parse a user command, the `InsuraBookParser` class creates an `XYZCommandParser` (`XYZ` is a 
-placeholder for the specific command name e.g., `AddClientCommandParser`) which uses the other classes shown above to 
-parse the user command and create a `XYZCommand` object (e.g., `AddClientCommand`) which the `InsuraBookParser` 
+* When called upon to parse a user command, the `InsuraBookParser` class creates an `XYZCommandParser` (`XYZ` is a
+placeholder for the specific command name e.g., `AddClientCommandParser`) which uses the other classes shown above to
+parse the user command and create a `XYZCommand` object (e.g., `AddClientCommand`) which the `InsuraBookParser`
 returns back as a `Command` object.
-* All `XYZCommandParser` classes (e.g., `AddClientCommandParser`, `DeleteClientCommandParser`, ...) inherit from 
+* All `XYZCommandParser` classes (e.g., `AddClientCommandParser`, `DeleteClientCommandParser`, ...) inherit from
 the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
@@ -149,12 +149,12 @@ the `Parser` interface so that they can be treated similarly where possible e.g,
 The `Model` component,
 
 * stores the insurabook data i.e., all `Client` objects (which are contained in a `UniqueClientList` object).
-* stores the currently 'selected' `Client` objects (e.g., results of a search query) as a separate _filtered_ list 
-which is exposed to outsiders as an unmodifiable `ObservableList<Client>` that can be 'observed' e.g. the UI can be 
+* stores the currently 'selected' `Client` objects (e.g., results of a search query) as a separate _filtered_ list
+which is exposed to outsiders as an unmodifiable `ObservableList<Client>` that can be 'observed' e.g. the UI can be
 bound to this list so that the UI automatically updates when the data in the list change.
-* stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a 
+* stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a
 `ReadOnlyUserPref` objects.
-* does not depend on any of the other three components (as the `Model` represents data entities of the domain, they 
+* does not depend on any of the other three components (as the `Model` represents data entities of the domain, they
 should make sense on their own without depending on other components)
 
 ### Storage component
@@ -167,9 +167,9 @@ should make sense on their own without depending on other components)
 
 The `Storage` component,
 * can save both insurabook data and user preference data in JSON format, and read them back into corresponding objects.
-* inherits from both `InsuraBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only 
+* inherits from both `InsuraBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only
 the functionality of only one is needed).
-* depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects 
+* depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects
 that belong to the `Model`)
 
 ### Common classes
@@ -185,7 +185,7 @@ This section describes some noteworthy details on how certain features are imple
 ### Storage Component
 
 #### Purpose and Overview
-The Storage component is responsible for all read/write operations on the user's hard drive. It handles the storage of 
+The Storage component is responsible for all read/write operations on the user's hard drive. It handles the storage of
 both the InsuraBook data and user preferences in JSON format. The component ensures that data is correctly serialized 
 and deserialized when saving to or loading from disk between application sessions.
 
@@ -193,24 +193,24 @@ All data is stored in a single JSON file named, typically located at `data/insur
 
 #### Architecture Design
 Our `Model` classes (like `Client`, `Policy`, etc.) are too complex and designed to be independent of the storage
-format, which are not suitable for direct JSON serialization. 
+format, which are not suitable for direct JSON serialization.
 
-To solve this, we introduce a parallel set of simple "adapter" classes (e.g., `JsonAdaptedClient`, `JsonAdaptedPolicy`, 
+To solve this, we introduce a parallel set of simple "adapter" classes (e.g., `JsonAdaptedClient`, `JsonAdaptedPolicy`,
 etc.). These classes act as intermediaries between the `Model` classes and the JSON format.
 
 **Key Classes:**
-* `Storage`: An interface that defines the high-level methods `readInsurabook()` and `saveInsurabook()`. The rest of 
+* `Storage`: An interface that defines the high-level methods `readInsurabook()` and `saveInsurabook()`. The rest of
 the application (e.g., `LogicManager`) only depends on this interface.
 
 * `StorageManager`: The main concrete implementation of `Storage`. It delegates its tasks to `JsonInsurabookStorage`.
 
-* `JsonInsurabookStorage`: This class directly handles the serialization/deserialization of data to and from the JSON 
+* `JsonInsurabookStorage`: This class directly handles the serialization/deserialization of data to and from the JSON
 file. It uses the Jackson JSON library.
 
-* `JsonSerializableInsurabook`: A helper class that represents the top-level JSON object (e.g., containing a 
+* `JsonSerializableInsurabook`: A helper class that represents the top-level JSON object (e.g., containing a
 `List<JsonAdaptedClient>`).
 
-* `JsonAdaptedClient`: `Client`'s adapter class. It has simple `String` and `List` fields (like `name`, `c_id`, 
+* `JsonAdaptedClient`: `Client`'s adapter class. It has simple `String` and `List` fields (like `name`, `c_id`,
 `policies`). It is responsible for converting a `Client` object to a JSON-friendly format and vice versa.
 
 * `JsonAdaptedPolicyType`: `PolicyType`'s adapter class for the `PolicyType` object.
@@ -221,7 +221,7 @@ file. It uses the Jackson JSON library.
 
 #### Data Flow
 1. **Saving Data:**
-   - This sequence is triggered every time a command that modifies data (like `AddCommand`, `DeleteCommand`, etc.) is 
+   - This sequence is triggered every time a command that modifies data (like `AddCommand`, `DeleteCommand`, etc.) is
    successfully executed.
     <img src="images/StorageSavingDataSequenceDiagram.png" width="600" />
 2. **Loading Data:**
@@ -230,7 +230,7 @@ file. It uses the Jackson JSON library.
 
 #### Handling Data Corruption
 It is possible that the JSON file on disk may become corrupted or contain invalid data. If the JSON file is malformed,
-Jackson will throw a `JsonParseException` during deserialization. If the JSON structure is valid but fails our 
+Jackson will throw a `JsonParseException` during deserialization. If the JSON structure is valid but fails our
 internal data validation (e.g., missing required fields, invalid values), we throw an `IllegalValueException`.
 
 To handle this, the `StorageManager` catches these exceptions and wraps them in a `DataLoadingException`, which is then
@@ -238,47 +238,47 @@ To handle this, the `StorageManager` catches these exceptions and wraps them in 
 2. Move the corrupted file to a backup location (e.g., `data/insurabook_backup_TIMESTAMP.json`) to prevent further issues.
 3. Initialize a new empty InsuraBook data file to allow the application to continue functioning.
 
-**Result:** The user sees a warning, and the application starts with a clean slate, as if it's the first launch. 
+**Result:** The user sees a warning, and the application starts with a clean slate, as if it's the first launch.
 Their corrupted data is not lost, but saved in the backup file for manual inspection.
 
 #### Design Considerations
 **Aspect: How to map in-memory Model objects into JSON file?**
-Converting complex Model objects directly to JSON can be challenging due to their intricate relationships and data 
+Converting complex Model objects directly to JSON can be challenging due to their intricate relationships and data
 types, which may not be directly serializable.
 
 **Alternative 1 (current choice): Use adapter classes**
-* **Description:** This approach involves creating a set of "adapter" classes (e.g., `JsonAdaptedClient`, 
-`JsonAdaptedPolicy`) that are simple POJOs (Plain Old Java Objects). The `StorageManager` is responsible for converting 
-the complex `Model` objects, which contain JavaFX properties, into these simple adapter objects before serialization. 
+* **Description:** This approach involves creating a set of "adapter" classes (e.g., `JsonAdaptedClient`,
+`JsonAdaptedPolicy`) that are simple POJOs (Plain Old Java Objects). The `StorageManager` is responsible for converting
+the complex `Model` objects, which contain JavaFX properties, into these simple adapter objects before serialization.
 Conversely, it converts the adapter objects back into `Model` objects (running validation) after deserialization.
-* **Pros:** 
-  * **Strong Decoupling:** Decouples the storage format from the Model classes (e.g. `Client`, `Policy`), so they can 
+* **Pros:**
+  * **Strong Decoupling:** Decouples the storage format from the Model classes (e.g. `Client`, `Policy`), so they can
   freely use complex JavaFX properties without breaking serialization, allowing both to evolve independently.
-  * **Centralized Validation:** Provides a clear and robust location for data validation. The `toModelType()` method in 
-  each adapter class is the perfect place to check for invalid data (e.g., missing IDs, invalid date formats) before 
+  * **Centralized Validation:** Provides a clear and robust location for data validation. The `toModelType()` method in
+  each adapter class is the perfect place to check for invalid data (e.g., missing IDs, invalid date formats) before
   the real model objects are created.
-  * **Resilience to Changes:** If the Model classes change (e.g., adding new fields), we only need to update the adapter 
+  * **Resilience to Changes:** If the Model classes change (e.g., adding new fields), we only need to update the adapter
   classes and the conversion logic in `StorageManager`, rather than modifying the Model classes themselves.
-* **Cons:** 
-  * **Increased Complexity:** Introduces additional classes and conversion logic, which adds some complexity  to the 
+* **Cons:**
+  * **Increased Complexity:** Introduces additional classes and conversion logic, which adds some complexity  to the
   codebase and adds one more layer of abstraction.
 
 **Alternative 2: Direct Serialization**
-* **Description:** This approach would involve making the `Model` classes (e.g., `Client`, `Policy`) directly 
+* **Description:** This approach would involve making the `Model` classes (e.g., `Client`, `Policy`) directly
 serializable to JSON by adding Jackson annotations or implementing custom serializers/deserializers.
-* **Pros:** 
-  * **Simplicity:** Fewer classes to manage, as there are no adapter classes. The serialization logic is contained 
+* **Pros:**
+  * **Simplicity:** Fewer classes to manage, as there are no adapter classes. The serialization logic is contained
   within the Model classes themselves.
 * **Cons:**
-* **Tight Coupling:** Couples the `Model` classes to the storage format. The `Model` classes would need to be aware of 
+* **Tight Coupling:** Couples the `Model` classes to the storage format. The `Model` classes would need to be aware of
 serialization concerns, which can clutter their design, making it harder to change one without affecting the other.
-* **Limited Flexibility:** Complex `Model` classes with JavaFX properties may not serialize cleanly, leading to 
+* **Limited Flexibility:** Complex `Model` classes with JavaFX properties may not serialize cleanly, leading to
 potential data loss or corruption.
-* **Scattered Validation:** Data validation logic would be scattered across multiple Model classes, making it harder 
+* **Scattered Validation:** Data validation logic would be scattered across multiple Model classes, making it harder
 to maintain and ensure consistency.
 
-We chose **Alternative 1** because the benefits of decoupling and robust validation are critical for this application. 
-The `Model` must remain independent of storage to allow flexibility. While Alternative 1 requires more setup, it makes 
+We chose **Alternative 1** because the benefits of decoupling and robust validation are critical for this application.
+The `Model` must remain independent of storage to allow flexibility. While Alternative 1 requires more setup, it makes
 the entire application safer, more maintainable, and less prone to errors from corrupted data or future refactoring.
 
 --------------------------------------------------------------------------------------------------------------------
@@ -303,7 +303,7 @@ the entire application safer, more maintainable, and less prone to errors from c
 * can type fast
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: 
+**Value proposition**:
 
 * Allows easier tracking of clients, policies, and claims
 * Performs operations on clients data quickly through CLI
@@ -451,20 +451,20 @@ testers are expected to do more *exploratory* testing.
 2. Saving window preferences
 
    * Resize the window to an optimum size. Move the window to a different location. Close the window.
-   
+
    * Re-launch the app by double-clicking the jar file.<br>
-   
+
    * **Expected:** The most recent window size and location is retained.
 
 ### Adding a client
 1. Adding a client with all fields specified
     * Test cases: `add -n John Doe -phone 98765432 -email johndoe@gmail.com -b 1970-01-01 -c_id C101`
-    * **Expected:** Client "John Doe" is added to the client list with his information. Success message is shown in the 
+    * **Expected:** Client "John Doe" is added to the client list with his information. Success message is shown in the
    result display.
 
 2. Adding a client with missing required fields
     * Test cases: `add -n John Doe -phone 98765432 -b 1970-01-01 -c_id C101` (missing email field)
-    * **Expected:** Error message indicating invalid command format is shown in the result display, together with its 
+    * **Expected:** Error message indicating invalid command format is shown in the result display, together with its
    correct command usage.
 
 3. Adding a client with invalid field values
@@ -493,12 +493,12 @@ testers are expected to do more *exploratory* testing.
 
 1. Editing an existing client with one field changed
     * Test cases: `edit -c_id C101 -n Jane Doe`
-    * **Expected:** Client with c_id C101 has her name changed to "Jane Doe". Success message is shown in the result 
+    * **Expected:** Client with c_id C101 has her name changed to "Jane Doe". Success message is shown in the result
    display.
 
 2. Editing an existing client with multiple fields changed
     * Test cases: `edit -c_id C101 -phone 91234567 -email janedoe@gmail.com`
-    * **Expected:** Client with c_id C101 has her phone and email changed accordingly. Success message is shown in the 
+    * **Expected:** Client with c_id C101 has her phone and email changed accordingly. Success message is shown in the
    result display.
 
 3. Editing without specifying any fields to change
