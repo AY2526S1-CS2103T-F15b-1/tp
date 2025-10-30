@@ -1,5 +1,6 @@
 package insurabook.logic.parser;
 
+import static insurabook.logic.Messages.MESSAGE_INVALID_BIRTHDAY;
 import static insurabook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static insurabook.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
@@ -37,6 +38,10 @@ public class AddClientCommandParser implements Parser<AddClientCommand> {
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_CLIENT_NAME).get());
         InsuraDate birthday = ParserUtil.parseInsuraDate(argMultimap.getValue(PREFIX_BIRTHDAY).get());
         ClientId clientId = ParserUtil.parseClientId(argMultimap.getValue(PREFIX_CLIENT_ID).get());
+
+        if (birthday.isAfterToday()) {
+            throw new ParseException(MESSAGE_INVALID_BIRTHDAY);
+        }
 
         Client client = new Client(name, birthday, clientId);
 

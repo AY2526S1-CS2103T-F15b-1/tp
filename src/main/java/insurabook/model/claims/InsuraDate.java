@@ -4,6 +4,7 @@ import static insurabook.commons.util.AppUtil.checkArgument;
 import static java.util.Objects.requireNonNull;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
@@ -45,6 +46,16 @@ public class InsuraDate extends Date {
         int month = Integer.parseInt(dateParts[1]);
         int day = Integer.parseInt(dateParts[2]);
         return (now.getMonthValue() == month) && (now.getDayOfMonth() == day);
+    }
+
+    /**
+     * Returns true if the date is after today
+     * @return boolean true/false
+     */
+    public boolean isAfterToday() {
+        LocalDate today = LocalDate.now();
+        LocalDate givenDate = LocalDate.parse(this.date);
+        return givenDate.isAfter(today);
     }
 
     /**
