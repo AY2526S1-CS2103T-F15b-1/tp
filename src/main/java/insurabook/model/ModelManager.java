@@ -28,7 +28,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 
 /**
- * Represents the in-memory model of the insura book data.
+ * Represents the in-memory model of the insurabook data.
  */
 public class ModelManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
@@ -43,7 +43,7 @@ public class ModelManager implements Model {
     private int currentStatePointer;
 
     /**
-     * Initializes a ModelManager with the given insuraBook and userPrefs.
+     * Initializes a ModelManager with the given insurabook and userPrefs.
      */
     public ModelManager(ReadOnlyInsuraBook insuraBook, ReadOnlyUserPrefs userPrefs) {
         requireAllNonNull(insuraBook, userPrefs);
