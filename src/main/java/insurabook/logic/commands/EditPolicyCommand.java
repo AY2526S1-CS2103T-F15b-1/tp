@@ -20,7 +20,7 @@ import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
 import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
-import insurabook.model.policytype.PolicyType;
+import insurabook.model.policytype.PolicyTypeId;
 
 /**
  * Edits the details of an existing policy for a client.
@@ -84,10 +84,10 @@ public class EditPolicyCommand extends Command {
         // Fields that are not edited are taken from the original policy
         PolicyId policyId = policyToEdit.getPolicyId();
         ClientId clientId = policyToEdit.getClientId();
-        PolicyType policyType = policyToEdit.getPolicyType();
+        PolicyTypeId policyTypeId = policyToEdit.getPolicyTypeId();
         List<Claim> claims = policyToEdit.getClaims();
 
-        return new Policy(policyId, clientId, policyType, updatedExpiryDate, claims);
+        return new Policy(policyId, clientId, policyTypeId, updatedExpiryDate, claims);
     }
 
     /**

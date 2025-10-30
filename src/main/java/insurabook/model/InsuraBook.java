@@ -165,10 +165,7 @@ public class InsuraBook implements ReadOnlyInsuraBook {
         return clients.getClient(clientId);
     }
 
-    /**
-     * Returns the policy type with the given policyTypeId.
-     * If no such policy type exists, returns null.
-     */
+    @Override
     public PolicyType getPolicyType(PolicyTypeId policyTypeId) {
         // NOTE: This function is for *internal use only*.
         // Users should not access policy types by ID alone.
@@ -227,8 +224,7 @@ public class InsuraBook implements ReadOnlyInsuraBook {
      */
     public Policy addPolicy(PolicyId policyId, ClientId clientId, PolicyTypeId policyTypeId, InsuraDate expiryDate) {
         Client client = this.getClient(clientId);
-        PolicyType policyType = this.getPolicyType(policyTypeId);
-        Policy policy = new Policy(policyId, clientId, policyType, expiryDate);
+        Policy policy = new Policy(policyId, clientId, policyTypeId, expiryDate);
         client.addPolicy(policy);
         this.clientPolicies.add(policy);
         return policy;
