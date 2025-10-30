@@ -1,7 +1,10 @@
 package insurabook.logic.commands;
 
+import static insurabook.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
 import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
+import static insurabook.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static insurabook.logic.parser.CliSyntax.PREFIX_PHONE;
 import static java.util.Objects.requireNonNull;
 
 import insurabook.commons.util.ToStringBuilder;
@@ -20,6 +23,9 @@ public class AddClientCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a client to InsuraBook. "
             + "Parameters: "
             + PREFIX_CLIENT_NAME + "NAME "
+            + PREFIX_PHONE + "PHONE "
+            + PREFIX_EMAIL + "EMAIL "
+            + PREFIX_BIRTHDAY + "BIRTHDAY "
             + PREFIX_CLIENT_ID + "CLIENT_ID\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_CLIENT_NAME + "John Doe "
