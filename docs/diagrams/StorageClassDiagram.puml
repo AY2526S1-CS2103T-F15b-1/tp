@@ -18,8 +18,10 @@ package "InsuraBook Storage" #F4F6F6{
 Class "<<interface>>\nInsuraBookStorage" as InsuraBookStorage
 Class JsonInsuraBookStorage
 Class JsonSerializableInsuraBook
-Class JsonAdaptedPerson
-Class JsonAdaptedTag
+Class JsonAdaptedClient
+Class JsonAdaptedPolicyType
+Class JsonAdaptedPolicy
+Class JsonAdaptedClaim
 }
 
 }
@@ -37,7 +39,9 @@ Storage -right-|> InsuraBookStorage
 JsonUserPrefsStorage .up.|> UserPrefsStorage
 JsonInsuraBookStorage .up.|> InsuraBookStorage
 JsonInsuraBookStorage ..> JsonSerializableInsuraBook
-JsonSerializableInsuraBook --> "*" JsonAdaptedPerson
-JsonAdaptedPerson --> "*" JsonAdaptedTag
+JsonSerializableInsuraBook --> "*" JsonAdaptedClient
+JsonSerializableInsuraBook --> "*" JsonAdaptedPolicyType
+JsonAdaptedClient --> "*" JsonAdaptedPolicy
+JsonAdaptedPolicy --> "*" JsonAdaptedClaim
 
 @enduml
