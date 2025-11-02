@@ -66,6 +66,10 @@ public class PolicyCard extends UiPart<Region> {
         List<Claim> claimList = policy.getClaims();
         claimList.stream()
                 .sorted(Comparator.comparing(claim -> claim.getClaimId().toString()))
-                .forEach(claim -> claims.getChildren().add(new Label("Claim ID: " + claim.getClaimId().toString())));
+                .forEach(claim -> claims.getChildren().add(
+                        new Label(
+                                "Claim ID: " + claim.getClaimId().toString() + "\n"
+                                + "Claim Amount: $" + claim.getAmount().toString() + "\n"
+                                + "Claim Date: " + claim.getDate().toUiString() + "\n")));
     }
 }
