@@ -123,4 +123,11 @@ public class InsuraDate {
     public int hashCode() {
         return date.hashCode();
     }
+
+    public int compareTo(InsuraDate claimDate) {
+        requireNonNull(claimDate);
+        Date thisDate = Date.from(this.date.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date otherDate = Date.from(claimDate.date.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        return thisDate.compareTo(otherDate);
+    }
 }
