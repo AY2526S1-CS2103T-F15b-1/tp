@@ -1,5 +1,6 @@
 package insurabook.logic.commands;
 
+import static insurabook.ui.enums.View.CLIENT_VIEW;
 import static java.util.Objects.requireNonNull;
 
 import java.util.function.Predicate;
@@ -38,8 +39,10 @@ public class FindCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
         model.updateFilteredClientList(predicate);
-        return new CommandResult(
+        CommandResult res = new CommandResult(
                 String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredClientList().size()));
+        res.setView(CLIENT_VIEW);
+        return res;
     }
 
     @Override
