@@ -124,6 +124,13 @@ public class InsuraDate {
         return date.hashCode();
     }
 
+    /**
+     * Compares this InsuraDate with another InsuraDate.
+     *
+     * @param claimDate The other InsuraDate to compare to.
+     * @return A negative integer, zero, or a positive integer as this date
+     *         is before, equal to, or after the specified date.
+     */
     public int compareTo(InsuraDate claimDate) {
         requireNonNull(claimDate);
         Date thisDate = Date.from(this.date.atStartOfDay(ZoneId.systemDefault()).toInstant());
