@@ -35,8 +35,8 @@ public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
-            + "by the index number used in the displayed person list. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the client identified "
+            + "by the client's ID number. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: " + PREFIX_CLIENT_ID + " CLIENT_ID "
             + "[" + PREFIX_CLIENT_NAME + " NAME] "
@@ -49,7 +49,7 @@ public class EditCommand extends Command {
     public static final String MESSAGE_EDIT_CLIENT_SUCCESS = "Edited client: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_NO_MATCHING_CLIENT = "No client found matching ID %1$s";
-    public static final String MESSAGE_DUPLICATE_CLIENT = "This client already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_CLIENT = "This client already exists in the InsuraBook.";
 
     private final ClientId idToEdit;
     private final EditPersonDescriptor editPersonDescriptor;
