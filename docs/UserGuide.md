@@ -63,8 +63,9 @@ a terminal.
    Some example commands you can try:
 
     * `list` : Lists all clients.
-    * `add -n John Doe -b 1970-01-01 -c_id C101` : Adds a client named John Doe with client id C101 and birthday on 01 Jan 1970.
-    * `delete -c_id C101` : Deletes client with client id C101 from InsuraBook.
+    * `add -n John Doe -phone 90000001 -email johndoe@example.com -b 2001-01-01 -c_id 123` : Adds a client named `John
+Doe` with client id `123`, birthday on `01 Jan 2001`, phone number `90000001` and email address `johndoe@example.com`.
+    * `delete -c_id 123` : Deletes client with client id 123 from InsuraBook.
     * `view -policy` : Lists all policy types that the insurance company sells.
     * `clear` : Deletes all clients.
     * `exit` : Exits the app.
@@ -170,6 +171,8 @@ with phone number `90000001`, email `johndoe@example.com`, birthdate `2002-01-01
 
 * `add -n Betty Cheng -phone 99900001 -email bettycheng@example.com -b 2000-01-01 -c_id C1`
 adds a client name `Betty Cheng` with client ID `C1`.
+* performing another `add -n Betty Cheng -phone 99900001 -email bettycheng@example.com -b 2000-01-01 -c_id C1` will
+result in `duplicate client` error because client ID `C1` already exists, not because client has same name.
 
 ---
 
