@@ -227,7 +227,7 @@ This section describes some noteworthy details on how certain features are imple
 
 #### Purpose and Overview
 The Storage component is responsible for all read/write operations on the user's hard drive. It handles the storage of
-both the InsuraBook data and user preferences in JSON format. The component ensures that data is correctly serialized 
+both the InsuraBook data and user preferences in JSON format. The component ensures that data is correctly serialized
 and deserialized when saving to or loading from disk between application sessions.
 
 All data is stored in a single JSON file named `insurabook.json`, typically located at `data/insurabook.json` within

@@ -139,7 +139,7 @@ Action | Format                                                                 
 ### Viewing help : `help`
 <small>[(back to Contents)](#table-of-contents)</small>
 
-Shows a message explaining how to access the help page.  
+Shows a message explaining how to access the help page.
 
 If you ever feel stuck or forget a command, just type `help`. This will open a window with a link to all the commands
 and instructions you need.
@@ -161,14 +161,14 @@ is the first step to tracking all their contact information and policies in Insu
 Format: `add -n NAME -phone PHONE_NUMBER -email EMAIL -b BIRTHDATE -c_id CLIENT_ID`
 
 Examples:
-* `add -n John Doe -phone 90000001 -email johndoe@example.com -b 2002-01-01 -c_id 123` adds a client name `John Doe` 
+* `add -n John Doe -phone 90000001 -email johndoe@example.com -b 2002-01-01 -c_id 123` adds a client name `John Doe`
 with phone number `90000001`, email `johndoe@example.com`, birthdate `2002-01-01` and client ID `123`.
 
 <p align="center">
     <img alt="img.png" height="300" src="images/addClient.png" width="500"/>
 </p>
 
-* `add -n Betty Cheng -phone 99900001 -email bettycheng@example.com -b 2000-01-01 -c_id C1` 
+* `add -n Betty Cheng -phone 99900001 -email bettycheng@example.com -b 2000-01-01 -c_id C1`
 adds a client name `Betty Cheng` with client ID `C1`.
 
 ---
@@ -179,7 +179,7 @@ adds a client name `Betty Cheng` with client ID `C1`.
 Adds a new policy type to InsuraBook. Before you can assign policies to clients, define the available policy
 “products.” Use this command to add a new "product" (eg. "BRUHealth") to your system's catalog.
 
-Format:  
+Format:
 `add policy type -pt_n POLICY_TYPE_NAME -pt_id POLICY_TYPE_ID [-desc DESCRIPTION] [-pr PREMIUM]`
 
 Examples:
@@ -229,7 +229,7 @@ against their policies, including the amount and date.
 Ensure that the client and policy already exist in InsuraBook before adding a claim.
 </div>
 
-Format:  
+Format:
 `add claim -c_id CLIENT_ID -p_id POLICY_ID -amt CLAIM_AMOUNT -date CLAIM_DATE [-desc DESCRIPTION]`
 
 Examples:
@@ -303,13 +303,13 @@ Examples:
 ### Editing a policy: `edit policy`
 <small>[(back to Contents)](#table-of-contents)</small>
 
-Updates the details of an existing policy attached to a client. Use this command if you need to correct the expiry date of 
-a previously filed policy.
+Updates the details of an existing policy attached to a client. Use this command if you need to correct the expiry date
+of a previously filed policy.
 
 > :bulb: **Tip:** All ID fields (CLIENT_ID, POLICY_ID) are mandatory to identify the specific policy to edit,
 > so they are not subject to change. You must provide at least one of the optional fields (-exp) to make an edit.
 
-Format:  
+Format:
 `edit policy -c_id CLIENT_ID -p_id POLICY_ID [-exp EXPIRY_DATE]`
 
 Examples:
@@ -324,14 +324,14 @@ Examples:
 ### Editing a claim: `edit claim`
 <small>[(back to Contents)](#table-of-contents)</small>
 
-Updates the details of an existing claim. Use this command if you need to correct the amount, date, 
+Updates the details of an existing claim. Use this command if you need to correct the amount, date,
 or description of a previously filed claim.
 
-> :bulb: **Tip:** All ID fields (CLIENT_ID, POLICY_ID, CLAIM_ID) are mandatory to identify the specific claim to edit, 
+> :bulb: **Tip:** All ID fields (CLIENT_ID, POLICY_ID, CLAIM_ID) are mandatory to identify the specific claim to edit,
 > so they are not subject to change. You must provide at least one of the optional fields (-amt, -date -desc) to make
 > an edit.
 
-Format:  
+Format:
 `edit claim -c_id CLIENT_ID -p_id POLICY_ID -cl_id CLAIM_ID [-amt CLAIM_AMOUNT] [-date CLAIM_DATE] [-desc DESCRIPTION]`
 
 Examples:
@@ -477,7 +477,7 @@ Example: Let's say you need to delete claim `CL003` from policy `P101` for clien
     ```
     view -c_id C101
     ```
-    This command will list all policies and their claims for client `C101`, allowing you to confirm that `P101` and 
+    This command will list all policies and their claims for client `C101`, allowing you to confirm that `P101` and
 `CL003` are the correct IDs.
 
 2. **Then, execute the delete command:**
@@ -562,7 +562,7 @@ Format: `exit`
 ### Startup Summary & Alerts
 <small>[(back to Contents)](#table-of-contents)</small>
 
-To help you stay on top of your client relationships and urgent tasks, InsuraBook automatically displays 
+To help you stay on top of your client relationships and urgent tasks, InsuraBook automatically displays
 a summary of key alerts every time you launch the application.
 
 This summary includes:
@@ -579,7 +579,7 @@ This list shows all clients who have their birthdays today.
 **:information_source: Expiring Policies (Next 3 Days)**
 
 This list highlights policies that are set to expire within the next three days (including today).
-* **Value:** This acts as an urgent "to-do" list, ensuring you can proactively reach out to clients about renewals and 
+* **Value:** This acts as an urgent "to-do" list, ensuring you can proactively reach out to clients about renewals and
 preventing lapses in coverage.
 
 <p align="center">
@@ -591,7 +591,7 @@ preventing lapses in coverage.
 ### Saving the data
 <small>[(back to Contents)](#table-of-contents)</small>
 
-InsuraBook data is saved automatically to disk after any command that changes the data.  
+InsuraBook data is saved automatically to disk after any command that changes the data.
 No manual saving is required.
 
 ---
@@ -632,7 +632,7 @@ policies and claims.
 
 1. **Multiple screens:** Moving the app to a secondary screen and later using only one may cause the GUI to open
 off-screen.
-   
+
    **Fix:** Delete `preferences.json` before running again.
 
 2. **Help window minimized:** If minimized, subsequent `help` commands will not open a new window.
@@ -641,11 +641,11 @@ off-screen.
 
 3. **Claim's commands not reflected immediately:** After adding/editing/deleting a claim, the claim list may not
    update until another command is run.
-   
+
    **Fix:** Run any command (e.g., view -c_id CLIENT_ID) to refresh the display.
 
 4. **PDF Viewing issues:** PDF versions of this document may introduce formatting issues when viewing long descriptions.
-   
+
    **Fix:** Visit out webpage for the properly formatted version at [User Guide](https://ay2526s1-cs2103t-f15b-1.github.io/tp/UserGuide.html).
 
 --------------------------------------------------------------------------------------------------------------------
