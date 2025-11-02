@@ -224,6 +224,7 @@ public class InsuraBook implements ReadOnlyInsuraBook {
      */
     public Policy addPolicy(PolicyId policyId, ClientId clientId, PolicyTypeId policyTypeId, InsuraDate expiryDate) {
         Client client = this.getClient(clientId);
+        this.getPolicyType(policyTypeId); // Validate that policy type exists
         Policy policy = new Policy(policyId, clientId, policyTypeId, expiryDate);
         client.addPolicy(policy);
         this.clientPolicies.add(policy);
