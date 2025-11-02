@@ -14,6 +14,7 @@ import insurabook.model.client.ClientId;
 import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
 import insurabook.model.policytype.PolicyTypeId;
+import insurabook.model.policytype.exceptions.PolicyTypeMissingException;
 
 /**
  * Attach a policy to a client.
@@ -56,16 +57,15 @@ public class AddPolicyCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        model.updateFilteredPolicyTypeList(pt -> pt.getPtId().equals(policyTypeId));
-        if (model.getFilteredPolicyTypeList().isEmpty()) {
-            model.updateFilteredPolicyTypeList(unused -> true);
+        try {
+            Policy policy = model.addPolicy(policyId, clientId, policyTypeId, expiryDate);
+            assert policy != null : "Added policy should not be null";
+            model.commitInsuraBook();
+            return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(policy, 0)));
+        } catch (PolicyTypeMissingException e) {
             throw new CommandException("No such policy type id exists in InsuraBook: "
                     + policyTypeId + "."
                     + " Please add the policy type first before adding policies of that type to clients.");
         }
-        Policy policy = model.addPolicy(policyId, clientId, policyTypeId, expiryDate);
-        assert policy != null : "Added policy should not be null";
-        model.commitInsuraBook();
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(policy, 0)));
     }
 }
