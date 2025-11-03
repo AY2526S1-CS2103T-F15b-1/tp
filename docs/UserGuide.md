@@ -4,7 +4,7 @@ title: User Guide
 ---
 
 InsuraBook is a **desktop app for insurance agents managing clients' contacts**.
-We assume you type really fast and prefer a CLI for speed, but still want a GUI to see your data. No prior programming
+We assume you type really fast, but still want a nice display to see your data. No prior programming
 knowledge is needed, although you ought to be comfortable installing Java and running a `.jar` file from
 a terminal.
 --------------------------------------------------------------------------------------------------------------------
