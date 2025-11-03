@@ -1,6 +1,7 @@
 package insurabook.logic.commands;
 
 import static insurabook.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static insurabook.ui.enums.View.CLIENT_VIEW;
 import static java.util.Objects.requireNonNull;
 
 import insurabook.model.Model;
@@ -18,7 +19,9 @@ public class ListCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
+        CommandResult res = new CommandResult(MESSAGE_SUCCESS);
         model.updateFilteredClientList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(MESSAGE_SUCCESS);
+        res.setView(CLIENT_VIEW);
+        return res;
     }
 }

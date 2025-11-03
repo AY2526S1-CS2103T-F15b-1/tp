@@ -2,14 +2,54 @@
 layout: page
 title: Developer Guide
 ---
-* Table of Contents
-{:toc}
+## Table of Contents
 
+- [Acknowledgements](#acknowledgements)
+- [Setting up, getting started](#setting-up-getting-started)
+- [Design](#design)
+  - [Architecture](#architecture)
+  - [UI component](#ui-component)
+  - [Logic component](#logic-component)
+  - [Model component](#model-component)
+  - [Storage component](#storage-component)
+  - [Common classes](#common-classes)
+- [Implementation](#implementation)
+  - [Storage Component](#storage-component-1)
+  - [Design Considerations](#design-considerations)
+- [Documentation, logging, testing, configuration, dev-ops](#documentation-logging-testing-configuration-dev-ops)
+- [Appendix: Requirements](#appendix-requirements)
+  - [Product scope](#product-scope)
+  - [User stories](#user-stories)
+  - [Use cases](#use-cases)
+  - [Non-Functional Requirements](#non-functional-requirements)
+  - [Glossary](#glossary)
+- [Appendix: Instructions for manual testing](#appendix-instructions-for-manual-testing)
+  - [Launch and shutdown](#launch-and-shutdown)
+  - [Adding a client](#adding-a-client)
+  - [Deleting a client](#deleting-a-client)
+  - [Editing a client](#editing-a-client)
+  - [Finding a client](#finding-a-client)
+  - [Viewing clients or policy\'s types](#viewing-clients-or-policys-types)
+  - [Viewing policies of a client](#viewing-policies-of-a-client)
+  - [Saving data](#saving-data)
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Acknowledgements**
 
-* {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+- Sources and inspiration:
+  - SE-EDU AddressBook and guides: https://github.com/se-edu/addressbook-level3 and https://se-education.org/guides
+  - PlantUML tutorial and examples: https://plantuml.com and https://se-education.org/guides/tutorials/plantUml.html
+  - Design styling and colour scheme: https://github.com/tokyo-night/tokyo-night-vscode-theme
+- Libraries and tools used (include links to original projects):
+  - JavaFX: https://openjfx.io
+  - Jackson (JSON): https://github.com/FasterXML/jackson
+  - JUnit 5 (testing): https://junit.org/junit5/
+  - Gradle (build): https://gradle.org
+  - Bundler (Ruby dependency manager): https://bundler.io
+  - IntelliJ IDEA (IDE): https://www.jetbrains.com/idea/
+- Third-party code and licenses:
+  - Any reused or adapted code from the above projects is used under the respective project licenses;
+consult the original repositories for full license details.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -38,7 +78,8 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/AY2526S1-CS2103T-F15b-1/tp/blob/master/src/main/java/insurabook/Main.java) and [`MainApp`](https://github.com/AY2526S1-CS2103T-F15b-1/tp/blob/master/src/main/java/insurabook/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [`Main`](https://github.com/AY2526S1-CS2103T-F15b-1/tp/blob/master/src/main/java/insurabook/Main.java) and [`MainApp`](https://github.com/AY2526S1-CS2103T-F15b-1/tp/blob/master/src/main/java/insurabook/MainApp.java)) and is in charge of the app launching and shutting
+down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -148,7 +189,7 @@ the `Parser` interface so that they can be treated similarly where possible e.g,
 
 The `Model` component,
 
-* stores the insurabook data i.e., all `Client` objects (which are contained in a `UniqueClientList` object).
+* stores the InsuraBook data i.e., all `Client` objects (which are contained in a `UniqueClientList` object).
 * stores the currently 'selected' `Client` objects (e.g., results of a search query) as a separate _filtered_ list
 which is exposed to outsiders as an unmodifiable `ObservableList<Client>` that can be 'observed' e.g. the UI can be
 bound to this list so that the UI automatically updates when the data in the list change.
@@ -166,7 +207,7 @@ should make sense on their own without depending on other components)
 </p>
 
 The `Storage` component,
-* can save both insurabook data and user preference data in JSON format, and read them back into corresponding objects.
+* can save both InsuraBook data and user preference data in JSON format, and read them back into corresponding objects.
 * inherits from both `InsuraBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only
 the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects
@@ -186,10 +227,11 @@ This section describes some noteworthy details on how certain features are imple
 
 #### Purpose and Overview
 The Storage component is responsible for all read/write operations on the user's hard drive. It handles the storage of
-both the InsuraBook data and user preferences in JSON format. The component ensures that data is correctly serialized 
+both the InsuraBook data and user preferences in JSON format. The component ensures that data is correctly serialized
 and deserialized when saving to or loading from disk between application sessions.
 
-All data is stored in a single JSON file named, typically located at `data/insurabook.json` within the home directory.
+All data is stored in a single JSON file named `insurabook.json`, typically located at `data/insurabook.json` within
+the home directory.
 
 #### Architecture Design
 Our `Model` classes (like `Client`, `Policy`, etc.) are too complex and designed to be independent of the storage
@@ -423,7 +465,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Glossary
 
-* **Mainstream OS**: Windows, Linux, Unix, MacOS
+* **Mainstream OS**: Windows, Linux, Unix, macOS
 * **Client**: An individual client of the user. If a group is under the same policy (e.g. family protection), each member of the group is a different Client.
 * **Policy Type**: A specific policy/plan offered by the user/the user's firm. This is different from a Policy.
 * **Policy**: An instance of a Policy Type owned by a Client. This is different from a Policy Type.
