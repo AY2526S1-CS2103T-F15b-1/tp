@@ -80,7 +80,8 @@ public class EditCommandParserTest {
         assertParseFailure(parser, " -c_id 1 " + INVALID_NAME_DESC, Name.MESSAGE_CONSTRAINTS); // invalid name
         assertParseFailure(parser, " -c_id 1 " + INVALID_PHONE_DESC, Phone.MESSAGE_CONSTRAINTS); // invalid phone
         assertParseFailure(parser, " -c_id 1 " + INVALID_EMAIL_DESC, Email.MESSAGE_CONSTRAINTS); // invalid email
-        assertParseFailure(parser, " -c_id 1 " + INVALID_BIRTHDAY_DESC, InsuraDate.MESSAGE_CONSTRAINTS); // invalid address
+        assertParseFailure(parser, " -c_id 1 " + INVALID_BIRTHDAY_DESC, InsuraDate.MESSAGE_CONSTRAINTS);
+        // invalid birthday
         assertParseFailure(parser, " -c_id 1 " + INVALID_TAG_DESC, Tag.MESSAGE_CONSTRAINTS); // invalid tag
 
         // invalid phone followed by valid email
