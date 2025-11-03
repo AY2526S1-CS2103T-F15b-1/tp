@@ -98,10 +98,6 @@ as `add -n John Doe -b 2002-01-01 -c_id C101`.
 * Parameters can be in any order.<br>
   e.g. if the command specifies `-n NAME -c_id CLIENT_ID`, `-c_id CLIENT_ID -n NAME` is also acceptable.
 
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will
-be ignored.<br>
-  e.g. if the command specifies `help 123`, it will be interpreted as `help`.
-
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines
 as space characters surrounding line-breaks may be omitted when copied over to the application.
 </div>
