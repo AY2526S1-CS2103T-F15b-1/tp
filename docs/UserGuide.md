@@ -7,7 +7,8 @@ InsuraBook is a **desktop app for insurance agents managing clients' contacts**.
 We assume you type really fast, but still want a nice display to see your data. No prior programming
 knowledge is needed, although you ought to be comfortable installing Java and running a `.jar` file from
 a terminal.
---------------------------------------------------------------------------------------------------------------------
+
+---
 
 # Table of Contents
 - [Quick Start](#quick-start)
@@ -39,7 +40,7 @@ a terminal.
 - [FAQ](#faq)
 - [Known issues](#known-issues)
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## Quick start
 
@@ -77,10 +78,10 @@ Doe` with client id `123`, birthday on `01 Jan 2001`, phone number `90000001` an
 ## Constraints
 
 * An Identifier is treated as unique.<br>
-    1. two clients cannot have the same `CLIENT_ID`. If they have the same name, they are treated as different clients.
-    2. two policy types cannot have the same `POLICY_TYPE_ID`.
-    3. two policies cannot have the same `POLICY_ID` under the same client.
-    4. two claims cannot have the same `CLAIM_ID` under the same policy of the same client.
+    1. Two clients cannot have the same `CLIENT_ID`. If they have the same name, they are treated as different clients.
+    2. Two policy types cannot have the same `POLICY_TYPE_ID`.
+    3. Two policies cannot have the same `POLICY_ID` under the same client.
+    4. Two claims cannot have the same `CLAIM_ID` under the same policy of the same client.
 
 ## Features
 
@@ -97,10 +98,6 @@ as `add -n John Doe -b 2002-01-01 -c_id C101`.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `-n NAME -c_id CLIENT_ID`, `-c_id CLIENT_ID -n NAME` is also acceptable.
-
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will
-be ignored.<br>
-  e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines
 as space characters surrounding line-breaks may be omitted when copied over to the application.
@@ -165,6 +162,13 @@ Examples:
 * `add -n John Doe -phone 90000001 -email johndoe@example.com -b 2002-01-01 -c_id 123` adds a client name `John Doe`
 with phone number `90000001`, email `johndoe@example.com`, birthdate `2002-01-01` and client ID `123`.
 
+Parameters:
+* Client Name: Only alphanumeric characters and spaces, cannot be blank.
+* Phone Number: Only numbers, at least 3 digits long.
+* Email: In the format "local-part@domain". More details are specified in the error message.
+* Birthday: In the format "YYYY-MM-DD".
+* Client ID: Only alphanumeric characters and spaces, cannot be blank.
+
 <p align="center">
     <img alt="img.png" height="300" src="images/addClient.png" width="500"/>
 </p>
@@ -184,6 +188,12 @@ Adds a new policy type to InsuraBook. Before you can assign policies to clients,
 
 Format:
 `add policy type -pt_n POLICY_TYPE_NAME -pt_id POLICY_TYPE_ID [-desc DESCRIPTION] [-pr PREMIUM]`
+
+Parameters:
+* Name of policy type: Only ASCII characters, cannot start with '-' and cannot be blank.
+* Policy Type ID: Only alphanumeric characters or '-', cannot start with '-' and cannot be blank.
+* Description: Only ASCII characters, cannot start with '-' and cannot be blank.
+* Starting Premium: A positive integer or floating point number.
 
 Examples:
 * `add policy type -pt_n BRUHealth -pt_id BRH001` adds a policy type named `BRUHealth` with policy type ID `BRH001`.
@@ -211,6 +221,12 @@ that policy (with its ID and expiry date) and link it directly to their client r
 
 Format:
 `add policy -p_id POLICY_ID -c_id CLIENT_ID -pt_id POLICY_TYPE_ID -exp EXPIRY_DATE`
+
+Parameters:
+* Policy ID: Only alphanumeric characters, cannot be blank.
+* Client ID: Must be of an existing client.
+* Policy Type ID: Must be of an existing policy type.
+* Expiry Date: In the format "YYYY-MM-DD", must be in the future.
 
 Examples:
 * `add policy -p_id 101 -c_id 123 -pt_id P03 -exp 2025-12-01` adds a policy with policy ID `101`, of policy type ID
@@ -245,6 +261,13 @@ Ensure that the client and policy already exist in InsuraBook before adding a cl
 
 Format:
 `add claim -c_id CLIENT_ID -p_id POLICY_ID -amt CLAIM_AMOUNT -date CLAIM_DATE [-desc DESCRIPTION]`
+
+Parameters:
+* Client ID: Must be of an existing client.
+* Policy ID: Must be of an existing policy.
+* Claim Amount: Must be a positive number, with up to two decimal places.
+* Claim Date: In the format "YYYY-MM-DD".
+* Description: Can take any values.
 
 Examples:
 * To add a claim with no description:
@@ -300,6 +323,8 @@ Allows you to edit a client's
 - phone number
 - email
 
+Parameter requirements are identical to [add](#adding-a-client-add).
+
 Format:
 - `edit -c_id CLIENT_ID -n NEW_NAME`
 - `edit -c_id CLIENT_ID -phone NEW_PHONE_NUMBER`
@@ -315,6 +340,8 @@ description of a previously entered policy type, use `edit policy type`.
 
 Format:
 `edit policy type -pt_id POLICY_TYPE_ID [-pt_n POLICY_TYPE_NAME] [-desc DESCRIPTION] [-pr PREMIUM]`
+
+Parameter requirements are identical to [add policy type](#adding-a-policy-type-add-policy-type).
 
 Examples:
 * `edit policy type -pt_id BRH001 -pt_n BRUHealthExtra` edits the policy type
@@ -341,12 +368,11 @@ of a previously filed policy.
 Format:
 `edit policy -c_id CLIENT_ID -p_id POLICY_ID [-exp EXPIRY_DATE]`
 
+Parameter requirements are identical to [add policy](#adding-a-policy-to-client-add-policy).
+
 Examples:
-* To edit the expiry date of a policy:
-    ```
-    edit policy -c_id C101 -p_id P101 -exp 2026-12-31
-    ```
-  This updates the expiry date to Dec 31, 2026 for policy P101 under client C101.
+* `edit policy -c_id C101 -p_id P101 -exp 2026-12-31` edits **only** the expiry date to `2026-12-31` for policy `P101`
+under client `C101`.
 
 ---
 
@@ -363,17 +389,13 @@ or description of a previously filed claim.
 Format:
 `edit claim -c_id CLIENT_ID -p_id POLICY_ID -cl_id CLAIM_ID [-amt CLAIM_AMOUNT] [-date CLAIM_DATE] [-desc DESCRIPTION]`
 
+Parameter requirements are identical to [add claim](#adding-a-claim-add-claim).
+
 Examples:
-* To edit **only** the amount of a claim:
-    ```
-    edit claim -c_id C101 -p_id P101 -cl_id CL001 -amt 1500
-    ```
-    This updates the amount to $1500 for claim CL001.
-* To edit **multiple fields** of a claim:
-    ```
-    edit claim -c_id C101 -p_id P101 -cl_id CL001 -date 2025-10-05 -desc Emergency surgery
-    ```
-    This updates the date to 2025-10-05 and its description to "Emergency surgery" for claim CL001.
+* `edit claim -c_id C101 -p_id P101 -cl_id CL001 -amt 1500` edits **only** the claim amount to `$1500` for claim
+`CL001`.
+* `edit claim -c_id C101 -p_id P101 -cl_id CL001 -date 2025-10-05 -desc Emergency surgery` edits the claim date to
+`2025-10-05` and its description to `"Emergency surgery"` for claim `CL001`.
 
 ---
 
@@ -382,9 +404,10 @@ Examples:
 
 Finds clients in InsuraBook by searching for keywords related to their Name or Client ID.
 
-The command's behavior changes depending on the flag you use (`-n` for Name, `-c_id` for Client ID).
+The command's behavior changes depending on the flag you use ([`-n` for Name](#searching-by-clients-name--n),
+[`-c_id` for Client ID](#searching-by-clients-id--c_id)).
 
-**Searching by client's name** `-n`:
+#### Searching by client's name `-n`:
 
 Searches for clients whose names contain at least one of the specified keywords.
 
@@ -415,7 +438,7 @@ Examples:
 
 ---
 
-**Searching by client's ID** `-c_id`:
+#### Searching by client's ID `-c_id`:
 
 Searches for clients whose CLIENT_IDs match the specified IDs.
 
@@ -453,6 +476,8 @@ InsuraBook, use this command.
 
 Format: `delete -c_id CLIENT_ID`
 
+Parameter requirements are identical to [add](#adding-a-client-add).
+
 <span style="color:orange">⚠ Action removes data, but can be reversed with 'undo'.</span>
 
 Examples:
@@ -474,7 +499,11 @@ Deletes a policy type from InsuraBook. To remove a policy type (product) from yo
 Format:
 `delete policy type -pt_n POLICY_TYPE_NAME -pt_id POLICY_TYPE_ID`
 
+Parameter requirements are identical to [add policy type](#adding-a-policy-type-add-policy-type).
+
 <span style="color:orange">⚠ Action removes data, but can be reversed with 'undo'.</span>
+
+<span style="color:red">⚠ WARNING: This will also delete any policies that have this policy type!</span>
 
 Example:
 * `delete policy type -pt_n BRUHealth -pt_id BRH001`
@@ -492,6 +521,8 @@ Deletes the specified policy previously saved under a client.
 
 Format:
 `delete policy -c_id CLIENT_ID -p_id POLICY_ID`
+
+Parameter requirements are identical to [add policy](#adding-a-policy-to-client-add-policy).
 
 <span style="color:orange">⚠ Action removes data, but can be reversed with 'undo'.</span>
 
@@ -512,6 +543,8 @@ Deletes the specified claim of a client's policy from the InsuraBook.
 
 Format:
 `delete claim -c_id CLIENT_ID -p_id POLICY_ID -cl_id CLAIM_ID [-desc DESCRIPTION]`
+
+Parameter requirements are identical to [add claim](#adding-a-claim-add-claim).
 
 > :bulb: **Tip:** Description is an optional field. It is just for your reference and will not be used to identify the
 > claim to delete.
@@ -543,7 +576,7 @@ window's display to show either all clients, all policy types, or all policies f
 Format:
 `view FLAG [CLIENT_ID]`
 * Shows a list of all existing records inside InsuraBook.
-* FLAG is used to tell the program what view to choose.
+* FLAG is used to tell the program what view to choose. (`-client`, `-policy` or `-c_id`)
 * The default view of the UI will be the client view.
 * CLIENT_ID is only used when retrieving the view to display all policies a certain client has bought.
 
@@ -581,6 +614,19 @@ Changes are:
 - edits to any information, e.g. phone, email
 
 <span style="color:red">⚠ InsuraBook cannot undo changes from **previous saves**.</span>
+
+Example:
+* State after clearing InsuraBook with `clear`.
+
+<p align="center">
+    <img alt="Image: Restored InsuraBook." height="300" src="images/priorToUndo.png" width="500"/>
+</p>
+
+* State after undoing the clear with `undo`.
+
+<p align="center">
+    <img alt="Image: Restored InsuraBook." height="300" src="images/afterUndo.png" width="500"/>
+</p>
 
 ---
 
