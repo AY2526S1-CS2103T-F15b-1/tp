@@ -757,6 +757,7 @@ testers are expected to do more *exploratory* testing.
 ### Viewing policies of a client
 > **Pre-requisite:** At least one client exists in the client list. In this example, we assume client C101 exists while
 > client C999 does not exist.
+
 1. Viewing policies of an existing client
     * Test cases: `view -c_id C101` (add some policies and claims to client C101 beforehand, details in user guide)
     * **Expected:** Policies of client with c_id C101 are shown in the policy list panel.
