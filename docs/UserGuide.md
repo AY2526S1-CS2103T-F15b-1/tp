@@ -417,9 +417,9 @@ Examples:
   This updates the amount to $1500 for claim CL001.
 * To edit **multiple fields** of a claim:
     ```
-    edit claim -c_id C101 -p_id P101 -cl_id CL001 -date 2025-10-05 -desc Emergency surgery
+    edit claim -c_id C101 -p_id P101 -cl_id CL001 -date 2025-10-05 -desc Surgery
     ```
-  This updates the date to 2025-10-05 and its description to "Emergency surgery" for claim CL001.
+  This updates the date to 2025-10-05 and its description to "Surgery" for claim CL001.
 
 ---
 
@@ -467,7 +467,7 @@ Searches for clients whose CLIENT_IDs match the specified IDs.
 Format: `find -c_id CLIENT_IDs [MORE_CLIENT_IDs]`
 
 Rules:
-* **OR Search**: Persons matching at least one ID will be returned. (e.g. searching for client id `123` `345`
+* **OR Search**: Clients matching at least one ID will be returned. (e.g. searching for client id `123` `345`
 will return 2 clients: client A with client ID `123` and client B with client ID `345`)
 * **Case-Insensitive**: Client IDs are alphanumerical and the search is not case-sensitive. (e.g., c012 will match C012).
 * **Full IDs Only**: The search matches complete IDs. (e.g. `101` will not match `C101`)
@@ -746,7 +746,7 @@ off-screen.
 
    **Fix:** Restore the minimized window manually.
 
-3**PDF Viewing issues:** PDF versions of this document may introduce formatting issues when viewing long descriptions.
+3. **PDF Viewing issues:** PDF versions of this document may introduce formatting issues when viewing long descriptions.
 
    **Fix:** Visit out webpage for the properly formatted version at [User Guide](https://ay2526s1-cs2103t-f15b-1.github.io/tp/UserGuide.html).
 
