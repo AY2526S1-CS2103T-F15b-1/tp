@@ -14,7 +14,7 @@ a terminal.
 - [Quick Start](#quick-start)
 - [Constraints](#constraints)
 - [Features](#features)
-- [Command summary](#command-summary)
+- [Command Summary](#command-summary)
 - [Viewing help : `help`](#viewing-help--help)
 - [Adding a client: `add`](#adding-a-client-add)
 - [Adding a policy type: `add policy type`](#adding-a-policy-type-add-policy-type)
@@ -109,7 +109,7 @@ as space characters surrounding line-breaks may be omitted when copied over to t
 
 ---
 
-## Command summary
+## Command Summary
 <small>[(back to Contents)](#table-of-contents)</small>
 
 Action | Format                                                                                                                  | Examples
