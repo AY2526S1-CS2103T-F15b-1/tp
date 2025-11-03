@@ -35,7 +35,7 @@ public class AddClaimCommandParserTest {
                 .withClaimDate("2025-10-10")
                 .withClaimMessage("").build();
         assertParseSuccess(parser,
-                PREAMBLE_WHITESPACE + CLIENT_ID_DESC_AMY + POLICY_ID_DESC_AMY
+                 CLIENT_ID_DESC_AMY + POLICY_ID_DESC_AMY
                         + CLAIM_AMOUNT_DESC + CLAIM_DATE_DESC,
                 new AddClaimCommand(claim.getClientId(), claim.getPolicyId(),
                         claim.getAmount(), claim.getDate(), claim.getDescription()));
