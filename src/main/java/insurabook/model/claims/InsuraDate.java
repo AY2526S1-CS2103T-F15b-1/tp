@@ -70,6 +70,15 @@ public class InsuraDate {
     }
 
     /**
+     * Returns true if the date is before 1900.
+     * @return boolean true/false
+     */
+    public boolean isTooOld() {
+        LocalDate yearLimit = LocalDate.of(1900, 1, 1);
+        return this.date.isBefore(yearLimit);
+    }
+
+    /**
      * Returns true if the date is in three days' time in Singapore timezone.
      */
     public boolean isExpiringInThreeDays() {
