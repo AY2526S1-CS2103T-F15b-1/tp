@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import insurabook.commons.exceptions.IllegalValueException;
 import insurabook.model.InsuraBook;
 import insurabook.model.ReadOnlyInsuraBook;
-import insurabook.model.claims.Claim;
 import insurabook.model.client.Client;
 import insurabook.model.policies.Policy;
 import insurabook.model.policytype.PolicyType;
@@ -72,21 +71,12 @@ class JsonSerializableInsuraBook {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
             }
             insuraBook.addClient(client);
-            for (JsonAdaptedPolicy jsonPolicy : jsonClient.getPolicies()) {
-                Policy modelPolicy = jsonPolicy.toModelType(insuraBook);
-                client.addPolicy(modelPolicy);
-                for (JsonAdaptedClaim jsonClaim : jsonPolicy.getClaims()) {
-                    Claim modelClaim = jsonClaim.toModelType(insuraBook);
-                    client.addClaim(modelClaim);
-                }
-            }
+            jsonClient.addPoliciesToClient(client, insuraBook);
         }
 
         // Set client policies list in InsuraBook
         List<Policy> clientPolices = insuraBook.getClientList().stream()
-                        .flatMap(client -> client.getPortfolio().getPolicies()
-                                .asUnmodifiableObservableList()
-                                .stream())
+                        .flatMap(client -> client.getPolicies().stream())
                         .toList();
         insuraBook.setClientPolicies(clientPolices);
 

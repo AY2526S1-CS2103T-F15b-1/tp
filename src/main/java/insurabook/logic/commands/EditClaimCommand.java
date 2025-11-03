@@ -53,6 +53,9 @@ public class EditClaimCommand extends Command {
     private final EditClaimDescriptor editClaimDescriptor;
 
     /**
+     * Creates an EditClaimCommand to edit the specified {@code Claim}
+     * of the specified {@code Policy} of the specified {@code Client}.
+     *
      * @param clientId of the client in the filtered person list to edit
      * @param policyId of the policy in the client's policies to edit
      * @param claimId of the claim in the policy's claims to edit
@@ -74,12 +77,15 @@ public class EditClaimCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+
         Claim claimToEdit = model.getClaim(clientId, policyId, claimId);
         assert claimToEdit != null : "The claim to edit should exist in the model.";
-        Claim editedClaim = createEditedClaim(claimToEdit, editClaimDescriptor);
 
+        Claim editedClaim = createEditedClaim(claimToEdit, editClaimDescriptor);
         model.setClaim(claimToEdit, editedClaim);
+
         model.commitInsuraBook();
+
         return new CommandResult(String.format(MESSAGE_EDIT_CLAIM_SUCCESS, Messages.format(editedClaim, 0)));
     }
 
