@@ -10,6 +10,7 @@ import static insurabook.testutil.Assert.assertThrows;
 import org.junit.jupiter.api.Test;
 
 import insurabook.logic.commands.AddPolicyTypeCommand;
+import insurabook.logic.parser.exceptions.ParseException;
 import insurabook.model.policytype.PolicyTypeDescription;
 import insurabook.model.policytype.PolicyTypeId;
 import insurabook.model.policytype.PolicyTypeName;
@@ -23,11 +24,6 @@ public class AddPolicyTypeCommandParserTest {
     private final String validId = "POL-001";
     private final String validDescription = "Policy A Description!";
     private final String validPremium = "100";
-
-    private final String invalidName = "";
-    private final String invalidId = "POL 001";
-    private final String invalidDescription = "¥";
-    private final String invalidPremium = "-100";
 
     @Test
     public void parse_null_throwsNullPointer() {
@@ -54,6 +50,12 @@ public class AddPolicyTypeCommandParserTest {
                 new PolicyTypeDescription(),
                 new PolicyTypePremium()
         ));
+    }
+
+    @Test
+    public void parse_invalid_throwsParseException() {
+        String invalidCommand = formatCommand(validId, validName, "¥", null);
+        assertThrows(ParseException.class, () -> parser.parse(invalidCommand));
     }
 
     private String formatCommand(String id, String name, String desc, String premium) {
@@ -85,6 +87,5 @@ public class AddPolicyTypeCommandParserTest {
 
         return builder.toString();
     }
-
 
 }
