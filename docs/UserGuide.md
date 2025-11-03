@@ -339,12 +339,12 @@ You can edit multiple tags in a single command, such as:
 
 Editing multiple details:
 <p align="center">
-    <img alt="img.png" height="300" src="images/editClientPreview.png" width="500"/>
+    <img alt="img.png" height="400" src="images/editClientPreview.png" width="500"/>
 </p>
 
 Phone and email are updated.
 <p align="center">
-    <img alt="img.png" height="300" src="images/editClientReview.png" width="500"/>
+    <img alt="img.png" height="400" src="images/editClientReview.png" width="500"/>
 </p>
 
 ---
