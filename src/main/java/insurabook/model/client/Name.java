@@ -10,8 +10,8 @@ import static java.util.Objects.requireNonNull;
 public class Name {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Names should only contain alphanumeric characters, spaces, hyphens, forward slashes, " +
-                    "and it should not be blank";
+            "Names should only contain alphanumeric characters, spaces, hyphens, forward slashes, "
+                    + "and it should not be blank";
 
     /*
      * The first character of the address must not be a whitespace,
