@@ -26,6 +26,11 @@ public class ParserUtilTest {
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_CLIENT_ID = "C!@#";
+    private static final String INVALID_POLICY_ID = "P!^";
+    private static final String INVALID_CLAIM_ID = "123";
+    private static final String INVALID_CLAIM_AMOUNT = "-1";
+    private static final String INVALID_CLAIM_DATE = "2025-02-30";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
@@ -33,6 +38,11 @@ public class ParserUtilTest {
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
+    private static final String VALID_CLIENT_ID = "C101";
+    private static final String VALID_POLICY_ID = "P101";
+    private static final String VALID_CLAIM_ID = "CL001";
+    private static final String VALID_CLAIM_AMOUNT = "1000";
+    private static final String VALID_CLAIM_DATE = "2025-10-10";
 
     private static final String WHITESPACE = " \t\r\n";
 

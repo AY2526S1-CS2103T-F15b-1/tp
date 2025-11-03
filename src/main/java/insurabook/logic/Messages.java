@@ -53,7 +53,7 @@ public class Messages {
      * If op is 0, format for AddClaimCommand or EditClaimCommand success message.
      * If op is 1, format for DeleteClaimCommand display message.
      */
-    public static String format(Claim claim, int op) {
+    public static String format(Claim claim, int op, String ... extraInfo) {
         final StringBuilder builder = new StringBuilder();
         if (op == 0) {
             builder.append(claim.getClaimId())
@@ -67,14 +67,14 @@ public class Messages {
                     .append(claim.getDate())
                     .append("; Description: ")
                     .append(claim.getDescription());
-        } else {
+        } else if (op == 1 && extraInfo.length > 0) {
             builder.append(claim.getClaimId())
                     .append(" on policy ID ")
                     .append(claim.getPolicyId())
                     .append(" for client ")
                     .append(claim.getClientId())
                     .append("; Description: ")
-                    .append(claim.getDescription());
+                    .append(extraInfo[0]);
         }
         return builder.toString();
     }

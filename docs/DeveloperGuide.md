@@ -266,9 +266,13 @@ file. It uses the Jackson JSON library.
    - This sequence is triggered every time a command that modifies data (like `AddCommand`, `DeleteCommand`, etc.) is
    successfully executed.
     <img src="images/StorageSavingDataSequenceDiagram.png" width="600" />
+   - Constructor for JsonSerializableInsuraBook:
+    <img src="images/JsonInsuraBookConstructor.png" width="600" />
 2. **Loading Data:**
    - This sequence occurs during application startup when the InsuraBook data is loaded from disk.
     <img src="images/StorageLoadingDataSequenceDiagram.png" width="600" />
+   - Converting JsonSerializableInsuraBook to a Model:
+    <img src="images/JsonInsuraBookToModel.png" width="600" />
 
 #### Handling Data Corruption
 It is possible that the JSON file on disk may become corrupted or contain invalid data. If the JSON file is malformed,
@@ -387,31 +391,71 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to view all clients
-2. InsuraBook shows the list of clients
-3. User ensures the client does not already exist
-4. User requests to add a new client with the required details
-5. InsuraBook shows the updated list of clients with the new client added
+1. User requests to view all clients.
+2. InsuraBook shows the list of clients.
+3. User requests to add a new client with all the required details.
+4. InsuraBook shows the updated list of clients with the new client added.
 
     Use case ends.
 
 **Extensions**
-* 3a. Client already exists.
+* 3a. User requests to add a client with client ID that already exists.
 
-  * 3a1. InsuraBook shows an error message.
+  * 3a1. InsuraBook shows an error message that client already exists.
+
+  Use case ends.
+
+* 3b. User requests to add a client with insufficient details.
+
+  * 3b1. InsuraBook shows an error message that mentions invalid command format.
+  * 3b2. User requests to add a new client with new details.
+  * 3b3. Steps 3b1 - 3b2 are repeated until user provides all correct details.
+  * Use case resumes at step 4.
+
+#### Use case 2: Add a new policy type
+
+**MSS**
+1.  User requests to view types of policy.
+2.  InsuraBook shows a list of policy types.
+3.  User requests to add a new policy type with all the required details.
+4.  InsuraBook shows the updated list of policy types with the new policy type added.
 
     Use case ends.
 
-#### Use case 2: Add a new policy for a client
+**Extensions**
+
+* 3a. User requests to add a policy type that already exists.
+
+  * 3a1. InsuraBook shows an error message that policy type already exists.
+
+  Use case ends.
+
+* 3b. User requests to add a policy type with insufficient details.
+
+  * 3b1. InsuraBook shows an error message that mentions invalid command format.
+  * 3b2. User requests to add a new policy type with all the required details.
+  * 3b3. Steps 3b1 - 3b2 are repeated until user provides all correct details.
+  * Use case resumes at step 4.
+
+* 3c. User requests to add a policy type with invalid entries.
+
+  * 3c1. InsuraBook shows an error message that mentions invalid entries.
+  * 3c2. User requests to add a new policy type with all the required details.
+  * 3c3. Steps 3c1 - 3c2 are repeated until user provides all correct details.
+  * Use case resumes at step 4.
+
+#### Use case 3: Add a new policy for a client
 
 **MSS**
 
-1.  User requests to view types of policy
-2.  InsuraBook shows a list of policy types
-3.  User requests to view a specific client
-4.  InsuraBook shows the specific client profile
-5.  User requests to add a policy to the client
-6.  InsuraBook shows the client profile with the list of policies
+1.  User requests to view types of policy.
+2.  InsuraBook shows a list of policy types.
+3.  User requests to view a specific client.
+4.  InsuraBook shows the specific client profile.
+5.  User requests to add a policy to the client.
+6.  InsuraBook adds a policy to a client's profile.
+7.  User requests to view client's profile.
+8.  InsuraBook shows the client profile with the updated list of policies.
 
     Use case ends.
 
@@ -419,38 +463,145 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 4a. Specific client does not exist.
 
-  * 4a1. InsuraBook shows an error message.
+  * 4a1. InsuraBook shows an error message that client does not exist.
+  * 4a2. User requests to add a new client with all the required details.
+  * 4a3. InsuraBook shows the updated list of clients with the new client added. 
+  * Use case resumes at step 5.
 
-    Use case: Add a new client and resume at step 3.
+* 6a. Policy type does not exist.
 
-* 5a. Policy type does not exist.
+  * 6a1. InsuraBook shows an error message that no such policy type exists.
+  * 6a2. User requests to add a new policy type with all the required details.
+  * Steps 6a1 - 6a2 are repeated until user provides all correct details for policy type.
+  * Use case resumes at step 5.
 
-  * 5a1. InsuraBook shows an error message and resumes at step 2.
+* 6b. Invalid expiration date format provided.
 
-#### Use case 3: Add a claim on a policy
+  * 6b1. InsuraBook shows an error message that mentions invalid date format.
+  * 6b2. User requests to add a policy to the client with a valid expiration date.
+  * Steps 6b1 - 6b2 are repeated until user provides a valid expiration date.
+  * 6b3. InsuraBook adds a policy to a client's profile.
+  * Use case resumes at step 7.
+
+* 6c. Provided expiration date is before today.
+
+  * 6c1. InsuraBook shows an error message that mentions invalid date.
+  * 6c2. User requests to add a policy to the client with a valid expiration date.
+  * Steps 6c1 - 6c2 are repeated until user provides a valid expiration date.
+  * 6c3. InsuraBook adds a policy to a client's profile.
+  * Use case resumes at step 7.
+
+* 6d. Client already has the specified policy.
+
+  * 6d1. InsuraBook shows an error message that mentions duplicate policy.
+
+  Use case ends.
+
+#### Use case 4: Add a new claim on a policy
 
 **MSS**
 
-1.  User searches for a policy number
-2.  InsuraBook shows the specific policy on the client profile
-3.  User adds a claim on the policy
-4.  InsuraBook shows the specific policy on the client profile with the claim
+1.  User requests to search for all policies under a specific client.
+2.  InsuraBook shows all policies on the client profile.
+3.  User looks through the policies and selects a specific policy.
+4.  User adds a claim to a specific policy.
+5.  InsuraBook shows the specific policy on the client profile with the claim.
 
     Use case ends.
 
 **Extensions**
 
-* 2a. Specified policy or client profile does not exist.
+* 2a. Specified client ID does not exist.
 
-  * 2a1. InsuraBook shows an error message
+  * 2a1. InsuraBook shows an error message that client does not exist.
+  * 2a2. User requests to search for all clients.
+  * 2a3. InsuraBook shows all clients.
+  * 2a4. User requests to view a specific client with the correct client ID.
+  * Use case resumes at step 2.
+
+* 3a. Specified client does not have the required policy.
+
+  * 3a1. User requests to add a policy to the client with valid fields.
+  * 3a2. InsuraBook adds a policy to a client's profile.
+  * Use case resumes at step 4.
+
+* 5a. Claim is a duplicate of an existing claim
+
+  * 5a1. InsuraBook shows an error message that claim already exists.
+
+  Use case ends.
+
+* 5b. Invalid claim date format provided.
+
+  * 5b1. InsuraBook shows an error message that claim date has invalid format.
+  * 5b2. User requests to add a claim to the specific policy with a valid claim date.
+  * Steps 5b1 - 5b2 are repeated until user provides a valid claim date.
+  * 5b3. InsuraBook shows the specific policy on the client profile with the claim.
+
+  Use case ends.
+
+* 5c. Provided claim date is after policy expiration date.
+
+  * 5c1. InsuraBook shows an error message that claim date is after policy expiration date.
+  * 5c2. User requests to add a claim to the specific policy with a valid claim date.
+  * Steps 5c1 - 5c2 are repeated until user provides a valid claim date.
+  * 5c3. InsuraBook shows the specific policy on the client profile with the claim.
+
+  Use case ends.
+
+#### Use case 5: Delete a policy type
+
+**MSS**
+1.  User requests to view types of policy.
+2.  InsuraBook shows a list of policy types.
+3.  User requests to delete an existing policy type with all the required details.
+4.  InsuraBook shows the updated list of policy types with the policy type deleted.
 
     Use case ends.
 
-* 3a. Claim is a duplicate of an existing claim
+**Extensions**
 
-  * 3a1. InsuraBook shows an error message
+* 3a. User requests to delete a policy type that does not exist.
 
-    Use case resumes at step 3.
+    * 3a1. InsuraBook shows an error message that policy type could not be found.
+
+  Use case ends.
+
+#### Use case 6: Edit a policy type
+
+**MSS**
+1.  User requests to view types of policy.
+2.  InsuraBook shows a list of policy types.
+3.  User requests to edit a policy type, specifying the fields they wish to change.
+4.  InsuraBook shows the updated list of policy types with the newly edited policy type.
+
+    Use case ends.
+
+**Extensions**
+
+* 3a. User requests to edit a policy type that does not exist.
+
+    * 3a1. InsuraBook shows an error message that policy type could not be found.
+
+  Use case ends.
+
+* 3b. User requests to edit a policy type but does not specify any fields to change.
+
+    * 3b1. InsuraBook shows an error message that at least one field to change is needed.
+
+  Use case ends.
+
+* 3c. User requests to change the policy type's name to one that already exists.
+
+    * 3c1. InsuraBook shows an error message that this operation would result in a duplicate policy type.
+
+  Use case ends.
+
+* 3d. User requests to change a policy type's field to an invalid value.
+
+    * 3d1. InsuraBook shows an error message specifying which field has an invalid value and what values are valid.
+
+  Use case ends.
 
 ### Non-Functional Requirements
 
@@ -486,7 +637,9 @@ testers are expected to do more *exploratory* testing.
 
 1. Initial launch
 
-   * Download the jar file and copy into an empty folder. Double-click the jar file.
+   * Download the jar file and copy into an empty folder.
+
+   * Open a command terminal in the folder and run `java -jar insurabook.jar`.
 
    * **Expected:** Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
@@ -517,9 +670,42 @@ testers are expected to do more *exploratory* testing.
     * Test cases: Add a client "John Doe" as in test case 1. Then, repeat the same command to add "John Doe" again.
     * **Expected:** Error message indicating that a client already exists is shown in the result display.
 
+### Adding a policy type
+1. Adding a policy type with all fields specified
+    * Test cases: `add policy type -pt_id P101 -pt_n Policy 101 -desc Description of Policy 101 -premium 1000`
+    * **Expected:** Policy Type "Policy 101" is added to the policy type list. Success message is shown in the
+   result display.
+
+2. Adding a policy type with some optional fields specified
+    * Test cases: `add policy type -pt_id P102 -pt_n Policy 102 -desc Description of Policy 102`
+    * **Expected:** Policy Type "Policy 102" is added to the policy type list, which has a description but no premium.
+   Success message is shown in the result display.
+
+3. Adding a policy type with only mandatory fields specified
+    * Test cases: `add policy type -pt_id P103 -pt_n Policy 103`
+    * **Expected:** Policy Type "Policy 103" is added to the policy type list, which has neither description nor
+   premium. Success message is shown in the result display.
+
+4. Adding a policy type with some mandatory fields missing
+    * Test cases: `add policy type -pt_id P104 -desc Description of Policy 104 -premium 1000` (missing name field)
+    * **Expected:** Error message indicating invalid command format is shown in the result display, together with its
+   correct command usage.
+
+5. Adding a policy type with some invalid fields
+    * Test cases: `add policy type -pt_id P105 -pt_n Policy 105 -desc Description of Policy 101 -premium -1000`
+    (negative premium)
+    * **Expected:** Error message indicating invalid premium value is shown in the result display, showing
+   field constraints.
+
+6. Adding a duplicate policy type
+    * Test cases: Add a client "Policy 101" as shown in use case 1. Then, enter
+   `add policy type -pt_id P101 -pt_n Another Policy` (different name, same ID)
+    * **Expected:** Error message indicating such a policy type already exists, showing the name and ID of "Policy 101".
+
 ### Deleting a client
 > **Pre-requisite:** At least one client exists in the client list. In this example, we assume client C101 exists while
 > client C999 does not exist.
+
 1. Deleting an existing client
     * Test cases: `delete -c_id C101` (assuming client with c_id C101 exists)
     * **Expected:** Client with c_id C101 is removed from the client list. Success message is shown in the result display.
@@ -549,6 +735,7 @@ testers are expected to do more *exploratory* testing.
 
 ### Finding a client
 > **Warnings:** Keywords must be complete words. Partial words will not match. For detailed matching rules, refer to the user guide.
+
 1. Finding clients by name keyword
     * Test cases: `find -n John`
     * **Expected:** All clients whose names contain the keyword "John" (case-insensitive) are shown in the client list.
@@ -570,6 +757,7 @@ testers are expected to do more *exploratory* testing.
 ### Viewing policies of a client
 > **Pre-requisite:** At least one client exists in the client list. In this example, we assume client C101 exists while
 > client C999 does not exist.
+
 1. Viewing policies of an existing client
     * Test cases: `view -c_id C101` (add some policies and claims to client C101 beforehand, details in user guide)
     * **Expected:** Policies of client with c_id C101 are shown in the policy list panel.

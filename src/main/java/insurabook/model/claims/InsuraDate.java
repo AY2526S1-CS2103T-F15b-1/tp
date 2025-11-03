@@ -79,6 +79,13 @@ public class InsuraDate {
     }
 
     /**
+     * Returns true if the date is before the otherDate
+     */
+    public boolean isBefore(InsuraDate otherDate) {
+        return this.date.isBefore(otherDate.date);
+    }
+
+    /**
      * Returns true if the date is in three days' time in Singapore timezone.
      */
     public boolean isExpiringInThreeDays() {

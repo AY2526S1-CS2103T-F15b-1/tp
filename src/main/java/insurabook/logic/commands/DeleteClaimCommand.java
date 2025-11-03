@@ -64,8 +64,7 @@ public class DeleteClaimCommand extends Command {
 
         model.commitInsuraBook();
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(claim, 1)
-                + "\nDescription: " + toDeleteMsg));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(claim, 1, toDeleteMsg.toString())));
     }
 
     @Override

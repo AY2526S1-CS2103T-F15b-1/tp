@@ -193,4 +193,19 @@ public class UniquePolicyList implements Iterable<Policy> {
                 .findFirst()
                 .orElseThrow(PolicyNotFoundException::new);
     }
+
+    /**
+     * Forces the list to fire an update notification for a specific policy.
+     * Call this method after you have *mutated* a policy object already in the list.
+     *
+     * @param policyToRefresh The Policy that was modified.
+     */
+    public void refreshPolicy(Policy policyToRefresh) {
+        if (policyToRefresh == null) {
+            return;
+        }
+
+        internalList.removeIf(policy -> policy.getPolicyId().equals(policyToRefresh.getPolicyId()));
+        internalList.add(0, policyToRefresh);
+    }
 }
