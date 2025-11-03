@@ -17,7 +17,7 @@ import java.util.Date;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class InsuraDate {
-    public static final String MESSAGE_CONSTRAINTS = "Date should be in the format YYYY-MM-DD";
+    public static final String MESSAGE_CONSTRAINTS = "Date should be valid calendar date and in the format YYYY-MM-DD";
     public static final String VALIDATION_PATTERN = "uuuu-MM-dd";
     public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private final LocalDate date;
