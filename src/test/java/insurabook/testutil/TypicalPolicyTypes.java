@@ -2,6 +2,7 @@ package insurabook.testutil;
 
 import java.util.List;
 
+import insurabook.model.InsuraBook;
 import insurabook.model.policytype.PolicyType;
 
 /**
@@ -70,6 +71,17 @@ public class TypicalPolicyTypes {
             .withDescription("Description of FWDTwo.")
             .withPremium("2000")
             .build();
+
+    /**
+     * Returns an {@code InsuraBook} with all the typical policy types.
+     */
+    public static InsuraBook getTypicalPtInsuraBook() {
+        InsuraBook ib = new InsuraBook();
+        for (PolicyType policyType : getTypicalPolicyTypes()) {
+            ib.addPolicyType(policyType);
+        }
+        return ib;
+    }
 
     /**
      * Returns a list of typical PolicyTypes.
