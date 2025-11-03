@@ -10,13 +10,15 @@ import static java.util.Objects.requireNonNull;
 public class Name {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Names should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Names should only contain alphanumeric characters, spaces and it should not be blank.\n"
+                    + "Hyphens and forward slashes must be surrounded by alphanumeric characters";
 
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String VALIDATION_REGEX = "\\p{Alnum}+([ ]*[\\p{Alnum}]+)"
+            + "*([\\-/]\\p{Alnum}+([ ]*[\\p{Alnum}]+)*)*";
 
     public final String fullName;
 
