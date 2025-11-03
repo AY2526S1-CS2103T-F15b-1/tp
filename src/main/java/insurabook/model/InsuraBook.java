@@ -59,6 +59,7 @@ public class InsuraBook implements ReadOnlyInsuraBook {
     public InsuraBook(ReadOnlyInsuraBook toBeCopied) {
         this();
         resetData(toBeCopied);
+        syncClaimIdCounter();
     }
 
     //// list overwrite operations
