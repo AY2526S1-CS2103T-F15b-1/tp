@@ -57,15 +57,5 @@ public class AddPolicyCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        try {
-            Policy policy = model.addPolicy(policyId, clientId, policyTypeId, expiryDate);
-            assert policy != null : "Added policy should not be null";
-            model.commitInsuraBook();
-            return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(policy, 0)));
-        } catch (PolicyTypeMissingException e) {
-            throw new CommandException("No such policy type id exists in InsuraBook: "
-                    + policyTypeId + "."
-                    + " Please add the policy type first before adding policies of that type to clients.");
-        }
     }
 }

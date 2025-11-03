@@ -26,17 +26,32 @@ public class EditPolicyCommandTest {
     private final Client validClient = new PersonBuilder().withName("Kevin").build();
     private final ClientId validClientId = new ClientId("1");
     private final PolicyId validPolicyId = new PolicyId("001");
+    private final PolicyTypeId validPolicyTypeId = new PolicyTypeId("PRU001");
+    private final InsuraDate validExpiryDate = new InsuraDate("2025-12-31");
+    private final InsuraDate expiryDateToSet = new InsuraDate("2026-12-31");
 
     @Test
     public void execute_found_editSuccessful() throws CommandException {
         model.addClient(validClient);
-        model.addPolicy(validPolicyId, validClient.getClientId(),
-                new PolicyTypeId("PRU001"), new InsuraDate("2025-12-31"));
+        model.addPolicy(validPolicyId, validClient.getClientId(), validPolicyTypeId, validExpiryDate);
         EditPolicyDescriptor editDescriptor = new EditPolicyDescriptor();
-        editDescriptor.setExpiryDate(new InsuraDate("2026-12-31"));
-        CommandResult commandResult = new EditPolicyCommand(validClientId, validPolicyId, editDescriptor).execute(model);
-        Policy editedPolicy = new Policy(validPolicyId, validClientId,
-                new PolicyTypeId("PRU001"), new InsuraDate("2026-12-31"));
+        editDescriptor.setExpiryDate(expiryDateToSet);
+        CommandResult commandResult = new EditPolicyCommand(validClientId,
+                validPolicyId, editDescriptor).execute(model);
+        Policy editedPolicy = new Policy(validPolicyId, validClientId, validPolicyTypeId, expiryDateToSet);
+        assertEquals(String.format(EditPolicyCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPolicy, 0)),
+                commandResult.getFeedbackToUser());
+    }
+
+    @Test
+    public void execute_noFieldsEdited_success() throws CommandException {
+        model.addClient(validClient);
+        model.addPolicy(validPolicyId, validClient.getClientId(),
+                validPolicyTypeId, validExpiryDate);
+        EditPolicyDescriptor editDescriptor = new EditPolicyDescriptor();
+        CommandResult commandResult = new EditPolicyCommand(validClientId,
+                validPolicyId, editDescriptor).execute(model);
+        Policy editedPolicy = new Policy(validPolicyId, validClientId, validPolicyTypeId, validExpiryDate);
         assertEquals(String.format(EditPolicyCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPolicy, 0)),
                 commandResult.getFeedbackToUser());
     }
@@ -45,7 +60,7 @@ public class EditPolicyCommandTest {
     public void execute_policyNotFound_throwsCommandException() {
         model.addClient(validClient);
         EditPolicyDescriptor editDescriptor = new EditPolicyDescriptor();
-        editDescriptor.setExpiryDate(new InsuraDate("2026-12-31"));
+        editDescriptor.setExpiryDate(expiryDateToSet);
         EditPolicyCommand command = new EditPolicyCommand(validClientId, validPolicyId, editDescriptor);
         assertThrows(PolicyNotFoundException.class, () -> command.execute(model));
     }
