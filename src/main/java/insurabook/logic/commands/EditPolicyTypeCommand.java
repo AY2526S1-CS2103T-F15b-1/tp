@@ -35,7 +35,7 @@ public class EditPolicyTypeCommand extends Command {
             + PREFIX_POLICY_TYPE_ID + " POLICY_TYPE_ID "
             + "[" + PREFIX_POLICY_TYPE + " POLICY_TYPE_NAME] "
             + "[" + PREFIX_DESCRIPTION + " DESCRIPTION] "
-            + "[" + PREFIX_PREMIUM + " PREMIUM] "
+            + "[" + PREFIX_PREMIUM + " PREMIUM]\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_POLICY_TYPE_ID + " BRH001 "
             + PREFIX_POLICY_TYPE + " BRUHealthTwo";
