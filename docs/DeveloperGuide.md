@@ -32,6 +32,7 @@ title: Developer Guide
   - [Viewing clients or policy\'s types](#viewing-clients-or-policys-types)
   - [Viewing policies of a client](#viewing-policies-of-a-client)
   - [Saving data](#saving-data)
+- [Appendix: Planned Enhancements](#appendix-planned-enhancements)
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Acknowledgements**
@@ -778,3 +779,18 @@ testers are expected to do more *exploratory* testing.
     * Open the `insurabook.json` file using a text editor. Corrupt the file by deleting some random parts of the file.
     * Launch the app by double-clicking the jar file.
     * **Expected:** App launches successfully with an empty client list.
+
+--------------------------------------------------------------------------------------------------------------------
+
+## **Appendix: Planned Enhancements**
+
+Team size: 5
+
+1. **Enhance `delete policy type` command error message.** As the command takes both ID and name, we plan to make the
+error message provide a list of policy types that match only one of the fields:
+```
+No matching policy type found with ID PT001 and name Policy A.
+Did you mean:
+(1) ID: PT001, Name: Policy 1
+(2) ID: PT002, Name: Policy A
+```
