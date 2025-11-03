@@ -486,7 +486,9 @@ testers are expected to do more *exploratory* testing.
 
 1. Initial launch
 
-   * Download the jar file and copy into an empty folder. Double-click the jar file.
+   * Download the jar file and copy into an empty folder.
+
+   * Open a command terminal in the folder and run `java -jar insurabook.jar`.
 
    * **Expected:** Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
