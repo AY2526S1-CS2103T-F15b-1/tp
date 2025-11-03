@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import insurabook.commons.exceptions.IllegalValueException;
 import insurabook.model.InsuraBook;
+import insurabook.model.claims.Claim;
 import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
@@ -105,5 +106,15 @@ public class JsonAdaptedPolicy {
 
     public List<JsonAdaptedClaim> getClaims() {
         return claims;
+    }
+
+    /**
+     * Adds claims to the given policy in the InsuraBook.
+     */
+    public void addClaimsToPolicy(Client client, InsuraBook insuraBook) throws IllegalValueException {
+        for (JsonAdaptedClaim jsonAdaptedClaim : claims) {
+            Claim claim = jsonAdaptedClaim.toModelType(insuraBook);
+            client.addClaim(claim);
+        }
     }
 }

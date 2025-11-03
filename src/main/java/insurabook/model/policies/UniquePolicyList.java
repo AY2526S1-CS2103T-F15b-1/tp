@@ -4,6 +4,7 @@ import static insurabook.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import insurabook.model.policies.exceptions.DuplicatePolicyException;
 import insurabook.model.policies.exceptions.PolicyNotFoundException;
@@ -170,14 +171,14 @@ public class UniquePolicyList implements Iterable<Policy> {
      * Returns true if {@code policies} contains only unique persons.
      */
     private boolean policiesAreUnique(List<Policy> policies) {
-        for (int i = 0; i < policies.size() - 1; i++) {
-            for (int j = i + 1; j < policies.size(); j++) {
-                if (policies.get(i).isSamePolicy(policies.get(j))) {
-                    return false;
-                }
-            }
-        }
-        return true;
+        return IntStream.range(0, policies.size() - 1)
+                .mapToObj(i -> IntStream.range(i + 1, policies.size() - 1)
+                        .mapToObj(policies::get)
+                        .map(policy -> !policies.get(i).isSamePolicy(policy))
+                        .reduce((a, b) -> a && b)
+                        .orElse(true))
+                .reduce((a, b) -> a && b)
+                .orElse(true);
     }
 
     /**

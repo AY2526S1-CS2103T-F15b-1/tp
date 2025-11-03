@@ -91,6 +91,10 @@ public class Client {
         return portfolio;
     }
 
+    public List<Policy> getPolicies() {
+        return portfolio.getPoliciesAsList();
+    }
+
     /**
      * Returns true if both clients have the same name.
      * This defines a weaker notion of equality between two clients.

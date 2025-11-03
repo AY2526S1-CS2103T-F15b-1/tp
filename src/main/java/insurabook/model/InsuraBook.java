@@ -19,6 +19,7 @@ import insurabook.model.client.UniqueClientList;
 import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
 import insurabook.model.policies.UniquePolicyList;
+import insurabook.model.policies.exceptions.PolicyNotFoundException;
 import insurabook.model.policytype.PolicyType;
 import insurabook.model.policytype.PolicyTypeId;
 import insurabook.model.policytype.PolicyTypeName;
@@ -114,9 +115,10 @@ public class InsuraBook implements ReadOnlyInsuraBook {
      */
     public void syncClaimIdCounter() {
         int maxId = clients.asUnmodifiableObservableList().stream()
-                .flatMap(client -> client.getPortfolio().getPolicies().asUnmodifiableObservableList().stream())
+                .flatMap(client -> client.getPolicies().stream())
                 .flatMap(policy -> policy.getClaims().stream())
-                .mapToInt(claim -> Integer.parseInt(claim.getClaimId().toString().substring(2)))
+                .map(claim -> claim.getClaimId().toString().substring(2))
+                .mapToInt(Integer::parseInt)
                 .max()
                 .orElse(0);
         this.claimIdCounter.setCounter(maxId + 1);
@@ -284,9 +286,14 @@ public class InsuraBook implements ReadOnlyInsuraBook {
         Client client = this.getClient(clientId);
         ClaimId claimId = new ClaimId(claimIdCounter.getNextClaimId());
         Claim claim = new Claim(claimId, clientId, policyId, claimAmount, claimDate, claimDescription);
-        Policy policyEdited = client.getPortfolio().getPolicies().getPolicy(policyId);
         client.addClaim(claim);
+
+        Policy policyEdited = client.getPolicies().stream()
+                .filter(p -> p.getPolicyId().equals(policyId))
+                .findFirst()
+                .orElseThrow(PolicyNotFoundException::new);
         this.clientPolicies.refreshPolicy(policyEdited);
+
         return claim;
     }
 
@@ -297,10 +304,12 @@ public class InsuraBook implements ReadOnlyInsuraBook {
     public Claim removeClaim(ClientId clientId, PolicyId policyId, ClaimId claimId) {
         Client client = this.getClient(clientId);
         Claim claimRemoved = client.removeClaim(policyId, claimId);
+
         Policy policyEdited = client.getPortfolio().getPolicies().getPolicy(policyId);
         if (claimRemoved != null) {
             this.clientPolicies.refreshPolicy(policyEdited);
         }
+
         return claimRemoved;
     }
 
@@ -312,8 +321,9 @@ public class InsuraBook implements ReadOnlyInsuraBook {
     public void setClaim(Claim target, Claim editedClaim) {
         requireNonNull(editedClaim);
         Client client = this.getClient(target.getClientId());
-        Policy policyEdited = client.getPortfolio().getPolicies().getPolicy(target.getPolicyId());
         client.setClaim(target, editedClaim);
+
+        Policy policyEdited = client.getPortfolio().getPolicies().getPolicy(target.getPolicyId());
         this.clientPolicies.refreshPolicy(policyEdited);
     }
 
@@ -358,7 +368,7 @@ public class InsuraBook implements ReadOnlyInsuraBook {
 
     public List<Policy> getExpiringPolicies() {
         return clients.asUnmodifiableObservableList().stream()
-                .flatMap(client -> client.getPortfolio().getPolicies().asUnmodifiableObservableList().stream())
+                .flatMap(client -> client.getPolicies().stream())
                 .filter(policy -> policy.getExpiryDate().isExpiringInThreeDays())
                 .toList();
     }
