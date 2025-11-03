@@ -60,4 +60,18 @@ public class AddPolicyTypeCommand extends Command {
         model.commitInsuraBook();
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(policyType, 0)));
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof AddPolicyTypeCommand castedObject) {
+            boolean nameEqual = ptName.equals(castedObject.ptName);
+            boolean idEqual = ptId.equals(castedObject.ptId);
+            boolean descEqual = ptDescription.equals(castedObject.ptDescription);
+            boolean premiumEqual = ptPremium.equals(castedObject.ptPremium);
+
+            return nameEqual && idEqual && descEqual && premiumEqual;
+        } else {
+            return false;
+        }
+    }
 }
