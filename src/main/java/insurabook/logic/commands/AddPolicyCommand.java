@@ -68,4 +68,19 @@ public class AddPolicyCommand extends Command {
                     + " Please add the policy type first before adding policies of that type to clients.");
         }
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other instanceof AddPolicyCommand castedObject) {
+            boolean policyIdEqual = policyId.equals(castedObject.policyId);
+            boolean clientIdEqual = clientId.equals(castedObject.clientId);
+            boolean policyTypeIdEqual = policyTypeId.equals(castedObject.policyTypeId);
+            boolean expiryDateEqual = expiryDate.equals(castedObject.expiryDate);
+            return policyIdEqual && clientIdEqual && policyTypeIdEqual && expiryDateEqual;
+        }
+        return false;
+    }
 }
