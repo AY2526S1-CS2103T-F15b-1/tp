@@ -387,31 +387,71 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to view all clients
-2. InsuraBook shows the list of clients
-3. User ensures the client does not already exist
-4. User requests to add a new client with the required details
-5. InsuraBook shows the updated list of clients with the new client added
+1. User requests to view all clients.
+2. InsuraBook shows the list of clients.
+3. User requests to add a new client with all the required details.
+4. InsuraBook shows the updated list of clients with the new client added.
 
     Use case ends.
 
 **Extensions**
-* 3a. Client already exists.
+* 3a. User requests to add a client with client ID that already exists.
 
-  * 3a1. InsuraBook shows an error message.
+  * 3a1. InsuraBook shows an error message that client already exists.
+
+  Use case ends.
+
+* 3b. User requests to add a client with insufficient details.
+
+  * 3b1. InsuraBook shows an error message that mentions invalid command format.
+  * 3b2. User requests to add a new client with new details.
+  * 3b3. Steps 3b1 - 3b2 are repeated until user provides all correct details.
+  * Use case resumes at step 4.
+
+#### Use case 2: Add a new policy type
+
+**MSS**
+1.  User requests to view types of policy.
+2.  InsuraBook shows a list of policy types.
+3.  User requests to add a new policy type with all the required details.
+4.  InsuraBook shows the updated list of policy types with the new policy type added.
 
     Use case ends.
 
-#### Use case 2: Add a new policy for a client
+**Extensions**
+
+* 3a. User requests to add a policy type that already exists.
+
+  * 3a1. InsuraBook shows an error message that policy type already exists.
+
+  Use case ends.
+
+* 3b. User requests to add a policy type with insufficient details.
+
+  * 3b1. InsuraBook shows an error message that mentions invalid command format.
+  * 3b2. User requests to add a new policy type with all the required details.
+  * 3b3. Steps 3b1 - 3b2 are repeated until user provides all correct details.
+  * Use case resumes at step 4.
+
+* 3c. User requests to add a policy type with invalid entries.
+
+  * 3c1. InsuraBook shows an error message that mentions invalid entries.
+  * 3c2. User requests to add a new policy type with all the required details.
+  * 3c3. Steps 3c1 - 3c2 are repeated until user provides all correct details.
+  * Use case resumes at step 4.
+
+#### Use case 3: Add a new policy for a client
 
 **MSS**
 
-1.  User requests to view types of policy
-2.  InsuraBook shows a list of policy types
-3.  User requests to view a specific client
-4.  InsuraBook shows the specific client profile
-5.  User requests to add a policy to the client
-6.  InsuraBook shows the client profile with the list of policies
+1.  User requests to view types of policy.
+2.  InsuraBook shows a list of policy types.
+3.  User requests to view a specific client.
+4.  InsuraBook shows the specific client profile.
+5.  User requests to add a policy to the client.
+6.  InsuraBook adds a policy to a client's profile.
+7.  User requests to view client's profile.
+8.  InsuraBook shows the client profile with the updated list of policies.
 
     Use case ends.
 
@@ -419,38 +459,91 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 4a. Specific client does not exist.
 
-  * 4a1. InsuraBook shows an error message.
+  * 4a1. InsuraBook shows an error message that client does not exist.
+  * 4a2. User requests to add a new client with all the required details.
+  * 4a3. InsuraBook shows the updated list of clients with the new client added. 
+  * Use case resumes at step 5.
 
-    Use case: Add a new client and resume at step 3.
+* 6a. Policy type does not exist.
 
-* 5a. Policy type does not exist.
+  * 6a1. InsuraBook shows an error message that no such policy type exists.
+  * 6a2. User requests to add a new policy type with all the required details.
+  * Steps 6a1 - 6a2 are repeated until user provides all correct details for policy type.
+  * Use case resumes at step 5.
 
-  * 5a1. InsuraBook shows an error message and resumes at step 2.
+* 6b. Invalid expiration date format provided.
 
-#### Use case 3: Add a claim on a policy
+  * 6b1. InsuraBook shows an error message that mentions invalid date format.
+  * 6b2. User requests to add a policy to the client with a valid expiration date.
+  * Steps 6b1 - 6b2 are repeated until user provides a valid expiration date.
+  * 6b3. InsuraBook adds a policy to a client's profile.
+  * Use case resumes at step 7.
+
+* 6c. Provided expiration date is before today.
+
+  * 6c1. InsuraBook shows an error message that mentions invalid date.
+  * 6c2. User requests to add a policy to the client with a valid expiration date.
+  * Steps 6c1 - 6c2 are repeated until user provides a valid expiration date.
+  * 6c3. InsuraBook adds a policy to a client's profile.
+  * Use case resumes at step 7.
+
+* 6d. Client already has the specified policy.
+
+  * 6d1. InsuraBook shows an error message that mentions duplicate policy.
+
+  Use case ends.
+
+#### Use case 4: Add a new claim on a policy
 
 **MSS**
 
-1.  User searches for a policy number
-2.  InsuraBook shows the specific policy on the client profile
-3.  User adds a claim on the policy
-4.  InsuraBook shows the specific policy on the client profile with the claim
+1.  User requests to search for all policies under a specific client.
+2.  InsuraBook shows all policies on the client profile.
+3.  User looks through the policies and selects a specific policy.
+4.  User adds a claim to a specific policy.
+5.  InsuraBook shows the specific policy on the client profile with the claim.
 
     Use case ends.
 
 **Extensions**
 
-* 2a. Specified policy or client profile does not exist.
+* 2a. Specified client ID does not exist.
 
-  * 2a1. InsuraBook shows an error message
+  * 2a1. InsuraBook shows an error message that client does not exist.
+  * 2a2. User requests to search for all clients.
+  * 2a3. InsuraBook shows all clients.
+  * 2a4. User requests to view a specific client with the correct client ID.
+  * Use case resumes at step 2.
 
-    Use case ends.
+* 3a. Specified client does not have the required policy.
 
-* 3a. Claim is a duplicate of an existing claim
+  * 3a1. User requests to add a policy to the client with valid fields.
+  * 3a2. InsuraBook adds a policy to a client's profile.
+  * Use case resumes at step 4.
 
-  * 3a1. InsuraBook shows an error message
+* 5a. Claim is a duplicate of an existing claim
 
-    Use case resumes at step 3.
+  * 5a1. InsuraBook shows an error message that claim already exists.
+
+  Use case ends.
+
+* 5b. Invalid claim date format provided.
+
+  * 5b1. InsuraBook shows an error message that claim date has invalid format.
+  * 5b2. User requests to add a claim to the specific policy with a valid claim date.
+  * Steps 5b1 - 5b2 are repeated until user provides a valid claim date.
+  * 5b3. InsuraBook shows the specific policy on the client profile with the claim.
+
+  Use case ends.
+
+* 5c. Provided claim date is after policy expiration date.
+
+  * 5c1. InsuraBook shows an error message that claim date is after policy expiration date.
+  * 5c2. User requests to add a claim to the specific policy with a valid claim date.
+  * Steps 5c1 - 5c2 are repeated until user provides a valid claim date.
+  * 5c3. InsuraBook shows the specific policy on the client profile with the claim.
+
+  Use case ends.
 
 ### Non-Functional Requirements
 
