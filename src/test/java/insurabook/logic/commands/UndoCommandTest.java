@@ -6,6 +6,7 @@ import static insurabook.testutil.TypicalClients.ALICE;
 import static insurabook.testutil.TypicalClients.BENSON;
 import static insurabook.testutil.TypicalClients.CARL;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -117,5 +118,14 @@ public class UndoCommandTest {
         undoCommand.execute(model);
 
         assertEquals(initialClientCount, model.getFilteredClientList().size());
+    }
+
+    @Test
+    public void equals_sameType_success() {
+        UndoCommand undoCommand1 = new UndoCommand();
+        UndoCommand undoCommand2 = new UndoCommand();
+
+        assertEquals(undoCommand1, undoCommand2);
+        assertNotEquals(null, undoCommand1);
     }
 }

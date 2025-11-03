@@ -17,23 +17,26 @@ import static insurabook.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static insurabook.logic.commands.CommandTestUtil.VALID_BIRTHDAY_AMY;
 import static insurabook.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static insurabook.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
-//import static insurabook.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static insurabook.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
 import static insurabook.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static insurabook.logic.parser.CliSyntax.PREFIX_PHONE;
 import static insurabook.logic.parser.CliSyntax.PREFIX_TAG;
 import static insurabook.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static insurabook.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static insurabook.testutil.TypicalClients.ALICE;
 
 import org.junit.jupiter.api.Test;
 
 import insurabook.logic.Messages;
 import insurabook.logic.commands.EditCommand;
 import insurabook.model.claims.InsuraDate;
-//import insurabook.model.client.Address;
 import insurabook.model.client.Email;
 import insurabook.model.client.Name;
 import insurabook.model.client.Phone;
 import insurabook.model.tag.Tag;
+import insurabook.testutil.EditPersonDescriptorBuilder;
 
 public class EditCommandParserTest {
 
@@ -50,30 +53,12 @@ public class EditCommandParserTest {
         assertParseFailure(parser, VALID_NAME_AMY, MESSAGE_INVALID_FORMAT);
 
         // no field specified
-        String noFieldInput = " " + CliSyntax.PREFIX_CLIENT_ID + " 1";
+        String noFieldInput = " " + PREFIX_CLIENT_ID + " 1";
         assertParseFailure(parser, noFieldInput, EditCommand.MESSAGE_NOT_EDITED);
 
         // no index and no field specified
         assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
     }
-
-    // no longer using preamble
-    /*
-    @Test
-    public void parse_invalidPreamble_failure() {
-        // negative index (not using Index)
-        // assertParseFailure(parser, "-5" + NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
-
-        // zero index
-        // assertParseFailure(parser, "0" + NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
-
-        // invalid arguments being parsed as preamble
-        assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
-
-        // invalid prefix being parsed as preamble
-        assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
-    }
-    */
 
     @Test
     public void parse_invalidValue_failure() {
@@ -102,65 +87,71 @@ public class EditCommandParserTest {
                 Name.MESSAGE_CONSTRAINTS);
     }
 
-    //@Test
-    //public void parse_allFieldsSpecified_success() {
-    //    Index targetIndex = INDEX_SECOND_PERSON;
-    //    String userInput = targetIndex.getOneBased() + PHONE_DESC_BOB + TAG_DESC_HUSBAND
-    //            + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + NAME_DESC_AMY + TAG_DESC_FRIEND;
+    @Test
+    public void parse_allFieldsSpecified_success() {
+        String sampleInput = " " + PREFIX_CLIENT_ID + ALICE.getClientId()
+                + " " + PREFIX_CLIENT_NAME + "John Doe"
+                + " " + PREFIX_PHONE + "98765432"
+                + " " + PREFIX_EMAIL + "john@example.com"
+                + " " + PREFIX_BIRTHDAY + "2000-01-01";
 
-    //    EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
-    //            .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-    //            .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
-    //    EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
+        EditCommand.EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withName("John Doe")
+                .withPhone("98765432")
+                .withEmail("john@example.com")
+                .withBirthday("2000-01-01")
+                .build();
 
-    //    assertParseSuccess(parser, userInput, expectedCommand);
-    //}
+        EditCommand expectedCommand = new EditCommand(ALICE.getClientId(), descriptor);
 
-    //@Test
-    //public void parse_someFieldsSpecified_success() {
-    //    Index targetIndex = INDEX_FIRST_PERSON;
-    //    String userInput = targetIndex.getOneBased() + PHONE_DESC_BOB + EMAIL_DESC_AMY;
+        assertParseSuccess(parser, sampleInput, expectedCommand);
+    }
 
-    //    EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB)
-    //            .withEmail(VALID_EMAIL_AMY).build();
-    //    EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
+    @Test
+    public void parse_someFieldsSpecified_success() {
+        String userInput = " " + PREFIX_CLIENT_ID + ALICE.getClientId() + " "
+                + PREFIX_PHONE + "98765432"
+                + " " + PREFIX_EMAIL + "john@example.com";
 
-    //    assertParseSuccess(parser, userInput, expectedCommand);
-    //}
+        EditCommand.EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withPhone("98765432")
+                .withEmail("john@example.com")
+                .build();
 
-    //@Test
-    //public void parse_oneFieldSpecified_success() {
-    //    // name
-    //    Index targetIndex = INDEX_THIRD_PERSON;
-    //    String userInput = targetIndex.getOneBased() + NAME_DESC_AMY;
-    //    EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY).build();
-    //    EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
-    //    assertParseSuccess(parser, userInput, expectedCommand);
+        EditCommand expectedCommand = new EditCommand(ALICE.getClientId(), descriptor);
 
-    //    // phone
-    //    userInput = targetIndex.getOneBased() + PHONE_DESC_AMY;
-    //    descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_AMY).build();
-    //    expectedCommand = new EditCommand(targetIndex, descriptor);
-    //    assertParseSuccess(parser, userInput, expectedCommand);
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
 
-    //    // email
-    //    userInput = targetIndex.getOneBased() + EMAIL_DESC_AMY;
-    //    descriptor = new EditPersonDescriptorBuilder().withEmail(VALID_EMAIL_AMY).build();
-    //    expectedCommand = new EditCommand(targetIndex, descriptor);
-    //    assertParseSuccess(parser, userInput, expectedCommand);
+    @Test
+    public void parse_oneFieldSpecified_success() {
+        // name
+        String userInput = " " + PREFIX_CLIENT_ID + ALICE.getClientId() + " "
+                + PREFIX_CLIENT_NAME + "John Doe";
+        EditCommand.EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName("John Doe").build();
+        EditCommand expectedCommand = new EditCommand(ALICE.getClientId(), descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
 
-    //    // address
-    //    userInput = targetIndex.getOneBased() + ADDRESS_DESC_AMY;
-    //    descriptor = new EditPersonDescriptorBuilder().withAddress(VALID_ADDRESS_AMY).build();
-    //    expectedCommand = new EditCommand(targetIndex, descriptor);
-    //    assertParseSuccess(parser, userInput, expectedCommand);
+        // phone
+        userInput = " " + PREFIX_CLIENT_ID + ALICE.getClientId() + " " + PREFIX_PHONE + "98765432";
+        descriptor = new EditPersonDescriptorBuilder().withPhone("98765432").build();
+        expectedCommand = new EditCommand(ALICE.getClientId(), descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
 
-    //    // tags
-    //    userInput = targetIndex.getOneBased() + TAG_DESC_FRIEND;
-    //    descriptor = new EditPersonDescriptorBuilder().withTags(VALID_TAG_FRIEND).build();
-    //    expectedCommand = new EditCommand(targetIndex, descriptor);
-    //    assertParseSuccess(parser, userInput, expectedCommand);
-    //}
+        // email
+        userInput = " " + PREFIX_CLIENT_ID + ALICE.getClientId() + " "
+                + PREFIX_EMAIL + "john@example.com";
+        descriptor = new EditPersonDescriptorBuilder().withEmail("john@example.com").build();
+        expectedCommand = new EditCommand(ALICE.getClientId(), descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+
+        // birthday
+        userInput = " " + PREFIX_CLIENT_ID + ALICE.getClientId() + " "
+                + PREFIX_BIRTHDAY + "2000-01-01";
+        descriptor = new EditPersonDescriptorBuilder().withBirthday("2000-01-01").build();
+        expectedCommand = new EditCommand(ALICE.getClientId(), descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
 
     @Test
     public void parse_multipleRepeatedFields_failure() {
@@ -193,15 +184,4 @@ public class EditCommandParserTest {
         assertParseFailure(parser, userInput,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL, PREFIX_BIRTHDAY));
     }
-
-    //@Test
-    //public void parse_resetTags_success() {
-    //    Index targetIndex = INDEX_THIRD_PERSON;
-    //    String userInput = targetIndex.getOneBased() + TAG_EMPTY;
-
-    //    EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withTags().build();
-    //    EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
-
-    //    assertParseSuccess(parser, userInput, expectedCommand);
-    //}
 }

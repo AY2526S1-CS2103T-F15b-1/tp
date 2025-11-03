@@ -4,6 +4,7 @@ import static insurabook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static insurabook.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static insurabook.testutil.Assert.assertThrows;
 import static insurabook.testutil.TypicalClients.ALICE;
+import static insurabook.testutil.TypicalClients.HOON;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
+import insurabook.logic.commands.AddClientCommand;
 import insurabook.logic.commands.ClearCommand;
 import insurabook.logic.commands.DeleteClientCommand;
 import insurabook.logic.commands.EditCommand;
@@ -35,12 +37,17 @@ public class InsuraBookParserTest {
 
     private final InsuraBookParser parser = new InsuraBookParser();
 
-    //@Test
-    //public void parseCommand_add() throws Exception {
-    //    Client client = new PersonBuilder().build();
-    //    AddClientCommand command = (AddClientCommand) parser.parseCommand(PersonUtil.getAddClientCommand(client));
-    //    assertEquals(new AddClientCommand(client), command);
-    //}
+    @Test
+    public void parseCommand_add() throws Exception {
+        AddClientCommand command = (AddClientCommand) parser.parseCommand(
+                AddClientCommand.COMMAND_WORD
+                        + " -n " + HOON.getName()
+                        + " -phone " + HOON.getPhone()
+                        + " -email " + HOON.getEmail()
+                        + " -b " + HOON.getBirthday()
+                        + " -c_id " + HOON.getClientId());
+        assertEquals(new AddClientCommand(HOON), command);
+    }
 
     @Test
     public void parseCommand_clear() throws Exception {
