@@ -960,7 +960,20 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
+1.  User requests to edit a client's details. (UC9)
+2.  InsuraBook shows the client's edited details.
+3.  User requests to undo the edit.
+4.  InsuraBook shows the client's original details.
+
+  Use case ends.
+
 **Extentions**
+
+* 3a. User has closed and relaunched InsuraBook.
+
+    * 3a1. InsuraBook shows an error that mentions no available changes to undo.
+
+  Use case ends.
 
 ### Non-Functional Requirements
 

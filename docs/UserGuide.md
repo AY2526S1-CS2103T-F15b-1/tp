@@ -328,13 +328,30 @@ Allows you to edit a client's
 - name
 - phone number
 - email
+- birthday
+
+<span style="color:orange">⚠ Client ID is unique, and cannot be edited.</span>
 
 Parameter requirements are identical to [add](#adding-a-client-add).
 
 Format:
 - `edit -c_id CLIENT_ID -n NEW_NAME`
 - `edit -c_id CLIENT_ID -phone NEW_PHONE_NUMBER`
-- `edit -c_id CLIENT_ID -email EMAIL`
+- `edit -c_id CLIENT_ID -email NEW_EMAIL`
+- `edit -c_id CLIENT_ID -b NEW_BIRTHDAY`
+
+Users can edit multiple tags in a single command, such as:
+`edit -c_id CLIENT_ID -n NEW_NAME -email NEW_EMAIL`
+
+Editing multiple details:
+<p align="center">
+    <img alt="img.png" height="400" src="images/editClientPreview.png" width="500"/>
+</p>
+
+Phone and email are updated.
+<p align="center">
+    <img alt="img.png" height="400" src="images/editClientReview.png" width="500"/>
+</p>
 
 ---
 
@@ -400,9 +417,9 @@ Examples:
   This updates the amount to $1500 for claim CL001.
 * To edit **multiple fields** of a claim:
     ```
-    edit claim -c_id C101 -p_id P101 -cl_id CL001 -date 2025-10-05 -desc Emergency surgery
+    edit claim -c_id C101 -p_id P101 -cl_id CL001 -date 2025-10-05 -desc Surgery
     ```
-  This updates the date to 2025-10-05 and its description to "Emergency surgery" for claim CL001.
+  This updates the date to 2025-10-05 and its description to "Surgery" for claim CL001.
 
 ---
 
@@ -450,7 +467,7 @@ Searches for clients whose CLIENT_IDs match the specified IDs.
 Format: `find -c_id CLIENT_IDs [MORE_CLIENT_IDs]`
 
 Rules:
-* **OR Search**: Persons matching at least one ID will be returned. (e.g. searching for client id `123` `345`
+* **OR Search**: Clients matching at least one ID will be returned. (e.g. searching for client id `123` `345`
 will return 2 clients: client A with client ID `123` and client B with client ID `345`)
 * **Case-Insensitive**: Client IDs are alphanumerical and the search is not case-sensitive. (e.g., c012 will match C012).
 * **Full IDs Only**: The search matches complete IDs. (e.g. `101` will not match `C101`)
@@ -615,7 +632,7 @@ Format `undo`
 Changes are:
 - adding client, policies, policy types and claims
 - deleting client, policies, policy types and claims
-- edits to any information, e.g. phone, email
+- edits to any information, e.g. name, phone, email, birthday
 
 <span style="color:red">⚠ InsuraBook cannot undo changes from **previous saves**.</span>
 
@@ -729,7 +746,7 @@ off-screen.
 
    **Fix:** Restore the minimized window manually.
 
-3**PDF Viewing issues:** PDF versions of this document may introduce formatting issues when viewing long descriptions.
+3. **PDF Viewing issues:** PDF versions of this document may introduce formatting issues when viewing long descriptions.
 
    **Fix:** Visit out webpage for the properly formatted version at [User Guide](https://ay2526s1-cs2103t-f15b-1.github.io/tp/UserGuide.html).
 
