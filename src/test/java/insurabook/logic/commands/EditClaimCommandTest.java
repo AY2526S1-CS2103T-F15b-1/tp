@@ -23,7 +23,9 @@ import insurabook.model.client.exceptions.ClientMissingException;
 import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
 import insurabook.model.policies.exceptions.PolicyNotFoundException;
+import insurabook.model.policytype.PolicyType;
 import insurabook.model.policytype.PolicyTypeId;
+import insurabook.model.policytype.PolicyTypeName;
 import insurabook.testutil.ClaimBuilder;
 import insurabook.testutil.EditClaimDescriptorBuilder;
 import insurabook.testutil.PersonBuilder;
@@ -31,10 +33,13 @@ import insurabook.testutil.PersonBuilder;
 public class EditClaimCommandTest {
 
     private final Client validClient = new PersonBuilder().withName("Kevin").build();
+    private final PolicyType validPolicyType = new PolicyType(
+            new PolicyTypeName("Health Insurance"),
+            new PolicyTypeId("PT1001"));
     private final Policy validPolicy = new Policy(
             new PolicyId("P12345"),
             validClient.getClientId(),
-            new PolicyTypeId("PT1001"),
+            validPolicyType.getPtId(),
             new InsuraDate("2025-12-31"));
     private final Claim validClaim = new ClaimBuilder().withClientId(validClient.getClientId().toString())
             .withPolicyId(validPolicy.getPolicyId().toString()).build();
@@ -50,10 +55,12 @@ public class EditClaimCommandTest {
         String expectedMessage = String.format(EditClaimCommand.MESSAGE_EDIT_CLAIM_SUCCESS,
                 Messages.format(editedClaim, 0));
         Model expectedModel = new ModelManager(new InsuraBook(model.getInsuraBook()), new UserPrefs());
+        model.addPolicyType(validPolicyType);
         model.addPolicy(validPolicy.getPolicyId(), validClient.getClientId(),
                 validPolicy.getPolicyTypeId(), validPolicy.getExpiryDate());
         model.addClaim(validClaim.getClientId(), validClaim.getPolicyId(),
                 validClaim.getAmount(), validClaim.getDate(), validClaim.getDescription());
+        expectedModel.addPolicyType(validPolicyType);
         expectedModel.addPolicy(validPolicy.getPolicyId(), validClient.getClientId(),
                 validPolicy.getPolicyTypeId(), validPolicy.getExpiryDate());
         expectedModel.setClaim(validClaim, editedClaim);
@@ -73,10 +80,12 @@ public class EditClaimCommandTest {
                 Messages.format(editedClaim, 0));
 
         Model expectedModel = new ModelManager(new InsuraBook(model.getInsuraBook()), new UserPrefs());
+        model.addPolicyType(validPolicyType);
         model.addPolicy(validPolicy.getPolicyId(), validClient.getClientId(),
                 validPolicy.getPolicyTypeId(), validPolicy.getExpiryDate());
         model.addClaim(validClaim.getClientId(), validClaim.getPolicyId(),
                 validClaim.getAmount(), validClaim.getDate(), validClaim.getDescription());
+        expectedModel.addPolicyType(validPolicyType);
         expectedModel.addPolicy(validPolicy.getPolicyId(), validClient.getClientId(),
                 validPolicy.getPolicyTypeId(), validPolicy.getExpiryDate());
         expectedModel.setClaim(validClaim, editedClaim);
@@ -94,10 +103,12 @@ public class EditClaimCommandTest {
                 Messages.format(validClaim, 0));
 
         Model expectedModel = new ModelManager(new InsuraBook(model.getInsuraBook()), new UserPrefs());
+        model.addPolicyType(validPolicyType);
         model.addPolicy(validPolicy.getPolicyId(), validClient.getClientId(),
                 validPolicy.getPolicyTypeId(), validPolicy.getExpiryDate());
         model.addClaim(validClaim.getClientId(), validClaim.getPolicyId(),
                 validClaim.getAmount(), validClaim.getDate(), validClaim.getDescription());
+        expectedModel.addPolicyType(validPolicyType);
         expectedModel.addPolicy(validPolicy.getPolicyId(), validClient.getClientId(),
                 validPolicy.getPolicyTypeId(), validPolicy.getExpiryDate());
         expectedModel.setClaim(validClaim, validClaim);

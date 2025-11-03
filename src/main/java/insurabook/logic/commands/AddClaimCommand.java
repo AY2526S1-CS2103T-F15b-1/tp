@@ -5,12 +5,9 @@ import static insurabook.logic.parser.CliSyntax.PREFIX_CLAIM_DATE;
 import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
 import static insurabook.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static insurabook.logic.parser.CliSyntax.PREFIX_POLICY_ID;
-import static insurabook.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static java.util.Objects.requireNonNull;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 import insurabook.logic.Messages;
 import insurabook.logic.commands.exceptions.CommandException;
@@ -20,7 +17,6 @@ import insurabook.model.claims.ClaimAmount;
 import insurabook.model.claims.ClaimMessage;
 import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.ClientId;
-import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
 
 /**
@@ -80,27 +76,6 @@ public class AddClaimCommand extends Command {
 
         Claim claim = model.addClaim(clientId, policyId, claimAmount, claimDate, claimMessage);
         assert claim != null : "Added claim should not be null";
-        model.updateFilteredClientList(client -> client.getClientId().equals(clientId));
-        List<Policy> clientPolicies = model.getFilteredClientList().get(0).getPortfolio()
-                .getPolicies().asUnmodifiableObservableList();
-        Optional<Policy> clientPolicy = clientPolicies.stream()
-                .filter(policy -> policy.getPolicyId().equals(policyId))
-                .findFirst();
-        if (clientPolicy.isEmpty()) {
-            model.updateFilteredClientList(PREDICATE_SHOW_ALL_PERSONS);
-            model.updateFilteredPolicyTypeList(unused -> true);
-            throw new CommandException("No such policy id exists for client: "
-                    + policyId + "."
-                    + " Please add the policy to client first before adding claims.");
-        } else {
-            InsuraDate expiryDate = clientPolicy.get().getExpiryDate();
-            if (expiryDate.compareTo(claimDate) < 0) {
-                model.updateFilteredClientList(PREDICATE_SHOW_ALL_PERSONS);
-                model.updateFilteredPolicyTypeList(unused -> true);
-                throw new CommandException("Claim date " + claimDate + " is after policy expiry date "
-                        + expiryDate + ". Please use a valid claim date.");
-            }
-        }
 
         model.commitInsuraBook();
 
