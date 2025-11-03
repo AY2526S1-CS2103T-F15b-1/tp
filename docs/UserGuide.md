@@ -214,7 +214,7 @@ Format:
 
 Examples:
 * `add policy -p_id 101 -c_id 123 -pt_id P03 -exp 2025-12-01` adds a policy with policy ID `101`, of policy type ID
-`P03`, with expiry date `2025-10-01` to the client with client ID `123`.
+`P03`, with expiry date `2025-12-01` to the client with client ID `123`.
 
 <p align="center">
     <img alt="img.png" height="300" src="images/addPolicyToClient.png" width="500"/>
