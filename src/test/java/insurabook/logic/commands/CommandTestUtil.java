@@ -36,7 +36,7 @@ public class CommandTestUtil {
     public static final String VALID_CLIENT_ID_BOB = "222";
     public static final String VALID_POLICY_ID_AMY = "P101";
     public static final String VALID_POLICY_ID_BOB = "P102";
-    public static final String VALID_POLICY_TYPE_ID = "PR01";
+    public static final String VALID_POLICY_TYPE_ID = "PRU001";
     public static final String VALID_EXPIRY_DATE = "2025-12-31";
     public static final String VALID_CLAIM_ID_AMY = "CL001";
     public static final String VALID_CLAIM_ID_BOB = "CL002";
@@ -73,6 +73,8 @@ public class CommandTestUtil {
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_CLIENT_ID_DESC = " " + PREFIX_CLIENT_ID + "C!^@&";
     public static final String INVALID_POLICY_ID_DESC = " " + PREFIX_POLICY_ID + "P*^^";
+    public static final String INVALID_POLICY_TYPE_ID_DESC = " " + PREFIX_POLICY_TYPE_ID + "PT$%";
+    public static final String INVALID_EXPIRY_DATE_DESC = " " + PREFIX_EXPIRY_DATE + "2025-13-01";
     public static final String INVALID_CLAIM_AMOUNT_DESC = " " + PREFIX_CLAIM_AMOUNT + "-1";
     public static final String INVALID_CLAIM_DATE_DESC = " " + PREFIX_CLAIM_DATE + "2025-02-30";
 
