@@ -1,15 +1,11 @@
 package insurabook.logic.commands;
 
 import static insurabook.testutil.Assert.assertThrows;
-import static insurabook.testutil.TypicalClients.ALICE;
 import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -34,68 +30,32 @@ import insurabook.model.policies.PolicyId;
 import insurabook.model.policytype.PolicyType;
 import insurabook.model.policytype.PolicyTypeId;
 import insurabook.model.policytype.PolicyTypeName;
-import insurabook.testutil.PersonBuilder;
+import insurabook.testutil.PolicyTypeBuilder;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 
-public class AddClientCommandTest {
+public class AddPolicyTypeCommandTest {
 
     @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new AddClientCommand(null));
+    public void constructor_null_throwsNullPointer() {
+        assertThrows(NullPointerException.class, () ->
+                new AddPolicyTypeCommand(null, null, null, null));
     }
 
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Client validClient = new PersonBuilder().build();
+    public void execute_policyTypeAcceptedByModel_addSuccessful() throws CommandException {
+        ModelStubAcceptingPolicyTypeAdded acceptingModel = new ModelStubAcceptingPolicyTypeAdded();
+        PolicyType validPolicyType = new PolicyTypeBuilder().build();
 
-        CommandResult commandResult = new AddClientCommand(validClient).execute(modelStub);
+        CommandResult commandResult = new AddPolicyTypeCommand(
+                validPolicyType.getPtName(),
+                validPolicyType.getPtId(),
+                validPolicyType.getPtDescription(),
+                validPolicyType.getPtPremium()).execute(acceptingModel);
 
-        assertEquals(String.format(AddClientCommand.MESSAGE_SUCCESS, Messages.format(validClient)),
+        assertEquals(String.format(AddPolicyTypeCommand.MESSAGE_SUCCESS, Messages.format(validPolicyType, 0)),
                 commandResult.getFeedbackToUser());
-        assertEquals(Arrays.asList(validClient), modelStub.personsAdded);
-    }
-
-    @Test
-    public void execute_duplicatePerson_throwsCommandException() {
-        Client validClient = new PersonBuilder().build();
-        AddClientCommand addClientCommand = new AddClientCommand(validClient);
-        ModelStub modelStub = new ModelStubWithPerson(validClient);
-
-        assertThrows(CommandException.class,
-                AddClientCommand.MESSAGE_DUPLICATE_PERSON, () -> addClientCommand.execute(modelStub));
-    }
-
-    @Test
-    public void equals() {
-        Client alice = new PersonBuilder().withName("Alice").withClientId("1").build();
-        Client bob = new PersonBuilder().withName("Bob").withClientId("2").build();
-        AddClientCommand addAliceCommand = new AddClientCommand(alice);
-        AddClientCommand addBobCommand = new AddClientCommand(bob);
-
-        // same object -> returns true
-        assertTrue(addAliceCommand.equals(addAliceCommand));
-
-        // same values -> returns true
-        AddClientCommand addAliceCommandCopy = new AddClientCommand(alice);
-        assertTrue(addAliceCommand.equals(addAliceCommandCopy));
-
-        // different types -> returns false
-        assertFalse(addAliceCommand.equals(1));
-
-        // null -> returns false
-        assertFalse(addAliceCommand.equals(null));
-
-        // different person -> returns false
-        assertFalse(addAliceCommand.equals(addBobCommand));
-    }
-
-    @Test
-    public void toStringMethod() {
-        AddClientCommand addClientCommand = new AddClientCommand(ALICE);
-        String expected = AddClientCommand.class.getCanonicalName() + "{toAdd=" + ALICE + "}";
-        assertEquals(expected, addClientCommand.toString());
+        assertEquals(List.of(validPolicyType), acceptingModel.policyTypesAdded);
     }
 
     /**
@@ -194,7 +154,7 @@ public class AddClientCommandTest {
 
         @Override
         public Claim addClaim(ClientId clientId, PolicyId policyId, ClaimAmount claimAmount,
-                             InsuraDate claimDate, ClaimMessage claimDescription) {
+                              InsuraDate claimDate, ClaimMessage claimDescription) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -274,39 +234,37 @@ public class AddClientCommandTest {
     }
 
     /**
-     * A Model stub that contains a single person.
+     * A Model stub that contains a single PolicyType.
      */
-    private class ModelStubWithPerson extends ModelStub {
-        private final Client client;
+    private class ModelStubWithPolicyType extends ModelStub {
+        private final PolicyType policyType;
 
-        ModelStubWithPerson(Client client) {
-            requireNonNull(client);
-            this.client = client;
+        ModelStubWithPolicyType(PolicyType policyType) {
+            requireNonNull(policyType);
+            this.policyType = policyType;
         }
 
-        @Override
-        public boolean hasClient(Client client) {
-            requireNonNull(client);
-            return this.client.isSameClient(client);
+        public boolean hasPolicyType(PolicyType policyType) {
+            requireNonNull(policyType);
+            return this.policyType.equals(policyType);
         }
     }
 
     /**
      * A Model stub that always accept the person being added.
      */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Client> personsAdded = new ArrayList<>();
+    private class ModelStubAcceptingPolicyTypeAdded extends ModelStub {
+        final ArrayList<PolicyType> policyTypesAdded = new ArrayList<>();
 
-        @Override
-        public boolean hasClient(Client client) {
-            requireNonNull(client);
-            return personsAdded.stream().anyMatch(client::isSameClient);
+        public boolean hasPolicyType(PolicyType policyType) {
+            requireNonNull(policyType);
+            return policyTypesAdded.stream().anyMatch(policyType::equals);
         }
 
         @Override
-        public void addClient(Client client) {
-            requireNonNull(client);
-            personsAdded.add(client);
+        public void addPolicyType(PolicyType policyType) {
+            requireNonNull(policyType);
+            policyTypesAdded.add(policyType);
         }
 
         @Override
@@ -314,5 +272,4 @@ public class AddClientCommandTest {
             return null;
         }
     }
-
 }
