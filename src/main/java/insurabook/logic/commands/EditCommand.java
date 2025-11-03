@@ -20,7 +20,6 @@ import insurabook.logic.Messages;
 import insurabook.logic.commands.exceptions.CommandException;
 import insurabook.model.Model;
 import insurabook.model.claims.InsuraDate;
-import insurabook.model.client.Address;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
 import insurabook.model.client.Email;
@@ -104,9 +103,9 @@ public class EditCommand extends Command {
         Name updatedName = editPersonDescriptor.getName().orElse(clientToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(clientToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(clientToEdit.getEmail());
+        InsuraDate birthday = editPersonDescriptor.getBirthday().orElse(clientToEdit.getBirthday());
 
         // keep the same client ID and portfolio
-        InsuraDate birthday = clientToEdit.getBirthday();
         ClientId clientId = clientToEdit.getClientId();
 
         Client editedClient = new Client(updatedName, updatedPhone, updatedEmail, birthday, clientId);
@@ -147,7 +146,7 @@ public class EditCommand extends Command {
         private Name name;
         private Phone phone;
         private Email email;
-        private Address address;
+        private InsuraDate birthday;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -160,7 +159,7 @@ public class EditCommand extends Command {
             setName(toCopy.name);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
-            setAddress(toCopy.address);
+            setBirthday(toCopy.birthday);
             setTags(toCopy.tags);
         }
 
@@ -168,7 +167,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, birthday, tags);
         }
 
         public void setName(Name name) {
@@ -195,12 +194,12 @@ public class EditCommand extends Command {
             return Optional.ofNullable(email);
         }
 
-        public void setAddress(Address address) {
-            this.address = address;
+        public void setBirthday(InsuraDate birthday) {
+            this.birthday = birthday;
         }
 
-        public Optional<Address> getAddress() {
-            return Optional.ofNullable(address);
+        public Optional<InsuraDate> getBirthday() {
+            return Optional.ofNullable(birthday);
         }
 
         /**
@@ -235,7 +234,7 @@ public class EditCommand extends Command {
             return Objects.equals(name, otherEditPersonDescriptor.name)
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
-                    && Objects.equals(address, otherEditPersonDescriptor.address)
+                    && Objects.equals(birthday, otherEditPersonDescriptor.birthday)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags);
         }
 
@@ -245,7 +244,7 @@ public class EditCommand extends Command {
                     .add("name", name)
                     .add("phone", phone)
                     .add("email", email)
-                    .add("address", address)
+                    .add("birthday", birthday)
                     .add("tags", tags)
                     .toString();
         }
