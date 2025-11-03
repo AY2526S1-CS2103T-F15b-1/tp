@@ -8,6 +8,7 @@ import insurabook.model.claims.ClaimId;
 import insurabook.model.claims.InsuraDate;
 import insurabook.model.claims.exceptions.ClaimNotFoundException;
 import insurabook.model.client.ClientId;
+import insurabook.model.policies.exceptions.ClaimAfterExpiredDateException;
 import insurabook.model.policytype.PolicyTypeId;
 
 /**
@@ -136,6 +137,9 @@ public class Policy {
      * @param claim to add
      */
     public void addClaim(Claim claim) {
+        if (this.expiryDate.isBefore(claim.getDate())) {
+            throw new ClaimAfterExpiredDateException();
+        }
         this.claim.add(claim);
     }
 
