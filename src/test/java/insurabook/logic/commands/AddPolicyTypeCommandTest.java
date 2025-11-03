@@ -3,6 +3,8 @@ package insurabook.logic.commands;
 import static insurabook.testutil.Assert.assertThrows;
 import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -56,6 +58,40 @@ public class AddPolicyTypeCommandTest {
         assertEquals(String.format(AddPolicyTypeCommand.MESSAGE_SUCCESS, Messages.format(validPolicyType, 0)),
                 commandResult.getFeedbackToUser());
         assertEquals(List.of(validPolicyType), acceptingModel.policyTypesAdded);
+    }
+
+    @Test
+    public void equals() {
+        PolicyType validPolicyType = new PolicyTypeBuilder().build();
+        PolicyType differentPolicyType = new PolicyTypeBuilder().withName("Different Name").build();
+
+        AddPolicyTypeCommand command = new AddPolicyTypeCommand(
+                validPolicyType.getPtName(),
+                validPolicyType.getPtId(),
+                validPolicyType.getPtDescription(),
+                validPolicyType.getPtPremium());
+
+        // null -> false
+        assertFalse(command.equals(null));
+
+        // same object -> true
+        assertTrue(command.equals(command));
+
+        // different values -> false
+        AddPolicyTypeCommand differentCommand = new AddPolicyTypeCommand(
+                differentPolicyType.getPtName(),
+                validPolicyType.getPtId(),
+                validPolicyType.getPtDescription(),
+                validPolicyType.getPtPremium());
+        assertFalse(command.equals(differentCommand));
+
+        // same values -> true
+        AddPolicyTypeCommand sameCommand = new AddPolicyTypeCommand(
+                validPolicyType.getPtName(),
+                validPolicyType.getPtId(),
+                validPolicyType.getPtDescription(),
+                validPolicyType.getPtPremium());
+        assertTrue(command.equals(sameCommand));
     }
 
     /**
