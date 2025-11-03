@@ -322,13 +322,30 @@ Allows you to edit a client's
 - name
 - phone number
 - email
+- birthday
+
+<span style="color:orange">⚠ Client ID is unique, and cannot be edited.</span>
 
 Parameter requirements are identical to [add](#adding-a-client-add).
 
 Format:
 - `edit -c_id CLIENT_ID -n NEW_NAME`
 - `edit -c_id CLIENT_ID -phone NEW_PHONE_NUMBER`
-- `edit -c_id CLIENT_ID -email EMAIL`
+- `edit -c_id CLIENT_ID -email NEW_EMAIL`
+- `edit -c_id CLIENT_ID -b NEW_BIRTHDAY`
+
+You can edit multiple tags in a single command, such as:
+`edit -c_id CLIENT_ID -n NEW_NAME -email NEW_EMAIL`
+
+Editing multiple details:
+<p align="center">
+    <img alt="img.png" height="300" src="images/editClientPreview.png" width="500"/>
+</p>
+
+Phone and email are updated.
+<p align="center">
+    <img alt="img.png" height="300" src="images/editClientReview.png" width="500"/>
+</p>
 
 ---
 
@@ -611,7 +628,7 @@ Format `undo`
 Changes are:
 - adding client, policies, policy types and claims
 - deleting client, policies, policy types and claims
-- edits to any information, e.g. phone, email
+- edits to any information, e.g. name, phone, email, birthday
 
 <span style="color:red">⚠ InsuraBook cannot undo changes from **previous saves**.</span>
 
