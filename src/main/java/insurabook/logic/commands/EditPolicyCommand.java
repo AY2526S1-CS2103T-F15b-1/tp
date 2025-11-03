@@ -92,6 +92,23 @@ public class EditPolicyCommand extends Command {
         return new Policy(policyId, clientId, policyTypeId, updatedExpiryDate, claims);
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+
+        if (!(other instanceof EditPolicyCommand)) {
+            return false;
+        }
+
+        EditPolicyCommand e = (EditPolicyCommand) other;
+
+        return clientId.equals(e.clientId)
+                && policyId.equals(e.policyId)
+                && editPolicyDescriptor.equals(e.editPolicyDescriptor);
+    }
+
     /**
      * Stores the details to edit the policy with. Each non-empty field value will replace the
      * corresponding field value of the policy.
