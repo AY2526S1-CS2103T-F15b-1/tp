@@ -90,14 +90,18 @@ Doe` with client id `123`, birthday on `01 Jan 2001`, phone number `90000001` an
 **:information_source: Notes about the command format:**<br>
 
 * Words in `UPPER_CASE` are the parameters to be supplied by you.<br>
-  e.g. in `add -n NAME -b BIRTHDATE -c_id CLIENT_ID`, `NAME`, `BIRTHDATE`, `CLIENT_ID` are parameters which can be used
-as `add -n John Doe -b 2002-01-01 -c_id C101`.
+  e.g. in `add -n NAME -phone PHONE_NUMBER -email EMAIL -b BIRTHDATE -c_id CLIENT_ID`, `NAME`, `PHONE_NUMBER`, `EMAIL`, `BIRTHDATE`, `CLIENT_ID` are parameters which can be used
+as `add -n John Doe -phone 98765432 -email johndoe@example.com -b 2002-01-01 -c_id C101`.
 
 * Items in square brackets are optional.<br>
-  e.g. `-c_id CLIENT_ID [-desc DESC]` can be used as `-c_id C101 -desc Car Accident` or as `-c_id C101`.
+  e.g. `add claim -c_id CLIENT_ID -p_id POLICY_ID -amt AMOUNT -date CLAIM_DATE [-desc DESC]` can be used as `add claim -c_id C101 -p_id 101 -amt 1000 -date 2025-10-01 -desc Car Accident` or as `add claim -c_id C101 -p_id 101 -amt 1000 -date 2025-10-01`.
+    > :bulb: Make sure client C101 and policy 101 already exist before executing this command.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `-n NAME -c_id CLIENT_ID`, `-c_id CLIENT_ID -n NAME` is also acceptable.
+
+* Note that for edit commands (`edit`, `edit policy type`, `edit policy`, `edit claim`), IDs are not meant to be edited,
+as they are unique identifiers. Provide IDs to identify the record to be edited, and provide new values for other fields to update them.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines
 as space characters surrounding line-breaks may be omitted when copied over to the application.
@@ -251,36 +255,38 @@ before adding a policy.
 ### Adding a claim: `add claim`
 <small>[(back to Contents)](#table-of-contents)</small>
 
-Adds a new claim record to an existing policy for a specific client. Use this command to log claims made by clients
-against their policies, including the amount and date.
+Adds a new claim record to an existing policy for a specific client. 
+
+When one of your clients files a claim against their policy, use this command to log the claim details
+(amount, date, and optional description) under the appropriate policy in their client record.
+
+Format:
+`add claim -c_id CLIENT_ID -p_id POLICY_ID -amt CLAIM_AMOUNT -date CLAIM_DATE [-desc DESCRIPTION]`
 
 <div markdown="span" class="alert alert-warning">
 <span style="color:orange">⚠️ **Warnings:**</span>
-Ensure that the client and policy already exist in InsuraBook before adding a claim.
+Ensure that the client and policy already exist in InsuraBook before adding a claim. Also, claim date must not be
+later than the policy's expiry date.
 </div>
 
 Format:
 `add claim -c_id CLIENT_ID -p_id POLICY_ID -amt CLAIM_AMOUNT -date CLAIM_DATE [-desc DESCRIPTION]`
 
 Parameters:
-* Client ID: Must be of an existing client.
-* Policy ID: Must be of an existing policy.
-* Claim Amount: Must be a positive number, with up to two decimal places.
-* Claim Date: In the format "YYYY-MM-DD".
-* Description: Can take any values.
+* Client ID: ID of an existing client. Only alphanumeric characters.
+* Policy ID: ID of an existing policy under the specified client. Only alphanumeric characters.
+* Claim Amount: Amount claimed by client in Singapore dollar. Must be a positive number, with up to two decimal places.
+* Claim Date: Date on which the claim is made in the format "YYYY-MM-DD".
+* Description: A message describing the claim.
 
 Examples:
 * To add a claim with no description:
     ```
     add claim -c_id 123 -p_id 101 -amt 1000 -date 2025-12-01
     ```
-    This adds a claim with amount $1000 on date 2025-12-01 to policy P101 for client C101.
-
-<p align="center">
-    <img alt="img.png" height="300" src="images/addClaimToPolicy.png" width="500"/>
-</p>
-
-* To view the newly added claim:
+    This adds a claim with amount $1000 on date 2025-12-01 to policy 101 for client 123.
+    
+    To view the newly added claim:
     ```
     view -c_id 123
     ```
@@ -292,11 +298,11 @@ Examples:
 
 * To add a claim with a description:
     ```
-    add claim -c_id C101 -p_id P101 -amt 2000 -date 2025-11-01 -desc Car accident
+    add claim -c_id 123 -p_id 101 -amt 2000 -date 2025-11-01 -desc Car accident
     ```
     This adds the same claim but includes the description "Car Accident".
 
-> :bulb: **Quick Tip:** Not sure of the policy ID or client ID? Use the `list` or `view -c_id CLIENT_ID` commands to find
+> :bulb: **Quick Tip:** Not sure of the policy ID or client ID? Use the `view -client` or `view -c_id CLIENT_ID` commands to find
 > them before adding a claim.
 
 ---
@@ -362,9 +368,6 @@ Examples:
 Updates the details of an existing policy attached to a client. Use this command if you need to correct the expiry date
 of a previously filed policy.
 
-> :bulb: **Tip:** All ID fields (CLIENT_ID, POLICY_ID) are mandatory to identify the specific policy to edit,
-> so they are not subject to change. You must provide at least one of the optional fields (-exp) to make an edit.
-
 Format:
 `edit policy -c_id CLIENT_ID -p_id POLICY_ID [-exp EXPIRY_DATE]`
 
@@ -379,12 +382,10 @@ under client `C101`.
 ### Editing a claim: `edit claim`
 <small>[(back to Contents)](#table-of-contents)</small>
 
-Updates the details of an existing claim. Use this command if you need to correct the amount, date,
-or description of a previously filed claim.
+Updates the details of an existing claim. 
 
-> :bulb: **Tip:** All ID fields (CLIENT_ID, POLICY_ID, CLAIM_ID) are mandatory to identify the specific claim to edit,
-> so they are not subject to change. You must provide at least one of the optional fields (-amt, -date -desc) to make
-> an edit.
+Made a typo? Or maybe the claim's details changed? No worries, as you can easily update the claim's amount, date, or
+description using this command on any existing claim.
 
 Format:
 `edit claim -c_id CLIENT_ID -p_id POLICY_ID -cl_id CLAIM_ID [-amt CLAIM_AMOUNT] [-date CLAIM_DATE] [-desc DESCRIPTION]`
@@ -392,17 +393,23 @@ Format:
 Parameter requirements are identical to [add claim](#adding-a-claim-add-claim).
 
 Examples:
-* `edit claim -c_id C101 -p_id P101 -cl_id CL001 -amt 1500` edits **only** the claim amount to `$1500` for claim
-`CL001`.
-* `edit claim -c_id C101 -p_id P101 -cl_id CL001 -date 2025-10-05 -desc Emergency surgery` edits the claim date to
-`2025-10-05` and its description to `"Emergency surgery"` for claim `CL001`.
+* To edit **only** the amount of a claim:
+    ```
+    edit claim -c_id C101 -p_id P101 -cl_id CL001 -amt 1500
+    ```
+  This updates the amount to $1500 for claim CL001.
+* To edit **multiple fields** of a claim:
+    ```
+    edit claim -c_id C101 -p_id P101 -cl_id CL001 -date 2025-10-05 -desc Emergency surgery
+    ```
+  This updates the date to 2025-10-05 and its description to "Emergency surgery" for claim CL001.
 
 ---
 
 ### Locating clients: `find`
 <small>[(back to Contents)](#table-of-contents)</small>
 
-Finds clients in InsuraBook by searching for keywords related to their Name or Client ID.
+Finds clients in InsuraBook by searching for keywords related to their `Name` or `Client ID`.
 
 The command's behavior changes depending on the flag you use ([`-n` for Name](#searching-by-clients-name--n),
 [`-c_id` for Client ID](#searching-by-clients-id--c_id)).
@@ -426,17 +433,15 @@ Examples:
   * **Result**: Returns clients named `John` and `John Doe`.
 
 <p align="center">
-    <img alt="img.png" height="300" src="images/findJohn.png" width="500"/>
+    <img alt="img.png" height="400" src="images/findJohn.png" width="500"/>
 </p>
 
 * `find -n alex YU`
   * **Result**: Returns clients named `Alex Yeoh` (who matched `alex`), and `Bernice Yu` (who matched `YU`).
 
 <p align="center">
-    <img alt="img.png" height="300" src="images/findAlexYu.png" width="500"/>
+    <img alt="img.png" height="400" src="images/findAlexYu.png" width="500"/>
 </p>
-
----
 
 #### Searching by client's ID `-c_id`:
 
@@ -445,7 +450,7 @@ Searches for clients whose CLIENT_IDs match the specified IDs.
 Format: `find -c_id CLIENT_IDs [MORE_CLIENT_IDs]`
 
 Rules:
-* **OR Search**: You may search for more than one client ID per find command. (e.g. searching for client id `123` `345`
+* **OR Search**: Persons matching at least one ID will be returned. (e.g. searching for client id `123` `345`
 will return 2 clients: client A with client ID `123` and client B with client ID `345`)
 * **Case-Insensitive**: Client IDs are alphanumerical and the search is not case-sensitive. (e.g., c012 will match C012).
 * **Full IDs Only**: The search matches complete IDs. (e.g. `101` will not match `C101`)
@@ -456,14 +461,14 @@ Examples:
   * **Result**: Returns client with client ID `1`.
 
 <p align="center">
-    <img alt="img.png" height="300" src="images/find1.png" width="500"/>
+    <img alt="img.png" height="400" src="images/find1.png" width="500"/>
 </p>
 
 * `find -c_id 2 123`
   * **Result**: Returns clients with client IDs `2` and `123`.
 
 <p align="center">
-    <img alt="img.png" height="300" src="images/find2And123.png" width="500"/>
+    <img alt="img.png" height="400" src="images/find2And123.png" width="500"/>
 </p>
 
 ---
@@ -546,7 +551,7 @@ Format:
 
 Parameter requirements are identical to [add claim](#adding-a-claim-add-claim).
 
-> :bulb: **Tip:** Description is an optional field. It is just for your reference and will not be used to identify the
+> :bulb: **Tip:** Description is an optional field. It is just for user's reference and will not be used to identify the
 > claim to delete.
 
 Example: Let's say you need to delete claim `CL003` from policy `P101` for client `C101`.
@@ -555,8 +560,7 @@ Example: Let's say you need to delete claim `CL003` from policy `P101` for clien
     ```
     view -c_id C101
     ```
-    This command will list all policies and their claims for client `C101`, allowing you to confirm that `P101` and
-`CL003` are the correct IDs.
+    This command will list all policies and their claims for client `C101`, allowing you to confirm that `P101` exists in client's portfolio and that `CL003` is indeed a claim under that policy.
 
 2. **Then, execute the delete command:**
     Once you've confirmed the IDs, use the following command to delete the claim:
@@ -653,7 +657,7 @@ Format: `exit`
 ### Startup Summary & Alerts
 <small>[(back to Contents)](#table-of-contents)</small>
 
-To help you stay on top of your client relationships and urgent tasks, InsuraBook automatically displays
+To help you stay on top of your client relationships, InsuraBook automatically displays
 a summary of key alerts every time you launch the application.
 
 This summary includes:
@@ -661,7 +665,7 @@ This summary includes:
 🎂 **Today's Client Birthdays**
 
 This list shows all clients who have their birthdays today.
-* **Value:** Helps you remember to send birthday wishes, strengthening client relationships.
+* **Value:** Helps user remember to send birthday wishes, strengthening client relationships!
 
 <p align="center">
     <img alt="img.png" height="400" src="images/birthday.png" width="500"/>
@@ -711,11 +715,6 @@ You are advised to perform your own backup before editing. Certain edits can cau
 **A**: Yes. Clients are identified by their unique CLIENT_ID, so you can have multiple clients with the same name. The
 client ID must be unique.
 
-**Q**: Upon adding a claim to a client, why can't I see any visual changes?<br>
-**A**: After adding a claim, you will need to run another command (`view -c_id CLIENT_ID`) to view the updated list of
-policies and claims.
-
-
 ---
 
 ## Known issues
@@ -730,12 +729,7 @@ off-screen.
 
    **Fix:** Restore the minimized window manually.
 
-3. **Claim's commands not reflected immediately:** After adding/editing/deleting a claim, the claim list may not
-   update until another command is run.
-
-   **Fix:** Run any command (e.g., view -c_id CLIENT_ID) to refresh the display.
-
-4. **PDF Viewing issues:** PDF versions of this document may introduce formatting issues when viewing long descriptions.
+3**PDF Viewing issues:** PDF versions of this document may introduce formatting issues when viewing long descriptions.
 
    **Fix:** Visit out webpage for the properly formatted version at [User Guide](https://ay2526s1-cs2103t-f15b-1.github.io/tp/UserGuide.html).
 
