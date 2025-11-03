@@ -2,6 +2,7 @@ package insurabook.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -194,7 +195,24 @@ public class InsuraBook implements ReadOnlyInsuraBook {
      * @throws PolicyTypeMissingException if no PolicyTypes found
      */
     public List<Integer> deletePolicyType(PolicyTypeName name, PolicyTypeId id) throws PolicyTypeMissingException {
-        return policyTypes.remove(name, id);
+        List<Integer> indices = policyTypes.remove(name, id);
+
+        List<Policy> policiesToRemove = new ArrayList<>(); // policies matching id to remove
+        if (indices == null) {
+            // successful deletion, delete policy type from all clients policies
+            for (Policy policy : clientPolicies) {
+                if (policy.getPolicyTypeId().equals(id)) {
+                    // delete this policy
+                    policiesToRemove.add(policy);
+                }
+            }
+        }
+
+        for (Policy toRemove : policiesToRemove) {
+            this.removePolicy(toRemove.getClientId(), toRemove.getPolicyId());
+        }
+
+        return indices;
     }
 
     /**

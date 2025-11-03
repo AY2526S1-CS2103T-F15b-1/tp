@@ -56,6 +56,7 @@ public class UniquePolicyTypeList implements Iterable<PolicyType> {
      * @throws PolicyTypeDuplicateException if policy already exists in list
      */
     public void add(PolicyType toAdd) throws PolicyTypeDuplicateException {
+        requireNonNull(toAdd);
         checkDuplicate(toAdd);
         internalList.add(toAdd);
     }
@@ -174,6 +175,7 @@ public class UniquePolicyTypeList implements Iterable<PolicyType> {
      * @return list of indices matching selected PolicyTypes
      */
     public List<Integer> findMatching(PolicyTypeName name, PolicyTypeId id) {
+        requireAllNonNull(name, id);
         List<Integer> result = new ArrayList<>();
         for (int i = 0; i < internalList.size(); i++) {
             PolicyType pt = internalList.get(i);
@@ -189,6 +191,7 @@ public class UniquePolicyTypeList implements Iterable<PolicyType> {
      * Returns true if given PolicyTypeName already exists in list.
      */
     public boolean containsName(PolicyTypeName name) {
+        requireNonNull(name);
         for (PolicyType pt: this) {
             if (pt.getPtName().equals(name)) {
                 return true;
@@ -201,6 +204,7 @@ public class UniquePolicyTypeList implements Iterable<PolicyType> {
      * Returns true if given PolicyTypeId already exists in list.
      */
     public boolean containsId(PolicyTypeId id) {
+        requireNonNull(id);
         for (PolicyType pt: this) {
             if (pt.getPtId().equals(id)) {
                 return true;
@@ -285,6 +289,7 @@ public class UniquePolicyTypeList implements Iterable<PolicyType> {
      * @throws PolicyTypeMissingException if no such policy could be found
      */
     public PolicyType getPolicyType(PolicyTypeName policyTypeName) {
+        requireNonNull(policyTypeName);
         return internalList.stream()
                 .filter(policyType -> policyType.getPtName().equals(policyTypeName))
                 .findFirst()
@@ -297,6 +302,7 @@ public class UniquePolicyTypeList implements Iterable<PolicyType> {
      * @throws PolicyTypeMissingException if no such policy could be found
      */
     public PolicyType getPolicyType(PolicyTypeId policyTypeId) {
+        requireNonNull(policyTypeId);
         return internalList.stream()
                 .filter(policyType -> policyType.getPtId().equals(policyTypeId))
                 .findFirst()
