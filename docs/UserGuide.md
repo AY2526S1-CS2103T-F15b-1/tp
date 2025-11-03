@@ -334,7 +334,7 @@ Format:
 - `edit -c_id CLIENT_ID -email NEW_EMAIL`
 - `edit -c_id CLIENT_ID -b NEW_BIRTHDAY`
 
-You can edit multiple tags in a single command, such as:
+Users can edit multiple tags in a single command, such as:
 `edit -c_id CLIENT_ID -n NEW_NAME -email NEW_EMAIL`
 
 Editing multiple details:
