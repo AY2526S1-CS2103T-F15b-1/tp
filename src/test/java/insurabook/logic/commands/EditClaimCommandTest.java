@@ -40,7 +40,7 @@ public class EditClaimCommandTest {
             new PolicyId("P12345"),
             validClient.getClientId(),
             validPolicyType.getPtId(),
-            new InsuraDate("2025-12-31"));
+            new InsuraDate("2026-12-31"));
     private final Claim validClaim = new ClaimBuilder().withClientId(validClient.getClientId().toString())
             .withPolicyId(validPolicy.getPolicyId().toString()).build();
     private final Model model = new ModelManager(getTypicalInsuraBook(), new UserPrefs());

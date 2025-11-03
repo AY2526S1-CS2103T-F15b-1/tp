@@ -265,7 +265,9 @@ public class InsuraBook implements ReadOnlyInsuraBook {
         Client client = this.getClient(clientId);
         ClaimId claimId = new ClaimId(claimIdCounter.getNextClaimId());
         Claim claim = new Claim(claimId, clientId, policyId, claimAmount, claimDate, claimDescription);
+        Policy policyEdited = client.getPortfolio().getPolicies().getPolicy(policyId);
         client.addClaim(claim);
+        this.clientPolicies.refreshPolicy(policyEdited);
         return claim;
     }
 
@@ -275,7 +277,12 @@ public class InsuraBook implements ReadOnlyInsuraBook {
      */
     public Claim removeClaim(ClientId clientId, PolicyId policyId, ClaimId claimId) {
         Client client = this.getClient(clientId);
-        return client.removeClaim(policyId, claimId);
+        Claim claimRemoved = client.removeClaim(policyId, claimId);
+        Policy policyEdited = client.getPortfolio().getPolicies().getPolicy(policyId);
+        if (claimRemoved != null) {
+            this.clientPolicies.refreshPolicy(policyEdited);
+        }
+        return claimRemoved;
     }
 
     /**
@@ -286,7 +293,9 @@ public class InsuraBook implements ReadOnlyInsuraBook {
     public void setClaim(Claim target, Claim editedClaim) {
         requireNonNull(editedClaim);
         Client client = this.getClient(target.getClientId());
+        Policy policyEdited = client.getPortfolio().getPolicies().getPolicy(target.getPolicyId());
         client.setClaim(target, editedClaim);
+        this.clientPolicies.refreshPolicy(policyEdited);
     }
 
     /**
