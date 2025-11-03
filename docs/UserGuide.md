@@ -7,7 +7,8 @@ InsuraBook is a **desktop app for insurance agents managing clients' contacts**.
 We assume you type really fast, but still want a nice display to see your data. No prior programming
 knowledge is needed, although you ought to be comfortable installing Java and running a `.jar` file from
 a terminal.
---------------------------------------------------------------------------------------------------------------------
+
+---
 
 # Table of Contents
 - [Quick Start](#quick-start)
@@ -39,7 +40,7 @@ a terminal.
 - [FAQ](#faq)
 - [Known issues](#known-issues)
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## Quick start
 
@@ -77,10 +78,10 @@ Doe` with client id `123`, birthday on `01 Jan 2001`, phone number `90000001` an
 ## Constraints
 
 * An Identifier is treated as unique.<br>
-    1. two clients cannot have the same `CLIENT_ID`. If they have the same name, they are treated as different clients.
-    2. two policy types cannot have the same `POLICY_TYPE_ID`.
-    3. two policies cannot have the same `POLICY_ID` under the same client.
-    4. two claims cannot have the same `CLAIM_ID` under the same policy of the same client.
+    1. Two clients cannot have the same `CLIENT_ID`. If they have the same name, they are treated as different clients.
+    2. Two policy types cannot have the same `POLICY_TYPE_ID`.
+    3. Two policies cannot have the same `POLICY_ID` under the same client.
+    4. Two claims cannot have the same `CLAIM_ID` under the same policy of the same client.
 
 ## Features
 
@@ -370,11 +371,8 @@ Format:
 Parameter requirements are identical to [add policy](#adding-a-policy-to-client-add-policy).
 
 Examples:
-* To edit the expiry date of a policy:
-    ```
-    edit policy -c_id C101 -p_id P101 -exp 2026-12-31
-    ```
-  This updates the expiry date to Dec 31, 2026 for policy P101 under client C101.
+* `edit policy -c_id C101 -p_id P101 -exp 2026-12-31` edits **only** the expiry date to `2026-12-31` for policy `P101`
+under client `C101`.
 
 ---
 
@@ -394,16 +392,10 @@ Format:
 Parameter requirements are identical to [add claim](#adding-a-claim-add-claim).
 
 Examples:
-* To edit **only** the amount of a claim:
-    ```
-    edit claim -c_id C101 -p_id P101 -cl_id CL001 -amt 1500
-    ```
-    This updates the amount to $1500 for claim CL001.
-* To edit **multiple fields** of a claim:
-    ```
-    edit claim -c_id C101 -p_id P101 -cl_id CL001 -date 2025-10-05 -desc Emergency surgery
-    ```
-    This updates the date to 2025-10-05 and its description to "Emergency surgery" for claim CL001.
+* `edit claim -c_id C101 -p_id P101 -cl_id CL001 -amt 1500` edits **only** the claim amount to `$1500` for claim
+`CL001`.
+* `edit claim -c_id C101 -p_id P101 -cl_id CL001 -date 2025-10-05 -desc Emergency surgery` edits the claim date to
+`2025-10-05` and its description to `"Emergency surgery"` for claim `CL001`.
 
 ---
 
