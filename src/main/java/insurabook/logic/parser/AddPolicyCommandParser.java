@@ -7,7 +7,6 @@ import static insurabook.logic.parser.CliSyntax.PREFIX_POLICY_ID;
 import static insurabook.logic.parser.CliSyntax.PREFIX_POLICY_TYPE_ID;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.stream.Stream;
 
 import insurabook.logic.commands.AddPolicyCommand;

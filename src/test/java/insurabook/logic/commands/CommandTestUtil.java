@@ -1,6 +1,18 @@
 package insurabook.logic.commands;
 
-import static insurabook.logic.parser.CliSyntax.*;
+import static insurabook.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLAIM_AMOUNT;
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLAIM_DATE;
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLAIM_ID;
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
+import static insurabook.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static insurabook.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static insurabook.logic.parser.CliSyntax.PREFIX_EXPIRY_DATE;
+import static insurabook.logic.parser.CliSyntax.PREFIX_PHONE;
+import static insurabook.logic.parser.CliSyntax.PREFIX_POLICY_ID;
+import static insurabook.logic.parser.CliSyntax.PREFIX_POLICY_TYPE_ID;
+import static insurabook.logic.parser.CliSyntax.PREFIX_TAG;
 import static insurabook.testutil.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

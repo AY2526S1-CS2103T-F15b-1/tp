@@ -2,15 +2,15 @@ package insurabook.logic.parser;
 
 import static insurabook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static insurabook.logic.commands.CommandTestUtil.CLIENT_ID_DESC_AMY;
-import static insurabook.logic.commands.CommandTestUtil.POLICY_ID_DESC_AMY;
 import static insurabook.logic.commands.CommandTestUtil.INVALID_CLIENT_ID_DESC;
 import static insurabook.logic.commands.CommandTestUtil.INVALID_POLICY_ID_DESC;
+import static insurabook.logic.commands.CommandTestUtil.POLICY_ID_DESC_AMY;
 import static insurabook.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static insurabook.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
-import insurabook.logic.commands.DeletePolicyCommand;
 import org.junit.jupiter.api.Test;
 
+import insurabook.logic.commands.DeletePolicyCommand;
 import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.ClientId;
 import insurabook.model.policies.PolicyId;

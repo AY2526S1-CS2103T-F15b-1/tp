@@ -4,9 +4,9 @@ import static insurabook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static insurabook.logic.commands.CommandTestUtil.CLIENT_ID_DESC_AMY;
 import static insurabook.logic.commands.CommandTestUtil.EXPIRY_DATE_DESC;
 import static insurabook.logic.commands.CommandTestUtil.INVALID_CLIENT_ID_DESC;
+import static insurabook.logic.commands.CommandTestUtil.INVALID_EXPIRY_DATE_DESC;
 import static insurabook.logic.commands.CommandTestUtil.INVALID_POLICY_ID_DESC;
 import static insurabook.logic.commands.CommandTestUtil.POLICY_ID_DESC_AMY;
-import static insurabook.logic.commands.CommandTestUtil.INVALID_EXPIRY_DATE_DESC;
 import static insurabook.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static insurabook.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
