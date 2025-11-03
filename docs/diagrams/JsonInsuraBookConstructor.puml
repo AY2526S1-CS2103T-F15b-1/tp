@@ -46,23 +46,5 @@ deactivate JsonAdaptedClient
 
 JsonSerializableInsuraBook --> JsonInsuraBookStorage
 deactivate JsonSerializableInsuraBook
-/'
-JsonInsuraBookStorage -> JsonUtil : saveJsonFile(serializableInsuraBook)
-activate JsonUtil
-
-JsonUtil -> JsonUtil : write to file
-JsonUtil --> JsonInsuraBookStorage
-deactivate JsonUtil
-
-JsonInsuraBookStorage --> StorageManager
-deactivate JsonInsuraBookStorage
-
-
-StorageManager --> LogicManager
-deactivate StorageManager
-
-[<--LogicManager
-deactivate LogicManager
-'/
 
 @enduml
