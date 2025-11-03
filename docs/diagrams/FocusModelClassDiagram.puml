@@ -1,0 +1,27 @@
+@startuml
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor MODEL_COLOR
+skinparam classBackgroundColor MODEL_COLOR
+
+Package Model as ModelPackage <<Rectangle>>{
+Class Client
+Class ClientId
+Class Portfolio
+Class Policy
+Class PolicyId
+Class Claim
+Class ClaimId
+}
+
+Client *--> "1" ClientId
+Client - "*" Policy
+(Client, Policy) .. Portfolio
+
+Policy *--> "1" PolicyId
+Policy *--> "*" Claim
+
+Claim *--> "1" ClaimId
+Claim *--> "1" ClientId
+Claim *--> "1" PolicyId
+@enduml
