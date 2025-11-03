@@ -251,7 +251,7 @@ Examples:
     ```
     add claim -c_id 123 -p_id 101 -amt 1000 -date 2025-12-01
     ```
-    This adds a claim with amount $1000 on date 2025-10-01 to policy P101 for client C101.
+    This adds a claim with amount $1000 on date 2025-12-01 to policy P101 for client C101.
 
 <p align="center">
     <img alt="img.png" height="300" src="images/addClaimToPolicy.png" width="500"/>
