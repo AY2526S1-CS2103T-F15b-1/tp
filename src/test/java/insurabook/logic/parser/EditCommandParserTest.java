@@ -1,11 +1,11 @@
 package insurabook.logic.parser;
 
 import static insurabook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static insurabook.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
-import static insurabook.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
+import static insurabook.logic.commands.CommandTestUtil.BIRTHDAY_DESC_AMY;
+import static insurabook.logic.commands.CommandTestUtil.BIRTHDAY_DESC_BOB;
 import static insurabook.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static insurabook.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
-import static insurabook.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
+import static insurabook.logic.commands.CommandTestUtil.INVALID_BIRTHDAY_DESC;
 import static insurabook.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static insurabook.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static insurabook.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
@@ -14,10 +14,11 @@ import static insurabook.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static insurabook.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
 import static insurabook.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static insurabook.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static insurabook.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
+import static insurabook.logic.commands.CommandTestUtil.VALID_BIRTHDAY_AMY;
 import static insurabook.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static insurabook.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
-import static insurabook.logic.parser.CliSyntax.PREFIX_ADDRESS;
+//import static insurabook.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static insurabook.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static insurabook.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static insurabook.logic.parser.CliSyntax.PREFIX_PHONE;
 import static insurabook.logic.parser.CliSyntax.PREFIX_TAG;
@@ -27,7 +28,8 @@ import org.junit.jupiter.api.Test;
 
 import insurabook.logic.Messages;
 import insurabook.logic.commands.EditCommand;
-import insurabook.model.client.Address;
+import insurabook.model.claims.InsuraDate;
+//import insurabook.model.client.Address;
 import insurabook.model.client.Email;
 import insurabook.model.client.Name;
 import insurabook.model.client.Phone;
@@ -78,7 +80,8 @@ public class EditCommandParserTest {
         assertParseFailure(parser, " -c_id 1 " + INVALID_NAME_DESC, Name.MESSAGE_CONSTRAINTS); // invalid name
         assertParseFailure(parser, " -c_id 1 " + INVALID_PHONE_DESC, Phone.MESSAGE_CONSTRAINTS); // invalid phone
         assertParseFailure(parser, " -c_id 1 " + INVALID_EMAIL_DESC, Email.MESSAGE_CONSTRAINTS); // invalid email
-        assertParseFailure(parser, " -c_id 1 " + INVALID_ADDRESS_DESC, Address.MESSAGE_CONSTRAINTS); // invalid address
+        assertParseFailure(parser, " -c_id 1 " + INVALID_BIRTHDAY_DESC, InsuraDate.MESSAGE_CONSTRAINTS);
+        // invalid birthday
         assertParseFailure(parser, " -c_id 1 " + INVALID_TAG_DESC, Tag.MESSAGE_CONSTRAINTS); // invalid tag
 
         // invalid phone followed by valid email
@@ -95,7 +98,7 @@ public class EditCommandParserTest {
 
         // multiple invalid values, but only the first invalid value is captured
         assertParseFailure(parser, " -c_id 1 " + INVALID_NAME_DESC + INVALID_EMAIL_DESC
-                        + VALID_ADDRESS_AMY + VALID_PHONE_AMY,
+                        + VALID_BIRTHDAY_AMY + VALID_PHONE_AMY,
                 Name.MESSAGE_CONSTRAINTS);
     }
 
@@ -176,19 +179,19 @@ public class EditCommandParserTest {
         assertParseFailure(parser, userInput, Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE));
 
         // mulltiple valid fields repeated
-        userInput = clientIdInput + PHONE_DESC_AMY + ADDRESS_DESC_AMY + EMAIL_DESC_AMY
-                + TAG_DESC_FRIEND + PHONE_DESC_AMY + ADDRESS_DESC_AMY + EMAIL_DESC_AMY + TAG_DESC_FRIEND
-                + PHONE_DESC_BOB + ADDRESS_DESC_BOB + EMAIL_DESC_BOB + TAG_DESC_HUSBAND;
+        userInput = clientIdInput + PHONE_DESC_AMY + BIRTHDAY_DESC_AMY + EMAIL_DESC_AMY
+                + TAG_DESC_FRIEND + PHONE_DESC_AMY + BIRTHDAY_DESC_AMY + EMAIL_DESC_AMY + TAG_DESC_FRIEND
+                + PHONE_DESC_BOB + BIRTHDAY_DESC_BOB + EMAIL_DESC_BOB + TAG_DESC_HUSBAND;
 
         assertParseFailure(parser, userInput,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS));
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL, PREFIX_BIRTHDAY));
 
         // multiple invalid values
-        userInput = clientIdInput + INVALID_PHONE_DESC + INVALID_ADDRESS_DESC + INVALID_EMAIL_DESC
-                + INVALID_PHONE_DESC + INVALID_ADDRESS_DESC + INVALID_EMAIL_DESC;
+        userInput = clientIdInput + INVALID_PHONE_DESC + INVALID_BIRTHDAY_DESC + INVALID_EMAIL_DESC
+                + INVALID_PHONE_DESC + INVALID_BIRTHDAY_DESC + INVALID_EMAIL_DESC;
 
         assertParseFailure(parser, userInput,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS));
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL, PREFIX_BIRTHDAY));
     }
 
     //@Test

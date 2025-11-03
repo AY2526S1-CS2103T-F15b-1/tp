@@ -2,10 +2,11 @@ package insurabook.logic.parser;
 
 import static insurabook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 //import static insurabook.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
-import static insurabook.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
+//import static insurabook.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
 //import static insurabook.logic.commands.CommandTestUtil.CLIENT_ID_DESC_AMY;
 //import static insurabook.logic.commands.CommandTestUtil.CLIENT_ID_DESC_BOB;
 //import static insurabook.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
+import static insurabook.logic.commands.CommandTestUtil.BIRTHDAY_DESC_BOB;
 import static insurabook.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 //import static insurabook.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 //import static insurabook.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
@@ -20,7 +21,8 @@ import static insurabook.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
 //import static insurabook.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
 //import static insurabook.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 //import static insurabook.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static insurabook.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+//import static insurabook.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static insurabook.logic.commands.CommandTestUtil.VALID_BIRTHDAY_BOB;
 import static insurabook.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static insurabook.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static insurabook.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
@@ -146,23 +148,23 @@ public class AddClientCommandParserTest {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddClientCommand.MESSAGE_USAGE);
 
         // missing name prefix
-        assertParseFailure(parser, VALID_NAME_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB,
+        assertParseFailure(parser, VALID_NAME_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + BIRTHDAY_DESC_BOB,
                 expectedMessage);
 
         // missing phone prefix
-        assertParseFailure(parser, NAME_DESC_BOB + VALID_PHONE_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB,
+        assertParseFailure(parser, NAME_DESC_BOB + VALID_PHONE_BOB + EMAIL_DESC_BOB + BIRTHDAY_DESC_BOB,
                 expectedMessage);
 
         // missing email prefix
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + VALID_EMAIL_BOB + ADDRESS_DESC_BOB,
+        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + VALID_EMAIL_BOB + BIRTHDAY_DESC_BOB,
                 expectedMessage);
 
-        // missing address prefix
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + VALID_ADDRESS_BOB,
+        // missing birthday prefix
+        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + VALID_BIRTHDAY_BOB,
                 expectedMessage);
 
         // all prefixes missing
-        assertParseFailure(parser, VALID_NAME_BOB + VALID_PHONE_BOB + VALID_EMAIL_BOB + VALID_ADDRESS_BOB,
+        assertParseFailure(parser, VALID_NAME_BOB + VALID_PHONE_BOB + VALID_EMAIL_BOB + VALID_BIRTHDAY_BOB,
                 expectedMessage);
     }
 
