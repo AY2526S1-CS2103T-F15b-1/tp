@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import insurabook.logic.Messages;
+import insurabook.logic.commands.EditPolicyCommand.EditPolicyDescriptor;
 import insurabook.logic.commands.exceptions.CommandException;
 import insurabook.model.Model;
 import insurabook.model.ModelManager;
@@ -20,37 +21,40 @@ import insurabook.model.policies.exceptions.PolicyNotFoundException;
 import insurabook.model.policytype.PolicyTypeId;
 import insurabook.testutil.PersonBuilder;
 
-public class DeletePolicyCommandTest {
+public class EditPolicyCommandTest {
     private final Model model = new ModelManager(getTypicalPtInsuraBook(), new UserPrefs());
     private final Client validClient = new PersonBuilder().withName("Kevin").build();
     private final ClientId validClientId = new ClientId("1");
     private final PolicyId validPolicyId = new PolicyId("001");
 
     @Test
-    public void constructor_nullClientId_throwsNullPointerException() {
-        // Test null client id
-        assertThrows(NullPointerException.class, () -> new DeletePolicyCommand(null, validPolicyId));
-
-        // Test null policy id
-        assertThrows(NullPointerException.class, () -> new DeletePolicyCommand(validClientId, null));
-    }
-
-    @Test
-    public void execute_found_deleteSuccessful() throws CommandException {
+    public void execute_found_editSuccessful() throws CommandException {
         model.addClient(validClient);
         model.addPolicy(validPolicyId, validClient.getClientId(),
                 new PolicyTypeId("PRU001"), new InsuraDate("2025-12-31"));
-        Policy toRemove = new Policy(validPolicyId, validClientId,
-                new PolicyTypeId("PRU001"), new InsuraDate("2025-12-31"));
-        CommandResult commandResult = new DeletePolicyCommand(validClientId, validPolicyId).execute(model);
-        assertEquals(String.format(DeletePolicyCommand.MESSAGE_SUCCESS, Messages.format(toRemove, 1)),
+        EditPolicyDescriptor editDescriptor = new EditPolicyDescriptor();
+        editDescriptor.setExpiryDate(new InsuraDate("2026-12-31"));
+        CommandResult commandResult = new EditPolicyCommand(validClientId, validPolicyId, editDescriptor).execute(model);
+        Policy editedPolicy = new Policy(validPolicyId, validClientId,
+                new PolicyTypeId("PRU001"), new InsuraDate("2026-12-31"));
+        assertEquals(String.format(EditPolicyCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPolicy, 0)),
                 commandResult.getFeedbackToUser());
     }
 
     @Test
-    public void execute_notFound_throwsCommandException() {
+    public void execute_policyNotFound_throwsCommandException() {
         model.addClient(validClient);
-        DeletePolicyCommand command = new DeletePolicyCommand(validClientId, validPolicyId);
+        EditPolicyDescriptor editDescriptor = new EditPolicyDescriptor();
+        editDescriptor.setExpiryDate(new InsuraDate("2026-12-31"));
+        EditPolicyCommand command = new EditPolicyCommand(validClientId, validPolicyId, editDescriptor);
         assertThrows(PolicyNotFoundException.class, () -> command.execute(model));
+    }
+
+    @Test
+    public void execute_clientNotFound_throwsCommandException() {
+        EditPolicyDescriptor editDescriptor = new EditPolicyDescriptor();
+        editDescriptor.setExpiryDate(new InsuraDate("2026-12-31"));
+        EditPolicyCommand command = new EditPolicyCommand(validClientId, validPolicyId, editDescriptor);
+        assertThrows(CommandException.class, () -> command.execute(model));
     }
 }
