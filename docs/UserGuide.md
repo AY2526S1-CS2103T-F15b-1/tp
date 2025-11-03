@@ -623,6 +623,19 @@ Changes are:
 
 <span style="color:red">⚠ InsuraBook cannot undo changes from **previous saves**.</span>
 
+Example:
+* State after clearing InsuraBook with `clear`.
+
+<p align="center">
+    <img alt="Image: Restored InsuraBook." height="300" src="images/priorToUndo.png" width="500"/>
+</p>
+
+* State after undoing the clear with `undo`.
+
+<p align="center">
+    <img alt="Image: Restored InsuraBook." height="300" src="images/afterUndo.png" width="500"/>
+</p>
+
 ---
 
 ### Clearing all entries: `clear`
