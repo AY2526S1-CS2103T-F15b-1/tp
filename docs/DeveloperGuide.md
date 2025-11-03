@@ -705,6 +705,7 @@ testers are expected to do more *exploratory* testing.
 ### Deleting a client
 > **Pre-requisite:** At least one client exists in the client list. In this example, we assume client C101 exists while
 > client C999 does not exist.
+
 1. Deleting an existing client
     * Test cases: `delete -c_id C101` (assuming client with c_id C101 exists)
     * **Expected:** Client with c_id C101 is removed from the client list. Success message is shown in the result display.
@@ -734,6 +735,7 @@ testers are expected to do more *exploratory* testing.
 
 ### Finding a client
 > **Warnings:** Keywords must be complete words. Partial words will not match. For detailed matching rules, refer to the user guide.
+
 1. Finding clients by name keyword
     * Test cases: `find -n John`
     * **Expected:** All clients whose names contain the keyword "John" (case-insensitive) are shown in the client list.
