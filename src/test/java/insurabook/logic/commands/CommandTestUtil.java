@@ -1,10 +1,15 @@
 package insurabook.logic.commands;
 
 import static insurabook.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLAIM_AMOUNT;
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLAIM_DATE;
+import static insurabook.logic.parser.CliSyntax.PREFIX_CLAIM_ID;
 import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
 import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
+import static insurabook.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static insurabook.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static insurabook.logic.parser.CliSyntax.PREFIX_PHONE;
+import static insurabook.logic.parser.CliSyntax.PREFIX_POLICY_ID;
 import static insurabook.logic.parser.CliSyntax.PREFIX_TAG;
 import static insurabook.testutil.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -39,6 +44,13 @@ public class CommandTestUtil {
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_CLIENT_ID_AMY = "111";
     public static final String VALID_CLIENT_ID_BOB = "222";
+    public static final String VALID_POLICY_ID_AMY = "P101";
+    public static final String VALID_POLICY_ID_BOB = "P102";
+    public static final String VALID_CLAIM_ID_AMY = "CL001";
+    public static final String VALID_CLAIM_ID_BOB = "CL002";
+    public static final String VALID_CLAIM_AMOUNT = "1000";
+    public static final String VALID_CLAIM_DATE = "2025-10-10";
+    public static final String VALID_CLAIM_MESSAGE = "Test message";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_CLIENT_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_CLIENT_NAME + VALID_NAME_BOB;
@@ -52,12 +64,23 @@ public class CommandTestUtil {
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
     public static final String CLIENT_ID_DESC_AMY = " " + PREFIX_CLIENT_ID + VALID_CLIENT_ID_AMY;
     public static final String CLIENT_ID_DESC_BOB = " " + PREFIX_CLIENT_ID + VALID_CLIENT_ID_BOB;
+    public static final String POLICY_ID_DESC_AMY = " " + PREFIX_POLICY_ID + VALID_POLICY_ID_AMY;
+    public static final String POLICY_ID_DESC_BOB = " " + PREFIX_POLICY_ID + VALID_POLICY_ID_BOB;
+    public static final String CLAIM_ID_DESC_AMY = " " + PREFIX_CLAIM_ID + VALID_CLAIM_ID_AMY;
+    public static final String CLAIM_ID_DESC_BOB = " " + PREFIX_CLAIM_ID + VALID_CLAIM_ID_BOB;
+    public static final String CLAIM_AMOUNT_DESC = " " + PREFIX_CLAIM_AMOUNT + VALID_CLAIM_AMOUNT;
+    public static final String CLAIM_DATE_DESC = " " + PREFIX_CLAIM_DATE + VALID_CLAIM_DATE;
+    public static final String CLAIM_MESSAGE_DESC = " " + PREFIX_DESCRIPTION + VALID_CLAIM_MESSAGE;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_CLIENT_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_CLIENT_ID_DESC = " " + PREFIX_CLIENT_ID + "C!^@&";
+    public static final String INVALID_POLICY_ID_DESC = " " + PREFIX_POLICY_ID + "P*^^";
+    public static final String INVALID_CLAIM_AMOUNT_DESC = " " + PREFIX_CLAIM_AMOUNT + "-1";
+    public static final String INVALID_CLAIM_DATE_DESC = " " + PREFIX_CLAIM_DATE + "2025-02-30";
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
