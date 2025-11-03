@@ -4,7 +4,7 @@ title: User Guide
 ---
 
 InsuraBook is a **desktop app for insurance agents managing clients' contacts**.
-We assume you type really fast and prefer a CLI for speed, but still want a GUI to see your data. No prior programming
+We assume you type really fast, but still want a nice display to see your data. No prior programming
 knowledge is needed, although you ought to be comfortable installing Java and running a `.jar` file from
 a terminal.
 --------------------------------------------------------------------------------------------------------------------
@@ -187,10 +187,15 @@ Format:
 
 Examples:
 * `add policy type -pt_n BRUHealth -pt_id BRH001` adds a policy type named `BRUHealth` with policy type ID `BRH001`.
-To view this, use the `view -policy` command.
 
 <p align="center">
     <img alt="img.png" height="300" src="images/addPolicyType.png" width="500"/>
+</p>
+
+* To view this, use the `view -policy` command.
+
+<p align="center">
+    <img alt="img.png" height="300" src="images/addPolicyTypeView.png" width="500"/>
 </p>
 
 * `add policy type -pt_n BRUWealth -pt_id BRW001 -desc Holistic savings plan -pr 1000` adds a policy type named `BRUWealth`
@@ -208,11 +213,17 @@ Format:
 `add policy -p_id POLICY_ID -c_id CLIENT_ID -pt_id POLICY_TYPE_ID -exp EXPIRY_DATE`
 
 Examples:
-* `add policy -p_id 101 -c_id 123 -pt_id P02 -exp 2025-10-01` adds a policy with policy ID `101`, of policy type ID
-`P02`, with expiry date `2025-10-01` to the client with client ID `123`.
+* `add policy -p_id 101 -c_id 123 -pt_id P03 -exp 2025-12-01` adds a policy with policy ID `101`, of policy type ID
+`P03`, with expiry date `2025-12-01` to the client with client ID `123`.
 
 <p align="center">
     <img alt="img.png" height="300" src="images/addPolicyToClient.png" width="500"/>
+</p>
+
+* To view this, use the `view -c_id 123` command to view the newly added policy.
+
+<p align="center">
+    <img alt="img.png" height="300" src="images/addPolicyToClientView.png" width="500"/>
 </p>
 
 > :bulb: **Quick Tip:** Not sure of the policy type ID or client ID? Use the `view -client` or `view -policy` commands to
@@ -238,9 +249,24 @@ Format:
 Examples:
 * To add a claim with no description:
     ```
-    add claim -c_id C101 -p_id P101 -amt 1000 -date 2025-10-01
+    add claim -c_id 123 -p_id 101 -amt 1000 -date 2025-12-01
     ```
-    This adds a claim with amount $1000 on date 2025-10-01 to policy P101 for client C101.
+    This adds a claim with amount $1000 on date 2025-12-01 to policy P101 for client C101.
+
+<p align="center">
+    <img alt="img.png" height="300" src="images/addClaimToPolicy.png" width="500"/>
+</p>
+
+* To view the newly added claim:
+    ```
+    view -c_id 123
+    ```
+  This displays all policies and claims for client 123, including the newly added claim.
+
+<p align="center">
+    <img alt="img.png" height="300" src="images/addClaimToPolicyView.png" width="500"/>
+</p>
+
 * To add a claim with a description:
     ```
     add claim -c_id C101 -p_id P101 -amt 2000 -date 2025-11-01 -desc Car accident
@@ -358,8 +384,6 @@ Finds clients in InsuraBook by searching for keywords related to their Name or C
 
 The command's behavior changes depending on the flag you use (`-n` for Name, `-c_id` for Client ID).
 
----
-
 **Searching by client's name** `-n`:
 
 Searches for clients whose names contain at least one of the specified keywords.
@@ -376,9 +400,18 @@ Rules:
 
 Examples:
 * `find -n John`
-  * **Result**: Returns clients named `john` and `John Doe`.
+  * **Result**: Returns clients named `John` and `John Doe`.
+
+<p align="center">
+    <img alt="img.png" height="300" src="images/findJohn.png" width="500"/>
+</p>
+
 * `find -n alex YU`
   * **Result**: Returns clients named `Alex Yeoh` (who matched `alex`), and `Bernice Yu` (who matched `YU`).
+
+<p align="center">
+    <img alt="img.png" height="300" src="images/findAlexYu.png" width="500"/>
+</p>
 
 ---
 
@@ -396,10 +429,19 @@ will return 2 clients: client A with client ID `123` and client B with client ID
 * If there are no such IDs found, an empty list of clients will be shown.
 
 Examples:
-* `find -c_id c101`
-  * **Result**: Returns client with client ID `C101`.
-* `find -c_id C102 c103`
-  * **Result**: Returns clients with client IDs `C102` and `C103`.
+* `find -c_id 1`
+  * **Result**: Returns client with client ID `1`.
+
+<p align="center">
+    <img alt="img.png" height="300" src="images/find1.png" width="500"/>
+</p>
+
+* `find -c_id 2 123`
+  * **Result**: Returns clients with client IDs `2` and `123`.
+
+<p align="center">
+    <img alt="img.png" height="300" src="images/find2And123.png" width="500"/>
+</p>
 
 ---
 
@@ -414,7 +456,7 @@ Format: `delete -c_id CLIENT_ID`
 <span style="color:orange">⚠ Action removes data, but can be reversed with 'undo'.</span>
 
 Examples:
-* `delete -c_id 123` deletes the client from InsuraBook with client ID `123`.
+* `delete -c_id 7` deletes the client from InsuraBook with client ID `7`.
 
 <p align="center">
     <img alt="img.png" height="300" src="images/deleteClient.png" width="500"/>
@@ -454,8 +496,8 @@ Format:
 <span style="color:orange">⚠ Action removes data, but can be reversed with 'undo'.</span>
 
 Example:
-* `view -c_id 1` to look for client with client id `1` and all the policies the client owns, followed by
-`delete -c_id 1 -p_id 002` deletes policy with policy id 002 from the client's portfolio.
+* `view -c_id 3` to look for client with client id `3` and all the policies the client owns, followed by
+`delete policy -c_id 3 -p_id 001` deletes policy with policy id `001` from the client's portfolio.
 
 <p align="center">
     <img alt="img.png" height="300" src="images/deletePolicyFromClient.png" width="500"/>
@@ -518,7 +560,7 @@ Examples:
     <img alt="img.png" height="300" src="images/policyView.png" width="500"/>
 </p>
 
-* `view -c_id 123` changes the view to list out all policies bought by client with client ID `1`.
+* `view -c_id 123` changes the view to list out all policies bought by client with client ID `123`.
 
 <p align="center">
     <img alt="img.png" height="300" src="images/clientsPolicyView.png" width="500"/>

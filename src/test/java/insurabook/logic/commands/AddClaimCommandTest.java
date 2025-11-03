@@ -1,11 +1,8 @@
 package insurabook.logic.commands;
 
 import static insurabook.testutil.Assert.assertThrows;
-import static insurabook.testutil.TypicalClients.ALICE;
-import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -17,7 +14,6 @@ import org.junit.jupiter.api.Test;
 
 import insurabook.commons.core.GuiSettings;
 import insurabook.logic.Messages;
-import insurabook.logic.commands.exceptions.CommandException;
 import insurabook.model.InsuraBook;
 import insurabook.model.Model;
 import insurabook.model.ReadOnlyInsuraBook;
@@ -29,73 +25,121 @@ import insurabook.model.claims.ClaimMessage;
 import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
+import insurabook.model.client.exceptions.ClientMissingException;
 import insurabook.model.policies.Policy;
 import insurabook.model.policies.PolicyId;
 import insurabook.model.policytype.PolicyType;
 import insurabook.model.policytype.PolicyTypeId;
 import insurabook.model.policytype.PolicyTypeName;
-import insurabook.testutil.PersonBuilder;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 
-public class AddClientCommandTest {
+public class AddClaimCommandTest {
+
+    private final ClaimId validClaimId = new ClaimId("CL001");
+    private final ClientId validClientId = new ClientId("C101");
+    private final PolicyId validPolicyId = new PolicyId("P101");
+    private final ClaimAmount validClaimAmount = new ClaimAmount("1000");
+    private final InsuraDate validClaimDate = new InsuraDate("2024-10-10");
+    private final ClaimMessage validClaimMessage = new ClaimMessage("Test claim");
 
     @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new AddClientCommand(null));
+    public void constrcutor_nullParameter_throwsNullPointerException() {
+        // Test null client id
+        assertThrows(NullPointerException.class, () -> new AddClaimCommand(
+                null, validPolicyId, validClaimAmount, validClaimDate, validClaimMessage));
+
+        // Test null policy id
+        assertThrows(NullPointerException.class, () -> new AddClaimCommand(
+                validClientId, null, validClaimAmount, validClaimDate, validClaimMessage));
+
+        // Test null claim amount
+        assertThrows(NullPointerException.class, () -> new AddClaimCommand(
+                validClientId, validPolicyId, null, validClaimDate, validClaimMessage));
+
+        // Test null claim date
+        assertThrows(NullPointerException.class, () -> new AddClaimCommand(
+                validClientId, validPolicyId, validClaimAmount, null, validClaimMessage));
+
+        // Test null claim message
+        assertThrows(NullPointerException.class, () -> new AddClaimCommand(
+                validClientId, validPolicyId, validClaimAmount, validClaimDate, null));
     }
 
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Client validClient = new PersonBuilder().build();
+    public void execute_addClaimSuccessful() throws Exception {
+        ModelStubAcceptingClaimAdded modelStub = new ModelStubAcceptingClaimAdded();
+        AddClaimCommand addClaimCommand = new AddClaimCommand(
+                validClientId, validPolicyId, validClaimAmount, validClaimDate, validClaimMessage);
+        Claim toAdd = new Claim(validClaimId, validClientId, validPolicyId,
+                validClaimAmount, validClaimDate, validClaimMessage);
 
-        CommandResult commandResult = new AddClientCommand(validClient).execute(modelStub);
+        CommandResult commandResult = addClaimCommand.execute(modelStub);
 
-        assertEquals(String.format(AddClientCommand.MESSAGE_SUCCESS, Messages.format(validClient)),
+        assertEquals(String.format(AddClaimCommand.MESSAGE_SUCCESS, Messages.format(toAdd, 0)),
                 commandResult.getFeedbackToUser());
-        assertEquals(Arrays.asList(validClient), modelStub.personsAdded);
+        assertEquals(Arrays.asList(toAdd), modelStub.claimsAdded);
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() {
-        Client validClient = new PersonBuilder().build();
-        AddClientCommand addClientCommand = new AddClientCommand(validClient);
-        ModelStub modelStub = new ModelStubWithPerson(validClient);
+    public void execute_clientNotFound_throwsCommandException() {
+        ModelStubClientMissing modelStub = new ModelStubClientMissing();
+        ClientId nonExistentClientId = new ClientId("C999");
+        AddClaimCommand addClaimCommand = new AddClaimCommand(
+                nonExistentClientId, validPolicyId, validClaimAmount, validClaimDate, validClaimMessage);
 
-        assertThrows(CommandException.class,
-                AddClientCommand.MESSAGE_DUPLICATE_PERSON, () -> addClientCommand.execute(modelStub));
+        assertThrows(ClientMissingException.class, "Client does not exist!", () ->
+                addClaimCommand.execute(modelStub));
     }
 
     @Test
     public void equals() {
-        Client alice = new PersonBuilder().withName("Alice").withClientId("1").build();
-        Client bob = new PersonBuilder().withName("Bob").withClientId("2").build();
-        AddClientCommand addAliceCommand = new AddClientCommand(alice);
-        AddClientCommand addBobCommand = new AddClientCommand(bob);
+        AddClaimCommand addClaimCommand1 = new AddClaimCommand(
+                validClientId, validPolicyId, validClaimAmount, validClaimDate, validClaimMessage
+        );
+        AddClaimCommand addClaimCommand2 = new AddClaimCommand(
+                validClientId, validPolicyId, validClaimAmount, new InsuraDate("2025-11-11"), validClaimMessage
+        );
 
         // same object -> returns true
-        assertTrue(addAliceCommand.equals(addAliceCommand));
+        assertEquals(addClaimCommand1, addClaimCommand1);
 
         // same values -> returns true
-        AddClientCommand addAliceCommandCopy = new AddClientCommand(alice);
-        assertTrue(addAliceCommand.equals(addAliceCommandCopy));
+        AddClaimCommand addClaimCommand1Copy = new AddClaimCommand(
+                validClientId, validPolicyId, validClaimAmount, validClaimDate, validClaimMessage
+        );
+        assertEquals(addClaimCommand1, addClaimCommand1Copy);
 
         // different types -> returns false
-        assertFalse(addAliceCommand.equals(1));
+        assertNotEquals(addClaimCommand1, 5);
 
         // null -> returns false
-        assertFalse(addAliceCommand.equals(null));
+        assertNotEquals(addClaimCommand1, null);
 
-        // different person -> returns false
-        assertFalse(addAliceCommand.equals(addBobCommand));
+        // different claim date -> returns false
+        assertNotEquals(addClaimCommand1, addClaimCommand2);
+    }
+
+    @Test
+    public void hashCode_sameValues_sameHashCode() {
+        AddClaimCommand addClaimCommand1 = new AddClaimCommand(
+                validClientId, validPolicyId, validClaimAmount, validClaimDate, validClaimMessage
+        );
+        AddClaimCommand addClaimCommand1Copy = new AddClaimCommand(
+                validClientId, validPolicyId, validClaimAmount, validClaimDate, validClaimMessage
+        );
+        assertEquals(addClaimCommand1.hashCode(), addClaimCommand1Copy.hashCode());
     }
 
     @Test
     public void toStringMethod() {
-        AddClientCommand addClientCommand = new AddClientCommand(ALICE);
-        String expected = AddClientCommand.class.getCanonicalName() + "{toAdd=" + ALICE + "}";
-        assertEquals(expected, addClientCommand.toString());
+        AddClaimCommand addClaimCommand = new AddClaimCommand(
+                validClientId, validPolicyId, validClaimAmount, validClaimDate, validClaimMessage
+        );
+
+        String expectedString = "AddClaimCommand: clientId=C101, policyId=P101, claimAmount=1000, "
+                + "claimDate=2024-10-10, claimMessage=Test claim";
+        assertEquals(expectedString, addClaimCommand.toString());
     }
 
     /**
@@ -194,7 +238,7 @@ public class AddClientCommandTest {
 
         @Override
         public Claim addClaim(ClientId clientId, PolicyId policyId, ClaimAmount claimAmount,
-                             InsuraDate claimDate, ClaimMessage claimDescription) {
+                              InsuraDate claimDate, ClaimMessage claimDescription) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -229,6 +273,11 @@ public class AddClientCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
+        /**
+         * Returns true if given PolicyTypeName already exists in list of PolicyTypes.
+         *
+         * @param name
+         */
         @Override
         public boolean containsPolicyTypeName(PolicyTypeName name) {
             throw new AssertionError("This method should not be called.");
@@ -274,39 +323,17 @@ public class AddClientCommandTest {
     }
 
     /**
-     * A Model stub that contains a single person.
+     * A Model stub that always accept the claim being added.
      */
-    private class ModelStubWithPerson extends ModelStub {
-        private final Client client;
-
-        ModelStubWithPerson(Client client) {
-            requireNonNull(client);
-            this.client = client;
-        }
+    private class ModelStubAcceptingClaimAdded extends ModelStub {
+        final ArrayList<Claim> claimsAdded = new ArrayList<>();
 
         @Override
-        public boolean hasClient(Client client) {
-            requireNonNull(client);
-            return this.client.isSameClient(client);
-        }
-    }
-
-    /**
-     * A Model stub that always accept the person being added.
-     */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Client> personsAdded = new ArrayList<>();
-
-        @Override
-        public boolean hasClient(Client client) {
-            requireNonNull(client);
-            return personsAdded.stream().anyMatch(client::isSameClient);
-        }
-
-        @Override
-        public void addClient(Client client) {
-            requireNonNull(client);
-            personsAdded.add(client);
+        public Claim addClaim(ClientId clientId, PolicyId policyId, ClaimAmount claimAmount,
+                             InsuraDate claimDate, ClaimMessage claimDescription) {
+            Claim claim = new Claim(validClaimId, clientId, policyId, claimAmount, claimDate, claimDescription);
+            claimsAdded.add(claim);
+            return claim;
         }
 
         @Override
@@ -315,4 +342,14 @@ public class AddClientCommandTest {
         }
     }
 
+    /**
+     * A Model stub that always throw ClientMissingException when trying to add a claim.
+     */
+    private class ModelStubClientMissing extends ModelStub {
+        @Override
+        public Claim addClaim(ClientId clientId, PolicyId policyId, ClaimAmount claimAmount,
+                             InsuraDate claimDate, ClaimMessage claimDescription) {
+            throw new ClientMissingException();
+        }
+    }
 }
