@@ -15,7 +15,16 @@ title: Developer Guide
   - [Common classes](#common-classes)
 - [Implementation](#implementation)
   - [Storage Component](#storage-component-1)
-  - [Design Considerations](#design-considerations)
+    - [Purpose and Overview](#purpose-and-overview)
+    - [Architecture Design](#architecture-design)
+    - [Data Flow](#data-flow)
+    - [Handling Data Corruption](#handling-data-corruption)
+    - [Design Considerations](#design-considerations)
+  - [Model Component: Entity Uniqueness and Identity](#model-component-entity-uniqueness-and-identity)
+    - [Purpose and Overview](#purpose-and-overview-1)
+    - [Architecture Design](#architecture-design-1)
+    - [Impacts on Commands](#impacts-on-commands)
+    - [Design Considerations](#design-considerations-1)
 - [Documentation, logging, testing, configuration, dev-ops](#documentation-logging-testing-configuration-dev-ops)
 - [Appendix: Requirements](#appendix-requirements)
   - [Product scope](#product-scope)
@@ -38,16 +47,16 @@ title: Developer Guide
 ## **Acknowledgements**
 
 - Sources and inspiration:
-  - SE-EDU AddressBook and guides: https://github.com/se-edu/addressbook-level3 and https://se-education.org/guides
-  - PlantUML tutorial and examples: https://plantuml.com and https://se-education.org/guides/tutorials/plantUml.html
-  - Design styling and colour scheme: https://github.com/tokyo-night/tokyo-night-vscode-theme
+  - [SE-EDU AddressBook](https://github.com/se-edu/addressbook-level3) and [guides](https://se-education.org/guides)
+  - [PlantUML tutorial](https://plantuml.com) and [examples](https://se-education.org/guides/tutorials/plantUml.html)
+  - [Design styling and colour scheme](https://github.com/tokyo-night/tokyo-night-vscode-theme)
 - Libraries and tools used (include links to original projects):
-  - JavaFX: https://openjfx.io
-  - Jackson (JSON): https://github.com/FasterXML/jackson
-  - JUnit 5 (testing): https://junit.org/junit5/
-  - Gradle (build): https://gradle.org
-  - Bundler (Ruby dependency manager): https://bundler.io
-  - IntelliJ IDEA (IDE): https://www.jetbrains.com/idea/
+  - [JavaFX](https://openjfx.io)
+  - [Jackson (JSON)](https://github.com/FasterXML/jackson)
+  - [JUnit 5 (testing)](https://junit.org/junit5/)
+  - [Gradle (build)](https://gradle.org)
+  - [Bundler (Ruby dependency manager)](https://bundler.io)
+  - [IntelliJ IDEA (IDE)](https://www.jetbrains.com/idea/)
 - Third-party code and licenses:
   - Any reused or adapted code from the above projects is used under the respective project licenses;
 consult the original repositories for full license details.
@@ -225,7 +234,6 @@ Classes used by multiple components are in the `insurabook.commons` package.
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Implementation**
-
 This section describes some noteworthy details on how certain features are implemented.
 
 ### Storage Component
@@ -346,6 +354,56 @@ to maintain and ensure consistency.
 We chose **Alternative 1** because the benefits of decoupling and robust validation are critical for this application.
 The `Model` must remain independent of storage to allow flexibility. While Alternative 1 requires more setup, it makes
 the entire application safer, more maintainable, and less prone to errors from corrupted data or future refactoring.
+
+
+### Model Component: Entity Uniqueness and Identity
+
+#### Purpose and Overview
+A core design principle in InsuraBook is how we define the uniqueness of data entities. IDs are not globally unique; instead, **their uniqueness is scoped to their parent object**.
+
+This is visually represented in our Model's class diagram, which shows a "composition" (one-to-many) relationship for our main entities.
+
+This design leads to the following business rules for uniqueness:
+* `Client` / `PolicyType`: Uniqueness is determined by their globally unique IDs (`c_id` for `Client`, `pt_id` for `PolicyType`). Must have an ID that is unique across the entire InsuraBook.
+* `Policy`: Uniqueness is scoped to the parent `Client`. A `Client` cannot have two `Policy` objects with the same `p_id`, but different `Client` objects can have `Policy` objects with the same `p_id`.
+  * For example, Client A can have a Policy with `p_id` "P001", and Client B can also have a different Policy with the same `p_id` "P001".
+* `Claim`: Uniqueness is scoped to the parent `Policy`. A `Policy` cannot have two `Claim` objects with the same `cl_id`, but different `Policy` objects can have `Claim` objects with the same `cl_id`.
+  * For example, Policy X can have a Claim with `cl_id` "CL001", and Policy Y can also have a different Claim with the same `cl_id` "CL001".
+
+#### Architecture Design
+This diagram shows that a `Client` "owns" a list of `Policy` objects through an association class `Portfolio`, and a `Policy` "owns" a list of `Claim` objects. Therefore, the uniqueness of a `-p_id` is scoped to its `Client`, and a `c_id` is scoped to its `Policy`.
+<p align="center">
+    <img src="images/FocusModelClassDiagram.png" width="400" />
+</p>
+
+#### Impacts on Commands
+This uniqueness design choice has direct impact on our `add` and `edit` commands:
+* **`add` commands**: These commands (`add`, `add policy type`, `add policy`, `add claim`) are responsible for creating new entities and require the user to provide these IDs. The `Logic` component is responsible for checking the uniqueness within the correct scope.
+* **`edit` commands**: We do not allow editing of ID fields (`c_id`, `p_id`, `cl_id`, `pt_id`). An entity's ID is its primary identifier. Changing an ID is conceptually the same as deleting one entity and creating another, which would break relationships and is not a true "edit."
+
+#### Design Considerations
+**Aspect: How to identify and enforce entity uniqueness?**
+
+**Alternative 1: Use a human-readable field as a unique identifier (e.g., AB3-Style)**
+* **Description:** The system would identify entities primarily by a field like a Client's full name. For example, two
+clients with the same name would be considered duplicates.
+* **Pros:**
+    * **Intuitive CLI:** This is very user-friendly at first, as users can refer to clients by their name instead of an abstract ID.
+* **Cons:**
+    * **Forces Unrealistic Constraints:** This model must forbid duplicate names (e.g., you cannot have two clients named "John Doe"). This is an unrealistic and poor data model for a real-world application like an insurance manager.
+    * **Ambiguity in Identification:** In cases where multiple entities share the same name, it becomes ambiguous which entity is being referred to, leading to potential errors and confusion. In addition to issues with case sensitivity or partial matches.
+
+**Alternative 2 (Current choice): Use Scoped IDs as primary identifiers**
+* **Description:** Use simple, user-provided IDs (like `C101`, `P001`) as the stable key. The uniqueness of these IDs is enforced only within their parent container (e.g., `P001` is unique per client).
+* **Pros:**
+    * **Realistic Data Model:** Allows duplicate names. Users can have two "John Does" as long as they have different IDs (`C101`, `C102`).
+    * **Stable Identity:** Decouples the entity's identity (its ID) from its attributes (its name). This allows names (or any other fields) to be edited freely and safely (e.g., `edit -c_id C101 -n John Smith`).
+* **Cons:**
+* **Higher Cognitive Load:** The user must remember or look up an ID (e.g., `view`, `find`) before they can act on a specific entity.
+* **More Verbose Commands:** Commands become slightly longer as users must specify IDs instead of names.
+
+We chose **Alternative 2**. The fatal flaw of Alternative 1 is that it forces an unrealistic business rule (no duplicate names) onto the user. Alternative 2 provides a much more robust and realistic data model where identity is stable and attributes (like names) can be safely edited. The higher cognitive load is a manageable trade-off, which we mitigate with powerful `find` and `view` commands to help the user locate IDs easily.
+
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -1025,16 +1083,22 @@ testers are expected to do more *exploratory* testing.
     * **Expected:** Policy with p_id POL101 is added to client with c_id C101. Success message is shown in the result
    display.
 
-2. Adding a policy where policy type does not exist
+2. Adding a policy with same id for different clients
+    * Test cases: Add another client with c_id C102 *(make sure this client does not have any policy attached)*. Then, enter
+   `add policy -c_id C102 -pt_id P101 -p_id POL101 -exp 2025-12-31` (same policy id POL101 as client C101)
+    * **Expected:** Policy with p_id POL101 is added to client with c_id C102. Success message is shown in the result
+   display.
+
+3. Adding a policy where policy type does not exist
     * Test cases: `add policy -c_id C101 -pt_id P999 -p_id POL102 -exp 2025-12-31` (assuming policy type P999 does not
    exist)
     * **Expected:** Error message indicating that no such policy type exists is shown in the result display.
 
-3. Adding a policy where client does not exist
+4. Adding a policy where client does not exist
     * Test cases: `add policy -c_id C999 -pt_id P101 -p_id POL103 -exp 2025-12-31` (assuming client C999 does not exist)
     * **Expected:** Error message indicating that no such client exists is shown in the result display.
 
-4. Adding a policy with invalid expiration date
+5. Adding a policy with invalid expiration date
     * Test cases: `add policy -c_id C101 -pt_id P101 -p_id POL104 -exp 2020-02-01` (expiration date before today; in the past)
     * **Expected:** Error message indicating that the expiration date is invalid is shown in the result display.
 
