@@ -23,6 +23,7 @@ public class Messages {
                 "Multiple values specified for the following single-valued field(s): ";
     public static final String MESSAGE_INVALID_CLAIM = "This claim does not exist.";
     public static final String MESSAGE_INVALID_BIRTHDAY = "Input birthday cannot be in the future!";
+    public static final String MESSAGE_OLD_BIRTHDAY = "Birthday might be too old!";
 
     /**
      * Returns an error message indicating the duplicate prefixes.
