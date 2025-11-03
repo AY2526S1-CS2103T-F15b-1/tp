@@ -14,7 +14,7 @@ a terminal.
 - [Quick Start](#quick-start)
 - [Constraints](#constraints)
 - [Features](#features)
-- [Command summary](#command-summary)
+- [Command Summary](#command-summary)
 - [Viewing help : `help`](#viewing-help--help)
 - [Adding a client: `add`](#adding-a-client-add)
 - [Adding a policy type: `add policy type`](#adding-a-policy-type-add-policy-type)
@@ -80,7 +80,7 @@ Doe` with client id `123`, birthday on `01 Jan 2001`, phone number `90000001` an
 * An Identifier is treated as unique.<br>
     1. Two clients cannot have the same `CLIENT_ID`. If they have the same name, they are treated as different clients.
     2. Two policy types cannot have the same `POLICY_TYPE_ID`.
-    3. Two policies cannot have the same `POLICY_ID` under the same client.
+    3. Two policies cannot have the same `POLICY_ID` or `POLICY_TYPE_ID` under the same client.
     4. Two claims cannot have the same `CLAIM_ID` under the same policy of the same client.
 
 ## Features
@@ -109,7 +109,7 @@ as space characters surrounding line-breaks may be omitted when copied over to t
 
 ---
 
-## Command summary
+## Command Summary
 <small>[(back to Contents)](#table-of-contents)</small>
 
 Action | Format                                                                                                                  | Examples
@@ -226,6 +226,11 @@ that policy (with its ID and expiry date) and link it directly to their client r
 Format:
 `add policy -p_id POLICY_ID -c_id CLIENT_ID -pt_id POLICY_TYPE_ID -exp EXPIRY_DATE`
 
+<div markdown="span" class="alert alert-warning">
+<span style="color:orange">⚠️ **Warnings:**</span>
+Ensure that the client and policy type already exist in InsuraBook before adding a policy.
+</div>
+
 Parameters:
 * Policy ID: Only alphanumeric characters, cannot be blank.
 * Client ID: Must be of an existing client.
@@ -268,9 +273,6 @@ Format:
 Ensure that the client and policy already exist in InsuraBook before adding a claim. Also, claim date must not be
 later than the policy's expiry date.
 </div>
-
-Format:
-`add claim -c_id CLIENT_ID -p_id POLICY_ID -amt CLAIM_AMOUNT -date CLAIM_DATE [-desc DESCRIPTION]`
 
 Parameters:
 * Client ID: ID of an existing client. Only alphanumeric characters.
