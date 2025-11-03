@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import insurabook.commons.exceptions.IllegalValueException;
 import insurabook.model.InsuraBook;
 import insurabook.model.ReadOnlyInsuraBook;
-import insurabook.model.claims.Claim;
 import insurabook.model.client.Client;
 import insurabook.model.policies.Policy;
 import insurabook.model.policytype.PolicyType;
