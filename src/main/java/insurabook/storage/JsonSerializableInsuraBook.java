@@ -72,21 +72,12 @@ class JsonSerializableInsuraBook {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
             }
             insuraBook.addClient(client);
-            for (JsonAdaptedPolicy jsonPolicy : jsonClient.getPolicies()) {
-                Policy modelPolicy = jsonPolicy.toModelType(insuraBook);
-                client.addPolicy(modelPolicy);
-                for (JsonAdaptedClaim jsonClaim : jsonPolicy.getClaims()) {
-                    Claim modelClaim = jsonClaim.toModelType(insuraBook);
-                    client.addClaim(modelClaim);
-                }
-            }
+            jsonClient.addPoliciesToClient(client, insuraBook);
         }
 
         // Set client policies list in InsuraBook
         List<Policy> clientPolices = insuraBook.getClientList().stream()
-                        .flatMap(client -> client.getPortfolio().getPolicies()
-                                .asUnmodifiableObservableList()
-                                .stream())
+                        .flatMap(client -> client.getPolicies().stream())
                         .toList();
         insuraBook.setClientPolicies(clientPolices);
 

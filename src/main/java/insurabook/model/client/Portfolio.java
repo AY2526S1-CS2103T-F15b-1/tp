@@ -37,7 +37,7 @@ public class Portfolio {
     public Portfolio(Portfolio toCopy) {
         this.policies = new UniquePolicyList();
 
-        List<Policy> copiedPolicies = toCopy.getPolicies().asUnmodifiableObservableList().stream()
+        List<Policy> copiedPolicies = toCopy.getPoliciesAsList().stream()
                 .map(Policy::new)
                 .collect(Collectors.toList());
 
@@ -51,6 +51,10 @@ public class Portfolio {
 
     public UniquePolicyList getPolicies() {
         return this.policies;
+    }
+
+    public List<Policy> getPoliciesAsList() {
+        return this.policies.asUnmodifiableObservableList();
     }
 
     /**

@@ -184,4 +184,15 @@ class JsonAdaptedClient {
         return policies;
     }
 
+    /**
+     * Adds policies to the given client in the InsuraBook.
+     */
+    public void addPoliciesToClient(Client client, InsuraBook insuraBook) throws IllegalValueException {
+        for (JsonAdaptedPolicy jsonPolicy : policies) {
+            Policy modelPolicy = jsonPolicy.toModelType(insuraBook);
+            client.addPolicy(modelPolicy);
+            jsonPolicy.addClaimsToPolicy(client, insuraBook);
+        }
+    }
+
 }
