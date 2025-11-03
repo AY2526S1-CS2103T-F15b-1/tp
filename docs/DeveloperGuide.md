@@ -266,9 +266,13 @@ file. It uses the Jackson JSON library.
    - This sequence is triggered every time a command that modifies data (like `AddCommand`, `DeleteCommand`, etc.) is
    successfully executed.
     <img src="images/StorageSavingDataSequenceDiagram.png" width="600" />
+   - Constructor for JsonSerializableInsuraBook:
+    <img src="images/JsonInsuraBookConstructor.png" width="600" />
 2. **Loading Data:**
    - This sequence occurs during application startup when the InsuraBook data is loaded from disk.
     <img src="images/StorageLoadingDataSequenceDiagram.png" width="600" />
+   - Converting JsonSerializableInsuraBook to a Model:
+    <img src="images/JsonInsuraBookToModel.png" width="600" />
 
 #### Handling Data Corruption
 It is possible that the JSON file on disk may become corrupted or contain invalid data. If the JSON file is malformed,
@@ -545,6 +549,60 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
   Use case ends.
 
+#### Use case 5: Delete a policy type
+
+**MSS**
+1.  User requests to view types of policy.
+2.  InsuraBook shows a list of policy types.
+3.  User requests to delete an existing policy type with all the required details.
+4.  InsuraBook shows the updated list of policy types with the policy type deleted.
+
+    Use case ends.
+
+**Extensions**
+
+* 3a. User requests to delete a policy type that does not exist.
+
+    * 3a1. InsuraBook shows an error message that policy type could not be found.
+
+  Use case ends.
+
+#### Use case 6: Edit a policy type
+
+**MSS**
+1.  User requests to view types of policy.
+2.  InsuraBook shows a list of policy types.
+3.  User requests to edit a policy type, specifying the fields they wish to change.
+4.  InsuraBook shows the updated list of policy types with the newly edited policy type.
+
+    Use case ends.
+
+**Extensions**
+
+* 3a. User requests to edit a policy type that does not exist.
+
+    * 3a1. InsuraBook shows an error message that policy type could not be found.
+
+  Use case ends.
+
+* 3b. User requests to edit a policy type but does not specify any fields to change.
+
+    * 3b1. InsuraBook shows an error message that at least one field to change is needed.
+
+  Use case ends.
+
+* 3c. User requests to change the policy type's name to one that already exists.
+
+    * 3c1. InsuraBook shows an error message that this operation would result in a duplicate policy type.
+
+  Use case ends.
+
+* 3d. User requests to change a policy type's field to an invalid value.
+
+    * 3d1. InsuraBook shows an error message specifying which field has an invalid value and what values are valid.
+
+  Use case ends.
+
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
@@ -579,7 +637,9 @@ testers are expected to do more *exploratory* testing.
 
 1. Initial launch
 
-   * Download the jar file and copy into an empty folder. Double-click the jar file.
+   * Download the jar file and copy into an empty folder.
+
+   * Open a command terminal in the folder and run `java -jar insurabook.jar`.
 
    * **Expected:** Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
@@ -610,9 +670,42 @@ testers are expected to do more *exploratory* testing.
     * Test cases: Add a client "John Doe" as in test case 1. Then, repeat the same command to add "John Doe" again.
     * **Expected:** Error message indicating that a client already exists is shown in the result display.
 
+### Adding a policy type
+1. Adding a policy type with all fields specified
+    * Test cases: `add policy type -pt_id P101 -pt_n Policy 101 -desc Description of Policy 101 -premium 1000`
+    * **Expected:** Policy Type "Policy 101" is added to the policy type list. Success message is shown in the
+   result display.
+
+2. Adding a policy type with some optional fields specified
+    * Test cases: `add policy type -pt_id P102 -pt_n Policy 102 -desc Description of Policy 102`
+    * **Expected:** Policy Type "Policy 102" is added to the policy type list, which has a description but no premium.
+   Success message is shown in the result display.
+
+3. Adding a policy type with only mandatory fields specified
+    * Test cases: `add policy type -pt_id P103 -pt_n Policy 103`
+    * **Expected:** Policy Type "Policy 103" is added to the policy type list, which has neither description nor
+   premium. Success message is shown in the result display.
+
+4. Adding a policy type with some mandatory fields missing
+    * Test cases: `add policy type -pt_id P104 -desc Description of Policy 104 -premium 1000` (missing name field)
+    * **Expected:** Error message indicating invalid command format is shown in the result display, together with its
+   correct command usage.
+
+5. Adding a policy type with some invalid fields
+    * Test cases: `add policy type -pt_id P105 -pt_n Policy 105 -desc Description of Policy 101 -premium -1000`
+    (negative premium)
+    * **Expected:** Error message indicating invalid premium value is shown in the result display, showing
+   field constraints.
+
+6. Adding a duplicate policy type
+    * Test cases: Add a client "Policy 101" as shown in use case 1. Then, enter
+   `add policy type -pt_id P101 -pt_n Another Policy` (different name, same ID)
+    * **Expected:** Error message indicating such a policy type already exists, showing the name and ID of "Policy 101".
+
 ### Deleting a client
 > **Pre-requisite:** At least one client exists in the client list. In this example, we assume client C101 exists while
 > client C999 does not exist.
+
 1. Deleting an existing client
     * Test cases: `delete -c_id C101` (assuming client with c_id C101 exists)
     * **Expected:** Client with c_id C101 is removed from the client list. Success message is shown in the result display.
@@ -642,6 +735,7 @@ testers are expected to do more *exploratory* testing.
 
 ### Finding a client
 > **Warnings:** Keywords must be complete words. Partial words will not match. For detailed matching rules, refer to the user guide.
+
 1. Finding clients by name keyword
     * Test cases: `find -n John`
     * **Expected:** All clients whose names contain the keyword "John" (case-insensitive) are shown in the client list.
@@ -663,6 +757,7 @@ testers are expected to do more *exploratory* testing.
 ### Viewing policies of a client
 > **Pre-requisite:** At least one client exists in the client list. In this example, we assume client C101 exists while
 > client C999 does not exist.
+
 1. Viewing policies of an existing client
     * Test cases: `view -c_id C101` (add some policies and claims to client C101 beforehand, details in user guide)
     * **Expected:** Policies of client with c_id C101 are shown in the policy list panel.

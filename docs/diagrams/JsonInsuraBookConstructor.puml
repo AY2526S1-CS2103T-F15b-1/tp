@@ -1,0 +1,50 @@
+@startuml
+!include style.puml
+!define COMMONS_COLOR #CCCDC6
+skinparam ArrowFontStyle plain
+
+box Storage STORAGE_COLOR_T1
+participant ":JsonInsuraBookStorage" as JsonInsuraBookStorage STORAGE_COLOR
+participant ":JsonSerializableInsuraBook" as JsonSerializableInsuraBook STORAGE_COLOR
+participant ":JsonAdaptedPolicyType" as JsonAdaptedPolicyType STORAGE_COLOR
+participant ":JsonAdaptedClient" as JsonAdaptedClient STORAGE_COLOR
+participant ":JsonAdaptedPolicy" as JsonAdaptedPolicy STORAGE_COLOR
+participant ":JsonAdaptedClaim" as JsonAdaptedClaim STORAGE_COLOR
+end box
+
+activate JsonInsuraBookStorage
+
+create JsonSerializableInsuraBook
+JsonInsuraBookStorage -> JsonSerializableInsuraBook : (insuraBook)
+activate JsonSerializableInsuraBook
+
+create JsonAdaptedPolicyType
+JsonSerializableInsuraBook -> JsonAdaptedPolicyType
+activate JsonAdaptedPolicyType
+JsonAdaptedPolicyType --> JsonSerializableInsuraBook
+deactivate JsonAdaptedPolicyType
+
+create JsonAdaptedClient
+JsonSerializableInsuraBook -> JsonAdaptedClient
+activate JsonAdaptedClient
+
+create JsonAdaptedPolicy
+JsonAdaptedClient -> JsonAdaptedPolicy
+activate JsonAdaptedPolicy
+
+create JsonAdaptedClaim
+JsonAdaptedPolicy -> JsonAdaptedClaim
+activate JsonAdaptedClaim
+JsonAdaptedClaim --> JsonAdaptedPolicy
+deactivate JsonAdaptedClaim
+
+JsonAdaptedPolicy --> JsonAdaptedClient
+deactivate JsonAdaptedPolicy
+
+JsonAdaptedClient --> JsonSerializableInsuraBook
+deactivate JsonAdaptedClient
+
+JsonSerializableInsuraBook --> JsonInsuraBookStorage
+deactivate JsonSerializableInsuraBook
+
+@enduml
