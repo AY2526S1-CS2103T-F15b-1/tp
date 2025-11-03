@@ -21,11 +21,11 @@ public class DeletePolicyTypeCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes a policy type. "
             + "Parameters: "
-            + "[" + PREFIX_POLICY_TYPE + "POLICY_TYPE_NAME] "
-            + "[" + PREFIX_POLICY_TYPE_ID + "POLICY_TYPE_ID] \n"
+            + PREFIX_POLICY_TYPE + " POLICY_TYPE_NAME "
+            + PREFIX_POLICY_TYPE_ID + " POLICY_TYPE_ID\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_POLICY_TYPE + "BRUShield "
-            + PREFIX_POLICY_TYPE_ID + "BRH001 ";
+            + PREFIX_POLICY_TYPE + " BRUShield "
+            + PREFIX_POLICY_TYPE_ID + " BRH001";
 
     // directly inject values
     public static final String MESSAGE_SUCCESS = "Deleted Policy Type %1$s with ID %2$s";

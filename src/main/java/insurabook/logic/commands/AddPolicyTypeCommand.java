@@ -23,15 +23,15 @@ public class AddPolicyTypeCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a policy type. "
             + "Parameters: "
-            + PREFIX_POLICY_TYPE + "POLICY_TYPE_NAME "
-            + PREFIX_POLICY_TYPE_ID + "POLICY_TYPE_ID "
-            + "[" + PREFIX_DESCRIPTION + "DESCRIPTION] "
-            + "[" + PREFIX_PREMIUM + "STARTING_PREMIUM] \n"
+            + PREFIX_POLICY_TYPE + " POLICY_TYPE_NAME "
+            + PREFIX_POLICY_TYPE_ID + " POLICY_TYPE_ID "
+            + "[" + PREFIX_DESCRIPTION + " DESCRIPTION] "
+            + "[" + PREFIX_PREMIUM + " STARTING_PREMIUM] \n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_POLICY_TYPE + "BRUShield "
-            + PREFIX_POLICY_TYPE_ID + "BRH001 "
-            + PREFIX_DESCRIPTION + "Comprehensive Health and Budget Needs "
-            + PREFIX_PREMIUM + "1000";
+            + PREFIX_POLICY_TYPE + " BRUShield "
+            + PREFIX_POLICY_TYPE_ID + " BRH001 "
+            + PREFIX_DESCRIPTION + " Comprehensive Health and Budget Needs "
+            + PREFIX_PREMIUM + " 1000";
     public static final String MESSAGE_SUCCESS = "Added %1$s";
 
     private final PolicyTypeName ptName;
