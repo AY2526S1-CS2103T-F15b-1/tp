@@ -6,9 +6,12 @@ import static insurabook.logic.parser.CliSyntax.PREFIX_EXPIRY_DATE;
 import static insurabook.logic.parser.CliSyntax.PREFIX_POLICY_ID;
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDate;
+
 import insurabook.logic.commands.EditPolicyCommand;
 import insurabook.logic.commands.EditPolicyCommand.EditPolicyDescriptor;
 import insurabook.logic.parser.exceptions.ParseException;
+import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.ClientId;
 import insurabook.model.policies.PolicyId;
 
@@ -35,21 +38,18 @@ public class EditPolicyCommandParser implements Parser<EditPolicyCommand> {
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_CLIENT_ID, PREFIX_POLICY_ID,
                  PREFIX_EXPIRY_DATE);
 
-        ClientId clientId;
-        PolicyId policyId;
-        try {
-            clientId = ParserUtil.parseClientId(argMultimap.getValue(PREFIX_CLIENT_ID).get());
-            policyId = ParserUtil.parsePolicyId(argMultimap.getValue(PREFIX_POLICY_ID).get());
-        } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                     EditPolicyCommand.MESSAGE_USAGE), pe);
-        }
+        ClientId clientId = ParserUtil.parseClientId(argMultimap.getValue(PREFIX_CLIENT_ID).get());
+        PolicyId policyId = ParserUtil.parsePolicyId(argMultimap.getValue(PREFIX_POLICY_ID).get());
 
         EditPolicyDescriptor editPolicyDescriptor = new EditPolicyDescriptor();
 
         if (argMultimap.getValue(PREFIX_EXPIRY_DATE).isPresent()) {
-            editPolicyDescriptor.setExpiryDate(
-                    ParserUtil.parseInsuraDate(argMultimap.getValue(PREFIX_EXPIRY_DATE).get()));
+            InsuraDate expiryDate = ParserUtil.parseInsuraDate(argMultimap.getValue(PREFIX_EXPIRY_DATE).get());
+            LocalDate expiryLocalDate = LocalDate.parse(argMultimap.getValue(PREFIX_EXPIRY_DATE).get());
+            if (!expiryLocalDate.isAfter(LocalDate.now())) {
+                throw new ParseException("Expiry date must be after today's date.");
+            }
+            editPolicyDescriptor.setExpiryDate(expiryDate);
         }
 
         if (!editPolicyDescriptor.isAnyFieldEdited()) {

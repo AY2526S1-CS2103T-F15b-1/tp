@@ -37,16 +37,11 @@ public class AddPolicyCommandParser implements Parser<AddPolicyCommand> {
         PolicyId policyId = ParserUtil.parsePolicyId(argMultimap.getValue(PREFIX_POLICY_ID).get());
         ClientId clientId = ParserUtil.parseClientId(argMultimap.getValue(PREFIX_CLIENT_ID).get());
         PolicyTypeId policyTypeId = ParserUtil.parsePtId(argMultimap.getValue(PREFIX_POLICY_TYPE_ID).get());
-        try {
-            LocalDate expiryLocalDate = LocalDate.parse(argMultimap.getValue(PREFIX_EXPIRY_DATE).get());
-            if (!expiryLocalDate.isAfter(LocalDate.now())) {
-                throw new ParseException("Expiry date must be after today's date.");
-            }
-        } catch (DateTimeParseException e) {
-            throw new ParseException("Invalid expiry date. Check to ensure it is in the format YYYY-MM-DD "
-                    + "and if it is a valid calendar date.");
-        }
         InsuraDate expiryDate = ParserUtil.parseInsuraDate(argMultimap.getValue(PREFIX_EXPIRY_DATE).get());
+        LocalDate expiryLocalDate = LocalDate.parse(argMultimap.getValue(PREFIX_EXPIRY_DATE).get());
+        if (!expiryLocalDate.isAfter(LocalDate.now())) {
+            throw new ParseException("Expiry date must be after today's date.");
+        }
         return new AddPolicyCommand(policyId, clientId, policyTypeId, expiryDate);
     }
 

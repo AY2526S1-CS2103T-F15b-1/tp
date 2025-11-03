@@ -16,16 +16,13 @@ import org.junit.jupiter.api.Test;
 
 import insurabook.logic.commands.AddPolicyCommand;
 import insurabook.model.claims.InsuraDate;
-import insurabook.model.client.Client;
 import insurabook.model.client.ClientId;
 import insurabook.model.policies.PolicyId;
 import insurabook.model.policytype.PolicyTypeId;
-import insurabook.testutil.PersonBuilder;
 
 public class AddPolicyCommandParserTest {
-    private AddPolicyCommandParser parser = new AddPolicyCommandParser();
+    private final AddPolicyCommandParser parser = new AddPolicyCommandParser();
 
-    private final Client validClient = new PersonBuilder().withName("Kevin").build();
     private final ClientId validClientId = new ClientId("111");
     private final PolicyId validPolicyId = new PolicyId("P101");
     private final PolicyTypeId validPolicyTypeId = new PolicyTypeId("PRU001");
@@ -81,7 +78,11 @@ public class AddPolicyCommandParserTest {
         // Invalid expiry date
         assertParseFailure(parser,
                 POLICY_ID_DESC_AMY + CLIENT_ID_DESC_AMY + POLICY_TYPE_ID_DESC + INVALID_EXPIRY_DATE_DESC,
-                "Invalid expiry date. Check to ensure it is in the format YYYY-MM-DD "
-                        + "and if it is a valid calendar date.");
+                InsuraDate.MESSAGE_CONSTRAINTS);
+
+        // Expiry date not after today's date
+        assertParseFailure(parser,
+                POLICY_ID_DESC_AMY + CLIENT_ID_DESC_AMY + POLICY_TYPE_ID_DESC + " -exp 2020-01-01",
+                "Expiry date must be after today's date.");
     }
 }
