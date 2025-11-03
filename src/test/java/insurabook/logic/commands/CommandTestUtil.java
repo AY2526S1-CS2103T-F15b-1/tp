@@ -9,8 +9,10 @@ import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_ID;
 import static insurabook.logic.parser.CliSyntax.PREFIX_CLIENT_NAME;
 import static insurabook.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static insurabook.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static insurabook.logic.parser.CliSyntax.PREFIX_EXPIRY_DATE;
 import static insurabook.logic.parser.CliSyntax.PREFIX_PHONE;
 import static insurabook.logic.parser.CliSyntax.PREFIX_POLICY_ID;
+import static insurabook.logic.parser.CliSyntax.PREFIX_POLICY_TYPE_ID;
 import static insurabook.logic.parser.CliSyntax.PREFIX_TAG;
 import static insurabook.testutil.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -47,6 +49,8 @@ public class CommandTestUtil {
     public static final String VALID_CLIENT_ID_BOB = "222";
     public static final String VALID_POLICY_ID_AMY = "P101";
     public static final String VALID_POLICY_ID_BOB = "P102";
+    public static final String VALID_POLICY_TYPE_ID = "PRU001";
+    public static final String VALID_EXPIRY_DATE = "2025-12-31";
     public static final String VALID_CLAIM_ID_AMY = "CL001";
     public static final String VALID_CLAIM_ID_BOB = "CL002";
     public static final String VALID_CLAIM_AMOUNT = "1000";
@@ -65,8 +69,10 @@ public class CommandTestUtil {
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
     public static final String CLIENT_ID_DESC_AMY = " " + PREFIX_CLIENT_ID + VALID_CLIENT_ID_AMY;
     public static final String CLIENT_ID_DESC_BOB = " " + PREFIX_CLIENT_ID + VALID_CLIENT_ID_BOB;
+    public static final String POLICY_TYPE_ID_DESC = " " + PREFIX_POLICY_TYPE_ID + VALID_POLICY_TYPE_ID;
     public static final String POLICY_ID_DESC_AMY = " " + PREFIX_POLICY_ID + VALID_POLICY_ID_AMY;
     public static final String POLICY_ID_DESC_BOB = " " + PREFIX_POLICY_ID + VALID_POLICY_ID_BOB;
+    public static final String EXPIRY_DATE_DESC = " " + PREFIX_EXPIRY_DATE + VALID_EXPIRY_DATE;
     public static final String CLAIM_ID_DESC_AMY = " " + PREFIX_CLAIM_ID + VALID_CLAIM_ID_AMY;
     public static final String CLAIM_ID_DESC_BOB = " " + PREFIX_CLAIM_ID + VALID_CLAIM_ID_BOB;
     public static final String CLAIM_AMOUNT_DESC = " " + PREFIX_CLAIM_AMOUNT + VALID_CLAIM_AMOUNT;
@@ -80,6 +86,8 @@ public class CommandTestUtil {
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_CLIENT_ID_DESC = " " + PREFIX_CLIENT_ID + "C!^@&";
     public static final String INVALID_POLICY_ID_DESC = " " + PREFIX_POLICY_ID + "P*^^";
+    public static final String INVALID_POLICY_TYPE_ID_DESC = " " + PREFIX_POLICY_TYPE_ID + "PT$%";
+    public static final String INVALID_EXPIRY_DATE_DESC = " " + PREFIX_EXPIRY_DATE + "2025-13-01";
     public static final String INVALID_CLAIM_AMOUNT_DESC = " " + PREFIX_CLAIM_AMOUNT + "-1";
     public static final String INVALID_CLAIM_DATE_DESC = " " + PREFIX_CLAIM_DATE + "2025-02-30";
 

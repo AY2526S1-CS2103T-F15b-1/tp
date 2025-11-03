@@ -48,4 +48,17 @@ public class DeletePolicyCommand extends Command {
         model.commitInsuraBook();
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(policy, 1)));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (!(other instanceof DeletePolicyCommand)) {
+            return false;
+        }
+        DeletePolicyCommand otherCommand = (DeletePolicyCommand) other;
+        return clientId.equals(otherCommand.clientId)
+                && policyId.equals(otherCommand.policyId);
+    }
 }
