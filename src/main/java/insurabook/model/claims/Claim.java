@@ -1,5 +1,7 @@
 package insurabook.model.claims;
 
+import java.util.Objects;
+
 import insurabook.model.client.ClientId;
 import insurabook.model.policies.PolicyId;
 
@@ -51,5 +53,27 @@ public class Claim {
 
     public ClaimMessage getDescription() {
         return description;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (!(other instanceof Claim)) {
+            return false;
+        }
+        Claim otherClaim = (Claim) other;
+        return claimId.equals(otherClaim.claimId)
+                && clientId.equals(otherClaim.clientId)
+                && policyId.equals(otherClaim.policyId)
+                && amount.equals(otherClaim.amount)
+                && date.equals(otherClaim.date)
+                && description.equals(otherClaim.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(claimId, clientId, policyId, amount, date, description);
     }
 }

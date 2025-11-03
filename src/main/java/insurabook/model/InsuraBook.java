@@ -2,6 +2,7 @@ package insurabook.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -194,7 +195,24 @@ public class InsuraBook implements ReadOnlyInsuraBook {
      * @throws PolicyTypeMissingException if no PolicyTypes found
      */
     public List<Integer> deletePolicyType(PolicyTypeName name, PolicyTypeId id) throws PolicyTypeMissingException {
-        return policyTypes.remove(name, id);
+        List<Integer> indices = policyTypes.remove(name, id);
+
+        List<Policy> policiesToRemove = new ArrayList<>(); // policies matching id to remove
+        if (indices == null) {
+            // successful deletion, delete policy type from all clients policies
+            for (Policy policy : clientPolicies) {
+                if (policy.getPolicyTypeId().equals(id)) {
+                    // delete this policy
+                    policiesToRemove.add(policy);
+                }
+            }
+        }
+
+        for (Policy toRemove : policiesToRemove) {
+            this.removePolicy(toRemove.getClientId(), toRemove.getPolicyId());
+        }
+
+        return indices;
     }
 
     /**
@@ -265,7 +283,9 @@ public class InsuraBook implements ReadOnlyInsuraBook {
         Client client = this.getClient(clientId);
         ClaimId claimId = new ClaimId(claimIdCounter.getNextClaimId());
         Claim claim = new Claim(claimId, clientId, policyId, claimAmount, claimDate, claimDescription);
+        Policy policyEdited = client.getPortfolio().getPolicies().getPolicy(policyId);
         client.addClaim(claim);
+        this.clientPolicies.refreshPolicy(policyEdited);
         return claim;
     }
 
@@ -275,7 +295,12 @@ public class InsuraBook implements ReadOnlyInsuraBook {
      */
     public Claim removeClaim(ClientId clientId, PolicyId policyId, ClaimId claimId) {
         Client client = this.getClient(clientId);
-        return client.removeClaim(policyId, claimId);
+        Claim claimRemoved = client.removeClaim(policyId, claimId);
+        Policy policyEdited = client.getPortfolio().getPolicies().getPolicy(policyId);
+        if (claimRemoved != null) {
+            this.clientPolicies.refreshPolicy(policyEdited);
+        }
+        return claimRemoved;
     }
 
     /**
@@ -286,7 +311,9 @@ public class InsuraBook implements ReadOnlyInsuraBook {
     public void setClaim(Claim target, Claim editedClaim) {
         requireNonNull(editedClaim);
         Client client = this.getClient(target.getClientId());
+        Policy policyEdited = client.getPortfolio().getPolicies().getPolicy(target.getPolicyId());
         client.setClaim(target, editedClaim);
+        this.clientPolicies.refreshPolicy(policyEdited);
     }
 
     /**
