@@ -47,7 +47,7 @@ title: Developer Guide
   - [Allow more date formats](#3-allow-more-date-formats)
   - [Add shortened command aliases](#4-add-shortened-command-aliases)
 
---------------------------------------------------------------------------------------------------------------------
+
 
 ## **Acknowledgements**
 
