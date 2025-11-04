@@ -47,7 +47,9 @@ title: Developer Guide
   - [Allow more date formats](#3-allow-more-date-formats)
   - [Add shortened command aliases](#4-add-shortened-command-aliases)
 
-## **Acknowledgements**
+---
+
+## Acknowledgements
 
 - Sources and inspiration:
   - [SE-EDU AddressBook](https://github.com/se-edu/addressbook-level3) and [guides](https://se-education.org/guides)

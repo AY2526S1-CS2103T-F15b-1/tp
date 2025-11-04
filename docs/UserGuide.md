@@ -148,6 +148,8 @@ and instructions you need.
 
 Format: `help`
 
+<span style="color:orange">Extra parameters will not be parsed.</span>
+
 <p align="center">
     <img alt="img.png" height="400" src="images/help.png" width="500"/>
 </p>
@@ -316,6 +318,8 @@ Shows a list of all clients in the InsuraBook. This is your main "view all" comm
 a complete list of all clients currently stored in InsuraBook.
 
 Format: `list`
+
+<span style="color:orange">Extra parameters will not be parsed.</span>
 
 <p align="center">
     <img alt="img.png" height="300" src="images/list.png" width="500"/>
@@ -631,6 +635,8 @@ Undo your previous change to InsuraBook
 
 Format `undo`
 
+<span style="color:orange">Extra parameters will not be parsed.</span>
+
 Changes are:
 - adding client, policies, policy types and claims
 - deleting client, policies, policy types and claims
@@ -660,6 +666,8 @@ Clears **ALL** entries from InsuraBook.
 
 Format: `clear`
 
+<span style="color:orange">Extra parameters will not be parsed.</span>
+
 <span style="color:orange">⚠ Clears all data. You can use 'undo' to recover it if needed.</span>
 
 ---
@@ -670,6 +678,8 @@ Format: `clear`
 Exits the program.
 
 Format: `exit`
+
+<span style="color:orange">Extra parameters will not be parsed.</span>
 
 ---
 
