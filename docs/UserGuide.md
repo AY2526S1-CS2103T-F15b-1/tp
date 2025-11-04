@@ -115,7 +115,7 @@ as space characters surrounding line-breaks may be omitted when copied over to t
 Action | Format                                                                                                                  | Examples
 ---|-------------------------------------------------------------------------------------------------------------------------|---
 **Add Client** | `add -n NAME -phone PHONE_NUMBER -email EMAIL -b BIRTHDAY -c_id CLIENT_ID`                                              | `add -n John Doe -phone 90000001 -email johndoe@example.com -b 2001-01-01 -c_id 123`
-**Add Policy Type** | `add policy type -pt_n POLICY_TYPE_NAME -pt_id POLICY_TYPE_ID [-d DESCRIPTION] [-pr PREMIUM]`                           | `add policy type -pt BRUWealth -pt_id BRW001 -d Holistic savings plan -pr 1000`
+**Add Policy Type** | `add policy type -pt_n POLICY_TYPE_NAME -pt_id POLICY_TYPE_ID [-desc DESCRIPTION] [-pr PREMIUM]`                        | `add policy type -pt BRUWealth -pt_id BRW001 -desc Holistic savings plan -pr 1000`
 **Add Policy** | `add policy -p_id POLICY_ID -c_id CLIENT_ID -pt_id POLICY_TYPE_ID -exp EXPIRY_DATE`                                     | `add policy -p_id 101 -c_id 123 -pt_id P02 -exp 2025-10-01`
 **Add Claim** | `add claim -c_id CLIENT_ID -p_id POLICY_ID -amt CLAIM_AMOUNT -date CLAIM_DATE [-desc DESCRIPTION]`                      | `add claim -c_id 123 -p_id 101 -amt 1000 -date 2025-10-01 -desc Car accident`
 **Clear** | `clear`                                                                                                                 | `clear`
