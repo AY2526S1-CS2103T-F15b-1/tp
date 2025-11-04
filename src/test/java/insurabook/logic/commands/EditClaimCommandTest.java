@@ -2,6 +2,7 @@ package insurabook.logic.commands;
 
 import static insurabook.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static insurabook.testutil.Assert.assertThrows;
+import static insurabook.testutil.TypicalClients.ALICE;
 import static insurabook.testutil.TypicalClients.getTypicalInsuraBook;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -28,11 +29,10 @@ import insurabook.model.policytype.PolicyTypeId;
 import insurabook.model.policytype.PolicyTypeName;
 import insurabook.testutil.ClaimBuilder;
 import insurabook.testutil.EditClaimDescriptorBuilder;
-import insurabook.testutil.PersonBuilder;
 
 public class EditClaimCommandTest {
 
-    private final Client validClient = new PersonBuilder().withName("Kevin").build();
+    private final Client validClient = ALICE;
     private final PolicyType validPolicyType = new PolicyType(
             new PolicyTypeName("Health Insurance"),
             new PolicyTypeId("PT1001"));

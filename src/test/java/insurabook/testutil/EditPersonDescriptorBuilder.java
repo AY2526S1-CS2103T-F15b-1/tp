@@ -1,8 +1,11 @@
 package insurabook.testutil;
 
 import insurabook.logic.commands.EditCommand.EditPersonDescriptor;
+import insurabook.model.claims.InsuraDate;
 import insurabook.model.client.Client;
+import insurabook.model.client.Email;
 import insurabook.model.client.Name;
+import insurabook.model.client.Phone;
 
 /**
  * A utility class to help with building EditPersonDescriptor objects.
@@ -32,6 +35,30 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder withName(String name) {
         descriptor.setName(new Name(name));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Phone} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withPhone(String phone) {
+        descriptor.setPhone(new Phone(phone));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Email} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withEmail(String email) {
+        descriptor.setEmail(new Email(email));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Birthday} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withBirthday(String birthday) {
+        descriptor.setBirthday(new InsuraDate(birthday));
         return this;
     }
 
