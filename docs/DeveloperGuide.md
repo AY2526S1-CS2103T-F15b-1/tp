@@ -41,10 +41,15 @@ title: Developer Guide
   - [Viewing clients or policy\'s types](#viewing-clients-or-policys-types)
   - [Viewing policies of a client](#viewing-policies-of-a-client)
   - [Saving data](#saving-data)
-- [Appendix: Planned Enhancements](#appendix-planned-enhancements)
---------------------------------------------------------------------------------------------------------------------
+- [Appendix: Planned enhancements](#appendix-planned-enhancements)
+  - [Enhance "delete policy type" error message](#1-enhance-delete-policy-type-command-error-message-)
+  - [Add scrolling of UI through keyboard input](#2-add-scrolling-of-ui-through-keyboard-input)
+  - [Allow more date formats](#3-allow-more-date-formats)
+  - [Add shortened command aliases](#4-add-shortened-command-aliases)
 
-## **Acknowledgements**
+---
+
+## Acknowledgements
 
 - Sources and inspiration:
   - [SE-EDU AddressBook](https://github.com/se-edu/addressbook-level3) and [guides](https://se-education.org/guides)
@@ -1198,11 +1203,26 @@ testers are expected to do more *exploratory* testing.
 
 Team size: 5
 
-1. **Enhance `delete policy type` command error message.** As the command takes both ID and name, we plan to make the
-error message provide a list of policy types that match only one of the fields:
+### 1. **Enhance `delete policy type` command error message.** 
+Currently, the command takes both ID and name, while only one of the two is strictly necessary. We plan to utilize this
+by making the error message provide a list of policy types that match only one of the fields:
 ```
 No matching policy type found with ID PT001 and name Policy A.
 Did you mean:
 (1) ID: PT001, Name: Policy 1
 (2) ID: PT002, Name: Policy A
 ```
+
+### 2. **Add scrolling of UI through keyboard input.**
+The UI still requires scrolling to view all entries in a list (e.g. all clients, all policy types).
+We plan to allow navigation of lists through keyboard inputs (e.g. up and down arrow keys) to fit more with
+keyboard-only usage.
+
+### 3. **Allow more date formats.**
+Currently, our program accepts dates (e.g. birthday, policy expiry) in only one format: YYYY-MM-DD.
+We plan to allow for more formats (e.g. YYYY/MM/DD, DD-MM-YYYY) to decrease friction for users copying dates from other
+platforms.
+
+### 4. **Add shortened command aliases.**
+Our program requires users type out somewhat lengthy commands and flags (e.g. `delete policy type`). We plan to provide
+default shortened command aliases (e.g. `dpt`) for expert users to further increase their usage efficiency.

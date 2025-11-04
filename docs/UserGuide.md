@@ -115,7 +115,7 @@ as space characters surrounding line-breaks may be omitted when copied over to t
 Action | Format                                                                                                                  | Examples
 ---|-------------------------------------------------------------------------------------------------------------------------|---
 **Add Client** | `add -n NAME -phone PHONE_NUMBER -email EMAIL -b BIRTHDAY -c_id CLIENT_ID`                                              | `add -n John Doe -phone 90000001 -email johndoe@example.com -b 2001-01-01 -c_id 123`
-**Add Policy Type** | `add policy type -pt_n POLICY_TYPE_NAME -pt_id POLICY_TYPE_ID [-d DESCRIPTION] [-pr PREMIUM]`                           | `add policy type -pt BRUWealth -pt_id BRW001 -d Holistic savings plan -pr 1000`
+**Add Policy Type** | `add policy type -pt_n POLICY_TYPE_NAME -pt_id POLICY_TYPE_ID [-desc DESCRIPTION] [-pr PREMIUM]`                        | `add policy type -pt BRUWealth -pt_id BRW001 -desc Holistic savings plan -pr 1000`
 **Add Policy** | `add policy -p_id POLICY_ID -c_id CLIENT_ID -pt_id POLICY_TYPE_ID -exp EXPIRY_DATE`                                     | `add policy -p_id 101 -c_id 123 -pt_id P02 -exp 2025-10-01`
 **Add Claim** | `add claim -c_id CLIENT_ID -p_id POLICY_ID -amt CLAIM_AMOUNT -date CLAIM_DATE [-desc DESCRIPTION]`                      | `add claim -c_id 123 -p_id 101 -amt 1000 -date 2025-10-01 -desc Car accident`
 **Clear** | `clear`                                                                                                                 | `clear`
@@ -147,6 +147,8 @@ If you ever feel stuck or forget a command, just type `help`. This will open a w
 and instructions you need.
 
 Format: `help`
+
+<span style="color:orange">Extra parameters will not be parsed.</span>
 
 <p align="center">
     <img alt="img.png" height="400" src="images/help.png" width="500"/>
@@ -316,6 +318,8 @@ Shows a list of all clients in the InsuraBook. This is your main "view all" comm
 a complete list of all clients currently stored in InsuraBook.
 
 Format: `list`
+
+<span style="color:orange">Extra parameters will not be parsed.</span>
 
 <p align="center">
     <img alt="img.png" height="300" src="images/list.png" width="500"/>
@@ -631,6 +635,8 @@ Undo your previous change to InsuraBook
 
 Format `undo`
 
+<span style="color:orange">Extra parameters will not be parsed.</span>
+
 Changes are:
 - adding client, policies, policy types and claims
 - deleting client, policies, policy types and claims
@@ -660,6 +666,8 @@ Clears **ALL** entries from InsuraBook.
 
 Format: `clear`
 
+<span style="color:orange">Extra parameters will not be parsed.</span>
+
 <span style="color:orange">⚠ Clears all data. You can use 'undo' to recover it if needed.</span>
 
 ---
@@ -670,6 +678,8 @@ Format: `clear`
 Exits the program.
 
 Format: `exit`
+
+<span style="color:orange">Extra parameters will not be parsed.</span>
 
 ---
 
